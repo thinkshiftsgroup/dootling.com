@@ -2,6 +2,8 @@
 import React from "react";
 import { Footer } from "@/components/main/landing-page/footer";
 import Navbar from "@/components/main/landing-page/navbar/navbar";
+import ActiveUsers from "@/components/main/landing-page/sidebar/activeUsers";
+import Suggestions from "@/components/main/landing-page/sidebar/suggestions";
 import Image from "next/image";
 
 const Profile = () => {
@@ -226,14 +228,14 @@ const Profile = () => {
                                 <button
                                   id="scrollLeft"
                                   className="p-1 btn absolute left-0 top-1/2 -translate-y-1/2"
-                                  // style="z-index: 10;"
+                                // style="z-index: 10;"
                                 >
                                   <i className="ph ph-caret-left text-3xl"></i>
                                 </button>
                                 <ul
                                   className="nav nav-pills flex items-center profile-feed-items p-0 m-0 rounded flex-nowrap overflow-hidden"
                                   id="tabContainer"
-                                  // style="scroll-behavior: smooth;"
+                                // style="scroll-behavior: smooth;"
                                 >
                                   <li className="nav-item w-1/3 md:w-1/6 py-3">
                                     <a
@@ -529,16 +531,15 @@ const Profile = () => {
                                                 className="overflow-hidden rounded-md group"
                                               >
                                                 <span
-                                                //   href={`/images/page-image/${img}`}
+                                                  //   href={`/images/page-image/${img}`}
                                                   data-fslightbox="gallery"
                                                 >
                                                   <Image
                                                     src={`/images/page-img/${img}`}
                                                     width={150}
                                                     height={150}
-                                                    alt={`photo-profile-${
-                                                      index + 1
-                                                    }`}
+                                                    alt={`photo-profile-${index + 1
+                                                      }`}
                                                     className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
                                                     loading="lazy"
                                                   />
@@ -7366,7 +7367,7 @@ const Profile = () => {
                                                     <select className="form-select">
                                                       <option
                                                         value="only-me"
-                                                        // selected
+                                                      // selected
                                                       >
                                                         Only Me
                                                       </option>
@@ -7390,7 +7391,7 @@ const Profile = () => {
                                                       </option>
                                                       <option
                                                         value="everyone"
-                                                        // selected
+                                                      // selected
                                                       >
                                                         Everyone
                                                       </option>
@@ -7411,7 +7412,7 @@ const Profile = () => {
                                                       </option>
                                                       <option
                                                         value="everyone"
-                                                        // selected
+                                                      // selected
                                                       >
                                                         Everyone
                                                       </option>
@@ -7467,7 +7468,7 @@ const Profile = () => {
                                                     <select className="form-select">
                                                       <option
                                                         value="only-me"
-                                                        // selected
+                                                      // selected
                                                       >
                                                         Only Me
                                                       </option>
@@ -7491,7 +7492,7 @@ const Profile = () => {
                                                     <select className="form-select">
                                                       <option
                                                         value="only-me"
-                                                        // selected
+                                                      // selected
                                                       >
                                                         Only Me
                                                       </option>
@@ -7515,7 +7516,7 @@ const Profile = () => {
                                                     <select className="form-select">
                                                       <option
                                                         value="only-me"
-                                                        // selected
+                                                      // selected
                                                       >
                                                         Only Me
                                                       </option>
@@ -7539,7 +7540,7 @@ const Profile = () => {
                                                     <select className="form-select">
                                                       <option
                                                         value="only-me"
-                                                        // selected
+                                                      // selected
                                                       >
                                                         Only Me
                                                       </option>
@@ -7563,7 +7564,7 @@ const Profile = () => {
                                                     <select className="form-select">
                                                       <option
                                                         value="only-me"
-                                                        // selected
+                                                      // selected
                                                       >
                                                         Only Me
                                                       </option>
@@ -7609,7 +7610,7 @@ const Profile = () => {
                                                     <select className="form-select">
                                                       <option
                                                         value="only-me"
-                                                        // selected
+                                                      // selected
                                                       >
                                                         Only Me
                                                       </option>
@@ -7633,7 +7634,7 @@ const Profile = () => {
                                                     <select className="form-select">
                                                       <option
                                                         value="only-me"
-                                                        // selected
+                                                      // selected
                                                       >
                                                         Only Me
                                                       </option>
@@ -7657,7 +7658,7 @@ const Profile = () => {
                                                     <select className="form-select">
                                                       <option
                                                         value="only-me"
-                                                        // selected
+                                                      // selected
                                                       >
                                                         Only Me
                                                       </option>
@@ -7681,7 +7682,7 @@ const Profile = () => {
                                                     <select className="form-select">
                                                       <option
                                                         value="only-me"
-                                                        // selected
+                                                      // selected
                                                       >
                                                         Only Me
                                                       </option>
@@ -7705,7 +7706,7 @@ const Profile = () => {
                                                     <select className="form-select">
                                                       <option
                                                         value="only-me"
-                                                        // selected
+                                                      // selected
                                                       >
                                                         Only Me
                                                       </option>
@@ -7729,7 +7730,7 @@ const Profile = () => {
                                                     <select className="form-select">
                                                       <option
                                                         value="only-me"
-                                                        // selected
+                                                      // selected
                                                       >
                                                         Only Me
                                                       </option>
@@ -13325,188 +13326,8 @@ const Profile = () => {
                     </div>
                   </div>
                   <div className="w-full lg:w-2/8 px-4">
-                    <div className="rounded-lg shadow bg-white">
-                      <div className="flex justify-between p-4 border-b border-[#f1f1f1]">
-                        <div className=" header-title">
-                          <h4 className="text-xl font-semibold">
-                            active users
-                          </h4>
-                        </div>
-                      </div>
-                      <div className="p-4 pt-0">
-                        <ul className="m-0 p-0 list-none">
-                          <li className="flex items-center gap-3 mb-3">
-                            <Image
-                              width={100}
-                              height={100}
-                              src="/images/user/01.jpg"
-                              alt="story-image"
-                              className="w-15 h-15 object-cover rounded-full avatar-borderd"
-                            />
-                            <div>
-                              <h5 className="inline-block">Arina Event</h5>
-                              <span className="profile-status-online"></span>
-                              <small className="capitalize block">Active</small>
-                            </div>
-                          </li>
-                          <li className="flex items-center gap-3 mb-3">
-                            <Image
-                              width={100}
-                              height={100}
-                              src="/images/user/02.jpg"
-                              alt="story-image"
-                              className="w-15 h-15 object-cover rounded-full avatar-borderd"
-                            />
-                            <div>
-                              <h5 className="inline-block">
-                                Darlene Robertson
-                              </h5>
-                              <span className="profile-status-online"></span>
-                              <small className="capitalize block">Active</small>
-                            </div>
-                          </li>
-                          <li className="flex items-center gap-3 mb-3">
-                            <Image
-                              width={100}
-                              height={100}
-                              src="/images/user/03.jpg"
-                              alt="story-image"
-                              className="w-15 h-15 object-cover rounded-full avatar-borderd"
-                            />
-                            <div>
-                              <h5 className="inline-block">Jerome Bell</h5>
-                              <span className="profile-status-offline"></span>
-                              <small className="capitalize block">
-                                7 hours ago
-                              </small>
-                            </div>
-                          </li>
-                          <li className="flex items-center gap-3">
-                            <Image
-                              width={100}
-                              height={100}
-                              src="/images/user/05.jpg"
-                              alt="story-image"
-                              className="w-15 h-15 object-cover rounded-full avatar-borderd"
-                            />
-                            <div>
-                              <h5 className="inline-block">Arlene McCoy</h5>
-                              <span className="profile-status-offline"></span>
-                              <small className="capitalize block">
-                                4 days ago
-                              </small>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-
-                    <div className="fixed-suggestion mb-4 mt-4">
-                      <div className="rounded-lg shadow bg-white">
-                        <div className="flex justify-between p-4 border-b border-[#f1f1f1]">
-                          <div className=" header-title">
-                            <h4 className="text-xl font-semibold">
-                              Suggestions for you
-                            </h4>
-                          </div>
-                          <small className="font-medium capitalize">
-                            See all
-                          </small>
-                        </div>
-                        <div className="p-4 pt-0">
-                          <ul className="m-0 p-0 list-none">
-                            <li className="mb-3">
-                              <div className="flex items-center gap-3">
-                                <Image
-                                  width={100}
-                                  height={100}
-                                  src="/images/user/13.jpg"
-                                  alt="story-image"
-                                  className="w-15 h-15 object-cover rounded-full avatar-borderd"
-                                />
-                                <div className="flex-1">
-                                  <div className="flex items-center justify-between gap-2">
-                                    <div>
-                                      <h5>Annette Black</h5>
-                                      <small className="capitalize">
-                                        Followed by dribbble + 2 more
-                                      </small>
-                                    </div>
-                                    <div className="flex items-center flex-shrink-0 gap-2">
-                                      <button className="px-2 py-1 bg-blue-100 text-blue-600 rounded hover:bg-blue-200">
-                                        <i className="ph ph-plus text-sm"></i>
-                                      </button>
-                                      <button className="px-2 py-1 bg-red-100 text-red-600 rounded hover:bg-red-200">
-                                        <i className="ph ph-x text-sm"></i>
-                                      </button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </li>
-                            <li className="mb-3">
-                              <div className="flex items-center gap-3">
-                                <Image
-                                  width={100}
-                                  height={100}
-                                  src="/images/user/17.jpg"
-                                  alt="story-image"
-                                  className="avatar-60 avatar-borderd object-cover avatar-rounded w-full h-auto inline-block"
-                                />
-                                <div className="flex-1">
-                                  <div className="flex items-center justify-between gap-2">
-                                    <div>
-                                      <h5>Christopher Plessis</h5>
-                                      <small className="capitalize">
-                                        Followed by dribbble + 2 more
-                                      </small>
-                                    </div>
-                                    <div className="flex items-center flex-shrink-0 gap-2">
-                                      <button className="px-2 py-1 bg-blue-100 text-blue-600 rounded hover:bg-blue-200 leading-none">
-                                        <i className="ph ph-plus text-sm"></i>
-                                      </button>
-                                      <button className="px-2 py-1 bg-red-100 text-red-600 rounded hover:bg-red-200 leading-none">
-                                        <i className="ph ph-x text-sm"></i>
-                                      </button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </li>
-
-                            <li className="mb-3">
-                              <div className="flex items-center gap-3">
-                                <Image
-                                  width={100}
-                                  height={100}
-                                  src="/images/user/16.jpg"
-                                  alt="story-image"
-                                  className="avatar-60 avatar-borderd object-cover avatar-rounded w-full h-auto inline-block"
-                                />
-                                <div className="flex-1">
-                                  <div className="flex items-center justify-between gap-2">
-                                    <div>
-                                      <h5>Ellyse Perry</h5>
-                                      <small className="capitalize">
-                                        Followed by dribbble + 2 more
-                                      </small>
-                                    </div>
-                                    <div className="flex items-center flex-shrink-0 gap-2">
-                                      <button className="px-2 py-1 bg-blue-100 text-blue-600 rounded hover:bg-blue-200 leading-none">
-                                        <i className="ph ph-plus text-sm"></i>
-                                      </button>
-                                      <button className="px-2 py-1 bg-red-100 text-red-600 rounded hover:bg-red-200 leading-none">
-                                        <i className="ph ph-x text-sm"></i>
-                                      </button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
+                    <ActiveUsers />
+                    <Suggestions />
                   </div>
                 </div>
               </div>
