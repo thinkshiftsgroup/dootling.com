@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Navbar from "@/components/main/landing-page/navbar/navbar";
-import { Switch } from "@/components/ui/switch";
+import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
@@ -28,18 +28,20 @@ const PrivacySetting = () => {
             </h4>
           </div>
 
-       
           <div className="p-6 space-y-8">
+            {/* Account Privacy */}
             <section>
-              <h4 className="text-base font-semibold mb-2 text-[#2b2d42]">Account Privacy</h4>
+              <h4 className="text-base font-semibold mb-2 text-[#2b2d42]">
+                Account Privacy
+              </h4>
               <div className="flex items-center gap-3">
-                <Switch
+                <Checkbox
                   id="privateAccount"
                   checked={privacy.privateAccount}
-                  onCheckedChange={(val) =>
-                    setPrivacy({ ...privacy, privateAccount: val })
+                  onCheckedChange={(val:any) =>
+                    setPrivacy({ ...privacy, privateAccount: !!val })
                   }
-                  className="data-[state=checked]:bg-[#50b5ff]"
+                  className="border-[#d1d5db] data-[state=checked]:bg-[#50b5ff] data-[state=checked]:border-[#50b5ff]"
                 />
                 <Label
                   htmlFor="privateAccount"
@@ -50,23 +52,25 @@ const PrivacySetting = () => {
               </div>
               <p className="mt-2 text-[#738b9a] text-sm">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry&apos;s standard
-                dummy text since the 1500s.
+                industry.
               </p>
             </section>
 
             <hr />
 
+            {/* Activity Status */}
             <section>
-              <h4 className="text-base font-semibold mb-2 text-[#2b2d42]">Activity Status</h4>
+              <h4 className="text-base font-semibold mb-2 text-[#2b2d42]">
+                Activity Status
+              </h4>
               <div className="flex items-center gap-3">
-                <Switch
+                <Checkbox
                   id="activityStatus"
                   checked={privacy.activityStatus}
-                  onCheckedChange={(val) =>
-                    setPrivacy({ ...privacy, activityStatus: val })
+                  onCheckedChange={(val:any) =>
+                    setPrivacy({ ...privacy, activityStatus: !!val })
                   }
-                  className="data-[state=checked]:bg-[#50b5ff]"
+                  className="border-[#d1d5db] data-[state=checked]:bg-[#50b5ff] data-[state=checked]:border-[#50b5ff]"
                 />
                 <Label
                   htmlFor="activityStatus"
@@ -76,24 +80,26 @@ const PrivacySetting = () => {
                 </Label>
               </div>
               <p className="mt-2 text-[#738b9a] text-sm">
-                A reader will be distracted by readable content of a page when
-                looking at its layout. Lorem Ipsum has a more-or-less normal
-                distribution of letters.
+                A reader will be distracted by readable content when looking at
+                its layout.
               </p>
             </section>
 
             <hr />
 
+            {/* Story Sharing */}
             <section>
-              <h4 className="text-base font-semibold mb-2 text-[#2b2d42]">Story Sharing</h4>
+              <h4 className="text-base font-semibold mb-2 text-[#2b2d42]">
+                Story Sharing
+              </h4>
               <div className="flex items-center gap-3">
-                <Switch
+                <Checkbox
                   id="storySharing"
                   checked={privacy.storySharing}
-                  onCheckedChange={(val) =>
-                    setPrivacy({ ...privacy, storySharing: val })
+                  onCheckedChange={(val:any) =>
+                    setPrivacy({ ...privacy, storySharing: !!val })
                   }
-                  className="data-[state=checked]:bg-[#50b5ff]"
+                  className="border-[#d1d5db] data-[state=checked]:bg-[#50b5ff] data-[state=checked]:border-[#50b5ff]"
                 />
                 <Label
                   htmlFor="storySharing"
@@ -110,57 +116,67 @@ const PrivacySetting = () => {
 
             <hr />
 
+            {/* Photo of You */}
             <section>
-              <h4 className="text-base font-semibold mb-2 text-[#2b2d42]">Photo of You</h4>
+              <h4 className="text-base font-semibold mb-2 text-[#2b2d42]">
+                Photo of You
+              </h4>
               <RadioGroup
                 value={privacy.photoOfYou}
-                onValueChange={(val:any) =>
+                onValueChange={(val: string) =>
                   setPrivacy({ ...privacy, photoOfYou: val })
                 }
                 className="space-y-2"
               >
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="automatically" id="automatically" />
+                  <RadioGroupItem
+                    value="automatically"
+                    id="automatically"
+                    className="data-[state=checked]:border-[#50b5ff] data-[state=checked]:text-[#50b5ff]"
+                  />
                   <Label htmlFor="automatically">Add Automatically</Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="manualy" id="manualy" />
+                  <RadioGroupItem
+                    value="manualy"
+                    id="manualy"
+                    className="data-[state=checked]:border-[#50b5ff] data-[state=checked]:text-[#50b5ff]"
+                  />
                   <Label htmlFor="manualy">Add Manually</Label>
                 </div>
               </RadioGroup>
               <p className="mt-2 text-[#738b9a] text-sm">
-                It is a long established fact that a reader will be distracted
-                by the readable content of a page layout.
+                It is a long established fact that readable content distracts
+                readers.
               </p>
             </section>
 
             <hr />
 
+            {/* Profile Visibility */}
             <section>
-              <h4 className="text-base font-semibold mb-2 text-[#2b2d42]">Your Profile</h4>
+              <h4 className="text-base font-semibold mb-2 text-[#2b2d42]">
+                Your Profile
+              </h4>
               <RadioGroup
                 value={privacy.profileVisibility}
-                onValueChange={(val:any) =>
+                onValueChange={(val: string) =>
                   setPrivacy({ ...privacy, profileVisibility: val })
                 }
                 className="space-y-2"
               >
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="public" id="public" />
-                  <Label htmlFor="public">Public</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="friend" id="friend" />
-                  <Label htmlFor="friend">Friend</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="specific" id="specific" />
-                  <Label htmlFor="specific">Specific Friend</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="onlyme" id="onlyme" />
-                  <Label htmlFor="onlyme">Only Me</Label>
-                </div>
+                {["public", "friend", "specific", "onlyme"].map((val) => (
+                  <div key={val} className="flex items-center space-x-2">
+                    <RadioGroupItem
+                      value={val}
+                      id={val}
+                      className="data-[state=checked]:border-[#50b5ff] data-[state=checked]:text-[#50b5ff]"
+                    />
+                    <Label htmlFor={val} className="capitalize">
+                      {val === "onlyme" ? "Only Me" : val}
+                    </Label>
+                  </div>
+                ))}
               </RadioGroup>
               <p className="mt-2 text-[#738b9a] text-sm">
                 A long established fact that readable content distracts readers.
@@ -169,25 +185,30 @@ const PrivacySetting = () => {
 
             <hr />
 
+            {/* Login Notification */}
             <section>
               <h4 className="text-base font-semibold mb-2 text-[#2b2d42]">
                 Login Notification
               </h4>
               <RadioGroup
                 value={privacy.loginNotification}
-                onValueChange={(val:any) =>
+                onValueChange={(val: string) =>
                   setPrivacy({ ...privacy, loginNotification: val })
                 }
                 className="space-y-2"
               >
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="enable" id="enable" />
-                  <Label htmlFor="enable">Enable</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="disable" id="disable" />
-                  <Label htmlFor="disable">Disable</Label>
-                </div>
+                {["enable", "disable"].map((val) => (
+                  <div key={val} className="flex items-center space-x-2">
+                    <RadioGroupItem
+                      value={val}
+                      id={val}
+                      className="data-[state=checked]:border-[#50b5ff] data-[state=checked]:text-[#50b5ff]"
+                    />
+                    <Label htmlFor={val} className="capitalize">
+                      {val}
+                    </Label>
+                  </div>
+                ))}
               </RadioGroup>
               <p className="mt-2 text-[#738b9a] text-sm">
                 Lorem Ipsum is simply dummy text used in typesetting.
@@ -196,8 +217,11 @@ const PrivacySetting = () => {
 
             <hr />
 
+            {/* Privacy Help */}
             <section>
-              <h4 className="text-base font-semibold mb-2 text-[#2b2d42]">Privacy Help</h4>
+              <h4 className="text-base font-semibold mb-2 text-[#2b2d42]">
+                Privacy Help
+              </h4>
               <Link
                 href="#"
                 className="flex items-center gap-2 text-[#50b5ff] hover:underline"
