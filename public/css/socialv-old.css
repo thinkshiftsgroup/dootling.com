@@ -15619,7 +15619,7 @@ fieldset:disabled .btn {
 
 .iq-nav-menu>li>a {
     font-weight: 600;
-    color: var(--bs-body-color)
+    color: var(--bs-body-color);
 }
 
 .iq-nav-menu a {

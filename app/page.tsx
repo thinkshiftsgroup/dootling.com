@@ -1,12 +1,14 @@
+import Navbar from "@/components/main/landing-page/navbar/navbar";
 import Image from "next/image";
 
 export default function Home() {
   return (
     <div>
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id iste nobis
-      facere voluptate possimus quas quibusdam harum distinctio officiis
-      aspernatur! Distinctio quidem esse quae accusantium molestias corporis at
-      aut? Optio?
+      <Navbar />
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti enim
+      expedita inventore. Eaque consequuntur vel aspernatur aliquam quas placeat
+      voluptate laboriosam at vitae pariatur maiores tempore culpa, explicabo
+      rem hic!
     </div>
   );
 }
