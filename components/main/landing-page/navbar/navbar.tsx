@@ -5,11 +5,11 @@ import { HiMagnifyingGlass } from "react-icons/hi2";
 import { List, X } from "phosphor-react";
 import { NotificationDropdown } from "./notifDropDown";
 import { MessageDropdown } from "./messageDropDown";
-import { UserDropdown } from "./userDropDown";
 import GroupDropdown from "./groupDropDown";
 import { VscMenu } from "react-icons/vsc";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { CaretDown } from "phosphor-react";
+import UserDropdown from "./userDropDown";
 
 interface UserItem {
   name: string;
@@ -326,135 +326,6 @@ const Navbar = () => {
                 </li>
               </ul>
             </div>
-            {/* <div
-              className="offcanvas offcanvas-end shadow-none iq-product-menu-responsive block xl:hidden"
-              id="offcanvasBottomNav"
-            >
-              <div className="offcanvas-body">
-                <button
-                  className="hamburger-close-btn navbar-toggle"
-                  id="navbar-toggle"
-                >
-                  <div className="bar-line top-bar"></div>
-                  <div className="bar-line bottom-bar"></div>
-                </button>
-                <ul className="iq-nav-menu list-none">
-                  <li className="nav-item">
-                    <a
-                      className="nav-link menu-arrow items-center gap-1 justify-start active"
-                      href="/"
-                    >
-                      <span className="nav-text">Home</span>
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a
-                      className="nav-link menu-arrow items-center gap-1 justify-start"
-                      data-bs-toggle="collapse"
-                      href="#blogData"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="blogData"
-                    >
-                      <span className="nav-text">Blog</span>
-                      <span className="dropdown-arrow">
-                        {" "}
-                        <i className="ph ph-caret-down"></i>
-                      </span>
-                    </a>
-                    <ul
-                      className="iq-header-sub-menu list-none hidden shadow"
-                      id="blogData"
-                    >
-                      <li className="nav-item">
-                        <a
-                          className="nav-link"
-                          href="./dashboard/blog-grid.html"
-                        >
-                          Blog Grid
-                        </a>
-                      </li>
-                      <li className="nav-item">
-                        <a
-                          className="nav-link"
-                          href="./dashboard/blog-list.html"
-                        >
-                          Blog List
-                        </a>
-                      </li>
-                      <li className="nav-item">
-                        <a
-                          className="nav-link"
-                          href="./dashboard/blog-detail.html"
-                        >
-                          Blog Detail
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li className="nav-item">
-                    <a
-                      className="nav-link menu-arrow items-center gap-1 justify-start"
-                      data-bs-toggle="collapse"
-                      href="#storeData"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="storeData"
-                    >
-                      <span className="nav-text">Store</span>
-                      <span className="dropdown-arrow">
-                        <i className="ph ph-caret-down"></i>
-                      </span>
-                    </a>
-                    <ul
-                      className="iq-header-sub-menu list-none hidden shadow"
-                      id="storeData"
-                    >
-                      <li className="nav-item">
-                        <a
-                          className="nav-link"
-                          href="./dashboard/store-category-grid.html"
-                        >
-                          Category Grid
-                        </a>
-                      </li>
-                      <li className="nav-item">
-                        <a
-                          className="nav-link"
-                          href="./dashboard/store-category-list.html"
-                        >
-                          Category List
-                        </a>
-                      </li>
-                      <li className="nav-item">
-                        <a
-                          className="nav-link"
-                          href="./dashboard/store-detail.html"
-                        >
-                          Store Detail
-                        </a>
-                      </li>
-                      <li className="nav-item">
-                        <a
-                          className="nav-link"
-                          href="./dashboard/product-detail.html"
-                        >
-                          Product Detail
-                        </a>
-                      </li>
-                      <li className="nav-item">
-                        <a
-                          className="nav-link"
-                          href="./dashboard/store-checkout.html"
-                        >
-                          Checkout
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </div>
-            </div> */}
           </div>
           <ul className="navbar-nav navbar-list flex items-center flex-row">
             <div className="flex items-center gap-2.5">
