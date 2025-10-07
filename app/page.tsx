@@ -1,22 +1,126 @@
-import Navbar from "@/components/main/landing-page/navbar/navbar";
 import Image from "next/image";
+import Navbar from "@/components/main/landing-page/navbar/navbar";
+import ActiveUsers from "@/components/main/landing-page/sidebar/activeUsers";
+import Suggestions from "@/components/main/landing-page/sidebar/suggestions";
 
 export default function Home() {
+  const stories = [
+    {
+      id: "bni",
+      name: "Your Story",
+      photo: "/images/user/1.jpg",
+      items: [
+        { id: "bni-1", type: "video", thumb: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/4.jpg", src: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/4.mp4" },
+        { id: "bni-2", type: "photo", thumb: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/5.jpg", src: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/5.jpg" },
+        { id: "bni-3", type: "photo", thumb: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/3.png", src: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/3.png" },
+      ],
+    },
+    {
+      id: "bob",
+      name: "Bob Frapples",
+      photo: "/images/user/13.jpg",
+      items: [
+        { id: "bob-1", type: "photo", thumb: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/1.jpg", src: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/1.jpg" },
+        { id: "bob-2", type: "video", thumb: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/2.jpg", src: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/2.mp4" },
+      ],
+    },
+    {
+      id: "greta",
+      name: "Greta Life",
+      photo: "/images/user/14.jpg",
+      items: [
+        { id: "greta-1", type: "photo", thumb: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/6.jpg", src: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/6.jpg" },
+        { id: "greta-2", type: "photo", thumb: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/7.jpg", src: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/7.jpg" },
+      ],
+    },
+    {
+      id: "pete",
+      name: "Pete Sariya",
+      photo: "/images/user/15.jpg",
+      items: [
+        { id: "pete-1", type: "photo", thumb: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/8.jpg", src: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/8.jpg" },
+      ],
+    },
+    {
+      id: "paige",
+      name: "Paige Turner",
+      photo: "/images/user/16.jpg",
+      items: [
+        { id: "paige-1", type: "photo", thumb: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/9.jpg", src: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/9.jpg" },
+      ],
+    },
+    {
+      id: "marcum",
+      name: "Marcum Shaw",
+      photo: "/images/user/17.jpg",
+      items: [
+        { id: "marcum-1", type: "photo", thumb: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/9.jpg", src: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/9.jpg" },
+      ],
+    },
+  ];
   return (
 
-    <main>
+    <main className="main-content">
       <div className="relative">
         <Navbar />
-
-
         <div>
           <div className="position-relative">
           </div>
           <div className="content-inner " id="page_layout">
-            <div className="xl:max-w-[90rem] mx-auto px-4">
+            <div className="xl:max-w-[80rem] mx-auto px-4">
               <div className="flex flex-wrap -mx-4">
                 <div className="w-full lg:w-2/3 px-4" id="dynamicDivContainer">
                   <div id="content">
+                    {/* --- STORIES SECTION --- */}
+                    <div className="flex flex-wrap pb-4">
+                      <div className="w-full">
+                        <div className="mb-5">
+                          <div
+                            id="stories"
+                            className="storiesWrapper flex gap-3 overflow-x-auto no-scrollbar stories user-icon carousel snapgram"
+                          >
+                            {stories.map((story) => (
+                              <div
+                                key={story.id}
+                                className="story flex flex-col items-center"
+                                data-id={story.id}
+                              >
+                                <a href="#" className="item-link flex flex-col items-center">
+                                  <span className="item-preview block w-16 h-16 rounded-full overflow-hidden border-2 border-blue-500">
+                                    <Image
+                                      src={story.photo}
+                                      alt={story.name}
+                                      width={64}
+                                      height={64}
+                                      className="object-cover w-full h-full"
+                                    />
+                                  </span>
+                                  <span className="info text-center mt-1">
+                                    <strong className="name text-sm block">{story.name}</strong>
+                                    <span className="time text-xs text-gray-400"></span>
+                                  </span>
+                                </a>
+
+                                <ul className="hidden">
+                                  {story.items.map((item) => (
+                                    <li key={item.id}>
+                                      <a href={item.src} data-type={item.type}>
+                                        <img
+                                          src={item.thumb}
+                                          alt={story.name}
+                                          className="w-full h-auto"
+                                          loading="lazy"
+                                        />
+                                      </a>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     <div className="flex flex-wrap pb-4">
                       <div className="w-full">
                         <div className="mb-5">
@@ -54,8 +158,8 @@ export default function Home() {
                             <div>
                               <form className="post-text w-full" action="javascript:void();">
                                 <input
-                                 type="text" className="w-full rounded p-0 border-0"
-                                  placeholder="Write And Share Your Post With Your Friends..."/>
+                                  type="text" className="w-full rounded p-0 border-0"
+                                  placeholder="Write And Share Your Post With Your Friends..." />
                               </form>
                             </div>
                           </div>
@@ -108,7 +212,7 @@ export default function Home() {
                               <div className="flex items-center justify-between gap-2 lg:gap-3">
                                 <div className="flex-shrink-0">
                                   <img className="border-2 rounded-full user-post-profile"
-                                    src="/images/user/01.jpg" alt="user-image" loading="lazy"/>
+                                    src="/images/user/01.jpg" alt="user-image" loading="lazy" />
                                 </div>
                                 <div className="w-full">
                                   <div className="flex items-center justify-between">
@@ -201,7 +305,7 @@ export default function Home() {
                               <a data-fslightbox="gallery" href="/images/page-img/fun.jpg"
                                 className="rounded">
                                 <img src="/images/page-img/fun.jpg" alt="post-image"
-                                  className="w-full rounded" loading="lazy"/>
+                                  className="w-full rounded" loading="lazy" />
                               </a>
                             </div>
                             <div className="post-meta-likes mt-4">
@@ -209,19 +313,19 @@ export default function Home() {
                                 <ul className="flex m-0 p-0 list-none post-user-liked-list">
                                   <li>
                                     <img src="/images/user/01.jpg" alt="userimg"
-                                      className="rounded-full userimg" loading="lazy"/>
+                                      className="rounded-full userimg" loading="lazy" />
                                   </li>
                                   <li>
                                     <img src="/images/user/02.jpg" alt="userimg"
-                                      className="rounded-full userimg" loading="lazy"/>
+                                      className="rounded-full userimg" loading="lazy" />
                                   </li>
                                   <li>
                                     <img src="/images/user/03.jpg" alt="userimg"
-                                      className="rounded-full userimg" loading="lazy"/>
+                                      className="rounded-full userimg" loading="lazy" />
                                   </li>
                                   <li>
                                     <img src="/images/user/04.jpg" alt="userimg"
-                                      className="rounded-full userimg" loading="lazy"/>
+                                      className="rounded-full userimg" loading="lazy" />
                                   </li>
                                 </ul>
                                 <div className="inline-flex items-center gap-1">
@@ -271,7 +375,7 @@ export default function Home() {
                               <div className="flex items-center justify-between gap-2 lg:gap-3">
                                 <div className="flex-shrink-0">
                                   <img className="border border-2 rounded-full user-post-profile"
-                                    src="/images/user/03.jpg" alt="user-image" loading="lazy"/>
+                                    src="/images/user/03.jpg" alt="user-image" loading="lazy" />
                                 </div>
                                 <div className="w-full">
                                   <div className="flex items-center justify-between">
@@ -367,21 +471,21 @@ export default function Home() {
                                   <a data-fslightbox="gallery" href="/images/page-img/boy.jpg"
                                     className="rounded">
                                     <img src="/images/page-img/boy.jpg" alt="post-image"
-                                      className="w-full rounded" loading="lazy"/>
+                                      className="w-full rounded" loading="lazy" />
                                   </a>
                                 </div>
                                 <div className="w-full md:w-1/3 px-2 mt-3 md:mt-0">
                                   <a data-fslightbox="gallery" href="/images/page-img/bus.jpg"
                                     className="rounded">
                                     <img src="/images/page-img/bus.jpg" alt="post-image"
-                                      className="w-full rounded" loading="lazy"/>
+                                      className="w-full rounded" loading="lazy" />
                                   </a>
                                 </div>
                                 <div className="w-full md:w-1/3 px-2 mt-3 md:mt-0">
                                   <a data-fslightbox="gallery" href="/images/page-img/fd.jpg"
                                     className="rounded">
                                     <img src="/images/page-img/fd.jpg" alt="post-image"
-                                      className="w-full rounded" loading="lazy"/>
+                                      className="w-full rounded" loading="lazy" />
                                   </a>
                                 </div>
                               </div>
@@ -390,16 +494,16 @@ export default function Home() {
                                   <a data-fslightbox="gallery"
                                     href="/images/page-img/mountain.jpg" className="rounded">
                                     <img src="/images/page-img/mountain.jpg" alt="post-image"
-                                      className="w-full rounded" loading="lazy"/>
+                                      className="w-full rounded" loading="lazy" />
                                   </a>
                                 </div>
                                 <div className="w-full md:w-1/2 px-2 mt-3 md:mt-0">
                                   <div className="post-overlay-box h-full rounded">
                                     <img src="/images/page-img/pizza.jpg" alt="post-image"
-                                      className="w-full h-full object-cover rounded" loading="lazy"/>
-                                      <a data-fslightbox="gallery"
-                                        href="/images/page-img/pizza.jpg"
-                                        className="rounded font-size-18">+2</a>
+                                      className="w-full h-full object-cover rounded" loading="lazy" />
+                                    <a data-fslightbox="gallery"
+                                      href="/images/page-img/pizza.jpg"
+                                      className="rounded font-size-18">+2</a>
                                   </div>
                                 </div>
                               </div>
@@ -409,19 +513,19 @@ export default function Home() {
                                 <ul className="flex m-0 p-0 list-none post-user-liked-list">
                                   <li>
                                     <img src="/images/user/01.jpg" alt="userimg"
-                                      className="rounded-full userimg" loading="lazy"/>
+                                      className="rounded-full userimg" loading="lazy" />
                                   </li>
                                   <li>
                                     <img src="/images/user/02.jpg" alt="userimg"
-                                      className="rounded-full userimg" loading="lazy"/>
+                                      className="rounded-full userimg" loading="lazy" />
                                   </li>
                                   <li>
                                     <img src="/images/user/03.jpg" alt="userimg"
-                                      className="rounded-full userimg" loading="lazy"/>
+                                      className="rounded-full userimg" loading="lazy" />
                                   </li>
                                   <li>
                                     <img src="/images/user/04.jpg" alt="userimg"
-                                      className="rounded-full userimg" loading="lazy"/>
+                                      className="rounded-full userimg" loading="lazy" />
                                   </li>
                                 </ul>
                                 <div className="inline-flex items-center gap-1">
@@ -449,31 +553,31 @@ export default function Home() {
                                         <a className="mx-2 inline-block" href="javascript:void(0);"
                                           data-bs-toggle="tooltip" data-bs-placement="top"
                                           title="Like"><img src="/images/icon/01.png"
-                                            className="w-full" alt="like" loading="lazy"/></a>
+                                            className="w-full" alt="like" loading="lazy" /></a>
                                         <a className="mr-2 inline-block" href="javascript:void(0);"
                                           data-bs-toggle="tooltip" data-bs-placement="top"
                                           title="Love"><img src="/images/icon/02.png"
-                                            className="w-full" alt="love" loading="lazy"/></a>
+                                            className="w-full" alt="love" loading="lazy" /></a>
                                         <a className="mr-2 inline-block" href="javascript:void(0);"
                                           data-bs-toggle="tooltip" data-bs-placement="top"
                                           title="Happy"><img src="/images/icon/03.png"
-                                            className="w-full" alt="happy" loading="lazy"/></a>
+                                            className="w-full" alt="happy" loading="lazy" /></a>
                                         <a className="mr-2 inline-block" href="javascript:void(0);"
                                           data-bs-toggle="tooltip" data-bs-placement="top"
                                           title="HaHa"><img src="/images/icon/04.png"
-                                            className="w-full" alt="haha" loading="lazy"/></a>
+                                            className="w-full" alt="haha" loading="lazy" /></a>
                                         <a className="mr-2 inline-block" href="javascript:void(0);"
                                           data-bs-toggle="tooltip" data-bs-placement="top"
                                           title="Think"><img src="/images/icon/05.png"
-                                            className="w-full" alt="think" loading="lazy"/></a>
+                                            className="w-full" alt="think" loading="lazy" /></a>
                                         <a className="mr-2 inline-block" href="javascript:void(0);"
                                           data-bs-toggle="tooltip" data-bs-placement="top"
                                           title="Sad"><img src="/images/icon/06.png"
-                                            className="w-full" alt="sad" loading="lazy"/></a>
+                                            className="w-full" alt="sad" loading="lazy" /></a>
                                         <a className="mr-2 inline-block" href="javascript:void(0);"
                                           data-bs-toggle="tooltip" data-bs-placement="top"
                                           title="Lovely"><img src="/images/icon/07.png"
-                                            className="w-full" alt="lovely" loading="lazy"/></a>
+                                            className="w-full" alt="lovely" loading="lazy" /></a>
                                       </div>
                                     </div>
                                   </div>
@@ -504,7 +608,7 @@ export default function Home() {
                                       <div className="flex items-center gap-3">
                                         <div className="comment-list-user-img flex-shrink-0">
                                           <img src="/images/user/13.jpg" alt="userimg"
-                                            className="avatar-48 rounded-full w-12 h-12" loading="lazy"/>
+                                            className="avatar-48 rounded-full w-12 h-12" loading="lazy" />
                                         </div>
                                         <div className="comment-list-user-data">
                                           <div className="inline-flex items-center gap-1 flex-wrap">
@@ -546,7 +650,7 @@ export default function Home() {
                                                         title="Like"><img
                                                           src="/images/icon/01.png"
                                                           className="w-full" alt="like"
-                                                          loading="lazy"/></a>
+                                                          loading="lazy" /></a>
                                                       <a className="mr-2 inline-block"
                                                         href="javascript:void(0);"
                                                         data-bs-toggle="tooltip"
@@ -554,7 +658,7 @@ export default function Home() {
                                                         title="Love"><img
                                                           src="/images/icon/02.png"
                                                           className="w-full" alt="love"
-                                                          loading="lazy"/></a>
+                                                          loading="lazy" /></a>
                                                       <a className="mr-2 inline-block"
                                                         href="javascript:void(0);"
                                                         data-bs-toggle="tooltip"
@@ -562,7 +666,7 @@ export default function Home() {
                                                         title="Happy"><img
                                                           src="/images/icon/03.png"
                                                           className="w-full" alt="happy"
-                                                          loading="lazy"/></a>
+                                                          loading="lazy" /></a>
                                                       <a className="mr-2 inline-block"
                                                         href="javascript:void(0);"
                                                         data-bs-toggle="tooltip"
@@ -570,7 +674,7 @@ export default function Home() {
                                                         title="HaHa"><img
                                                           src="/images/icon/04.png"
                                                           className="w-full" alt="haha"
-                                                          loading="lazy"/></a>
+                                                          loading="lazy" /></a>
                                                       <a className="mr-2 inline-block"
                                                         href="javascript:void(0);"
                                                         data-bs-toggle="tooltip"
@@ -578,7 +682,7 @@ export default function Home() {
                                                         title="Think"><img
                                                           src="/images/icon/05.png"
                                                           className="w-full" alt="think"
-                                                          loading="lazy"/></a>
+                                                          loading="lazy" /></a>
                                                       <a className="mr-2 inline-block"
                                                         href="javascript:void(0);"
                                                         data-bs-toggle="tooltip"
@@ -586,7 +690,7 @@ export default function Home() {
                                                         title="Sad"><img
                                                           src="/images/icon/06.png"
                                                           className="w-full" alt="sad"
-                                                          loading="lazy"/></a>
+                                                          loading="lazy" /></a>
                                                       <a className="mr-2 inline-block"
                                                         href="javascript:void(0);"
                                                         data-bs-toggle="tooltip"
@@ -594,7 +698,7 @@ export default function Home() {
                                                         title="Lovely"><img
                                                           src="/images/icon/07.png"
                                                           className="w-full" alt="lovely"
-                                                          loading="lazy"/></a>
+                                                          loading="lazy" /></a>
                                                     </div>
                                                   </div>
                                                 </div>
@@ -622,9 +726,9 @@ export default function Home() {
                                                 <form>
                                                   <input type="text"
                                                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                                    placeholder="Write a Comment..."/>
-                                                    <button type="submit"
-                                                      className="px-5 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-size-12 capitalize">post</button>
+                                                    placeholder="Write a Comment..." />
+                                                  <button type="submit"
+                                                    className="px-5 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-size-12 capitalize">post</button>
                                                 </form>
                                               </div>
                                             </div>
@@ -638,15 +742,15 @@ export default function Home() {
                                   <div className="flex items-center gap-3">
                                     <div className="flex-shrink-0">
                                       <img src="/images/user/1.jpg" alt="userimg"
-                                        className="avatar-48 rounded-full w-12 h-12" loading="lazy"/>
+                                        className="avatar-48 rounded-full w-12 h-12" loading="lazy" />
                                     </div>
                                     <div className="add-comment-form">
                                       <form>
                                         <input type="text"
                                           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                          placeholder="Write a Comment..."/>
-                                          <button type="submit"
-                                            className="px-5 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-size-12 capitalize">post</button>
+                                          placeholder="Write a Comment..." />
+                                        <button type="submit"
+                                          className="px-5 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-size-12 capitalize">post</button>
                                       </form>
                                     </div>
                                   </div>
@@ -664,7 +768,7 @@ export default function Home() {
                               <div className="flex items-center justify-between gap-2 lg:gap-3">
                                 <div className="flex-shrink-0">
                                   <img className="border border-2 rounded-full user-post-profile"
-                                    src="/images/user/04.jpg" alt="user-image" loading="lazy"/>
+                                    src="/images/user/04.jpg" alt="user-image" loading="lazy" />
                                 </div>
                                 <div className="w-full">
                                   <div className="flex items-center justify-between">
@@ -742,19 +846,19 @@ export default function Home() {
                                 <ul className="flex m-0 p-0 list-none post-user-liked-list">
                                   <li>
                                     <img src="/images/user/01.jpg" alt="userimg"
-                                      className="rounded-full userimg" loading="lazy"/>
+                                      className="rounded-full userimg" loading="lazy" />
                                   </li>
                                   <li>
                                     <img src="/images/user/02.jpg" alt="userimg"
-                                      className="rounded-full userimg" loading="lazy"/>
+                                      className="rounded-full userimg" loading="lazy" />
                                   </li>
                                   <li>
                                     <img src="/images/user/03.jpg" alt="userimg"
-                                      className="rounded-full userimg" loading="lazy"/>
+                                      className="rounded-full userimg" loading="lazy" />
                                   </li>
                                   <li>
                                     <img src="/images/user/04.jpg" alt="userimg"
-                                      className="rounded-full userimg" loading="lazy"/>
+                                      className="rounded-full userimg" loading="lazy" />
                                   </li>
                                 </ul>
                                 <div className="inline-flex items-center gap-1">
@@ -782,31 +886,31 @@ export default function Home() {
                                         <a className="mx-2 inline-block" href="javascript:void(0);"
                                           data-bs-toggle="tooltip" data-bs-placement="top"
                                           title="Like"><img src="/images/icon/01.png"
-                                            className="w-full" alt="like" loading="lazy"/></a>
+                                            className="w-full" alt="like" loading="lazy" /></a>
                                         <a className="mr-2 inline-block" href="javascript:void(0);"
                                           data-bs-toggle="tooltip" data-bs-placement="top"
                                           title="Love"><img src="/images/icon/02.png"
-                                            className="w-full" alt="love" loading="lazy"/></a>
+                                            className="w-full" alt="love" loading="lazy" /></a>
                                         <a className="mr-2 inline-block" href="javascript:void(0);"
                                           data-bs-toggle="tooltip" data-bs-placement="top"
                                           title="Happy"><img src="/images/icon/03.png"
-                                            className="w-full" alt="happy" loading="lazy"/></a>
+                                            className="w-full" alt="happy" loading="lazy" /></a>
                                         <a className="mr-2 inline-block" href="javascript:void(0);"
                                           data-bs-toggle="tooltip" data-bs-placement="top"
                                           title="HaHa"><img src="/images/icon/04.png"
-                                            className="w-full" alt="haha" loading="lazy"/></a>
+                                            className="w-full" alt="haha" loading="lazy" /></a>
                                         <a className="mr-2 inline-block" href="javascript:void(0);"
                                           data-bs-toggle="tooltip" data-bs-placement="top"
                                           title="Think"><img src="/images/icon/05.png"
-                                            className="w-full" alt="think" loading="lazy"/></a>
+                                            className="w-full" alt="think" loading="lazy" /></a>
                                         <a className="mr-2 inline-block" href="javascript:void(0);"
                                           data-bs-toggle="tooltip" data-bs-placement="top"
                                           title="Sad"><img src="/images/icon/06.png"
-                                            className="w-full" alt="sad" loading="lazy"/></a>
+                                            className="w-full" alt="sad" loading="lazy" /></a>
                                         <a className="mr-2 inline-block" href="javascript:void(0);"
                                           data-bs-toggle="tooltip" data-bs-placement="top"
                                           title="Lovely"><img src="/images/icon/07.png"
-                                            className="w-full" alt="lovely" loading="lazy"/></a>
+                                            className="w-full" alt="lovely" loading="lazy" /></a>
                                       </div>
                                     </div>
                                   </div>
@@ -837,7 +941,7 @@ export default function Home() {
                                       <div className="flex items-center gap-3">
                                         <div className="comment-list-user-img flex-shrink-0">
                                           <img src="/images/user/13.jpg" alt="userimg"
-                                            className="avatar-48 rounded-full w-12 h-12" loading="lazy"/>
+                                            className="avatar-48 rounded-full w-12 h-12" loading="lazy" />
                                         </div>
                                         <div className="comment-list-user-data">
                                           <div className="inline-flex items-center gap-1 flex-wrap">
@@ -880,7 +984,7 @@ export default function Home() {
                                                         title="Like"><img
                                                           src="/images/icon/01.png"
                                                           className="w-full" alt="like"
-                                                          loading="lazy"/></a>
+                                                          loading="lazy" /></a>
                                                       <a className="mr-2 inline-block"
                                                         href="javascript:void(0);"
                                                         data-bs-toggle="tooltip"
@@ -888,7 +992,7 @@ export default function Home() {
                                                         title="Love"><img
                                                           src="/images/icon/02.png"
                                                           className="w-full" alt="love"
-                                                          loading="lazy"/></a>
+                                                          loading="lazy" /></a>
                                                       <a className="mr-2 inline-block"
                                                         href="javascript:void(0);"
                                                         data-bs-toggle="tooltip"
@@ -896,7 +1000,7 @@ export default function Home() {
                                                         title="Happy"><img
                                                           src="/images/icon/03.png"
                                                           className="w-full" alt="happy"
-                                                          loading="lazy"/></a>
+                                                          loading="lazy" /></a>
                                                       <a className="mr-2 inline-block"
                                                         href="javascript:void(0);"
                                                         data-bs-toggle="tooltip"
@@ -904,7 +1008,7 @@ export default function Home() {
                                                         title="HaHa"><img
                                                           src="/images/icon/04.png"
                                                           className="w-full" alt="haha"
-                                                          loading="lazy"/></a>
+                                                          loading="lazy" /></a>
                                                       <a className="mr-2 inline-block"
                                                         href="javascript:void(0);"
                                                         data-bs-toggle="tooltip"
@@ -912,7 +1016,7 @@ export default function Home() {
                                                         title="Think"><img
                                                           src="/images/icon/05.png"
                                                           className="w-full" alt="think"
-                                                          loading="lazy"/></a>
+                                                          loading="lazy" /></a>
                                                       <a className="mr-2 inline-block"
                                                         href="javascript:void(0);"
                                                         data-bs-toggle="tooltip"
@@ -920,7 +1024,7 @@ export default function Home() {
                                                         title="Sad"><img
                                                           src="/images/icon/06.png"
                                                           className="w-full" alt="sad"
-                                                          loading="lazy"/></a>
+                                                          loading="lazy" /></a>
                                                       <a className="mr-2 inline-block"
                                                         href="javascript:void(0);"
                                                         data-bs-toggle="tooltip"
@@ -928,7 +1032,7 @@ export default function Home() {
                                                         title="Lovely"><img
                                                           src="/images/icon/07.png"
                                                           className="w-full" alt="lovely"
-                                                          loading="lazy"/></a>
+                                                          loading="lazy" /></a>
                                                     </div>
                                                   </div>
                                                 </div>
@@ -950,15 +1054,15 @@ export default function Home() {
                                               <div className="flex-shrink-0">
                                                 <img src="/images/user/1.jpg" alt="userimg"
                                                   className="avatar-48 rounded-full w-12 h-12"
-                                                  loading="lazy"/>
+                                                  loading="lazy" />
                                               </div>
                                               <div className="add-comment-form">
                                                 <form>
                                                   <input type="text"
                                                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                                    placeholder="Write a Comment..."/>
-                                                    <button type="submit"
-                                                      className="px-5 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-size-12 capitalize">post</button>
+                                                    placeholder="Write a Comment..." />
+                                                  <button type="submit"
+                                                    className="px-5 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-size-12 capitalize">post</button>
                                                 </form>
                                               </div>
                                             </div>
@@ -972,15 +1076,15 @@ export default function Home() {
                                   <div className="flex items-center gap-3">
                                     <div className="flex-shrink-0">
                                       <img src="/images/user/1.jpg" alt="userimg"
-                                        className="avatar-48 rounded-full w-12 h-12" loading="lazy"/>
+                                        className="avatar-48 rounded-full w-12 h-12" loading="lazy" />
                                     </div>
                                     <div className="add-comment-form">
                                       <form>
                                         <input type="text"
                                           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                          placeholder="Write a Comment..."/>
-                                          <button type="submit"
-                                            className="px-5 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-size-12 capitalize">post</button>
+                                          placeholder="Write a Comment..." />
+                                        <button type="submit"
+                                          className="px-5 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-size-12 capitalize">post</button>
                                       </form>
                                     </div>
                                   </div>
@@ -998,7 +1102,7 @@ export default function Home() {
                               <div className="flex items-center justify-between gap-2 lg:gap-3">
                                 <div className="flex-shrink-0">
                                   <img className="border-2 border rounded-full user-post-profile"
-                                    src="/images/user/1.jpg" alt="user-image" loading="lazy"/>
+                                    src="/images/user/1.jpg" alt="user-image" loading="lazy" />
                                 </div>
                                 <div className="w-full">
                                   <div className="flex items-center justify-between">
@@ -1076,7 +1180,7 @@ export default function Home() {
                               <div className="aspect-video">
                                 <iframe className="w-full h-full"
                                   src="https://www.youtube.com/embed/oHD33oKbKh4?si=VF-Qcp-pZdzUb3RX"
-                                   allowFullScreen></iframe>
+                                  allowFullScreen></iframe>
                               </div>
                             </div>
 
@@ -1084,13 +1188,13 @@ export default function Home() {
                               <div className="flex items-center gap-2 flex-wrap">
                                 <ul className="flex m-0 p-0 list-none post-user-liked-list">
                                   <li><img src="/images/user/01.jpg" alt="userimg"
-                                    className="rounded-full userimg" loading="lazy"/></li>
+                                    className="rounded-full userimg" loading="lazy" /></li>
                                   <li><img src="/images/user/02.jpg" alt="userimg"
-                                    className="rounded-full userimg" loading="lazy"/></li>
+                                    className="rounded-full userimg" loading="lazy" /></li>
                                   <li><img src="/images/user/03.jpg" alt="userimg"
-                                    className="rounded-full userimg" loading="lazy"/></li>
+                                    className="rounded-full userimg" loading="lazy" /></li>
                                   <li><img src="/images/user/04.jpg" alt="userimg"
-                                    className="rounded-full userimg" loading="lazy"/></li>
+                                    className="rounded-full userimg" loading="lazy" /></li>
                                 </ul>
                                 <div className="inline-flex items-center gap-1">
                                   <h6 className="m-0 text-sm">Aliana Molex</h6>
@@ -1138,7 +1242,7 @@ export default function Home() {
                                       <div className="flex items-center gap-3">
                                         <div className="comment-list-user-img flex-shrink-0">
                                           <img src="/images/user/13.jpg" alt="userimg"
-                                            className="w-12 h-12 rounded-full userimg" loading="lazy"/>
+                                            className="w-12 h-12 rounded-full userimg" loading="lazy" />
                                         </div>
                                         <div className="comment-list-user-data">
                                           <div className="inline-flex items-center gap-1 flex-wrap">
@@ -1183,15 +1287,15 @@ export default function Home() {
                                               <div className="flex-shrink-0">
                                                 <img src="/images/user/1.jpg" alt="userimg"
                                                   className="w-12 h-12 rounded-full userimg"
-                                                  loading="lazy"/>
+                                                  loading="lazy" />
                                               </div>
                                               <div className="add-comment-form">
                                                 <form className="flex gap-2">
                                                   <input type="text"
                                                     className="border rounded px-3 py-1 w-full"
-                                                    placeholder="Write a Comment..."/>
-                                                    <button type="submit"
-                                                      className="bg-blue-600 text-white text-xs font-medium rounded px-5 py-1 capitalize">Post</button>
+                                                    placeholder="Write a Comment..." />
+                                                  <button type="submit"
+                                                    className="bg-blue-600 text-white text-xs font-medium rounded px-5 py-1 capitalize">Post</button>
                                                 </form>
                                               </div>
                                             </div>
@@ -1206,34 +1310,38 @@ export default function Home() {
                                   <div className="flex items-center gap-3">
                                     <div className="flex-shrink-0">
                                       <img src="/images/user/1.jpg" alt="userimg"
-                                        className="w-12 h-12 rounded-full userimg" loading="lazy"/>
+                                        className="w-12 h-12 rounded-full userimg" loading="lazy" />
                                     </div>
-                                    <div className="add-comment-form w-full"/>
-                                      <form className="flex gap-2">
-                                        <input type="text" className="border rounded px-3 py-1 w-full"
-                                          placeholder="Write a Comment..."/>
-                                          <button type="submit"
-                                            className="bg-blue-600 text-white text-xs font-medium rounded px-5 py-1 capitalize">Post</button>
-                                      </form>
-                                    </div>
+                                    <div className="add-comment-form w-full" />
+                                    <form className="flex gap-2">
+                                      <input type="text" className="border rounded px-3 py-1 w-full"
+                                        placeholder="Write a Comment..." />
+                                      <button type="submit"
+                                        className="bg-blue-600 text-white text-xs font-medium rounded px-5 py-1 capitalize">Post</button>
+                                    </form>
                                   </div>
                                 </div>
-
                               </div>
+
                             </div>
                           </div>
                         </div>
                       </div>
-
                     </div>
+
                   </div>
+                </div>
+
+                <div className="w-full lg:w-1/3 px-4">
+                  <ActiveUsers />
+                  <Suggestions />
                 </div>
               </div>
             </div>
           </div>
         </div>
-      
-
+      </div>
     </main>
   );
 }
+
