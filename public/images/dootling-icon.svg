@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 300 300">
+  <defs>
+    <style>
+      .cls-1 {
+        mask: url(#mask);
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+
+      .cls-2, .cls-3, .cls-4 {
+        fill-rule: evenodd;
+      }
+
+      .cls-3 {
+        fill: #157bff;
+      }
+
+      .cls-4 {
+        fill: #faaf40;
+      }
+    </style>
+    <mask id="mask" x="-48.1" y="14.97" width="316.6" height="269.39" maskUnits="userSpaceOnUse">
+      <g id="b-2" data-name="b">
+        <path id="a-3" data-name="a" class="cls-2" d="M150.86,14.97l117.63,67.18v134.35l-117.63,67.17-117.64-67.17V82.15L150.86,14.97ZM113.17,82.74v133.34l116.74-66.67-116.74-66.67Z"/>
+      </g>
+    </mask>
+  </defs>
+  <g id="b">
+    <path id="a" class="cls-2" d="M151.11,15.64l117.05,66.84v133.68l-117.05,66.84-117.06-66.84V82.48L151.11,15.64ZM113.41,82.74v133.34l116.74-66.67-116.74-66.67Z"/>
+  </g>
+  <g>
+    <path id="a-2" data-name="a" class="cls-3" d="M151.11,15.64l117.05,66.84v133.68l-117.05,66.84-117.06-66.84V82.48L151.11,15.64ZM113.41,82.74v133.34l116.74-66.67-116.74-66.67Z"/>
+    <g class="cls-1">
+      <path class="cls-4" d="M41.21,41.61l188.29,107.71L17.79,270.73l-65.9,13.64L41.21,41.61Z"/>
+    </g>
+  </g>
+</svg>
