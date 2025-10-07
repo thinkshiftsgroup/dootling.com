@@ -33,6 +33,34 @@ export default function RootLayout({
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap"
         />
+        <link rel="stylesheet" href="/css/socialv.css?v=5.2.2" />
+        <link rel="stylesheet" href="/css/custom.css?v=5.2.2" />
+        <link rel="stylesheet" href="/css/customizer.css?v=5.2.2" />
+        <link rel="stylesheet" href="/css/rtl.css?v=5.2.2" />
+        <link
+          rel="stylesheet"
+          href="/vendor/phosphor-icons/Fonts/bold/style.css"
+        />
+        <link
+          rel="stylesheet"
+          href="/vendor/phosphor-icons/Fonts/duotone/style.css"
+        />
+        <link
+          rel="stylesheet"
+          href="/vendor/phosphor-icons/Fonts/fill/style.css"
+        />
+        <link
+          rel="stylesheet"
+          href="/vendor/phosphor-icons/Fonts/light/style.css"
+        />
+        <link
+          rel="stylesheet"
+          href="/vendor/phosphor-icons/Fonts/regular/style.css"
+        />
+        <link
+          rel="stylesheet"
+          href="/vendor/phosphor-icons/Fonts/thin/style.css"
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body

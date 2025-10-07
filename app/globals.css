@@ -4,7 +4,6 @@
 @custom-variant dark (&:is(.dark *));
 
 @layer theme {
-  :root,
   :host {
     --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -14,7 +13,7 @@
     --color-red-200: oklch(88.5% 0.062 18.334);
     --color-red-500: oklch(63.7% 0.237 25.331);
     --color-red-600: oklch(57.7% 0.245 27.325);
-    --color-yellow-500: oklch(79.5% 0.184 86.047);  
+    --color-yellow-500: oklch(79.5% 0.184 86.047);
     --color-green-200: oklch(92.5% 0.084 155.995);
     --color-green-500: oklch(72.3% 0.219 149.579);
     --color-sky-500: oklch(68.5% 0.169 237.323);
@@ -73,6 +72,10 @@
     --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
+  }
+  :root {
+    --tw-border-style: #6c757d;
+    --color-blue-600: #157bff;
   }
 }
 @layer base {
@@ -2473,3 +2476,19 @@ pre {
     @apply bg-background text-foreground;
   }
 }
+
+.nav {
+  background: #fff;
+}
+
+.nav > .navbar-inner {
+  display: flex;
+  flex-wrap: inherit;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-list li > a {
+  display: flex !important;
+}
+
