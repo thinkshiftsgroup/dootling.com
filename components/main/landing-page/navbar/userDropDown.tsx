@@ -32,32 +32,32 @@ export default function UserDropdown() {
               <a className="text-base text-gray-800 font-normal">My Profile</a>
             </div>
 
-            <div className="flex items-center gap-2 py-2 cursor-pointer hover:bg-gray-50 rounded-md">
+            <div
+              onClick={() => router.push("/profile/edit-profile")}
+              className="flex items-center gap-2 py-2 cursor-pointer hover:bg-gray-50 rounded-md"
+            >
               <UserGear size={20} className="text-gray-700" />
-              <a
-                href="/app/profile-edit"
-                className="text-base text-gray-800 font-normal"
-              >
+              <a className="text-base text-gray-800 font-normal">
                 Edit Profile
               </a>
             </div>
 
-            <div className="flex items-center gap-2 py-2 cursor-pointer hover:bg-gray-50 rounded-md">
+            <div
+              onClick={() => router.push("/profile/profile-settings")}
+              className="flex items-center gap-2 py-2 cursor-pointer hover:bg-gray-50 rounded-md"
+            >
               <Gear size={20} className="text-gray-700" />
-              <a
-                href="/app/account-setting"
-                className="text-base text-gray-800 font-normal"
-              >
+              <a className="text-base text-gray-800 font-normal">
                 Account Settings
               </a>
             </div>
 
-            <div className="flex items-center gap-2 py-2 cursor-pointer hover:bg-gray-50 rounded-md">
+            <div
+              onClick={() => router.push("/profile/privacy-settings")}
+              className="flex items-center gap-2 py-2 cursor-pointer hover:bg-gray-50 rounded-md"
+            >
               <LockSimple size={20} className="text-gray-700" />
-              <a
-                href="/app/privacy-setting"
-                className="text-base text-gray-800 font-normal"
-              >
+              <a className="text-base text-gray-800 font-normal">
                 Privacy Settings
               </a>
             </div>

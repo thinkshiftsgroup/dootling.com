@@ -7677,7 +7677,7 @@ const Profile = () => {
                                                   <td className="table-title fs-6 fw-semibold p-3 text-body">
                                                     Behance
                                                   </td>
-                                                  <td className="p-2 fs-6 p-3">
+                                                  <td className="p-2 fs-6">
                                                     <select className="form-select">
                                                       <option
                                                         value="only-me"
@@ -7701,7 +7701,7 @@ const Profile = () => {
                                                   <td className="table-title fs-6 fw-semibold p-3 text-body">
                                                     YouTube
                                                   </td>
-                                                  <td className="p-2 fs-6 p-3">
+                                                  <td className="p-2 fs-6 ">
                                                     <select className="form-select">
                                                       <option
                                                         value="only-me"
@@ -7725,7 +7725,7 @@ const Profile = () => {
                                                   <td className="table-title fs-6 fw-semibold p-3 text-body">
                                                     Instagram
                                                   </td>
-                                                  <td className="p-2 fs-6 p-3">
+                                                  <td className="p-2 fs-6 ">
                                                     <select className="form-select">
                                                       <option
                                                         value="only-me"
