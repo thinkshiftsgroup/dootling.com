@@ -10,6 +10,8 @@ import { VscMenu } from "react-icons/vsc";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { CaretDown } from "phosphor-react";
 import UserDropdown from "./userDropDown";
+import { useRouter } from "next/navigation";
+import SearchBar from "./searchBar";
 
 interface UserItem {
   name: string;
@@ -64,12 +66,15 @@ const suggestedUsers: UserItem[] = [
 ];
 
 const Navbar = () => {
-  const [showSearchModal, setShowSearchModal] = useState(false);
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
+  const [query, setQuery] = useState("");
+
   const [openBlog, setOpenBlog] = useState(false);
   const [openStore, setOpenStore] = useState(false);
+
+  const router = useRouter();
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -80,6 +85,13 @@ const Navbar = () => {
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
+
+  const results = [
+    "Emma Watson",
+    "Chris Evans",
+    "Frontend Developers Group",
+    "Next.js Enthusiasts",
+  ].filter((r) => r.toLowerCase().includes(query.toLowerCase()));
 
   return (
     <nav className="nav iq-navbar shadow-sm bg-white text-gray-800 xl:flex xl:flex-row py-2 lg:p-0">
@@ -96,123 +108,7 @@ const Navbar = () => {
             />
           </div>
 
-          <div className="relative hidden lg:block w-full max-w-md">
-            <form
-              onSubmit={(e) => e.preventDefault()}
-              className="flex items-center gap-2 bg-gray-100 rounded iq-search-bar .search-input px-3 py-2 focus-within:ring-2 focus-within:ring-blue-400"
-            >
-              <button
-                type="button"
-                onClick={() => setShowSearchModal(true)}
-                className="text-gray-500 hover:text-blue-500 transition"
-              >
-                <HiMagnifyingGlass className="text-2xl" />
-              </button>
-              <input
-                type="text"
-                placeholder="Search for people or groups..."
-                className="w-full border border-[#f1f1f1] text-xs bg-gray-100 outline-none placeholder:text-[#7E8B9A]"
-              />
-            </form>
-          </div>
-
-          {showSearchModal && (
-            <div className="fixed inset-0 z-50 bg-black/50 flex justify-center items-start pt-20">
-              <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[80vh] overflow-y-auto">
-                <div className="flex items-center justify-between border-b px-4 py-3 sticky top-0 bg-white">
-                  <h4 className="font-semibold text-lg">Search</h4>
-                  <button
-                    onClick={() => setShowSearchModal(false)}
-                    className="text-gray-600 hover:text-gray-900 transition"
-                  >
-                    <X size={24} weight="bold" />
-                  </button>
-                </div>
-
-                <div className="px-4 py-3 space-y-6">
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <h5 className="font-semibold text-base">Recent</h5>
-                      <button className="text-sm text-blue-500 hover:underline">
-                        Clear All
-                      </button>
-                    </div>
-                    <div className="space-y-3">
-                      {recentUsers.map((user) => (
-                        <div
-                          key={user.name}
-                          className="flex items-center justify-between hover:bg-gray-50 px-2 py-1 rounded-md"
-                        >
-                          <div className="flex items-center gap-3">
-                            <Image
-                              src={user.image}
-                              width={40}
-                              height={40}
-                              alt={user.name}
-                              className="rounded-full"
-                            />
-                            <div>
-                              <div className="flex items-center gap-2">
-                                <p className="font-medium text-sm">
-                                  {user.name}
-                                </p>
-                                {user.status === "online" ? (
-                                  <span className="w-2 h-2 rounded-full bg-green-500" />
-                                ) : (
-                                  <span className="w-2 h-2 rounded-full bg-gray-400" />
-                                )}
-                              </div>
-                              {user.username && (
-                                <p className="text-xs text-gray-500">
-                                  {user.username}
-                                </p>
-                              )}
-                            </div>
-                          </div>
-                          <button className="text-gray-400 hover:text-gray-700">
-                            <X size={18} />
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <h5 className="font-semibold text-base mb-2">
-                      Suggestions
-                    </h5>
-                    <div className="space-y-3">
-                      {suggestedUsers.map((user) => (
-                        <div
-                          key={user.name}
-                          className="flex items-center justify-between hover:bg-gray-50 px-2 py-1 rounded-md"
-                        >
-                          <div className="flex items-center gap-3">
-                            <Image
-                              src={user.image}
-                              width={40}
-                              height={40}
-                              alt={user.name}
-                              className="rounded-full"
-                            />
-                            <div>
-                              <p className="font-medium text-sm">{user.name}</p>
-                              <p className="text-xs text-gray-500">
-                                {user.note}
-                              </p>
-                            </div>
-                          </div>
-                          <button className="text-gray-400 hover:text-gray-700">
-                            <X size={18} />
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
+          <SearchBar />
         </div>
         <div className="flex">
           <div className="flex items-center justify-between product-offcanvas menu-toggle">
@@ -350,7 +246,7 @@ const Navbar = () => {
                   <ul className="flex flex-col gap-2 mt-5 text-base">
                     <li>
                       <a
-                        href="/"
+                        onClick={() => router.push("/")}
                         className="flex items-center justify-between px-2 py-2 rounded-md hover:bg-gray-100 font-medium"
                       >
                         <span>Home</span>
