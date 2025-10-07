@@ -5,10 +5,10 @@ export default function Home() {
   return (
     <div>
       <Navbar />
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti enim
+      {/* Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti enim
       expedita inventore. Eaque consequuntur vel aspernatur aliquam quas placeat
       voluptate laboriosam at vitae pariatur maiores tempore culpa, explicabo
-      rem hic!
+      rem hic! */}
     </div>
   );
 }
