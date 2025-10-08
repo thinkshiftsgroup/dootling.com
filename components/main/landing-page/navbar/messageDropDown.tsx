@@ -8,9 +8,9 @@ export const MessageDropdown = () => (
   <Dropdown
     trigger={
       <div className="relative hidden lg:block cursor-pointer mt-0.5 text-[#7e8b9a]">
-        <EnvelopeSimple size={21} />
+        <EnvelopeSimple size={25} />
 
-        <span className="absolute -top-0.5 -right-1 flex items-center justify-center w-[13px] h-[13px] bg-blue-600 text-[10px] rounded-full text-white">
+        <span className="absolute -top-[3px] -right-1 flex items-center justify-center w-[16px] h-[16px] bg-red-600 text-[10px] rounded-full text-white">
           3
         </span>
       </div>
