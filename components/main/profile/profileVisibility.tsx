@@ -126,7 +126,7 @@ const ProfileVisibility = ({ activeTab }: any) => {
           className="overflow-x-auto border border-gray-200 rounded-sm"
         >
           <table className="w-full text-sm border-collapse">
-            <thead className="bg-[#50b5ff] text-white">
+            <thead className="bg-[#1578ff] text-white">
               <tr>
                 <th className="py-3 px-4 text-left  font-semibold">
                   {section.title}
