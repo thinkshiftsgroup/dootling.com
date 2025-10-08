@@ -44,7 +44,7 @@ export default function UserDropdown() {
             </div> */}
 
             <div
-              onClick={() => router.push("/profile/profile-setting")}
+              onClick={() => router.push("/profile/profile-settings")}
               className="flex items-center gap-2 py-2 cursor-pointer hover:bg-gray-50 rounded-md"
             >
               <Gear size={20} className="text-gray-700" />
@@ -54,7 +54,7 @@ export default function UserDropdown() {
             </div>
 
             <div
-              onClick={() => router.push("/profile/privacy-settings")}
+              onClick={() => router.push("/profile/privacy-setting")}
               className="flex items-center gap-2 py-2 cursor-pointer hover:bg-gray-50 rounded-md"
             >
               <LockSimple size={20} className="text-gray-700" />
