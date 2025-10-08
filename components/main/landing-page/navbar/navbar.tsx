@@ -92,12 +92,9 @@ const Navbar = () => {
 
   return (
     <nav className="nav iq-navbar shadow-sm bg-white text-gray-800 xl:flex xl:flex-row py-2">
-      <div className="container mx-auto flex items-center justify-between">
+      <div className="w-[78rem] mx-auto flex items-center justify-between">
         <div className="flex items-center justify-between w-2/6">
-          <div
-            onClick={() => router.push("/")}
-            className="flex items-center relative pb-2 lg:pb-0"
-          >
+          <div className="flex items-center relative pb-2 lg:pb-0">
             <Image
               width={60}
               height={60}
@@ -113,7 +110,10 @@ const Navbar = () => {
         <div className="flex">
           <ul className="navbar-nav navbar-list flex items-center flex-row">
             <div className="flex items-center gap-4">
-              <div className="cursor-pointer hidden lg:flex flex-col items-center ">
+              <div
+                onClick={() => router.push("/")}
+                className="cursor-pointer hidden lg:flex flex-col items-center "
+              >
                 <div className="relative">
                   <svg
                     width="25"
