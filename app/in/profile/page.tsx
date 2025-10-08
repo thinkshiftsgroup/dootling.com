@@ -24,6 +24,7 @@ import { BiRepost } from "react-icons/bi";
 import { LuSend } from "react-icons/lu";
 import { IoWalletOutline } from "react-icons/io5";
 import ProfileAbout from "@/components/main/profile/about";
+import ProfileIn from "@/components/main/profile/otherProfile";
 
 const UserProfile = () => {
   const galleryImages = [
@@ -104,7 +105,7 @@ const UserProfile = () => {
 
                                   <div>
                                     <h1 className="text-3xl flex items-center gap-1 font-bold text-black">
-                                      John Paul{" "}
+                                      Joshua Israel{" "}
                                       <GoShieldCheck
                                         size={14}
                                         className="text-[#979797]"
@@ -236,7 +237,7 @@ const UserProfile = () => {
                                 />
                                 <div>
                                   <h1 className="text-xl flex items-center gap-1 font-bold text-black">
-                                    John Paul{" "}
+                                    Joshua Israel{" "}
                                     <GoShieldCheck
                                       size={14}
                                       className="text-[#979797]"
@@ -308,7 +309,7 @@ const UserProfile = () => {
                           </div>
                         )}
 
-                        {activeTab === "About" && <ProfileAbout />}
+                        {activeTab === "About" && <ProfileIn />}
                       </div>
                     </div>
                   </div>

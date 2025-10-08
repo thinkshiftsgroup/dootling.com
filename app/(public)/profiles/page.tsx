@@ -170,10 +170,10 @@ const UserProfile = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="relative my-5">
+                      <div className="relative my-6">
                         <button
                           onClick={() => scroll("left")}
-                          className="absolute left-0 top-1/2 -translate-y-1/2 z-10"
+                          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-md rounded-full p-1 hover:bg-gray-50"
                         >
                           {/* <FaChevronLeft size={10} className="text-gray-500" /> */}
                           <svg xmlns="http://www.w3.org/2000/svg" width={35} height={35} viewBox="0 0 24 24" className="text-gray-500"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" d="m14 7l-5 5l5 5" strokeWidth={1}></path></svg>
@@ -181,7 +181,7 @@ const UserProfile = () => {
 
                         <button
                           onClick={() => scroll("right")}
-                          className="absolute right-0 top-1/2 -translate-y-1/2 z-10"
+                          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-md rounded-full p-1 hover:bg-gray-50"
                         >
                           {/* <FaChevronRight width={10} height={40} className="text-gray-500" /> */}
                           <svg xmlns="http://www.w3.org/2000/svg" width={35} height={35} viewBox="0 0 24 24" className="text-gray-500"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" d="m10 17l5-5l-5-5" strokeWidth={1}></path></svg>
@@ -189,14 +189,18 @@ const UserProfile = () => {
 
                         <div
                           ref={scrollRef}
-                          className="bg-white justify-around flex items-center rounded-lg shadow-md px-2 overflow-x-auto scrollbar-hide"
+                          className="relative bg-white justify-around flex items-center rounded-lg shadow-md px-6overflow-x-auto scrollbar-hide scroll-smooth"
                         >
                           {items.map((item, idx) => (
                             <div
                               key={idx}
-                              className={`flex flex-col items-center px-4 py-2 w-full ${idx !== 0 ? "border-l border-gray-200" : ""
+                              className={`flex flex-col items-center px-4 py-4 w-full ${idx !== 0 ? "border-l border-gray-200" : ""
                                 }`}
                             >
+                              {idx !== items.length - 1 && (
+                                <span className="absolute right-[-30px] top-1/2 -translate-y-1/2 w-[1px] h-10 bg-gray-200"></span>
+                              )}
+
                               <div
                                 className={`${idx === 0 ? "bg-[#157BFF]" : "bg-[#157BFF]/10"
                                   } w-[60px] h-[60px] flex justify-center items-center text-white rounded-md p-2`}
@@ -260,14 +264,14 @@ const UserProfile = () => {
                         <div className="py-2.5 my-2.5 flex items-center  justify-between border-b-[#e5e5e5] border-b">
                           <div className="flex items-center gap-2">
                             <div className="flex items-center">
-                              <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white border-2 border-white z-30">
-                                <FaThumbsUp className="w-3.5 h-3.5" />
+                              <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-white border-2 border-white z-30">
+                                <FaThumbsUp className="w-2.5 h-2.5" />
                               </div>
-                              <div className="-ml-2 w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white border-2 border-white z-20">
-                                <FaHandsClapping className="w-3.5 h-3.5" />
+                              <div className="-ml-2 w-6 h-6 rounded-full bg-green-500 flex items-center justify-center text-white border-2 border-white z-20">
+                                <FaHandsClapping className="w-2.5 h-2.5" />
                               </div>
-                              <div className="-ml-2 w-8 h-8 rounded-full bg-rose-500 flex items-center justify-center text-white border-2 border-white z-10">
-                                <FaHeart className="w-3.5 h-3.5" />
+                              <div className="-ml-2 w-6 h-6 rounded-full bg-rose-500 flex items-center justify-center text-white border-2 border-white z-10">
+                                <FaHeart className="w-2.5 h-2.5" />
                               </div>
                             </div>
 

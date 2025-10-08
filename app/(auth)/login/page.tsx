@@ -79,10 +79,9 @@ export default function LoginPage() {
       </Head>
 
       <div className="min-h-screen flex flex-col lg:flex-row">
-        {/* Left Panel - Form */}
+
         <div className="w-full lg:w-1/2 bg-white flex items-center justify-center p-8 lg:p-16">
           <div className="max-w-md w-full space-y-8 form-container">
-            {/* Logo Section */}
             <div className="text-center space-y-4">
               <div className="flex items-center justify-center gap-3">
                 <Image 
@@ -98,9 +97,7 @@ export default function LoginPage() {
               </p>
             </div>
 
-            {/* Login Form */}
             <form onSubmit={handleSubmit} className="space-y-6 w-full" noValidate>
-              {/* Email Field */}
               <div>
                 <label htmlFor="email" className="block text-gray-900 font-medium mb-2">
                   Email Address
