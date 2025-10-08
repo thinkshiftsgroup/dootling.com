@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Favicon from "@/public/images/dootling-icon.svg";
+import Favicon from "@/public/images/dootlinglogowBG.svg";
 import "./globals.css";
 
 const geistSans = Geist({

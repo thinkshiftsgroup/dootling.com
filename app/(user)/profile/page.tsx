@@ -86,7 +86,7 @@ const UserProfile = () => {
       ),
       label: "Projects",
     },
-    { icon: <FiUsers size={30} />, label: "Account" },
+    { icon: <FiUsers size={30} />, label: "About" },
     {
       icon: (
         <svg
@@ -124,7 +124,7 @@ const UserProfile = () => {
       label: "Spaces",
     },
     { icon: <HiOutlineNewspaper size={30} />, label: "Finance" },
-    { icon: <LuArrowUpToLine size={30} />, label: "Top Contributions" },
+    { icon: <LuArrowUpToLine size={30} />, label: "Top Contributors" },
     // { icon: <IoWalletOutline size={30} />, label: "Wallet" },
   ];
 
@@ -158,9 +158,9 @@ const UserProfile = () => {
                             </div>
 
                             <ContributionHeatmap />
-                            <div className="max-w-5xl -mt-10 relative mx-auto bg-white rounded-lg shadow p-6">
-                              <div className="flex items-center justify-between">
-                                <div className="flex items-start gap-6">
+                            <div className="max-w-5xl -mt-10 relative mx-auto  bg-white p-2">
+                              <div className="flex items-start justify-between">
+                                <div className="flex gap-6">
                                   <img
                                     src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop"
                                     alt="Profile"
@@ -216,10 +216,9 @@ const UserProfile = () => {
                                         12
                                       </p>
                                       <p className="text-gray-600 text-sm">
-                                        Strikes
+                                        Streaks
                                       </p>
                                     </div>
-
                                     <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 flex items-center gap-2 py-1 rounded-sm text-[1.2rem]">
                                       <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -236,9 +235,23 @@ const UserProfile = () => {
                                     </button>
                                   </div>
                                 </div>
+                                <button className="bg-blue-500 hover:bg-blue-600 text-white px-2 mt-5 flex items-center gap-2 py-1 rounded-sm text-[0.9rem]">
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <path
+                                      fill="currentColor"
+                                      d="M18.385 9.083V8.07q.717.15 1.45.328q.732.178 1.524.378q.324.08.5.351q.177.27.122.593l-1.466 7.962q-.106.59-.553.953T18.925 19H5.152q-.59 0-1.025-.373t-.54-.944L2.025 9.72q-.056-.323.118-.605q.174-.283.498-.364q.734-.2 1.428-.356t1.373-.287V9.12l-1.188.251q-.6.126-1.22.278L4.46 17.5q.038.212.22.356t.395.144h13.85q.212 0 .394-.144t.222-.356l1.425-7.85q-.658-.171-1.306-.307t-1.275-.26M16 9.065q0-.427-.125-.829t-.394-.728q-.39-.506-.63-1.098q-.24-.59-.24-1.226q0-.401.105-.782q.105-.38.309-.74l.152-.27q.09-.177.291-.233q.201-.055.378.035t.233.289t-.035.375l-.177.294q-.13.244-.202.52t-.073.551q0 .427.154.82q.154.391.423.718q.41.468.62 1.05q.211.581.211 1.197q0 .42-.095.811q-.096.39-.26.77l-.159.326q-.09.177-.288.233t-.375-.034t-.233-.289t.035-.375l.152-.313q.112-.264.167-.53T16 9.066m-3.892 0q0-.428-.125-.83t-.395-.728q-.39-.506-.63-1.098q-.239-.59-.239-1.226q0-.401.105-.782t.309-.74l.151-.27q.091-.176.292-.232t.378.034t.232.289t-.034.375l-.177.294q-.13.244-.203.51q-.072.267-.072.542q0 .427.154.829t.423.728q.41.468.62 1.05q.21.581.21 1.197q0 .42-.094.811q-.096.39-.261.77l-.158.326q-.09.177-.288.233t-.375-.034t-.233-.289t.035-.375l.152-.313q.111-.264.167-.53t.056-.541m-3.887-.02q0-.427-.128-.819q-.127-.392-.397-.72q-.41-.486-.64-1.077q-.229-.591-.229-1.226q0-.402.102-.792t.312-.75l.157-.27q.09-.176.292-.232q.2-.056.377.034t.233.289t-.034.375l-.177.294q-.131.239-.206.508t-.075.544q0 .427.154.829t.423.728q.41.468.62 1.05q.21.581.21 1.197q0 .42-.095.811q-.095.39-.26.77l-.152.326q-.09.177-.292.233q-.2.056-.377-.034q-.177-.091-.233-.289t.035-.375l.157-.313q.112-.264.168-.54q.055-.276.055-.55"
+                                    />
+                                  </svg>
+                                  Add Progress{" "}
+                                </button>
                               </div>
 
-                              <span className="flex items-center gap-1.5 -mt-[2rem] text-xs ms-[8.5rem]">
+                              <span className="flex flex-wrap items-center gap-1.5 -mt-[2rem] text-xs ms-[8.5rem]">
                                 <p className="text-[#979797] text-sm border border-[#979797] rounded p-0.5">
                                   #Advocate
                                 </p>
@@ -337,7 +350,7 @@ const UserProfile = () => {
                               <p
                                 className={`${
                                   idx === 0 ? "text-[#157BFF]" : "text-gray-500"
-                                }  font-semibold flex-none text-center mt-2 text-xs`}
+                                }  font-semibold whitespace-nowrap text-center mt-2 text-xs`}
                               >
                                 {item.label}
                               </p>
@@ -466,17 +479,17 @@ const UserProfile = () => {
                             {[
                               {
                                 name: "Annette Black",
-                                info: "33 Projects 6 Strikes",
+                                info: "33 Projects 6 Streaks",
                                 image: "/images/user/13.jpg",
                               },
                               {
                                 name: "Christopher Plessis",
-                                info: "33 Projects 6 Strikes",
+                                info: "33 Projects 6 Streaks",
                                 image: "/images/user/17.jpg",
                               },
                               {
                                 name: "Ellyse Perry",
-                                info: "33 Projects 6 Strikes",
+                                info: "33 Projects 6 Streaks",
                                 image: "/images/user/16.jpg",
                               },
                             ].map((user, index) => (

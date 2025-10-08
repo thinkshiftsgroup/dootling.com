@@ -12,11 +12,12 @@ export default function UserDropdown() {
       trigger={
         <div className="cursor-pointer">
           <Image
-            src="/images/user/1.jpg"
-            width={48}
-            height={48}
-            alt="User avatar"
-            className="rounded-full border-2 mt-1.5 border-gray-200"
+            src="/images/user/userImg.png"
+            width={35}
+            height={35}
+            alt="user"
+            priority
+            className="rounded-sm mt-1.5 cursor-pointer"
           />
         </div>
       }
@@ -32,7 +33,7 @@ export default function UserDropdown() {
               <a className="text-base text-gray-800 font-normal">My Profile</a>
             </div>
 
-            <div
+            {/* <div
               onClick={() => router.push("/profile/edit-profile")}
               className="flex items-center gap-2 py-2 cursor-pointer hover:bg-gray-50 rounded-md"
             >
@@ -40,7 +41,7 @@ export default function UserDropdown() {
               <a className="text-base text-gray-800 font-normal">
                 Edit Profile
               </a>
-            </div>
+            </div> */}
 
             <div
               onClick={() => router.push("/profile/profile-setting")}

@@ -29,7 +29,7 @@ export const Dropdown = ({
     <div className="relative" ref={ref}>
       <button onClick={() => setOpen((prev) => !prev)}>{trigger}</button>
       <div
-        className={`absolute z-50 mt-2 min-w-[14rem] rounded-lg bg-white shadow-lg transition-all duration-200 ${
+        className={`absolute z-50 min-w-[14rem] rounded-lg bg-white shadow-lg transition-all duration-200 ${
           align === "right" ? "right-0" : "left-0"
         } ${
           open ? "opacity-100 visible" : "opacity-0 invisible translate-y-1"
