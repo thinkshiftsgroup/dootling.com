@@ -34,7 +34,7 @@ export default function GroupDropdown() {
       </button>
 
       <div
-        className={`absolute right-0 mt-3 w-80 bg-white shadow-lg rounded-lg transition-all duration-200 ${
+        className={`absolute right-0 mt-3 z-10 w-80 bg-white shadow-lg rounded-lg transition-all duration-200 ${
           open
             ? "opacity-100 visible translate-y-0"
             : "opacity-0 invisible translate-y-2"
