@@ -5,7 +5,7 @@ import Image from "next/image";
 import { User, Gear, CaretDown, PencilSimple, Plus } from "phosphor-react";
 import React, { useState } from "react";
 
-const mainBlue = "#50b5ff";
+const mainBlue = "#1578ff";
 const mainText = "#2b2d42";
 const paragraph = "#7e8b9a";
 
@@ -97,7 +97,7 @@ const ProfileIn = () => {
                   <div className="">
                     <button
                       // onClick={() => toggleAccordion("profile")}
-                      className="w-full flex items-center justify-between px-4 py-3 bg-[#50b5ff]  transition-all rounded-sm"
+                      className="w-full flex items-center justify-between px-4 py-3 bg-[#1578ff]  transition-all rounded-sm"
                     >
                       <span className="flex items-center gap-2 font-semibold text-white">
                         <User size={20} className="" />
@@ -140,9 +140,9 @@ const ProfileIn = () => {
                           <button
                             key={idx}
                             onClick={() => handleTabClick(item.id)}
-                            className={`text-left font-medium text-sm py-2 px-2 rounded-sm hover:bg-[#50b5ff]/10 transition ${
+                            className={`text-left font-medium text-sm py-2 px-2 rounded-sm hover:bg-[#1578ff]/10 transition ${
                               activeTab === item.id
-                                ? " bg-[#50b5ff]/10 text-[#50b5ff]"
+                                ? " bg-[#1578ff]/10 text-[#1578ff]"
                                 : "text-[#0a66c2]"
                             }`}
                           >
@@ -156,7 +156,7 @@ const ProfileIn = () => {
                   {/* <div className="">
                     <button
                       onClick={() => toggleAccordion("account")}
-                      className="w-full flex items-center justify-between px-4 py-3 bg-[#50b5ff] transition-all rounded-lg"
+                      className="w-full flex items-center justify-between px-4 py-3 bg-[#1578ff] transition-all rounded-lg"
                     >
                       <span className="flex items-center gap-2 font-semibold text-white">
                         <Gear size={20} className="" />
@@ -191,9 +191,9 @@ const ProfileIn = () => {
                           <button
                             key={idx}
                             onClick={() => handleTabClick(item.id)}
-                            className={`text-left font-medium text-sm py-2 px-2 rounded-sm hover:bg-[#50b5ff]/10 transition ${
+                            className={`text-left font-medium text-sm py-2 px-2 rounded-sm hover:bg-[#1578ff]/10 transition ${
                               activeTab === item.id
-                                ? " bg-[#50b5ff]/10 text-[#50b5ff]"
+                                ? " bg-[#1578ff]/10 text-[#1578ff]"
                                 : "text-[#0a66c2]"
                             }`}
                           >
@@ -222,7 +222,7 @@ const ProfileIn = () => {
                         Personal Info
                       </h4>
                       {/* <button
-                        className="flex items-center justify-center w-9 h-9 bg-[#50b5ff] text-white rounded-sm hover:bg-[#50b5ff]/90 transition"
+                        className="flex items-center justify-center w-9 h-9 bg-[#1578ff] text-white rounded-sm hover:bg-[#1578ff]/90 transition"
                         aria-label="Edit personal info"
                       >
                         <PencilSimple size={18} />
@@ -392,7 +392,7 @@ const ProfileIn = () => {
                         Hobbies and Interests
                       </h4>
                       {/* <button
-                        className="flex items-center justify-center w-9 h-9 bg-[#50b5ff] text-white rounded-sm hover:bg-[#50b5ff]/90 transition"
+                        className="flex items-center justify-center w-9 h-9 bg-[#1578ff] text-white rounded-sm hover:bg-[#1578ff]/90 transition"
                         aria-label="Edit hobbies and interests"
                       >
                         <PencilSimple size={18} />
@@ -491,7 +491,7 @@ const ProfileIn = () => {
                       </h4>
                       {/* <a
                         href="../app/profile-edit.html"
-                        className="p-2 flex justify-center items-center bg-[#50b5ff] hover:bg-[#50b5ff] text-white rounded-sm transition"
+                        className="p-2 flex justify-center items-center bg-[#1578ff] hover:bg-[#1578ff] text-white rounded-sm transition"
                       >
                         <PencilSimple size={18} />
                       </a> */}
@@ -555,7 +555,7 @@ const ProfileIn = () => {
                             </div>
                             {/* <a
                               href="#"
-                              className="flex items-center gap-1 text-[#50b5ff] hover:text-blue-800 transition"
+                              className="flex items-center gap-1 text-[#1578ff] hover:text-blue-800 transition"
                             >
                               <PencilSimple size={16} />
                             </a>
@@ -802,7 +802,7 @@ const ProfileIn = () => {
                           type="checkbox"
                           name="account_type"
                           value="private"
-                          className="w-4 h-4 text-[#50b5ff] border-gray-300 rounded focus:ring-[#50b5ff]"
+                          className="w-4 h-4 text-[#1578ff] border-gray-300 rounded focus:ring-[#1578ff]"
                         />
                         <div>
                           <label className="text-[#2b2d42] text-sm font-medium">
@@ -895,7 +895,7 @@ const ProfileIn = () => {
                       <p className="text-[#7e8b9a] font-medium text-sm">
                         You previously requested an export of your personal data
                         on{" "}
-                        <span className="text-[#50b5ff] font-semibold">
+                        <span className="text-[#1578ff] font-semibold">
                           July 26, 2022.
                         </span>
                       </p>
