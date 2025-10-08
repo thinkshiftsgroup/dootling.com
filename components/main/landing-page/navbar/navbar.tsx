@@ -71,9 +71,6 @@ const Navbar = () => {
 
   const [query, setQuery] = useState("");
 
-  const [openBlog, setOpenBlog] = useState(false);
-  const [openStore, setOpenStore] = useState(false);
-
   const router = useRouter();
 
   useEffect(() => {
@@ -95,7 +92,7 @@ const Navbar = () => {
 
   return (
     <nav className="nav iq-navbar shadow-sm bg-white text-gray-800 xl:flex xl:flex-row py-2">
-      <div className="w-full container mx-auto flex items-center justify-between">
+      <div className="container mx-auto flex items-center justify-between">
         <div className="flex items-center justify-between w-2/6">
           <div
             onClick={() => router.push("/")}
