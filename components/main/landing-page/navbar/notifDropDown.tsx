@@ -18,7 +18,9 @@ export const NotificationDropdown = () => (
     <div className="bg-white m-0 shadow-md rounded-lg w-72 sm:w-80">
       <div className="flex justify-between items-center px-4 py-3 border-b border-gray-200">
         <h5 className="font-semibold text-gray-800">Notifications</h5>
+        
         <Gear size={18} className="text-gray-500 cursor-pointer" />
+        
       </div>
 
       <div className="max-h-60 overflow-y-auto p-3">

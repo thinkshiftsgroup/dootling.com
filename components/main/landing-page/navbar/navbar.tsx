@@ -251,8 +251,8 @@ const Navbar = () => {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
-                  <p>Home</p>
                 </svg>
+                <p>Home</p>
               </div>
               <GroupDropdown />
               <MessageDropdown />
