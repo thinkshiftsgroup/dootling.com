@@ -7,12 +7,25 @@ import { Dropdown } from "./dropDown";
 export const MessageDropdown = () => (
   <Dropdown
     trigger={
-      <div className="relative hidden lg:block cursor-pointer mt-0.5 text-[#7e8b9a]">
-        <EnvelopeSimple size={25} />
-
-        <span className="absolute -top-[3px] -right-1 flex items-center justify-center w-[16px] h-[16px] bg-red-600 text-[10px] rounded-full text-white">
-          3
-        </span>
+      <div className="relative hidden lg:block cursor-pointer mt-0.5 text-black">
+        <div>
+          <svg
+            width="25"
+            height="25"
+            viewBox="0 0 196 196"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M57.0723 154.586C53.1439 154.586 49.8522 153.339 47.1973 150.846C44.5477 148.348 43.223 145.237 43.223 141.513V72.3963L17.0703 41.2656H157.013C160.941 41.2656 164.233 42.5148 166.888 45.0133C169.537 47.5063 170.862 50.6172 170.862 54.346V141.513C170.862 145.237 169.537 148.348 166.888 150.846C164.233 153.339 160.941 154.586 157.013 154.586H57.0723ZM34.4407 49.3599L51.3173 69.2881V141.513C51.3173 142.755 51.9136 143.896 53.1061 144.937C54.2987 145.979 55.6207 146.497 57.0723 146.491H157.021C158.472 146.491 159.794 145.973 160.987 144.937C162.179 143.901 162.776 142.76 162.776 141.513V54.3379C162.776 53.0968 162.179 51.9555 160.987 50.914C159.794 49.8726 158.47 49.3545 157.013 49.3599H34.4407ZM102.837 134.35L108.568 128.619L94.3708 115.668H137.4V107.574H74.6693L102.837 134.35ZM74.6693 88.2773H137.4L109.378 61.5014L103.647 67.2321L117.844 80.183H74.6693V88.2773Z"
+              fill="#041827"
+            />
+          </svg>
+          <span className="absolute -top-[3px] -right-1 flex items-center justify-center w-[16px] h-[16px] bg-red-600 text-[10px] rounded-full text-white">
+            3
+          </span>
+        </div>
+        <p>Messages</p>
       </div>
     }
   >

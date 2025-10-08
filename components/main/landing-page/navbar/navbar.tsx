@@ -95,7 +95,7 @@ const Navbar = () => {
 
   return (
     <nav className="nav iq-navbar shadow-sm bg-white text-gray-800 xl:flex xl:flex-row py-2 lg:p-0">
-      <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 navbar-inner">
+      <div className="w-full container mx-auto flex items-center justify-between">
         <div className="flex items-center justify-between w-2/6">
           <div
             onClick={() => router.push("/")}
@@ -114,7 +114,7 @@ const Navbar = () => {
           <SearchBar />
         </div>
         <div className="flex">
-          <div className="flex items-center justify-between product-offcanvas menu-toggle">
+          {/* <div className="flex items-center justify-between product-offcanvas menu-toggle">
             <div className="hidden xl:block">
               <ul className="iq-nav-menu list-none">
                 <li className="nav-item">
@@ -225,9 +225,35 @@ const Navbar = () => {
                 </li>
               </ul>
             </div>
-          </div>
+          </div> */}
           <ul className="navbar-nav navbar-list flex items-center flex-row">
             <div className="flex items-center gap-2.5">
+              <div>
+                {/* home-icon */}
+                <svg
+                  width="25"
+                  height="25"
+                  viewBox="0 0 133 140"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M5.78516 69.5903V86.6034C5.78516 108.971 5.78516 120.155 12.7328 127.103C19.6804 134.05 30.8643 134.05 53.2322 134.05H80.3448C102.713 134.05 113.897 134.05 120.844 127.103C127.792 120.155 127.792 108.971 127.792 86.6034V69.5903C127.792 58.1894 127.792 52.4958 125.379 47.5613C122.966 42.6268 118.465 39.1293 109.477 32.1342L95.921 21.5942C81.9241 10.7085 74.9223 5.26562 66.7885 5.26562C58.6547 5.26562 51.6529 10.7085 37.656 21.5942L24.0997 32.1342C15.1051 39.1293 10.6112 42.6268 8.19818 47.5613C5.78516 52.4958 5.78516 58.1894 5.78516 69.5903Z"
+                    stroke="#041827"
+                    strokeWidth="10.1672"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M87.122 134.053V100.163C87.122 90.5783 87.122 85.7861 84.1396 82.8105C81.164 79.8281 76.3719 79.8281 66.7876 79.8281C57.2033 79.8281 52.4111 79.8281 49.4355 82.8105C46.4531 85.7793 46.4531 90.5715 46.4531 100.163V134.053"
+                    stroke="#041827"
+                    strokeWidth="10.1672"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <p>Home</p>
+                </svg>
+              </div>
               <GroupDropdown />
               <MessageDropdown />
               <NotificationDropdown />
