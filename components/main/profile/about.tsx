@@ -378,7 +378,7 @@ const ProfileAbout = () => {
                     </h4>
 
                     <form className="space-y-6">
-                      <div className="flex mb-6">
+                      {/* <div className="flex mb-6">
                         <div className="relative  ">
                           <Image
                             src="/images/user/11.png"
@@ -400,13 +400,13 @@ const ProfileAbout = () => {
                             className="hidden"
                           />
                         </div>
-                      </div>
+                      </div> */}
 
                       <div className="grid grid-cols-2 gap-4">
                         <div className="w-full flex flex-col gap-4">
                           <div>
                             <label className="text-sm font-medium text-[#738b9a]">
-                              First Name
+                              First Name<sup className="text-black">*</sup>
                             </label>
                             <input
                               type="text"
@@ -417,7 +417,7 @@ const ProfileAbout = () => {
 
                           <div>
                             <label className="text-sm font-medium text-[#738b9a]">
-                              Username
+                              Username<sup className="text-black">*</sup>
                             </label>
                             <input
                               type="text"
@@ -425,49 +425,49 @@ const ProfileAbout = () => {
                               className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
                             />
                           </div>
-
                           <div>
                             <label className="text-sm font-medium text-[#738b9a]">
-                              Gender
+                              Phone<sup className="text-black">*</sup>
                             </label>
-                            <div className="flex items-center gap-4 mt-2">
-                              <label className="flex items-center gap-1 text-sm text-[#7e8b9a]">
-                                <input
-                                  type="radio"
-                                  name="gender"
-                                  value="male"
-                                  className="text-blue-500 focus:ring-blue-500"
-                                />
-                                Male
-                              </label>
-                              <label className="flex items-center gap-1 text-sm text-[#7e8b9a]">
-                                <input
-                                  type="radio"
-                                  name="gender"
-                                  value="female"
-                                  className="text-blue-500 focus:ring-blue-500"
-                                />
-                                Female
-                              </label>
-                            </div>
+                            <input
+                              type="number"
+                              placeholder="090291827635"
+                              className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                            />
                           </div>
-
                           <div>
                             <label className="text-sm font-medium text-[#738b9a]">
-                              Marital Status
+                              Role<sup className="text-black">*</sup>
                             </label>
                             <select className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 bg-white focus:ring-blue-500 focus:border-blue-500">
-                              <option>Single</option>
-                              <option>Married</option>
-                              <option>Widowed</option>
-                              <option>Divorced</option>
-                              <option>Separated</option>
+                              <option>Software Engineer</option>
                             </select>
                           </div>
+                          {/* <div>
+                            <div>
+                              <label className="text-sm font-medium text-[#738b9a]">
+                                Headline <sup className="text-black">*</sup>
+                              </label>
+                              <textarea
+                                placeholder="Bni@01"
+                                className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                              />
+                            </div>
+                          </div> */}
 
                           <div>
                             <label className="text-sm font-medium text-[#738b9a]">
-                              Country
+                              Pronouns<sup className="text-black">*</sup>
+                            </label>
+                            <select className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 bg-white focus:ring-blue-500 focus:border-blue-500">
+                              <option>He/Him</option>
+                              <option>She/Her</option>
+                              <option>They/Them</option>
+                            </select>
+                          </div>
+                          <div>
+                            <label className="text-sm font-medium text-[#738b9a]">
+                              Country<sup className="text-black">*</sup>
                             </label>
                             <select className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 bg-white focus:ring-blue-500 focus:border-blue-500">
                               <option>USA</option>
@@ -482,7 +482,7 @@ const ProfileAbout = () => {
                         <div className="w-full flex flex-col gap-4">
                           <div>
                             <label className="text-sm font-medium text-[#738b9a]">
-                              Last Name
+                              Last Name <sup className="text-black">*</sup>
                             </label>
                             <input
                               type="text"
@@ -493,59 +493,68 @@ const ProfileAbout = () => {
 
                           <div>
                             <label className="text-sm font-medium text-[#738b9a]">
-                              City
+                              Email<sup className="text-black">*</sup>
                             </label>
                             <input
                               type="text"
-                              placeholder="Atlanta"
+                              placeholder="Sam@gmail.com"
+                              className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                            />
+                          </div>
+                          <div>
+                            <label className="text-sm font-medium text-[#738b9a]">
+                              Languages<sup className="text-black">*</sup>
+                            </label>
+                            <input
+                              type="text"
+                              placeholder="English, French"
                               className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
                             />
                           </div>
 
                           <div>
                             <label className="text-sm font-medium text-[#738b9a]">
-                              Date of Birth
+                              Industry<sup className="text-black">*</sup>
+                            </label>
+                            <select className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 bg-white focus:ring-blue-500 focus:border-blue-500">
+                              <option>Finance</option>
+                            </select>
+                          </div>
+                          <div>
+                            <label className="text-sm font-medium text-[#738b9a]">
+                              Date of Birth<sup className="text-black">*</sup>
                             </label>
                             <input
                               type="date"
                               className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
                             />
                           </div>
-
                           <div>
                             <label className="text-sm font-medium text-[#738b9a]">
-                              Age
+                              City<sup className="text-black">*</sup>
                             </label>
                             <select className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 bg-white focus:ring-blue-500 focus:border-blue-500">
-                              <option>18–25</option>
-                              <option>26–35</option>
-                              <option>36–45</option>
-                              <option>46–62</option>
-                              <option>63+</option>
-                            </select>
-                          </div>
-
-                          <div>
-                            <label className="text-sm font-medium text-[#738b9a]">
-                              State
-                            </label>
-                            <select className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 bg-white focus:ring-blue-500 focus:border-blue-500">
-                              <option>California</option>
-                              <option>Florida</option>
-                              <option>Georgia</option>
-                              <option>Connecticut</option>
-                              <option>Louisiana</option>
+                              <option>Los Angelis</option>
                             </select>
                           </div>
                         </div>
 
                         <div className="col-span-2">
                           <label className="text-sm font-medium text-[#738b9a]">
-                            Address
+                            Headline<sup className="text-black">*</sup>
                           </label>
                           <textarea
                             className="w-full h-[128px] mt-1 border-[#f1f1f1] border rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
-                            defaultValue="37 Cardinal Lane Petersburg, VA 23803 United States of America Zip Code: 85001"
+                            defaultValue="Cracked software Engineer"
+                          />
+                        </div>
+                        <div className="col-span-2">
+                          <label className="text-sm font-medium text-[#738b9a]">
+                            Tags<sup className="text-black">*</sup>
+                          </label>
+                          <textarea
+                            className="w-full h-[128px] mt-1 border-[#f1f1f1] border rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                            defaultValue="Engineer, Architect etc.."
                           />
                         </div>
                       </div>

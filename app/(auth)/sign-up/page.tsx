@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { useState, FormEvent } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import Head from 'next/head';
+import { useState, FormEvent } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import Head from "next/head";
 
 export default function SignupPage() {
   const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    password: '',
+    fullName: "",
+    email: "",
+    password: "",
     acceptTerms: false,
   });
 
@@ -38,25 +38,31 @@ export default function SignupPage() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
-  const handleBlur = (field: 'fullName' | 'email' | 'password') => {
-    if (field === 'fullName') {
-      setErrors(prev => ({ ...prev, fullName: !validateFullName(formData.fullName) }));
-    } else if (field === 'email') {
-      setErrors(prev => ({ ...prev, email: !validateEmail(formData.email) }));
-    } else if (field === 'password') {
-      setErrors(prev => ({ ...prev, password: !validatePassword(formData.password) }));
+  const handleBlur = (field: "fullName" | "email" | "password") => {
+    if (field === "fullName") {
+      setErrors((prev) => ({
+        ...prev,
+        fullName: !validateFullName(formData.fullName),
+      }));
+    } else if (field === "email") {
+      setErrors((prev) => ({ ...prev, email: !validateEmail(formData.email) }));
+    } else if (field === "password") {
+      setErrors((prev) => ({
+        ...prev,
+        password: !validatePassword(formData.password),
+      }));
     }
   };
 
   const handleTermsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData(prev => ({ ...prev, acceptTerms: e.target.checked }));
-    setErrors(prev => ({ ...prev, terms: !e.target.checked }));
+    setFormData((prev) => ({ ...prev, acceptTerms: e.target.checked }));
+    setErrors((prev) => ({ ...prev, terms: !e.target.checked }));
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -79,10 +85,15 @@ export default function SignupPage() {
 
       // Simulate API call
       setTimeout(() => {
-        console.log('Form submitted:', formData);
-        alert('Account created successfully! Welcome to Dootling.');
-        
-        setFormData({ fullName: '', email: '', password: '', acceptTerms: false });
+        console.log("Form submitted:", formData);
+        alert("Account created successfully! Welcome to Dootling.");
+
+        setFormData({
+          fullName: "",
+          email: "",
+          password: "",
+          acceptTerms: false,
+        });
         setIsSubmitting(false);
       }, 1500);
     }
@@ -92,7 +103,10 @@ export default function SignupPage() {
     <>
       <Head>
         <title>Dootling - Connect with Confidence</title>
-        <meta name="description" content="Join Dootling to Connect with Confidence. Create your account and start building meaningful connections today." />
+        <meta
+          name="description"
+          content="Join Dootling to Connect with Confidence. Create your account and start building meaningful connections today."
+        />
         <link rel="shortcut icon" href="/images/dootling-icon.svg" />
       </Head>
 
@@ -103,10 +117,10 @@ export default function SignupPage() {
             {/* Logo Section */}
             <div className="text-center space-y-4">
               <div className="flex items-center justify-center gap-3">
-                <Image 
-                  src="/images/dootling.svg" 
-                  alt="Dootling Logo" 
-                  width={200} 
+                <Image
+                  src="/images/dootling.svg"
+                  alt="Dootling Logo"
+                  width={200}
                   height={50}
                   priority
                 />
@@ -117,10 +131,17 @@ export default function SignupPage() {
             </div>
 
             {/* Signup Form */}
-            <form onSubmit={handleSubmit} className="space-y-6 w-full" noValidate>
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-6 w-full"
+              noValidate
+            >
               {/* Full Name Field */}
               <div>
-                <label htmlFor="fullName" className="block text-gray-900 font-medium mb-2">
+                <label
+                  htmlFor="fullName"
+                  className="block text-gray-900 font-medium mb-2"
+                >
                   Full Name
                 </label>
                 <input
@@ -129,10 +150,10 @@ export default function SignupPage() {
                   name="fullName"
                   value={formData.fullName}
                   onChange={handleInputChange}
-                  onBlur={() => handleBlur('fullName')}
+                  onBlur={() => handleBlur("fullName")}
                   placeholder="first and last name"
                   className={`w-full h-12 px-4 rounded-lg border bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                    errors.fullName ? 'border-red-500' : 'border-gray-300'
+                    errors.fullName ? "border-red-500" : "border-gray-300"
                   }`}
                   required
                   minLength={2}
@@ -147,7 +168,10 @@ export default function SignupPage() {
 
               {/* Email Field */}
               <div>
-                <label htmlFor="email" className="block text-gray-900 font-medium mb-2">
+                <label
+                  htmlFor="email"
+                  className="block text-gray-900 font-medium mb-2"
+                >
                   Email Address
                 </label>
                 <input
@@ -156,10 +180,10 @@ export default function SignupPage() {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  onBlur={() => handleBlur('email')}
+                  onBlur={() => handleBlur("email")}
                   placeholder="marvin@example.com"
                   className={`w-full h-12 px-4 rounded-lg border bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                    errors.email ? 'border-red-500' : 'border-gray-300'
+                    errors.email ? "border-red-500" : "border-gray-300"
                   }`}
                   required
                   maxLength={255}
@@ -173,7 +197,10 @@ export default function SignupPage() {
 
               {/* Password Field */}
               <div>
-                <label htmlFor="password" className="block text-gray-900 font-medium mb-2">
+                <label
+                  htmlFor="password"
+                  className="block text-gray-900 font-medium mb-2"
+                >
                   Password
                 </label>
                 <input
@@ -182,10 +209,10 @@ export default function SignupPage() {
                   name="password"
                   value={formData.password}
                   onChange={handleInputChange}
-                  onBlur={() => handleBlur('password')}
+                  onBlur={() => handleBlur("password")}
                   placeholder="••••••"
                   className={`w-full h-12 px-4 rounded-lg border bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                    errors.password ? 'border-red-500' : 'border-gray-300'
+                    errors.password ? "border-red-500" : "border-gray-300"
                   }`}
                   required
                   minLength={6}
@@ -210,9 +237,15 @@ export default function SignupPage() {
                     className="w-5 h-5 mt-1 cursor-pointer accent-blue-600"
                     required
                   />
-                  <label htmlFor="acceptTerms" className="text-sm text-gray-900">
-                    I Accept{' '}
-                    <Link href="/terms" className="text-blue-600 hover:underline font-medium">
+                  <label
+                    htmlFor="acceptTerms"
+                    className="text-sm text-gray-900"
+                  >
+                    I Accept{" "}
+                    <Link
+                      href="/terms"
+                      className="text-blue-600 hover:underline font-medium"
+                    >
                       Terms And Conditions
                     </Link>
                   </label>
@@ -230,13 +263,16 @@ export default function SignupPage() {
                 disabled={isSubmitting}
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none"
               >
-                {isSubmitting ? 'SIGNING UP...' : 'SIGN UP'}
+                {isSubmitting ? "SIGNING UP..." : "SIGN UP"}
               </button>
 
               {/* Login Link */}
               <p className="text-center text-gray-900">
-                Already Have An Account?{' '}
-                <Link href="/login" className="text-blue-600 hover:underline font-medium">
+                Already Have An Account?{" "}
+                <Link
+                  href="/login"
+                  className="text-blue-600 hover:underline font-medium"
+                >
                   Login
                 </Link>
               </p>
@@ -286,7 +322,8 @@ export default function SignupPage() {
         }
 
         @keyframes float {
-          0%, 100% {
+          0%,
+          100% {
             transform: translateY(0px);
           }
           50% {
