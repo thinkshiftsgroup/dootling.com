@@ -97,7 +97,10 @@ const Navbar = () => {
     <nav className="nav iq-navbar shadow-sm bg-white text-gray-800 xl:flex xl:flex-row py-2 lg:p-0">
       <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 navbar-inner">
         <div className="flex items-center justify-between w-2/6">
-          <div className="flex items-center relative pb-2 lg:pb-0">
+          <div
+            onClick={() => router.push("/")}
+            className="flex items-center relative pb-2 lg:pb-0"
+          >
             <Image
               width={60}
               height={60}
