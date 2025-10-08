@@ -101,46 +101,15 @@ const EditProfile = () => {
                           className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
                         />
                       </div>
-
                       <div>
                         <label className="text-sm font-medium text-[#738b9a]">
-                          Gender
+                          Headline
                         </label>
-                        <div className="flex items-center gap-4 mt-2">
-                          <label className="flex items-center gap-1 text-sm text-[#7e8b9a]">
-                            <input
-                              type="radio"
-                              name="gender"
-                              value="male"
-                              className="text-blue-500 focus:ring-blue-500"
-                            />
-                            Male
-                          </label>
-                          <label className="flex items-center gap-1 text-sm text-[#7e8b9a]">
-                            <input
-                              type="radio"
-                              name="gender"
-                              value="female"
-                              className="text-blue-500 focus:ring-blue-500"
-                            />
-                            Female
-                          </label>
-                        </div>
+                        <textarea
+                          placeholder="Bni@01"
+                          className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                        />
                       </div>
-
-                      <div>
-                        <label className="text-sm font-medium text-[#738b9a]">
-                          Marital Status
-                        </label>
-                        <select className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 bg-white focus:ring-blue-500 focus:border-blue-500">
-                          <option>Single</option>
-                          <option>Married</option>
-                          <option>Widowed</option>
-                          <option>Divorced</option>
-                          <option>Separated</option>
-                        </select>
-                      </div>
-
                       <div>
                         <label className="text-sm font-medium text-[#738b9a]">
                           Country
@@ -152,6 +121,27 @@ const EditProfile = () => {
                           <option>Nigeria</option>
                           <option>Germany</option>
                         </select>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="w-full flex flex-col gap-4">
+                        <div>
+                          <label className="text-sm font-medium text-[#738b9a]">
+                            Role
+                          </label>
+                          <select className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 bg-white focus:ring-blue-500 focus:border-blue-500">
+                            <option>Software Eng</option>
+                          </select>
+                        </div>
+
+                        <div>
+                          <label className="text-sm font-medium text-[#738b9a]">
+                            Industry
+                          </label>
+                          <select className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 bg-white focus:ring-blue-500 focus:border-blue-500">
+                            <option>Finance</option>
+                          </select>
+                        </div>
                       </div>
                     </div>
 
@@ -169,13 +159,23 @@ const EditProfile = () => {
 
                       <div>
                         <label className="text-sm font-medium text-[#738b9a]">
-                          City
+                          Email
                         </label>
                         <input
                           type="text"
-                          placeholder="Atlanta"
+                          placeholder="Johndoe@gmail.com"
                           className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
                         />
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium text-[#738b9a]">
+                          Pronoun
+                        </label>
+                        <select className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 bg-white focus:ring-blue-500 focus:border-blue-500">
+                          <option>He</option>
+                          <option>She</option>
+                          <option>They</option>
+                        </select>
                       </div>
 
                       <div>

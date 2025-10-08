@@ -84,11 +84,7 @@ const ProfileIn = () => {
   return (
     <div>
       {/* <Navbar /> */}
-      <div
-        className="tab-pane fade"
-        id="about"
-        role="tabpanel"
-      >
+      <div className="tab-pane fade" id="account" role="tabpanel">
         <div className="grid grid-cols-12 gap-3">
           <div className="col-span-4">
             <div className="w-full md:w-[350px] bg-white rounded-sm">
