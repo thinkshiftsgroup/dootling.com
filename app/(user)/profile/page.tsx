@@ -144,10 +144,10 @@ const UserProfile = () => {
           <div>
             <div className="relative"></div>
             <div className="content-inner " id="page_layout">
-              <div className="w-full max-w-[1450px]  mx-auto px-4">
-                <div className="flex flex-wrap">
-                  <div className="w-full lg:w-6/8 px-4">
-                    <div className="w-full  mx-auto px-4">
+              <div className="container mx-auto">
+                <div className="grid grid-cols-8 gap-4">
+                  <div className="w-full col-span-6 ">
+                    <div className="w-full  mx-auto">
                       <div className="w-full h-[23.5rem]  rounded-lg bg-white shadow-md">
                         <div className="max-w-7xl mx-auto px-4 pt-[20px]">
                           <div className="relative">
@@ -486,8 +486,8 @@ const UserProfile = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="w-full lg:w-2/8 px-4">
-                    <div className="mb-4 mt-4">
+                  <div className="w-full col-span-2 ">
+                    <div className="">
                       <div className="rounded-lg shadow bg-white">
                         <div className="flex justify-between p-4 border-b border-[#f1f1f1]">
                           <div className="header-title">
