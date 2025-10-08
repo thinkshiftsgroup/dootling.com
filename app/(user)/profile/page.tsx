@@ -242,7 +242,7 @@ const UserProfile = () => {
                                         Streaks
                                       </p>
                                     </div>
-                                    <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 flex items-center gap-2 py-1 rounded-sm text-[1.2rem]">
+                                    {/* <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 flex items-center gap-2 py-1 rounded-sm text-[1.2rem]">
                                       <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         width="24"
@@ -255,7 +255,7 @@ const UserProfile = () => {
                                         />
                                       </svg>
                                       Add Progress{" "}
-                                    </button>
+                                    </button> */}
                                   </div>
                                 </div>
                                 <button className="bg-blue-500 hover:bg-blue-600 text-white px-2 mt-5 flex items-center gap-2 py-1 rounded-sm text-[0.9rem]">
@@ -482,7 +482,7 @@ const UserProfile = () => {
                           </div>
                         )}
 
-                        {activeTab === "Account" && <ProfileAbout />}
+                        {activeTab === "About" && <ProfileAbout />}
                       </div>
                     </div>
                   </div>
