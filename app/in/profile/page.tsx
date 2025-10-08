@@ -22,6 +22,9 @@ import { FaHandsClapping } from "react-icons/fa6";
 import { BiCommentDetail } from "react-icons/bi";
 import { BiRepost } from "react-icons/bi";
 import { LuSend } from "react-icons/lu";
+import { IoWalletOutline } from "react-icons/io5";
+import ProfileAbout from "@/components/main/profile/about";
+import ProfileIn from "@/components/main/profile/otherProfile";
 
 const UserProfile = () => {
   const galleryImages = [
@@ -38,6 +41,8 @@ const UserProfile = () => {
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  const [activeTab, setActiveTab] = useState("Feeds");
+
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
       const scrollAmount = 200;
@@ -52,13 +57,12 @@ const UserProfile = () => {
   const items = [
     { icon: <TbBrandFeedly size={30} />, label: "Feeds" },
     { icon: <MdOutlineDashboard size={30} />, label: "Projects" },
-    { icon: <FiUsers size={30} />, label: "Followed" },
+    { icon: <FiUsers size={30} />, label: "About" },
     { icon: <MdOutlineDashboard size={30} />, label: "Spaces" },
-    { icon: <HiOutlineNewspaper size={30} />, label: "Accounts" },
+    { icon: <HiOutlineNewspaper size={30} />, label: "Finance" },
     { icon: <LuArrowUpToLine size={30} />, label: "Top Contributions" },
+    // { icon: <IoWalletOutline size={30} />, label: "Wallet" },
   ];
-
-  const [showReactions, setShowReactions] = useState(false);
 
   const reactions = [
     { icon: <FaThumbsUp className="text-blue-500" />, label: "Like" },
@@ -101,7 +105,7 @@ const UserProfile = () => {
 
                                   <div>
                                     <h1 className="text-3xl flex items-center gap-1 font-bold text-black">
-                                      John Paul{" "}
+                                      Joshua Israel{" "}
                                       <GoShieldCheck
                                         size={14}
                                         className="text-[#979797]"
@@ -165,14 +169,14 @@ const UserProfile = () => {
                       <div className="relative my-6">
                         <button
                           onClick={() => scroll("left")}
-                          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-md rounded-full p-1 hover:bg-gray-50"
+                          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white p-1"
                         >
                           <FaChevronLeft size={18} className="text-gray-500" />
                         </button>
 
                         <button
                           onClick={() => scroll("right")}
-                          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-md rounded-full p-1 hover:bg-gray-50"
+                          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white p-1"
                         >
                           <FaChevronRight size={18} className="text-gray-500" />
                         </button>
@@ -184,7 +188,8 @@ const UserProfile = () => {
                           {items.map((item, idx) => (
                             <div
                               key={idx}
-                              className="relative flex flex-col items-center w-[80px]"
+                              onClick={() => setActiveTab(item.label)}
+                              className="relative cursor-pointer flex flex-col items-center w-[80px]"
                             >
                               {idx !== items.length - 1 && (
                                 <span className="absolute right-[-30px] top-1/2 -translate-y-1/2 w-[1px] h-10 bg-gray-200"></span>
@@ -197,14 +202,20 @@ const UserProfile = () => {
                               >
                                 <span
                                   className={`${
-                                    idx === 0 ? "text-white" : "text-[#157BFF]/50"
+                                    idx === 0
+                                      ? "text-white"
+                                      : "text-[#157BFF]/50"
                                   } text-2xl`}
                                 >
                                   {item.icon}
                                 </span>
                               </div>
 
-                              <p className="font-semibold text-center mt-2 text-sm text-[#157BFF]">
+                              <p
+                                className={`${
+                                  idx === 0 ? "text-[#157BFF]" : "text-gray-500"
+                                }  font-semibold flex-none text-center mt-2 text-xs`}
+                              >
                                 {item.label}
                               </p>
                             </div>
@@ -212,104 +223,97 @@ const UserProfile = () => {
                         </div>
                       </div>
 
-                      <div className="rounded-lg p-5 bg-white shadow-md">
-                        <div
-                          className="flex items-center
-                         justify-between"
-                        >
-                          <div className="flex items-center gap-2">
+                      <div className="mt-6">
+                        {activeTab === "Feeds" && (
+                          <div className="rounded-lg p-5 bg-white shadow-md">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <Image
+                                  width={100}
+                                  height={100}
+                                  alt="user"
+                                  src="/images/user/userImg.png"
+                                  className="rounded w-20 h-20 object-cover"
+                                />
+                                <div>
+                                  <h1 className="text-xl flex items-center gap-1 font-bold text-black">
+                                    Joshua Israel{" "}
+                                    <GoShieldCheck
+                                      size={14}
+                                      className="text-[#979797]"
+                                    />
+                                  </h1>
+                                  <p className="text-gray-500 text-xs">
+                                    90 days ago
+                                  </p>
+                                </div>
+                              </div>
+                              <TbDots size={20} className="cursor-pointer" />
+                            </div>
+
+                            <h1 className="text-3xl text-black my-4">
+                              Completed milestone: "Prototype testing" in Mobile
+                              App Development
+                            </h1>
+
                             <Image
                               width={100}
                               height={100}
-                              alt="user"
-                              src="/images/user/userImg.png"
-                              className="rounded w-20 h-20 object-cover"
+                              alt="feed image"
+                              className="w-full h-32 object-cover rounded"
+                              src="/images/page-img/pizza.jpg"
                             />
-                            <div>
-                              <h1 className="text-xl flex items-center gap-1 font-bold text-black">
-                                John Paul{" "}
-                                <GoShieldCheck
-                                  size={14}
-                                  className="text-[#979797]"
-                                />
-                              </h1>
-                              <p className="text-gray-500 text-xs">
-                                90 days ago
-                              </p>
-                            </div>
-                          </div>
-                          <TbDots size={20} className="cursor-pointer" />
-                        </div>
-                        <h1 className="text-3xl text-black my-4">
-                          Completed milestone: "Prototype testing" in Mobile App
-                          Development
-                        </h1>
-                        <div>
-                          <Image
-                            width={100}
-                            height={100}
-                            alt="feed image"
-                            className="w-full h-32 object-cover"
-                            src="/images/page-img/pizza.jpg"
-                          />
-                        </div>
 
-                        <div className="my-5 flex items-center  justify-between">
-                          <div className="flex items-center gap-2">
-                            <div className="flex items-center">
-                              <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-white border-2 border-white z-30">
-                                <FaThumbsUp className="w-2.5 h-2.5" />
+                            <div className="my-5 flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <div className="flex items-center">
+                                  <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-white border-2 border-white z-30">
+                                    <FaThumbsUp className="w-2.5 h-2.5" />
+                                  </div>
+                                  <div className="-ml-2 w-6 h-6 rounded-full bg-green-500 flex items-center justify-center text-white border-2 border-white z-20">
+                                    <FaHandsClapping className="w-2.5 h-2.5" />
+                                  </div>
+                                  <div className="-ml-2 w-6 h-6 rounded-full bg-rose-500 flex items-center justify-center text-white border-2 border-white z-10">
+                                    <FaHeart className="w-2.5 h-2.5" />
+                                  </div>
+                                </div>
+                                <span className="text-gray-700 font-medium text-sm">
+                                  293
+                                </span>
                               </div>
-                              <div className="-ml-2 w-6 h-6 rounded-full bg-green-500 flex items-center justify-center text-white border-2 border-white z-20">
-                                <FaHandsClapping className="w-2.5 h-2.5" />
-                              </div>
-                              <div className="-ml-2 w-6 h-6 rounded-full bg-rose-500 flex items-center justify-center text-white border-2 border-white z-10">
-                                <FaHeart className="w-2.5 h-2.5" />
+
+                              <div className="text-xs text-gray-500 flex items-center gap-2">
+                                <p>23 comments</p>
+                                <p>4 reposts</p>
                               </div>
                             </div>
 
-                            <span className="text-gray-700 font-medium text-sm">
-                              293
-                            </span>
+                            <div className="flex items-center justify-between mt-3">
+                              <div className="flex flex-col items-center gap-1 text-gray-600 cursor-pointer">
+                                <FaThumbsUp />
+                                <p className="text-xs">Like</p>
+                              </div>
+                              <div className="flex flex-col items-center gap-1 text-gray-600 cursor-pointer">
+                                <BiCommentDetail />
+                                <p className="text-xs">Comment</p>
+                              </div>
+                              <div className="flex flex-col items-center gap-1 text-gray-600 cursor-pointer">
+                                <BiRepost />
+                                <p className="text-xs">Repost</p>
+                              </div>
+                              <div className="flex flex-col items-center gap-1 text-gray-600 cursor-pointer">
+                                <LuSend />
+                                <p className="text-xs">Send</p>
+                              </div>
+                            </div>
                           </div>
-                          <div className="text-xs text-gray-500 flex items-center gap-2">
-                            <p>23 comments</p>
-                            <p>4 reposts</p>
-                          </div>
-                        </div>
+                        )}
 
-                        <div className="flex items-center justify-between">
-                          <Image
-                            width={100}
-                            height={100}
-                            alt="user"
-                            src="/images/user/userImg.png"
-                            className="rounded w-10 h-10 object-cover"
-                          />
-
-                          <div className="flex flex-col items-center gap-1">
-                            <FaThumbsUp />
-                            <p>Like</p>
-                          </div>
-                          <div className="flex flex-col items-center gap-1">
-                            <BiCommentDetail />
-                            <p>Comment</p>
-                          </div>
-                          <div className="flex flex-col items-center gap-1">
-                            <BiRepost />
-                            <p>Repost</p>
-                          </div>
-                          <div className="flex flex-col items-center gap-1">
-                            <LuSend />
-                            <p>Send</p>
-                          </div>
-                        </div>
+                        {activeTab === "About" && <ProfileIn />}
                       </div>
                     </div>
                   </div>
                   <div className="w-full lg:w-2/8 px-4">
-                    {/* <ActiveUsers /> */}
-                    {/* <Suggestions /> */}
                     <div className="mb-4 mt-4">
                       <div className="rounded-lg shadow bg-white">
                         <div className="flex justify-between p-4 border-b border-[#f1f1f1]">
@@ -318,7 +322,6 @@ const UserProfile = () => {
                               More Similar Profiles
                             </h4>
                           </div>
-                          {/* <small className="font-medium capitalize cursor-pointer">See all</small> */}
                         </div>
 
                         <div className="p-4 pt-0">

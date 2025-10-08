@@ -17,7 +17,7 @@ const EditProfile = () => {
 
   return (
     <div>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="relative bg-gray-50 min-h-screen py-10">
         <div className="max-w-6xl mx-auto px-4">
           <div className="bg-white rounded-lg mb-6">
