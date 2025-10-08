@@ -26,8 +26,8 @@ export default function GroupDropdown() {
         className="flex items-center pb-0.5 relative focus:outline-none"
       >
         <span className="relative flex items-center justify-between">
-          <Users size={21} className="text-[#7e8b9a]" />
-          <span className="absolute -top-0.5 -right-1 flex items-center justify-center w-[13px] h-[13px] bg-blue-600 text-[10px] rounded-full text-white">
+          <Users size={25} className="text-[#7e8b9a]" />
+          <span className="absolute -top-[3px] -right-1 flex items-center justify-center w-[16px] h-[16px] bg-red-600 text-[10px] rounded-full text-white">
             3
           </span>
         </span>
