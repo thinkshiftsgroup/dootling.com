@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const AddHeatmapModal = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedType, setSelectedType] = useState('manual');
+    const [selectedType, setSelectedType] = useState('');
     const [title, setTitle] = useState('UX Revamp Milestone');
     const [date, setDate] = useState('Oct 8, 2025');
     const [description, setDescription] = useState('Finalized design overhaul for the mobile app');
@@ -50,7 +50,7 @@ const AddHeatmapModal = () => {
             <style dangerouslySetInnerHTML={{ __html: styles }} />
             <span>
 
-                <button onClick={() => setIsOpen(true)} className="bg-[#157BFF] hover:bg-blue-600 text-white px-2 mt-5 flex items-center gap-2 py-1 rounded-sm text-[0.9rem]">
+                <button onClick={() => setIsOpen(true)} className="bg-[#157BFF] hover:bg-blue-600 text-white px-2 mt-3 flex items-center gap-2 py-1 rounded-sm text-[0.9rem]">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -91,11 +91,7 @@ const AddHeatmapModal = () => {
                                         {/* Type Selection */}
                                         <div className="flex gap-4 mb-8">
                                             <button
-                                                onClick={() => setSelectedType('manual')}
-                                                className={`px-2 py-1 rounded-sm font-medium transition-colors ${selectedType === 'manual'
-                                                    ? 'bg-[#FAAF40] text-white'
-                                                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                                                    }`}
+                                                className={`px-2 py-1 rounded-sm font-medium transition-colors bg-[#babec1] text-white`}
                                             >
                                                 Manual Heat
                                             </button>
@@ -127,26 +123,26 @@ const AddHeatmapModal = () => {
                                         {/* Title and Date */}
                                         <div className="grid grid-cols-2 gap-6 mb-6">
                                             <div>
-                                                <label className="block text-gray-900 font-semibold mb-2 text-lg">
+                                                <label className="block text-sm font-medium text-[#738b9a] mb-2">
                                                     Title
                                                 </label>
                                                 <input
                                                     type="text"
                                                     value={title}
                                                     onChange={(e) => setTitle(e.target.value)}
-                                                    className="w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
+                                                    className="w-full border border-[#f1f1f1] rounded-md text-sm p-2 focus:outline-none focus:border-blue-500 transition-colors"
                                                     placeholder="Enter title"
                                                 />
                                             </div>
                                             <div>
-                                                <label className="block text-gray-900 font-semibold mb-2 text-lg">
+                                                <label className="block text-sm font-medium text-[#738b9a] mb-2">
                                                     Date
                                                 </label>
                                                 <input
                                                     type="text"
                                                     value={date}
                                                     onChange={(e) => setDate(e.target.value)}
-                                                    className="w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
+                                                    className="w-full border border-[#f1f1f1] rounded-md text-sm p-2 focus:outline-none focus:border-blue-500 transition-colors"
                                                     placeholder="Oct 8, 2025"
                                                 />
                                             </div>
@@ -154,41 +150,43 @@ const AddHeatmapModal = () => {
 
                                         {/* Description */}
                                         <div className="mb-6">
-                                            <label className="block text-gray-900 font-semibold mb-2 text-lg">
+                                            <label className="block text-sm font-medium text-[#738b9a] mb-2">
                                                 Description
                                             </label>
                                             <textarea
                                                 value={description}
                                                 onChange={(e) => setDescription(e.target.value)}
                                                 rows={2}
-                                                className="w-full px-3 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-[#157BFF] transition-colors resize-none"
+                                                className="w-full border border-[#f1f1f1] rounded-md text-sm p-2 focus:outline-none focus:border-[#157BFF] transition-colors resize-none"
                                                 placeholder="Enter description"
                                             />
                                         </div>
 
                                         {/* Attachment */}
                                         <div className="mb-6">
-                                            <label className="block text-gray-900 font-semibold mb-2 text-lg">
-                                                Attachment (optional)
+                                            <label className="block text-sm font-medium text-[#738b9a] mb-2">
+                                                Project or Collab Link (optional)
                                             </label>
-                                            <div className="flex gap-2 mb-4 border-2 border-gray-200 rounded-lg focus-within:outline-none focus-within:border-[#157BFF]">
+                                            <div className="flex gap-2 mb-4 border border-[#f1f1f1] rounded-sm focus-within:outline-none focus-within:border-[#157BFF]">
                                                 <input
                                                     type="text"
                                                     value={attachmentUrl}
                                                     onChange={(e) => setAttachmentUrl(e.target.value)}
-                                                    className="flex-1 px-3 py-2 border-r-2 border-gray-200 focus:outline-none focus:border-[#157BFF] transition-colors"
+                                                    className="flex-1 px-3 py-2 border-r border-[#f1f1f1] focus:outline-none focus:border-[#157BFF] transition-colors"
                                                     placeholder="http://example.com"
                                                 />
                                                 <button
                                                     onClick={() => setAttachmentUrl('')}
-                                                    className="px-3 text-gray-400 hover:text-red-500 transition-colors"
+                                                    className="px-3 text-gray-400 hover:text-[#738b9a] transition-colors"
                                                 >
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 1024 1024"><path fill="currentColor" d="M360 184h-8c4.4 0 8-3.6 8-8zh304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32M731.3 840H292.7l-24.2-512h487z"></path></svg>
+                                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                                                        </svg>
                                                 </button>
                                             </div>
                                             <div className="grid grid-cols-2 gap-6 mb-6">
                                                 {/* File Upload Area */}
-                                                <div className="border-2 border-gray-300 rounded-lg px-3 py-2 text-center hover:border-gray-400 transition-colors cursor-pointer">
+                                                <div className="border border-[#f1f1f1] rounded-md text-sm p-2 my-auto text-center hover:border-[#157BFF] transition-colors cursor-pointer">
                                                     <button
                                                         className="text-gray-600 font-medium flex items-center justify-center gap-2 mx-auto"
                                                     >
@@ -201,7 +199,7 @@ const AddHeatmapModal = () => {
 
                                                 {/* Uploaded Files */}
                                                 {uploadedFiles.length > 0 && (
-                                                    <div className="flex gap-4 mt-4">
+                                                    <div className="flex gap-4 ">
                                                         {uploadedFiles.map((file, index) => (
                                                             <div key={index} className="relative group">
                                                                 <div className=" bg-red-100 rounded-lg flex items-center justify-center">
@@ -229,11 +227,11 @@ const AddHeatmapModal = () => {
 
                                         {/* Peer Confirmation */}
                                         <div className="mb-6">
-                                        <label className="block text-gray-900 font-semibold mb-2 text-lg">
+                                        <label className="block text-sm font-medium text-[#738b9a] mb-2">
                                             Peer Confirmation (Optional)
                                         </label>
                                         <select
-                                            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors bg-white text-gray-700"
+                                            className="w-full border border-[#f1f1f1] rounded-md text-sm p-2 focus:outline-none focus:border-blue-500 transition-colors bg-white text-gray-700"
                                         >
                                             <option>Multi-Select From Collaborator</option>
                                         </select>
