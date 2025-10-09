@@ -119,7 +119,7 @@ export default function Home() {
     },
   ];
   return (
-    <main className="main-content">
+    <main className="main-content pb-20">
       <div className="relative">
         <Navbar />
         <div>
