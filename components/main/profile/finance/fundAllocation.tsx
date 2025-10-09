@@ -1,14 +1,15 @@
 import React from "react";
 
 const FundAllocation = () => {
+  const percentage = 50;
   return (
     <div className="rounded bg-white p-4 shadow-md my-5">
-      <h1 className="text-lg font-semibold text-black">Fund Allocation</h1>
+      <h1 className="text-lg font-bold text-black">Fund Allocation</h1>
 
       <div className="flex items-center my-4 gap-4">
         <select
           name=""
-          className=" border w-1/3 text-sm text-black border-gray-300/70 rounded-sm p-1.5"
+          className=" border w-1/2 text-sm text-black border-gray-300/70 rounded-sm p-1.5"
           id=""
         >
           <option value="">Developing Investor Vaults</option>
@@ -77,11 +78,108 @@ const FundAllocation = () => {
         </button>
       </div>
 
-      <div>
-        <div>
-          <p className="font-bold text-lg text-black">Amelia Shaw</p>
-          <input type="range" className="bg-[#157BFF]" />
-          <div className="" />
+      <div className="mr-10 flex flex-col gap-1 w-full max-w-2xl">
+        {[
+          {
+            name: "Amelia Shaw",
+            color: "#0b50ab",
+            percent: 50,
+            amount: "$1,250",
+          },
+          { name: "Ronald Nunez", color: "gray", percent: 30, amount: "$550" },
+          {
+            name: "Carolyn Ortiz",
+            color: "#9ca3af",
+            percent: 20,
+            amount: "$200",
+          },
+        ].map((person, i) => (
+          <div key={i} className="flex items-center gap-4 w-full">
+            <div className="w-30">
+              <p className="font-semibold whitespace-nowrap text-lg text-black">
+                {person.name}
+              </p>
+            </div>
+
+            <div className="flex-1 h-[12px] bg-gray-100 rounded relative overflow-hidden">
+              <div
+                className="absolute top-0 left-0 h-full rounded transition-all duration-300"
+                style={{
+                  width: `${person.percent}%`,
+                  backgroundColor: person.color,
+                }}
+              ></div>
+            </div>
+
+            <div className="flex items-center gap-2 w-28 justify-end">
+              <p className="font-bold text-lg text-black">{person.percent}%</p>
+              <p className="font-bold text-lg text-[#157BFF]">
+                {person.amount}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-5 max-w-xl">
+        {/* <h1 className="font-bold text-black">Fund Allocation</h1> */}
+        {[
+          {
+            name: "Amelia Shaw",
+            email: "ameliashaw@example.com",
+            percent: "50%",
+          },
+          {
+            name: "Ronald Nunez",
+            email: "ronaldnunez@example.com",
+            percent: "30%",
+          },
+          {
+            name: "Carolyn Ortiz",
+            email: "carolynortiz@example.com",
+            percent: "20%",
+          },
+        ].map((person, index) => (
+          <div
+            key={index}
+            className="py-2.5 flex items-center justify-between text-gray-800 text-sm border-t border-gray-300/50"
+          >
+            <p>{person.name}</p>
+            <p>{person.email}</p>
+            <p>{person.percent}</p>
+          </div>
+        ))}
+      </div>
+
+      <div className="my-5">
+        <h1 className="font-bold text-black mb-4">Audit Trials</h1>
+        <div className="max-w-xl">
+          {[
+            {
+              name: "Amelia Shaw",
+              email: "ameliashaw@example.com",
+              percent: "50%",
+            },
+            {
+              name: "Ronald Nunez",
+              email: "ronaldnunez@example.com",
+              percent: "30%",
+            },
+            {
+              name: "Carolyn Ortiz",
+              email: "carolynortiz@example.com",
+              percent: "20%",
+            },
+          ].map((person, index) => (
+            <div
+              key={index}
+              className="py-2.5  flex items-center justify-between text-gray-800 text-sm border-t border-gray-300/50"
+            >
+              <p>{person.name}</p>
+              <p>{person.email}</p>
+              <p>{person.percent}</p>
+            </div>
+          ))}
         </div>
       </div>
     </div>

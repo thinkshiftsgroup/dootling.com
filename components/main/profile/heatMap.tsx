@@ -48,7 +48,6 @@ const HeatmapConnections = () => {
             <div className=" bg-gray-50">
                 <div className="max-w-5xl mx-auto">
                     <div className="bg-white rounded-2xl shadow-sm p-8">
-                        {/* Header */}
                         <div className="flex justify-between items-start mb-8">
                             <div className="w-9/10">
                                 <h1 className="text-4xl font-medium text-gray-900 mb-3">Heatmap</h1>
@@ -63,7 +62,6 @@ const HeatmapConnections = () => {
                             </div>
                         </div>
 
-                        {/* Connections List */}
                         <div className="space-y-0 rounded-sm shadow-sm py-5">
                             {connections.map((connection, index) => (
                                 <div
@@ -97,7 +95,6 @@ const HeatmapConnections = () => {
                             ))}
                         </div>
 
-                        {/* Add Permission Button */}
                         <div className="flex justify-center mt-8">
                             <button className="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded-sm flex items-center gap-2 transition-colors text-[0.9rem]">
                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
