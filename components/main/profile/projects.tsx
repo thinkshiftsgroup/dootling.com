@@ -61,7 +61,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       <div className="py-6 pt-2 px-4 w-6/10">
         <div className="flex items-start justify-between mb-2.5">
           <h3 className="text-lg font-semibold text-gray-900">{projectName}</h3>
-          <button className="text-gray-400 hover:text-gray-600 transition-colors">
+          <button className="text-gray-400 cursor-pointer hover:text-gray-600 transition-colors">
             <MoreHorizontal className="w-5 h-5" />
           </button>
         </div>
@@ -94,7 +94,7 @@ const TabButton: React.FC<TabButtonProps> = ({ active, onClick, icon, children }
   return (
     <button
       onClick={onClick}
-      className={`px-4 py-1 rounded-sm font-medium transition-colors ${active
+      className={`px-4 py-1 rounded-sm font-medium transition-colors cursor-pointer ${active
         ? 'bg-[#D8D8D8] text-[#202224]'
         : 'bg-[#F8F9FA] text-[#202224] hover:bg-gray-100'
         }`}
@@ -145,7 +145,7 @@ const ProjectDashboard: React.FC<ProjectDashboardProps> = ({ projects = [] }) =>
                   </TabButton>
                 </div>
 
-                <button className="bg-[#157BFF] hover:bg-blue-700 text-white px-4 py-1.5 rounded-sm transition-colors flex items-center gap-2">
+                <button className="bg-[#157BFF] hover:bg-blue-700 text-white px-4 py-1.5 rounded-sm transition-colors cursor-pointer flex items-center gap-2">
                   <span className="text-xl"><svg xmlns="http://www.w3.org/2000/svg" width={22} height={22} viewBox="0 0 24 24"><path fill="currentColor" d="M18 12.998h-5v5a1 1 0 0 1-2 0v-5H6a1 1 0 0 1 0-2h5v-5a1 1 0 0 1 2 0v5h5a1 1 0 0 1 0 2"></path></svg></span>
                   Create Project
                 </button>
