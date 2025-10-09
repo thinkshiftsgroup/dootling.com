@@ -11,7 +11,13 @@ interface MonthLabel {
   weekIndex: number;
 }
 
-const ContributionHeatmap: React.FC = () => {
+interface ContributionHeatmapProps {
+  pageType?: "profile" | "space";
+}
+
+const ContributionHeatmap: React.FC<ContributionHeatmapProps> = ({
+  pageType = "profile",
+}) => {
   const generateData = (): DayData[] => {
     const data: DayData[] = [];
     const startDate = new Date("2024-01-01");
@@ -36,22 +42,27 @@ const ContributionHeatmap: React.FC = () => {
   const [hoveredCell, setHoveredCell] = useState<DayData | null>(null);
 
   const getColor = (level: number): string => {
-    // const colors: { [key: number]: string } = {
-    //   0: '#ebedf0',
-    //   1: '#9be9a8',
-    //   2: '#40c463',
-    //   3: '#30a14e',
-    //   4: '#216e39'
-    // };
-    const colors: { [key: number]: string } = {
-      0: "#e6f3ff",
-      1: "#b3dbff",
-      2: "#80c3ff",
-      3: "#50b5ff",
-      4: "#2a7fcc",
-    };
-
-    return colors[level] || colors[0];
+    if (pageType === "space") {
+      // orange-based palette for "space" pages
+      const colors: { [key: number]: string } = {
+        0: "#FFF4E0",
+        1: "#FFD89A",
+        2: "#FFC766",
+        3: "#FAAF40",
+        4: "#D89030",
+      };
+      return colors[level] || colors[0];
+    } else {
+      // blue-based palette for "profile" pages
+      const colors: { [key: number]: string } = {
+        0: "#e6f3ff",
+        1: "#b3dbff",
+        2: "#80c3ff",
+        3: "#50b5ff",
+        4: "#2a7fcc",
+      };
+      return colors[level] || colors[0];
+    }
   };
 
   const groupByWeeks = (): DayData[][] => {
@@ -106,9 +117,10 @@ const ContributionHeatmap: React.FC = () => {
   const dayLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
   return (
-    <div className="w-full overflow-x-scroll p-4 bg-white  rounded-md">
-      <div className=" mx-auto">
+    <div className="w-full overflow-x-scroll p-4 bg-white rounded-md">
+      <div className="mx-auto">
         <div className="relative">
+          {/* Month Labels */}
           <div className="flex ml-8 mb-2">
             {monthLabels.map((label, index) => (
               <div
@@ -130,6 +142,7 @@ const ContributionHeatmap: React.FC = () => {
           </div>
 
           <div className="flex">
+            {/* Day Labels */}
             <div className="flex flex-col text-xs text-gray-600 mr-2 mt-1">
               {dayLabels.map((day, index) => (
                 <div
@@ -142,6 +155,7 @@ const ContributionHeatmap: React.FC = () => {
               ))}
             </div>
 
+            {/* Heatmap Grid */}
             <div className="flex gap-1">
               {weeks.map((week, weekIndex) => (
                 <div key={weekIndex} className="flex flex-col gap-1">
@@ -170,6 +184,7 @@ const ContributionHeatmap: React.FC = () => {
             </div>
           </div>
 
+          {/* Tooltip */}
           {hoveredCell && (
             <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 bg-gray-900 text-white text-xs rounded py-1 px-2 whitespace-nowrap">
               {hoveredCell.count} contributions on{" "}

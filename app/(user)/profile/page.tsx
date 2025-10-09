@@ -91,7 +91,7 @@ const UserProfile = () => {
       ),
       label: "Heatmap",
     },
-    { icon: <FiUsers size={30} />, label: "Followed" },
+    // { icon: <FiUsers size={30} />, label: "Followed" },
     {
       icon: (isActive: boolean) => (
         <FiUsers
@@ -217,7 +217,7 @@ const UserProfile = () => {
                               </h2>
                             </div>
 
-                            <ContributionHeatmap />
+                            <ContributionHeatmap pageType={"profile"} />
                             <div className="max-w-5xl -mt-10 relative mx-auto  bg-white p-2">
                               <div className="flex items-start justify-between">
                                 <div className="flex gap-6">
@@ -302,7 +302,7 @@ const UserProfile = () => {
                       <div className="relative my-6">
                         <button
                           onClick={() => scroll("left")}
-                          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white p-1"
+                          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-1"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -324,7 +324,7 @@ const UserProfile = () => {
 
                         <button
                           onClick={() => scroll("right")}
-                          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white p-1"
+                          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-1"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -356,9 +356,9 @@ const UserProfile = () => {
                                 onClick={() => setActiveTab(item.label)}
                                 className="relative cursor-pointer flex flex-col items-center w-[80px]"
                               >
-                                {idx !== items.length - 1 && (
+                                {/* {idx !== items.length - 1 && (
                                   <span className="absolute right-[-30px] top-1/2 -translate-y-1/2 w-[1px] h-10 bg-gray-200"></span>
-                                )}
+                                )} */}
 
                                 <div
                                   className={`${
@@ -493,7 +493,7 @@ const UserProfile = () => {
                           </div>
                         )}
                         {activeTab === "Account" && <ProfileAbout />}
-                        {activeTab === "Heatmap" && <HeatmapConnections/>}
+                        {activeTab === "Heatmap" && <HeatmapConnections />}
                       </div>
                     </div>
                   </div>
