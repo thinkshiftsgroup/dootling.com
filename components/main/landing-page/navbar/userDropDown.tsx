@@ -11,12 +11,12 @@ export default function UserDropdown() {
     <Dropdown
       trigger={
         <div className="cursor-pointer">
-          <Image
-            src="/images/user/userImg.png"
+          <img
+            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop"
             width={35}
             height={35}
             alt="user"
-            priority
+            // priority
             className="rounded-sm mt-1.5 cursor-pointer"
           />
         </div>
