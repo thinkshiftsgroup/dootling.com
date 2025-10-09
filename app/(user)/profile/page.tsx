@@ -15,6 +15,7 @@ import { FaHandsClapping } from "react-icons/fa6";
 import ProfileAbout from "@/components/main/profile/about/about";
 import ProfileFinance from "@/components/main/profile/finance";
 import ProfileFeeds from "@/components/main/profile/feeds";
+import FollowedTab from "@/components/main/profile/followed";
 
 const UserProfile = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -34,12 +35,13 @@ const UserProfile = () => {
 
   const items = [
     {
-      icon: (
+      icon: (isActive: boolean) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width={30}
           height={30}
           viewBox="0 0 20 20"
+          className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
         >
           <path
             fill="currentColor"
@@ -50,12 +52,13 @@ const UserProfile = () => {
       label: "Feeds",
     },
     {
-      icon: (
+      icon: (isActive: boolean) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="30"
-          height="30"
+          width={30}
+          height={30}
           viewBox="0 0 32 32"
+          className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
         >
           <path
             fill="currentColor"
@@ -65,14 +68,23 @@ const UserProfile = () => {
       ),
       label: "Projects",
     },
-    { icon: <FiUsers size={30} />, label: "About" },
     {
-      icon: (
+      icon: (isActive: boolean) => (
+        <FiUsers
+          size={30}
+          className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
+        />
+      ),
+      label: "Followed",
+    },
+    {
+      icon: (isActive: boolean) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width={30}
           height={30}
           viewBox="0 0 512 512"
+          className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
         >
           <path
             fill="none"
@@ -86,24 +98,47 @@ const UserProfile = () => {
             fill="currentColor"
             d="M98.08 431.87a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m0-80a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m0-80a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m0-80a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m0-80a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m80 240a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m0-80a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m0-80a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m0-80a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m80 320a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m0-80a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m0-80a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79"
           ></path>
-          <ellipse
-            cx={256}
-            cy={176}
-            fill="currentColor"
-            rx={15.95}
-            ry={16.03}
-            transform="rotate(-45 255.99 175.996)"
-          ></ellipse>
-          <path
-            fill="currentColor"
-            d="M258.08 111.87a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79M400 400a16 16 0 1 0 16 16a16 16 0 0 0-16-16m0-80a16 16 0 1 0 16 16a16 16 0 0 0-16-16m0-80a16 16 0 1 0 16 16a16 16 0 0 0-16-16m-64 160a16 16 0 1 0 16 16a16 16 0 0 0-16-16m0-80a16 16 0 1 0 16 16a16 16 0 0 0-16-16m0-80a16 16 0 1 0 16 16a16 16 0 0 0-16-16"
-          ></path>
         </svg>
       ),
       label: "Spaces",
     },
-    { icon: <HiOutlineNewspaper size={30} />, label: "Finance" },
-    { icon: <LuArrowUpToLine size={30} />, label: "Top Contributors" },
+    {
+      icon: (isActive: boolean) => (
+        <svg
+          width={30}
+          height={30}
+          viewBox="0 0 163 163"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
+        >
+          <path
+            d="M0 135.562H162.676M0 157.252H162.676M27.1126 43.3795V27.112H43.3802M119.295 27.112H135.563V43.3795M27.1126 75.9146V92.1822H43.3802M119.295 92.1822H135.563V75.9146M81.3378 81.3372C75.5852 81.3372 70.0683 79.052 66.0006 74.9843C61.9329 70.9166 59.6477 65.3996 59.6477 59.6471C59.6477 53.8945 61.9329 48.3776 66.0006 44.3099C70.0683 40.2422 75.5852 37.957 81.3378 37.957C87.0904 37.957 92.6073 40.2422 96.675 44.3099C100.743 48.3776 103.028 53.8945 103.028 59.6471C103.028 65.3996 100.743 70.9166 96.675 74.9843C92.6073 79.052 87.0904 81.3372 81.3378 81.3372ZM16.2676 5.42188H146.408C149.284 5.42188 152.043 6.56447 154.077 8.59831C156.11 10.6322 157.253 13.3906 157.253 16.2669V103.027C157.253 105.904 156.11 108.662 154.077 110.696C152.043 112.73 149.284 113.872 146.408 113.872H16.2676C13.3913 113.872 10.6328 112.73 8.59896 110.696C6.56512 108.662 5.42252 105.904 5.42252 103.027V16.2669C5.42252 13.3906 6.56512 10.6322 8.59896 8.59831C10.6328 6.56447 13.3913 5.42188 16.2676 5.42188Z"
+            stroke="currentColor"
+            strokeWidth="10.845"
+          />
+        </svg>
+      ),
+      label: "Finance",
+    },
+    {
+      icon: (isActive: boolean) => (
+        <HiOutlineNewspaper
+          size={30}
+          className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
+        />
+      ),
+      label: "Account",
+    },
+    {
+      icon: (isActive: boolean) => (
+        <LuArrowUpToLine
+          size={30}
+          className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
+        />
+      ),
+      label: "Top Contributors",
+    },
   ];
 
   const reactions = [
@@ -328,14 +363,10 @@ const UserProfile = () => {
                                       : "bg-[#157BFF]/10"
                                   } w-[60px] h-[60px] flex justify-center items-center rounded-xl transition-all duration-200`}
                                 >
-                                  <span
-                                    className={`${
-                                      isActive
-                                        ? "text-white"
-                                        : "text-[#157BFF]/50"
-                                    } transition-colors duration-200`}
-                                  >
-                                    {item.icon}
+                                  <span className="transition-colors duration-200">
+                                    {typeof item.icon === "function"
+                                      ? item.icon(isActive)
+                                      : item.icon}
                                   </span>
                                 </div>
 
@@ -356,8 +387,9 @@ const UserProfile = () => {
 
                       <div className="mt-6">
                         {activeTab === "Feeds" && <ProfileFeeds />}
-                        {activeTab === "About" && <ProfileAbout />}
+                        {activeTab === "Account" && <ProfileAbout />}
                         {activeTab === "Finanace" && <ProfileFinance />}
+                        {activeTab === "Followed" && <FollowedTab />}
                       </div>
                     </div>
                   </div>
