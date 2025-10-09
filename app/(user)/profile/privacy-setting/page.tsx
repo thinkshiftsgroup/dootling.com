@@ -20,7 +20,7 @@ const PrivacySetting = () => {
   return (
     <div className="bg-gray-50 min-h-screen">
       <Navbar />
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto py-8">
         <div className="bg-white rounded-lg">
           <div className="px-6 py-4 flex items-center justify-between">
             <h4 className="text-lg font-semibold text-gray-800">

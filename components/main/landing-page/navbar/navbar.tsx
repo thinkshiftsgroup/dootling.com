@@ -91,8 +91,8 @@ const Navbar = () => {
   ].filter((r) => r.toLowerCase().includes(query.toLowerCase()));
 
   return (
-    <nav className="nav iq-navbar shadow-sm bg-white text-gray-800 xl:flex xl:flex-row py-2">
-      <div className="w-[78rem] mx-auto flex items-center justify-between">
+    <nav className="nav w-full iq-navbar shadow-sm bg-white text-gray-800 xl:flex xl:flex-row py-2">
+      <div className="container mx-auto flex items-center justify-between">
         <div className="flex items-center justify-between w-2/6">
           <div className="flex items-center relative pb-2 lg:pb-0">
             <Image
@@ -179,9 +179,9 @@ const Navbar = () => {
                     />
                   </svg>
 
-                  <span className="absolute -top-[3px] -right-1 flex items-center justify-center w-[16px] h-[16px] bg-red-600 text-[10px] rounded-full text-white">
+                  {/* <span className="absolute -top-[3px] -right-1 flex items-center justify-center w-[16px] h-[16px] bg-red-600 text-[10px] rounded-full text-white">
                     3
-                  </span>
+                  </span> */}
                 </div>
                 <p className="text-black text-xs">Account</p>
               </div>
