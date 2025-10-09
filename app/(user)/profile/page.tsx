@@ -76,12 +76,13 @@ const UserProfile = () => {
       label: "Projects",
     },
     {
-      icon: (
+      icon: (isActive: boolean) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="30"
           height="30"
           viewBox="0 0 24 24"
+          className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
         >
           <path
             fill="currentColor"
