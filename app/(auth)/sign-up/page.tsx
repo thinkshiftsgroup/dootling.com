@@ -152,7 +152,7 @@ export default function SignupPage() {
             <div className="text-center space-y-4">
               <div className="flex items-center justify-center gap-3">
                 <Image
-                  src="/images/dootling.svg"
+                  src="/images/dootlinglogo.svg"
                   alt="Dootling Logo"
                   width={200}
                   height={50}

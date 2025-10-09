@@ -24,6 +24,8 @@ import { BiRepost } from "react-icons/bi";
 import { LuSend } from "react-icons/lu";
 import { IoWalletOutline } from "react-icons/io5";
 import ProfileAbout from "@/components/main/profile/about";
+import HeatmapConnections from "@/components/main/profile/heatMap";
+import AddHeatmapModal from "@/components/main/profile/addHeatMapModal";
 
 const UserProfile = () => {
   const galleryImages = [
@@ -86,7 +88,23 @@ const UserProfile = () => {
       ),
       label: "Projects",
     },
-    { icon: <FiUsers size={30} />, label: "About" },
+    {
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="30"
+          height="30"
+          viewBox="0 0 24 24"
+        >
+          <path
+            fill="currentColor"
+            d="M18.385 9.083V8.07q.717.15 1.45.328q.732.178 1.524.378q.324.08.5.351q.177.27.122.593l-1.466 7.962q-.106.59-.553.953T18.925 19H5.152q-.59 0-1.025-.373t-.54-.944L2.025 9.72q-.056-.323.118-.605q.174-.283.498-.364q.734-.2 1.428-.356t1.373-.287V9.12l-1.188.251q-.6.126-1.22.278L4.46 17.5q.038.212.22.356t.395.144h13.85q.212 0 .394-.144t.222-.356l1.425-7.85q-.658-.171-1.306-.307t-1.275-.26M16 9.065q0-.427-.125-.829t-.394-.728q-.39-.506-.63-1.098q-.24-.59-.24-1.226q0-.401.105-.782q.105-.38.309-.74l.152-.27q.09-.177.291-.233q.201-.055.378.035t.233.289t-.035.375l-.177.294q-.13.244-.202.52t-.073.551q0 .427.154.82q.154.391.423.718q.41.468.62 1.05q.211.581.211 1.197q0 .42-.095.811q-.096.39-.26.77l-.159.326q-.09.177-.288.233t-.375-.034t-.233-.289t.035-.375l.152-.313q.112-.264.167-.53T16 9.066m-3.892 0q0-.428-.125-.83t-.395-.728q-.39-.506-.63-1.098q-.239-.59-.239-1.226q0-.401.105-.782t.309-.74l.151-.27q.091-.176.292-.232t.378.034t.232.289t-.034.375l-.177.294q-.13.244-.203.51q-.072.267-.072.542q0 .427.154.829t.423.728q.41.468.62 1.05q.21.581.21 1.197q0 .42-.094.811q-.096.39-.261.77l-.158.326q-.09.177-.288.233t-.375-.034t-.233-.289t.035-.375l.152-.313q.111-.264.167-.53t.056-.541m-3.887-.02q0-.427-.128-.819q-.127-.392-.397-.72q-.41-.486-.64-1.077q-.229-.591-.229-1.226q0-.402.102-.792t.312-.75l.157-.27q.09-.176.292-.232q.2-.056.377.034t.233.289t-.034.375l-.177.294q-.131.239-.206.508t-.075.544q0 .427.154.829t.423.728q.41.468.62 1.05q.21.581.21 1.197q0 .42-.095.811q-.095.39-.26.77l-.152.326q-.09.177-.292.233q-.2.056-.377-.034q-.177-.091-.233-.289t.035-.375l.157-.313q.112-.264.168-.54q.055-.276.055-.55"
+          />
+        </svg>
+      ),
+      label: "HeatMap",
+    },
+    { icon: <FiUsers size={30} />, label: "Followed" },
     {
       icon: (
         <svg
@@ -123,6 +141,7 @@ const UserProfile = () => {
       ),
       label: "Spaces",
     },
+    { icon: <svg xmlns="http://www.w3.org/2000/svg" width={30} height={30} viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeLinejoin="round" strokeWidth={1.5}><path strokeLinecap="round" d="M2 12c0-4.243 0-6.364 1.464-7.682C4.93 3 7.286 3 12 3s7.071 0 8.535 1.318S22 7.758 22 12s0 6.364-1.465 7.682C19.072 21 16.714 21 12 21s-7.071 0-8.536-1.318S2 16.242 2 12"></path><path d="M8.4 8h-.8c-.754 0-1.131 0-1.366.234C6 8.47 6 8.846 6 9.6v.8c0 .754 0 1.131.234 1.366C6.47 12 6.846 12 7.6 12h.8c.754 0 1.131 0 1.366-.234C10 11.53 10 11.154 10 10.4v-.8c0-.754 0-1.131-.234-1.366C9.53 8 9.154 8 8.4 8Z"></path><path strokeLinecap="round" d="M6 16h4m4-8h4m-4 4h4m-4 4h4"></path></g></svg>, label: "Account" },
     { icon: <HiOutlineNewspaper size={30} />, label: "Finance" },
     { icon: <LuArrowUpToLine size={30} />, label: "Top Contributors" },
     // { icon: <IoWalletOutline size={30} />, label: "Wallet" },
@@ -258,7 +277,7 @@ const UserProfile = () => {
                                     </button> */}
                                   </div>
                                 </div>
-                                <button className="bg-blue-500 hover:bg-blue-600 text-white px-2 mt-5 flex items-center gap-2 py-1 rounded-sm text-[0.9rem]">
+                                {/* <button className="bg-blue-500 hover:bg-blue-600 text-white px-2 mt-5 flex items-center gap-2 py-1 rounded-sm text-[0.9rem]">
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="24"
@@ -271,7 +290,8 @@ const UserProfile = () => {
                                     />
                                   </svg>
                                   Add Progress{" "}
-                                </button>
+                                </button> */}
+                                <AddHeatmapModal />
                               </div>
 
                               <span className="flex flex-wrap items-center gap-1.5 -mt-[2rem] text-xs ms-[8.5rem]">
@@ -355,25 +375,22 @@ const UserProfile = () => {
                               )}
 
                               <div
-                                className={`${
-                                  idx === 0 ? "bg-[#157BFF]" : "bg-[#157BFF]/10"
-                                } w-[60px] h-[60px] flex justify-center items-center rounded-xl transition-all duration-200`}
+                                className={`${idx === 0 ? "bg-[#157BFF]" : "bg-[#157BFF]/10"
+                                  } w-[60px] h-[60px] flex justify-center items-center rounded-xl transition-all duration-200`}
                               >
                                 <span
-                                  className={`${
-                                    idx === 0
-                                      ? "text-white"
-                                      : "text-[#157BFF]/50"
-                                  } text-2xl`}
+                                  className={`${idx === 0
+                                    ? "text-white"
+                                    : "text-[#157BFF]/50"
+                                    } text-2xl`}
                                 >
                                   {item.icon}
                                 </span>
                               </div>
 
                               <p
-                                className={`${
-                                  idx === 0 ? "text-[#157BFF]" : "text-gray-500"
-                                }  font-semibold whitespace-nowrap text-center mt-2 text-xs`}
+                                className={`${idx === 0 ? "text-[#157BFF]" : "text-gray-500"
+                                  }  font-semibold whitespace-nowrap text-center mt-2 text-xs`}
                               >
                                 {item.label}
                               </p>
@@ -482,7 +499,9 @@ const UserProfile = () => {
                           </div>
                         )}
 
-                        {activeTab === "About" && <ProfileAbout />}
+                        {activeTab === "Account" && <ProfileAbout />}
+
+                        {activeTab === "HeatMap" && <HeatmapConnections/>}
                       </div>
                     </div>
                   </div>
