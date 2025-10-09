@@ -13,10 +13,12 @@ interface MonthLabel {
 
 interface ContributionHeatmapProps {
   pageType?: "profile" | "space";
+  size?: "mini" | "normal";
 }
 
 const ContributionHeatmap: React.FC<ContributionHeatmapProps> = ({
   pageType = "profile",
+  size = "normal",
 }) => {
   const generateData = (): DayData[] => {
     const data: DayData[] = [];
@@ -43,8 +45,7 @@ const ContributionHeatmap: React.FC<ContributionHeatmapProps> = ({
 
   const getColor = (level: number): string => {
     if (pageType === "space") {
-      // orange-based palette for "space" pages
-      const colors: { [key: number]: string } = {
+      const colors: Record<number, string> = {
         0: "#FFF4E0",
         1: "#FFD89A",
         2: "#FFC766",
@@ -53,8 +54,7 @@ const ContributionHeatmap: React.FC<ContributionHeatmapProps> = ({
       };
       return colors[level] || colors[0];
     } else {
-      // blue-based palette for "profile" pages
-      const colors: { [key: number]: string } = {
+      const colors: Record<number, string> = {
         0: "#e6f3ff",
         1: "#b3dbff",
         2: "#80c3ff",
@@ -103,7 +103,6 @@ const ContributionHeatmap: React.FC<ContributionHeatmapProps> = ({
     weeks.forEach((week, weekIndex) => {
       const firstDay = week[0];
       const month = firstDay.date.getMonth();
-
       if (month !== lastMonth) {
         labels.push({ month: months[month], weekIndex });
         lastMonth = month;
@@ -116,59 +115,82 @@ const ContributionHeatmap: React.FC<ContributionHeatmapProps> = ({
   const monthLabels = getMonthLabels();
   const dayLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
+  const cellSize = size === "mini" ? 6 : 13;
+  const gap = size === "mini" ? 0.5 : 1;
+  const fontSize = size === "mini" ? "0.6rem" : "0.75rem";
+  const padding = size === "mini" ? "p-2" : "p-4";
+  const width = size === "mini" ? "w-[100px]" : "w-full";
+  const height = size === "mini" ? "h-[40px]" : "auto";
+  const bgColor = size === "mini" ? "" : "bg-white"
+ 
   return (
-    <div className="w-full overflow-x-scroll p-4 bg-white rounded-md">
+    <div
+      className={`${width} ${height} hide-scrollbar overflow-x-scroll ${padding} ${bgColor} rounded-md`}
+    >
       <div className="mx-auto">
         <div className="relative">
-          {/* Month Labels */}
-          <div className="flex ml-8 mb-2">
-            {monthLabels.map((label, index) => (
-              <div
-                key={index}
-                className="text-xs text-gray-600"
-                style={{
-                  marginLeft:
-                    index === 0
-                      ? `${label.weekIndex * 14}px`
-                      : `${
-                          (label.weekIndex - monthLabels[index - 1].weekIndex) *
-                          14
-                        }px`,
-                }}
-              >
-                {label.month}
-              </div>
-            ))}
-          </div>
-
-          <div className="flex">
-            {/* Day Labels */}
-            <div className="flex flex-col text-xs text-gray-600 mr-2 mt-1">
-              {dayLabels.map((day, index) => (
+          {size !== "mini" && (
+            <div className="flex ml-6 mb-1">
+              {monthLabels.map((label, index) => (
                 <div
-                  key={day}
-                  className="h-3 mb-1 flex items-center"
-                  style={{ opacity: index % 2 === 0 ? 1 : 0 }}
+                  key={index}
+                  className="text-gray-600"
+                  style={{
+                    fontSize,
+                    marginLeft:
+                      index === 0
+                        ? `${label.weekIndex * (cellSize + gap)}px`
+                        : `${
+                            (label.weekIndex -
+                              monthLabels[index - 1].weekIndex) *
+                            (cellSize + gap)
+                          }px`,
+                  }}
                 >
-                  {day}
+                  {label.month}
                 </div>
               ))}
             </div>
+          )}
 
-            {/* Heatmap Grid */}
-            <div className="flex gap-1">
+          <div className="flex">
+            {size !== "mini" && (
+              <div className="flex flex-col text-gray-600 mr-2 mt-1">
+                {dayLabels.map((day, index) => (
+                  <div
+                    key={day}
+                    className="flex items-center"
+                    style={{
+                      height: `${cellSize}px`,
+                      fontSize,
+                      marginBottom: `${gap}px`,
+                      opacity: index % 2 === 0 ? 1 : 0,
+                    }}
+                  >
+                    {day}
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div className="flex" style={{ gap: `${gap}px` }}>
               {weeks.map((week, weekIndex) => (
-                <div key={weekIndex} className="flex flex-col gap-1">
+                <div
+                  key={weekIndex}
+                  className="flex flex-col"
+                  style={{ gap: `${gap}px` }}
+                >
                   {[0, 1, 2, 3, 4, 5, 6].map((dayIndex) => {
                     const dayData = week.find(
                       (d: DayData) => d.date.getDay() === dayIndex
                     );
-
                     return (
                       <div
                         key={dayIndex}
-                        className="w-[13px] h-[13px] cursor-pointer transition-all hover:ring-2 hover:ring-gray-400"
+                        className="cursor-pointer transition-all hover:ring-1 hover:ring-gray-400"
                         style={{
+                          width: `${cellSize}px`,
+                          height: `${cellSize}px`,
                           backgroundColor: dayData
                             ? getColor(dayData.level)
                             : "#ebedf0",
@@ -184,8 +206,7 @@ const ContributionHeatmap: React.FC<ContributionHeatmapProps> = ({
             </div>
           </div>
 
-          {/* Tooltip */}
-          {hoveredCell && (
+          {hoveredCell && size !== "mini" && (
             <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 bg-gray-900 text-white text-xs rounded py-1 px-2 whitespace-nowrap">
               {hoveredCell.count} contributions on{" "}
               {hoveredCell.date.toLocaleDateString()}

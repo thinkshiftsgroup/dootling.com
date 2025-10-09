@@ -12,7 +12,7 @@ import { TbDots } from "react-icons/tb";
 import { FaThumbsUp, FaHeart } from "react-icons/fa";
 import { FaHandsClapping } from "react-icons/fa6";
 
-import ProfileFinance from "@/components/main/profile/finance";
+import ProfileFinance from "@/components/main/profile/finance/finance";
 import ProfileFeeds from "@/components/main/profile/feeds";
 import FollowedTab from "@/components/main/profile/followed";
 import { BiCommentDetail } from "react-icons/bi";
@@ -76,12 +76,13 @@ const UserProfile = () => {
       label: "Projects",
     },
     {
-      icon: (
+      icon: (isActive: boolean) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="30"
           height="30"
           viewBox="0 0 24 24"
+          className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
         >
           <path
             fill="currentColor"
@@ -392,7 +393,7 @@ const UserProfile = () => {
                       <div className="mt-6">
                         {activeTab === "Feeds" && <ProfileFeeds />}
                         {activeTab === "Account" && <ProfileAbout />}
-                        {activeTab === "Finanace" && <ProfileFinance />}
+                        {activeTab === "Finance" && <ProfileFinance />}
                         {activeTab === "Followed" && <FollowedTab />}
                         {activeTab === "Feeds" && (
                           <div className="rounded-lg p-5 bg-white shadow-md mb-[40px]">
