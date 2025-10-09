@@ -12,7 +12,7 @@ import { TbDots } from "react-icons/tb";
 import { FaThumbsUp, FaHeart } from "react-icons/fa";
 import { FaHandsClapping } from "react-icons/fa6";
 
-import ProfileFinance from "@/components/main/profile/finance";
+import ProfileFinance from "@/components/main/profile/finance/finance";
 import ProfileFeeds from "@/components/main/profile/feeds";
 import FollowedTab from "@/components/main/profile/followed";
 import { BiCommentDetail } from "react-icons/bi";
