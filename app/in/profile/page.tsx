@@ -175,16 +175,16 @@ const UserProfile = () => {
   return (
     <div>
       <Navbar />
-      <main className="main-content">
+      <main className="main-content pb-20">
         <div className="relative">
           <div>
             <div className="relative"></div>
             <div className="content-inner " id="page_layout">
               <div className="container mx-auto">
-              <div className="grid grid-cols-8 gap-4">
-                   <div className="w-full col-span-6 ">
+                <div className="grid grid-cols-8 gap-4">
+                  <div className="w-full col-span-6 ">
                     <div className="w-full  mx-auto">
-                      <div className="w-full h-[23.5rem] rounded-lg bg-white shadow-md">
+                      <div className="w-full h-[23.5rem]  rounded-lg bg-white shadow-md">
                         <div className="max-w-7xl mx-auto px-4 pt-[20px]">
                           <div className="relative">
                             <div className="flex justify-between items-center mb-4">
@@ -217,8 +217,8 @@ const UserProfile = () => {
                             </div>
 
                             <ContributionHeatmap />
-                            <div className="max-w-5xl -mt-10 relative mx-auto bg-white p-2">
-                              <div className="flex items-center justify-between">
+                            <div className="max-w-5xl -mt-10 relative mx-auto  bg-white p-2">
+                              <div className="flex items-start justify-between">
                                 <div className="flex gap-6">
                                   <img
                                     src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop"
@@ -280,7 +280,8 @@ const UserProfile = () => {
                                     </div>
                                   </div>
                                 </div>
-                                <button className="bg-blue-500 -mt-14 hover:bg-blue-600 text-white px-2 flex items-center gap-2 py-1 rounded-sm text-[0.9rem]">
+
+                                <button className="bg-blue-500 mt-3 hover:bg-blue-600 text-white px-2 flex items-center gap-2 py-1 rounded-sm text-[0.9rem]">
                                   Message
                                   <Image
                                     src="/images/icon/message-01.svg"
@@ -292,20 +293,14 @@ const UserProfile = () => {
                               </div>
 
                               <span className="flex flex-wrap items-center gap-1.5 -mt-[2rem] text-xs ms-[8.5rem]">
-                                <p className="text-[#979797] text-sm border border-[#979797] rounded p-0.5">
+                                <p className="text-[#b1afaf] text-sm border border-[#e3e0e0] rounded p-0.5">
                                   #Advocate
                                 </p>
-                                <p className="text-[#979797] text-sm border border-[#979797] rounded p-0.5">
+                                <p className="text-[#b1afaf] text-sm border border-[#e3e0e0] rounded p-0.5">
                                   Engineering With Precision
                                 </p>
-                                <p className="text-[#979797] text-sm border border-[#979797] rounded p-0.5">
-                                  #FreeSpeech
-                                </p>
-                                <p className="text-[#979797] text-sm border border-[#979797] rounded p-0.5">
+                                <p className="text-[#b1afaf] text-sm border border-[#e3e0e0] rounded p-0.5">
                                   Havard Graduate
-                                </p>
-                                <p className="text-[#979797] text-sm border border-[#979797] rounded p-0.5">
-                                  #BuildWithAi
                                 </p>
                               </span>
                             </div>
@@ -367,30 +362,27 @@ const UserProfile = () => {
                               onClick={() => setActiveTab(item.label)}
                               className="relative cursor-pointer flex flex-col items-center w-[80px]"
                             >
-                              {idx !== items.length - 1 && (
+                              {/* {idx !== items.length - 1 && (
                                 <span className="absolute right-[-30px] top-1/2 -translate-y-1/2 w-[1px] h-10 bg-gray-200"></span>
-                              )}
+                              )} */}
 
                               <div
-                                className={`${
-                                  idx === 0 ? "bg-[#157BFF]" : "bg-[#157BFF]/10"
-                                } w-[60px] h-[60px] flex justify-center items-center rounded-xl transition-all duration-200`}
+                                className={`${idx === 0 ? "bg-[#157BFF]" : "bg-[#157BFF]/10"
+                                  } w-[60px] h-[60px] flex justify-center items-center rounded-xl transition-all duration-200`}
                               >
                                 <span
-                                  className={`${
-                                    idx === 0
-                                      ? "text-white"
-                                      : "text-[#157BFF]/50"
-                                  } text-2xl`}
+                                  className={`${idx === 0
+                                    ? "text-white"
+                                    : "text-[#157BFF]/50"
+                                    } text-2xl`}
                                 >
                                   {item.icon}
                                 </span>
                               </div>
 
                               <p
-                                className={`${
-                                  idx === 0 ? "text-[#157BFF]" : "text-gray-500"
-                                }  font-semibold whitespace-nowrap text-center mt-2 text-xs`}
+                                className={`${idx === 0 ? "text-[#157BFF]" : "text-gray-500"
+                                  }  font-semibold whitespace-nowrap text-center mt-2 text-xs`}
                               >
                                 {item.label}
                               </p>

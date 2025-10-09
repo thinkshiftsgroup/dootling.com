@@ -50,16 +50,16 @@ const HeatmapConnections = () => {
                     <div className="bg-white rounded-2xl shadow-sm p-8">
                         {/* Header */}
                         <div className="flex justify-between items-start mb-8">
-                            <div>
+                            <div className="w-9/10">
                                 <h1 className="text-4xl font-medium text-gray-900 mb-3">Heatmap</h1>
-                                <p className="text-gray-600 text-lg leading-relaxed max-w-3xl">
-                                    Manage Connections To Your Work Apps For Automatic Contribution Tracking On<br />
+                                <p className="text-gray-600 leading-relaxed max-w-3xl">
+                                    Manage Connections To Your Work Apps For Automatic Contribution Tracking On
                                     Your Profile. We Only Track <span className="font-semibold text-gray-900">Activity Metadata</span>, Never Your Private Data Or Content.
                                 </p>
                             </div>
-                            <div className="flex items-center gap-2 bg-[#F5F6FA] text-[#FAAF40] px-4 py-2 rounded-lg">                                
-                                <Image src="/images/dootling-icon1.svg" width={28} height={28} alt='icon'/>
-                                <span className="font-medium">Browser Extension</span>
+                            <div className="flex items-center gap-1 bg-[#F5F6FA] text-[#FAAF40] px-3 py-2 rounded-lg w-3/12">                                
+                                <Image src="/images/dootling-icon1.svg" width={25} height={25} alt='icon'/>
+                                <span className="font-medium flex flex-wrap">Browser Extension</span>
                             </div>
                         </div>
 
