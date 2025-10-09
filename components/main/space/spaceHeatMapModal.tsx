@@ -61,7 +61,7 @@ const SpaceHeatMapModal = () => {
       <span>
         <button
           onClick={() => setIsOpen(true)}
-          className="bg-[#FAAF40] hover:bg-[#FAAF40]/50 text-white px-2 mt-3 flex items-center gap-2 py-1 rounded-sm text-[0.9rem]"
+          className="bg-[#FAAF40] hover:bg-[#FAAF40]/50 text-white px-2 flex items-center gap-2 py-0.5 rounded-sm text-[0.9rem]"
         >
           <svg
             width="24"
