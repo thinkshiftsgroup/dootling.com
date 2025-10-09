@@ -4,8 +4,26 @@ import { useState, FormEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Head from "next/head";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import authApi from "@/api/auth";
+import { useAuthStore } from "@/stores/useAuthStore";
+
+interface SignupResponse {
+  token: string;
+  user: {
+    id: number;
+    email: string;
+    name: string;
+  };
+}
 
 export default function SignupPage() {
+  const router = useRouter();
+  const loginUser = useAuthStore((state) => state.login);
+  // Get the state setter function for the unverified email from the store
+  const setUnverifiedEmail = useAuthStore((state) => state.setUnverifiedEmail);
+
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -18,26 +36,20 @@ export default function SignupPage() {
     email: false,
     password: false,
     terms: false,
+    api: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  const validateFullName = (name: string) => {
-    return name.trim().length >= 2;
-  };
-
-  const validateEmail = (email: string) => {
-    return emailRegex.test(email.trim());
-  };
-
-  const validatePassword = (password: string) => {
-    return password.length >= 6;
-  };
+  const validateFullName = (name: string) => name.trim().length >= 2;
+  const validateEmail = (email: string) => emailRegex.test(email.trim());
+  const validatePassword = (password: string) => password.length >= 6;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
+    setErrors((prev) => ({ ...prev, api: "" }));
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
@@ -78,24 +90,48 @@ export default function SignupPage() {
       email: !isEmailValid,
       password: !isPasswordValid,
       terms: !isTermsValid,
+      api: "",
     });
 
     if (isFullNameValid && isEmailValid && isPasswordValid && isTermsValid) {
       setIsSubmitting(true);
 
-      // Simulate API call
-      setTimeout(() => {
-        console.log("Form submitted:", formData);
-        alert("Account created successfully! Welcome to Dootling.");
-
-        setFormData({
-          fullName: "",
-          email: "",
-          password: "",
-          acceptTerms: false,
+      try {
+        const response = await authApi.post<SignupResponse>("/auth/signup", {
+          fullName: formData.fullName,
+          email: formData.email,
+          password: formData.password,
         });
+
+        if (response.data.token && response.data.user) {
+          loginUser(response.data.token, {
+            ...response.data.user,
+            name: formData.fullName,
+          });
+
+          setUnverifiedEmail(formData.email);
+
+          router.push("/confirm-code");
+        } else {
+          setErrors((prev) => ({
+            ...prev,
+            api: "Sign up failed: Invalid server response.",
+          }));
+        }
+      } catch (error) {
+        let errorMessage = "An unexpected error occurred. Please try again.";
+
+        if (axios.isAxiosError(error) && error.response) {
+          errorMessage =
+            error.response.data.message ||
+            "Registration failed. Email might be in use.";
+        }
+
+        setErrors((prev) => ({ ...prev, api: errorMessage }));
+        console.error("Sign up error:", error);
+      } finally {
         setIsSubmitting(false);
-      }, 1500);
+      }
     }
   };
 
@@ -111,10 +147,8 @@ export default function SignupPage() {
       </Head>
 
       <div className="min-h-screen flex flex-col lg:flex-row">
-        {/* Left Panel - Form */}
         <div className="w-full lg:w-1/2 bg-white flex items-center justify-center p-8 lg:p-16">
           <div className="max-w-md w-full space-y-8 form-container">
-            {/* Logo Section */}
             <div className="text-center space-y-4">
               <div className="flex items-center justify-center gap-3">
                 <Image
@@ -130,13 +164,17 @@ export default function SignupPage() {
               </p>
             </div>
 
-            {/* Signup Form */}
             <form
               onSubmit={handleSubmit}
               className="space-y-6 w-full"
               noValidate
             >
-              {/* Full Name Field */}
+              {errors.api && (
+                <div className="text-red-600 font-medium p-3 bg-red-100 border border-red-400 rounded-lg text-center">
+                  {errors.api}
+                </div>
+              )}
+
               <div>
                 <label
                   htmlFor="fullName"
@@ -166,7 +204,6 @@ export default function SignupPage() {
                 )}
               </div>
 
-              {/* Email Field */}
               <div>
                 <label
                   htmlFor="email"
@@ -195,7 +232,6 @@ export default function SignupPage() {
                 )}
               </div>
 
-              {/* Password Field */}
               <div>
                 <label
                   htmlFor="password"
@@ -225,7 +261,6 @@ export default function SignupPage() {
                 )}
               </div>
 
-              {/* Terms Checkbox */}
               <div>
                 <div className="flex items-start space-x-3">
                   <input
@@ -257,7 +292,6 @@ export default function SignupPage() {
                 )}
               </div>
 
-              {/* Submit Button */}
               <button
                 type="submit"
                 disabled={isSubmitting}
@@ -266,7 +300,6 @@ export default function SignupPage() {
                 {isSubmitting ? "SIGNING UP..." : "SIGN UP"}
               </button>
 
-              {/* Login Link */}
               <p className="text-center text-gray-900">
                 Already Have An Account?{" "}
                 <Link
