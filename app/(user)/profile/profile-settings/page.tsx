@@ -15,7 +15,7 @@ const ProfileSetting = () => {
   return (
     <div className="bg-gray-50 min-h-screen">
       <Navbar />
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto py-8">
         <div className="lg:grid block grid-cols-2 gap-4">
           <div className="bg-white rounded-lg ">
             <div className="px-6 py-4 flex items-center justify-between">

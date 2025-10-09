@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Dropdown } from "./dropDown";
 import { User, UserGear, Gear, LockSimple, SignOut } from "phosphor-react";
 import { useRouter } from "next/navigation";
+import user from "@/public/images/user/userImg.jpg"
 
 export default function UserDropdown() {
   const router = useRouter();
@@ -11,8 +12,8 @@ export default function UserDropdown() {
     <Dropdown
       trigger={
         <div className="cursor-pointer">
-          <img
-            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop"
+          <Image
+            src={user}
             width={35}
             height={35}
             alt="user"

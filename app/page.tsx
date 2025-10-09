@@ -125,11 +125,11 @@ export default function Home() {
         <div>
           <div className="position-relative"></div>
           <div className="content-inner " id="page_layout">
-            <div className="xl:max-w-[80rem] mx-auto px-4">
+            <div className="container mx-auto">
               <div className="flex flex-wrap -mx-4">
                 <div className="w-full lg:w-2/3 px-4" id="dynamicDivContainer">
                   <div id="content">
-                    {/* --- STORIES SECTION --- */}
+                 
                     <div className="flex flex-wrap pb-4">
                       <div className="w-full">
                         <div className="mb-5">
