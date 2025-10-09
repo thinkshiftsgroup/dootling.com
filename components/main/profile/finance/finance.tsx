@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import TransactionsTable from "./transactionsTable";
 import FundWalletSideModal from "./fundWallet";
 import ManageEscrowFunds from "./manageEscrow";
+import FundAllocation from "./fundAllocation";
 
 const cards = [
   {
@@ -59,6 +60,9 @@ const cards = [
 const ProfileFinance = () => {
   const [showModal, setShowModal] = useState(false);
   const [showManageFunds, setManageFunds] = useState(false);
+
+  const [showTransactions, setShowTransactions] = useState(true);
+  const [showEscrowTransactions, setShowEscrowTransactions] = useState(false);
   return (
     <div className="rounded-sm bg-white px-4 py-2">
       <div className="flex items-start justify-between gap-5 my-5">
@@ -81,7 +85,21 @@ const ProfileFinance = () => {
             </div>
 
             <div className="flex items-center justify-between mt-2">
-              <p className="text-gray-300 text-xs cursor-pointer">
+              <p
+                onClick={() => {
+                  if (card.buttonText === "Fund Wallet") {
+                    setShowTransactions((prev) => !prev);
+                  } else if (card.buttonText === "Manage Funds") {
+                    setShowEscrowTransactions((prev) => !prev);
+                  }
+                }}
+                className={`text-xs cursor-pointer transition-colors duration-200 ${
+                  (card.buttonText === "Fund Wallet" && showTransactions) ||
+                  (card.buttonText === "Manage Funds" && showEscrowTransactions)
+                    ? "text-[#157BFF]"
+                    : "text-gray-300"
+                }`}
+              >
                 All Transactions
               </p>
 
@@ -104,85 +122,90 @@ const ProfileFinance = () => {
         ))}
       </div>
 
-      <div className="rounded bg-white p-4 shadow-md my-5">
-        <div className="flex items-center justify-between mb-5 gap-5">
-          <h1 className="text-lg font-semibold text-black">All Transactions</h1>
-          <div className="text-black border bg-[#F9F9FB] text-xs font-medium justify-around border-[#D5D5D5] flex items-center rounded-md">
-            <span className="flex items-center gap-2 px-3 cursor-pointer">
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 57 66"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M28.4901 27.0768C43.0684 27.0768 54.8864 21.6223 54.8864 14.8939C54.8864 8.16542 43.0684 2.71094 28.4901 2.71094C13.9118 2.71094 2.09375 8.16542 2.09375 14.8939C2.09375 21.6223 13.9118 27.0768 28.4901 27.0768Z"
-                  stroke="black"
-                  strokeWidth="4.06098"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M2.09375 14.8828C2.1006 27.1077 10.5031 37.7273 22.3986 40.5455V57.5231C22.3986 60.8873 25.1259 63.6145 28.4901 63.6145C31.8543 63.6145 34.5816 60.8873 34.5816 57.5231V40.5455C46.4771 37.7273 54.8796 27.1077 54.8864 14.8828"
-                  stroke="black"
-                  strokeWidth="4.06098"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
-            <div className="self-stretch w-px bg-[#D5D5D5]" />
-            <span className="flex items-center gap-2 py-2 px-3">
-              <p>Filter by</p>
-            </span>
-            <div className="self-stretch w-px bg-[#D5D5D5]" />
+      {showTransactions && (
+        <div className="rounded bg-white p-4 shadow-md my-5">
+          <div className="flex items-center justify-between mb-5 gap-5">
+            <h1 className="text-lg font-semibold text-black">
+              All Transactions
+            </h1>
+            <div className="text-black border bg-[#F9F9FB] text-xs font-medium justify-around border-[#D5D5D5] flex items-center rounded-md">
+              <span className="flex items-center gap-2 px-3 cursor-pointer">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 57 66"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M28.4901 27.0768C43.0684 27.0768 54.8864 21.6223 54.8864 14.8939C54.8864 8.16542 43.0684 2.71094 28.4901 2.71094C13.9118 2.71094 2.09375 8.16542 2.09375 14.8939C2.09375 21.6223 13.9118 27.0768 28.4901 27.0768Z"
+                    stroke="black"
+                    strokeWidth="4.06098"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M2.09375 14.8828C2.1006 27.1077 10.5031 37.7273 22.3986 40.5455V57.5231C22.3986 60.8873 25.1259 63.6145 28.4901 63.6145C31.8543 63.6145 34.5816 60.8873 34.5816 57.5231V40.5455C46.4771 37.7273 54.8796 27.1077 54.8864 14.8828"
+                    stroke="black"
+                    strokeWidth="4.06098"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>
+              <div className="self-stretch w-px bg-[#D5D5D5]" />
+              <span className="flex items-center gap-2 py-2 px-3">
+                <p>Filter by</p>
+              </span>
+              <div className="self-stretch w-px bg-[#D5D5D5]" />
 
-            <span className="flex cursor-pointer items-center gap-2 py-3 px-2">
-              <p>Date</p>
-              <ChevronDown size={16} />
-            </span>
+              <span className="flex cursor-pointer items-center gap-2 py-3 px-2">
+                <p>Date</p>
+                <ChevronDown size={16} />
+              </span>
 
-            <div className="self-stretch w-px bg-[#D5D5D5]" />
+              <div className="self-stretch w-px bg-[#D5D5D5]" />
 
-            <span className="flex cursor-pointer items-center gap-2 py-3 px-2">
-              <p>Projects</p>
-              <ChevronDown size={16} />
-            </span>
+              <span className="flex cursor-pointer items-center gap-2 py-3 px-2">
+                <p>Projects</p>
+                <ChevronDown size={16} />
+              </span>
 
-            <div className="self-stretch w-px bg-[#D5D5D5]" />
+              <div className="self-stretch w-px bg-[#D5D5D5]" />
 
-            <span className="flex cursor-pointer items-center gap-2 py-3 px-2">
-              <p>Transaction Status</p>
-              <ChevronDown size={16} />
-            </span>
+              <span className="flex cursor-pointer items-center gap-2 py-3 px-2">
+                <p>Transaction Status</p>
+                <ChevronDown size={16} />
+              </span>
 
-            <div className="self-stretch w-px bg-[#D5D5D5]" />
+              <div className="self-stretch w-px bg-[#D5D5D5]" />
 
-            <span className="flex cursor-pointer items-center gap-2 py-3 px-2">
-              <svg
-                width="15"
-                height="15"
-                viewBox="0 0 50 49"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M24.6619 10.3563V2.23438L14.5094 12.3868L24.6619 22.5393V14.4173C31.3828 14.4173 36.8448 19.8793 36.8448 26.6002C36.8448 33.3211 31.3828 38.7832 24.6619 38.7832C17.941 38.7832 12.4789 33.3211 12.4789 26.6002H8.41797C8.41797 35.575 15.6871 42.8441 24.6619 42.8441C33.6366 42.8441 40.9058 35.575 40.9058 26.6002C40.9058 17.6255 33.6366 10.3563 24.6619 10.3563Z"
-                  fill="#EA0234"
-                />
-              </svg>
-              <p>Reset filter</p>
-            </span>
+              <span className="flex cursor-pointer items-center gap-2 py-3 px-2">
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 50 49"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M24.6619 10.3563V2.23438L14.5094 12.3868L24.6619 22.5393V14.4173C31.3828 14.4173 36.8448 19.8793 36.8448 26.6002C36.8448 33.3211 31.3828 38.7832 24.6619 38.7832C17.941 38.7832 12.4789 33.3211 12.4789 26.6002H8.41797C8.41797 35.575 15.6871 42.8441 24.6619 42.8441C33.6366 42.8441 40.9058 35.575 40.9058 26.6002C40.9058 17.6255 33.6366 10.3563 24.6619 10.3563Z"
+                    fill="#EA0234"
+                  />
+                </svg>
+                <p>Reset filter</p>
+              </span>
+            </div>
+          </div>
+
+          <div>
+            <TransactionsTable />
           </div>
         </div>
-
-        <div>
-          <TransactionsTable />
-        </div>
-      </div>
+      )}
+      {showEscrowTransactions && <FundAllocation />}
 
       <div>
         <FundWalletSideModal
