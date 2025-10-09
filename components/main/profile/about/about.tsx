@@ -226,7 +226,7 @@ const ProfileAbout = () => {
                     </h4>
 
                     <form className="space-y-6">
-                      <div className="flex mb-6">
+                      {/* <div className="flex mb-6">
                         <div className="relative  ">
                           <Image
                             src="/images/user/11.png"
@@ -248,7 +248,7 @@ const ProfileAbout = () => {
                             className="hidden"
                           />
                         </div>
-                      </div>
+                      </div> */}
 
                       <div className="grid grid-cols-2 gap-4">
                         <div className="w-full flex flex-col gap-4">
