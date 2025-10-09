@@ -125,9 +125,9 @@ export default function LoginPage() {
             <div className="text-center space-y-4">
               <div className="flex items-center justify-center gap-3">
                 <Image
-                  src="/images/dootling.svg"
+                  src="/images/dootling-icon.svg"
                   alt="Dootling Logo"
-                  width={200}
+                  width={120}
                   height={50}
                   priority
                 />
