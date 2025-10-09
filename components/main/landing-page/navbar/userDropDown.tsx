@@ -17,7 +17,7 @@ export default function UserDropdown() {
             width={35}
             height={35}
             alt="user"
-            priority
+            // priority
             className="rounded-sm mt-1.5 cursor-pointer"
           />
         </div>
