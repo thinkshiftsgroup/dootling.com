@@ -1,16 +1,8 @@
 "use client";
 import React, { useRef, useState } from "react";
-import { Footer } from "@/components/main/landing-page/footer";
 import Navbar from "@/components/main/landing-page/navbar/navbar";
-import ActiveUsers from "@/components/main/landing-page/sidebar/activeUsers";
-import Suggestions from "@/components/main/landing-page/sidebar/suggestions";
 import Image from "next/image";
 import ContributionHeatmap from "@/components/main/landing-page/heatMap";
-import { GoShieldCheck } from "react-icons/go";
-import { GrMapLocation } from "react-icons/gr";
-import { BiMessageRoundedDetail } from "react-icons/bi";
-import { TbBrandFeedly } from "react-icons/tb";
-import { MdOutlineDashboard } from "react-icons/md";
 import { FiUsers } from "react-icons/fi";
 import { HiOutlineNewspaper } from "react-icons/hi";
 import { LuArrowUpToLine } from "react-icons/lu";
@@ -19,25 +11,12 @@ import { TbDots } from "react-icons/tb";
 
 import { FaThumbsUp, FaHeart } from "react-icons/fa";
 import { FaHandsClapping } from "react-icons/fa6";
-import { BiCommentDetail } from "react-icons/bi";
-import { BiRepost } from "react-icons/bi";
-import { LuSend } from "react-icons/lu";
-import { IoWalletOutline } from "react-icons/io5";
-import ProfileAbout from "@/components/main/profile/about";
+
+import ProfileAbout from "@/components/main/profile/about/about";
+import ProfileFinance from "@/components/main/profile/finance";
+import ProfileFeeds from "@/components/main/profile/feeds";
 
 const UserProfile = () => {
-  const galleryImages = [
-    "g1.jpg",
-    "g2.jpg",
-    "g3.jpg",
-    "g4.jpg",
-    "g5.jpg",
-    "g6.jpg",
-    "g7.jpg",
-    "g8.jpg",
-    "g9.jpg",
-  ];
-
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const [activeTab, setActiveTab] = useState("Feeds");
@@ -125,7 +104,6 @@ const UserProfile = () => {
     },
     { icon: <HiOutlineNewspaper size={30} />, label: "Finance" },
     { icon: <LuArrowUpToLine size={30} />, label: "Top Contributors" },
-    // { icon: <IoWalletOutline size={30} />, label: "Wallet" },
   ];
 
   const reactions = [
@@ -242,20 +220,6 @@ const UserProfile = () => {
                                         Streaks
                                       </p>
                                     </div>
-                                    {/* <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 flex items-center gap-2 py-1 rounded-sm text-[1.2rem]">
-                                      <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                      >
-                                        <path
-                                          fill="currentColor"
-                                          d="M18.385 9.083V8.07q.717.15 1.45.328q.732.178 1.524.378q.324.08.5.351q.177.27.122.593l-1.466 7.962q-.106.59-.553.953T18.925 19H5.152q-.59 0-1.025-.373t-.54-.944L2.025 9.72q-.056-.323.118-.605q.174-.283.498-.364q.734-.2 1.428-.356t1.373-.287V9.12l-1.188.251q-.6.126-1.22.278L4.46 17.5q.038.212.22.356t.395.144h13.85q.212 0 .394-.144t.222-.356l1.425-7.85q-.658-.171-1.306-.307t-1.275-.26M16 9.065q0-.427-.125-.829t-.394-.728q-.39-.506-.63-1.098q-.24-.59-.24-1.226q0-.401.105-.782q.105-.38.309-.74l.152-.27q.09-.177.291-.233q.201-.055.378.035t.233.289t-.035.375l-.177.294q-.13.244-.202.52t-.073.551q0 .427.154.82q.154.391.423.718q.41.468.62 1.05q.211.581.211 1.197q0 .42-.095.811q-.096.39-.26.77l-.159.326q-.09.177-.288.233t-.375-.034t-.233-.289t.035-.375l.152-.313q.112-.264.167-.53T16 9.066m-3.892 0q0-.428-.125-.83t-.395-.728q-.39-.506-.63-1.098q-.239-.59-.239-1.226q0-.401.105-.782t.309-.74l.151-.27q.091-.176.292-.232t.378.034t.232.289t-.034.375l-.177.294q-.13.244-.203.51q-.072.267-.072.542q0 .427.154.829t.423.728q.41.468.62 1.05q.21.581.21 1.197q0 .42-.094.811q-.096.39-.261.77l-.158.326q-.09.177-.288.233t-.375-.034t-.233-.289t.035-.375l.152-.313q.111-.264.167-.53t.056-.541m-3.887-.02q0-.427-.128-.819q-.127-.392-.397-.72q-.41-.486-.64-1.077q-.229-.591-.229-1.226q0-.402.102-.792t.312-.75l.157-.27q.09-.176.292-.232q.2-.056.377.034t.233.289t-.034.375l-.177.294q-.131.239-.206.508t-.075.544q0 .427.154.829t.423.728q.41.468.62 1.05q.21.581.21 1.197q0 .42-.095.811q-.095.39-.26.77l-.152.326q-.09.177-.292.233q-.2.056-.377-.034q-.177-.091-.233-.289t.035-.375l.157-.313q.112-.264.168-.54q.055-.276.055-.55"
-                                        />
-                                      </svg>
-                                      Add Progress{" "}
-                                    </button> */}
                                   </div>
                                 </div>
                                 <button className="bg-blue-500 hover:bg-blue-600 text-white px-2 mt-5 flex items-center gap-2 py-1 rounded-sm text-[0.9rem]">
@@ -344,145 +308,56 @@ const UserProfile = () => {
                           ref={scrollRef}
                           className="relative bg-white flex justify-around items-center rounded-xl shadow-sm px-6 py-4 overflow-x-auto scrollbar-hide scroll-smooth"
                         >
-                          {items.map((item, idx) => (
-                            <div
-                              key={idx}
-                              onClick={() => setActiveTab(item.label)}
-                              className="relative cursor-pointer flex flex-col items-center w-[80px]"
-                            >
-                              {idx !== items.length - 1 && (
-                                <span className="absolute right-[-30px] top-1/2 -translate-y-1/2 w-[1px] h-10 bg-gray-200"></span>
-                              )}
+                          {items.map((item, idx) => {
+                            const isActive = activeTab === item.label;
 
+                            return (
                               <div
-                                className={`${
-                                  idx === 0 ? "bg-[#157BFF]" : "bg-[#157BFF]/10"
-                                } w-[60px] h-[60px] flex justify-center items-center rounded-xl transition-all duration-200`}
+                                key={idx}
+                                onClick={() => setActiveTab(item.label)}
+                                className="relative cursor-pointer flex flex-col items-center w-[80px]"
                               >
-                                <span
-                                  className={`${
-                                    idx === 0
-                                      ? "text-white"
-                                      : "text-[#157BFF]/50"
-                                  } text-2xl`}
-                                >
-                                  {item.icon}
-                                </span>
-                              </div>
+                                {idx !== items.length - 1 && (
+                                  <span className="absolute right-[-30px] top-1/2 -translate-y-1/2 w-[1px] h-10 bg-gray-200"></span>
+                                )}
 
-                              <p
-                                className={`${
-                                  idx === 0 ? "text-[#157BFF]" : "text-gray-500"
-                                }  font-semibold whitespace-nowrap text-center mt-2 text-xs`}
-                              >
-                                {item.label}
-                              </p>
-                            </div>
-                          ))}
+                                <div
+                                  className={`${
+                                    isActive
+                                      ? "bg-[#157BFF]"
+                                      : "bg-[#157BFF]/10"
+                                  } w-[60px] h-[60px] flex justify-center items-center rounded-xl transition-all duration-200`}
+                                >
+                                  <span
+                                    className={`${
+                                      isActive
+                                        ? "text-white"
+                                        : "text-[#157BFF]/50"
+                                    } transition-colors duration-200`}
+                                  >
+                                    {item.icon}
+                                  </span>
+                                </div>
+
+                                <p
+                                  className={`${
+                                    isActive
+                                      ? "text-[#157BFF]"
+                                      : "text-gray-500"
+                                  } font-semibold whitespace-nowrap text-center mt-2 text-xs transition-colors duration-200`}
+                                >
+                                  {item.label}
+                                </p>
+                              </div>
+                            );
+                          })}
                         </div>
                       </div>
 
                       <div className="mt-6">
-                        {activeTab === "Feeds" && (
-                          <div className="rounded-lg p-5 bg-white shadow-md mb-[40px]">
-                            <div
-                              className="flex items-center
-                                                   justify-between"
-                            >
-                              <div className="flex items-center gap-2">
-                                <Image
-                                  width={100}
-                                  height={100}
-                                  alt="user"
-                                  src="/images/user/userImg.png"
-                                  className="rounded w-20 h-20 object-cover"
-                                />
-                                <div>
-                                  <h1 className="text-xl flex items-center gap-1 font-bold text-black">
-                                    John Paul{" "}
-                                    <Image
-                                      src="/images/icon/verified.svg"
-                                      alt="icon"
-                                      width={14}
-                                      height={14}
-                                    />
-                                  </h1>
-                                  <p className="text-gray-500 text-xs">
-                                    90 days ago
-                                  </p>
-                                </div>
-                              </div>
-                              <TbDots size={20} className="cursor-pointer" />
-                            </div>
-                            <h1 className="text-3xl text-black my-4">
-                              Completed milestone: "Prototype testing" in Mobile
-                              App Development
-                            </h1>
-                            <div>
-                              <Image
-                                width={100}
-                                height={100}
-                                alt="feed image"
-                                className="w-full h-32 object-cover"
-                                src="/images/page-img/pizza.jpg"
-                              />
-                            </div>
-
-                            <div className="py-2.5 my-2.5 flex items-center  justify-between border-b-[#e5e5e5] border-b">
-                              <div className="flex items-center gap-2">
-                                <div className="flex items-center">
-                                  <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-white border-2 border-white z-30">
-                                    <FaThumbsUp className="w-2.5 h-2.5" />
-                                  </div>
-                                  <div className="-ml-2 w-6 h-6 rounded-full bg-green-500 flex items-center justify-center text-white border-2 border-white z-20">
-                                    <FaHandsClapping className="w-2.5 h-2.5" />
-                                  </div>
-                                  <div className="-ml-2 w-6 h-6 rounded-full bg-rose-500 flex items-center justify-center text-white border-2 border-white z-10">
-                                    <FaHeart className="w-2.5 h-2.5" />
-                                  </div>
-                                </div>
-
-                                <span className="text-gray-700 font-medium text-sm">
-                                  293
-                                </span>
-                              </div>
-                              <div className="text-xs text-gray-500 flex items-center gap-1">
-                                <p>23 comments</p>
-                                <span className="inline-flex w-1 h-1 rounded-full bg-gray-500"></span>
-                                <p>4 reposts</p>
-                              </div>
-                            </div>
-                            <div className="flex items-center gap-[4rem]">
-                              <Image
-                                width={100}
-                                height={100}
-                                alt="user"
-                                src="/images/user/userImg.png"
-                                className="rounded w-10 h-10 object-cover"
-                              />
-                              <div className="flex items-center justify-between w-7/9">
-                                <div className="flex flex-col items-center gap-1">
-                                  <FaThumbsUp />
-                                  <p className="font-bold">Like</p>
-                                </div>
-                                <div className="flex flex-col items-center gap-1">
-                                  <BiCommentDetail />
-                                  <p className="font-bold">Comment</p>
-                                </div>
-                                <div className="flex flex-col items-center gap-1">
-                                  <BiRepost />
-                                  <p className="font-bold">Repost</p>
-                                </div>
-                                <div className="flex flex-col items-center gap-1">
-                                  <LuSend />
-                                  <p className="font-bold">Send</p>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        )}
-
+                        {activeTab === "Feeds" && <ProfileFeeds />}
                         {activeTab === "About" && <ProfileAbout />}
+                        {activeTab === "Finanace" && <ProfileFinance />}
                       </div>
                     </div>
                   </div>

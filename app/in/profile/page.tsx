@@ -23,7 +23,7 @@ import { BiCommentDetail } from "react-icons/bi";
 import { BiRepost } from "react-icons/bi";
 import { LuSend } from "react-icons/lu";
 import { IoWalletOutline } from "react-icons/io5";
-import ProfileAbout from "@/components/main/profile/about";
+import ProfileAbout from "@/components/main/profile/about/about";
 import ProfileIn from "@/components/main/profile/otherProfile";
 
 const UserProfile = () => {
