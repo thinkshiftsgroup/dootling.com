@@ -50,7 +50,7 @@ const AddHeatmapModal = () => {
             <style dangerouslySetInnerHTML={{ __html: styles }} />
             <span>
 
-                <button onClick={() => setIsOpen(true)} className="bg-[#157BFF] hover:bg-blue-600 text-white px-2 mt-3 flex items-center gap-2 py-1 rounded-sm text-[0.9rem]">
+                <button onClick={() => setIsOpen(true)} className="bg-[#157BFF] hover:bg-blue-600 cursor-pointer text-white px-2 mt-3 flex items-center gap-2 py-1 rounded-sm text-[0.9rem]">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -78,7 +78,7 @@ const AddHeatmapModal = () => {
                                         <h2 className="text-3xl font-medium text-gray-900 mb-3">Add Heatmap</h2>
                                         <button
                                             onClick={() => setIsOpen(false)}
-                                            className="text-gray-400 hover:text-gray-600 transition-colors"
+                                            className="text-gray-400 cursor-pointer hover:text-gray-600 transition-colors"
                                         >
                                             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -97,7 +97,7 @@ const AddHeatmapModal = () => {
                                             </button>
                                             <button
                                                 onClick={() => setSelectedType('financial')}
-                                                className={`px-2 py-1 rounded-sm font-medium transition-colors flex items-center gap-2 ${selectedType === 'financial'
+                                                className={`px-2 py-1 rounded-sm cursor-pointer font-medium transition-colors flex items-center gap-2 ${selectedType === 'financial'
                                                     ? ' text-gray-700'
                                                     : 'text-gray-700 hover:border-gray-300'
                                                     }`}
@@ -108,7 +108,7 @@ const AddHeatmapModal = () => {
                                             </button>
                                             <button
                                                 onClick={() => setSelectedType('work')}
-                                                className={`px-2 py-1 font-medium transition-colors flex items-center gap-2 ${selectedType === 'work'
+                                                className={`px-2 py-1 cursor-pointer font-medium transition-colors flex items-center gap-2 ${selectedType === 'work'
                                                     ? ' text-gray-700'
                                                     : ' text-gray-700 hover:border-[#157BFF]'
                                                     }`}
@@ -167,7 +167,7 @@ const AddHeatmapModal = () => {
                                             <label className="block text-sm font-medium text-[#738b9a] mb-2">
                                                 Project or Collab Link (optional)
                                             </label>
-                                            <div className="flex gap-2 mb-4 border border-[#f1f1f1] rounded-sm focus-within:outline-none focus-within:border-[#157BFF]">
+                                            <div className="flex  mb-4 border border-[#f1f1f1] rounded-sm focus-within:outline-none focus-within:border-[#157BFF]">
                                                 <input
                                                     type="text"
                                                     value={attachmentUrl}
@@ -177,7 +177,7 @@ const AddHeatmapModal = () => {
                                                 />
                                                 <button
                                                     onClick={() => setAttachmentUrl('')}
-                                                    className="px-3 text-gray-400 hover:text-[#738b9a] transition-colors"
+                                                    className="px-3 text-gray-400 cursor-pointer hover:text-[#738b9a] transition-colors"
                                                 >
                                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -188,7 +188,7 @@ const AddHeatmapModal = () => {
                                                 {/* File Upload Area */}
                                                 <div className="border border-[#f1f1f1] rounded-md text-sm p-2 my-auto text-center hover:border-[#157BFF] transition-colors cursor-pointer">
                                                     <button
-                                                        className="text-gray-600 font-medium flex items-center justify-center gap-2 mx-auto"
+                                                        className="text-gray-600 cursor-pointer font-medium flex items-center justify-center gap-2 mx-auto"
                                                     >
                                                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -211,7 +211,7 @@ const AddHeatmapModal = () => {
                                                                 </div>
                                                                 <button
                                                                     onClick={() => handleFileRemove(index)}
-                                                                    className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                                                                    className="absolute cursor-pointer -top-2 -right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
                                                                 >
                                                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -231,7 +231,7 @@ const AddHeatmapModal = () => {
                                             Peer Confirmation (Optional)
                                         </label>
                                         <select
-                                            className="w-full border border-[#f1f1f1] rounded-md text-sm p-2 focus:outline-none focus:border-blue-500 transition-colors bg-white text-gray-700"
+                                            className="w-full border cursor-pointer border-[#f1f1f1] rounded-md text-sm p-2 focus:outline-none focus:border-blue-500 transition-colors bg-white text-gray-700"
                                         >
                                             <option>Multi-Select From Collaborator</option>
                                         </select>
@@ -240,7 +240,7 @@ const AddHeatmapModal = () => {
                                         {/* Submit Button */}
                                         <button
                                             onClick={handleSubmit}
-                                            className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-8 py-1 rounded-sm transition-colors"
+                                            className="bg-blue-600 cursor-pointer hover:bg-blue-700 text-white font-medium px-8 py-1 rounded-sm transition-colors"
                                         >
                                             Submit
                                         </button>
