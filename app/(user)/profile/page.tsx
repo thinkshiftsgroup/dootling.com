@@ -323,7 +323,7 @@ const UserProfile = () => {
                       <div className="relative my-6">
                         <button
                           onClick={() => scroll("left")}
-                          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-1"
+                          className="absolute left-0 top-1/2 cursor-pointer -translate-y-1/2 z-10 p-1 group"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -345,7 +345,7 @@ const UserProfile = () => {
 
                         <button
                           onClick={() => scroll("right")}
-                          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-1"
+                          className="absolute right-0 top-1/2 cursor-pointer -translate-y-1/2 z-10 p-1 group"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -566,10 +566,10 @@ const UserProfile = () => {
                                         </small>
                                       </div>
                                       <div className="flex items-center flex-shrink-0 gap-2">
-                                        <button className="px-2 py-1 bg-blue-100 text-blue-600 rounded hover:bg-blue-200 leading-none">
+                                        <button className="px-2 py-1 cursor-pointer bg-blue-100 text-blue-600 rounded hover:bg-blue-200 leading-none">
                                           <i className="ph ph-plus text-sm"></i>
                                         </button>
-                                        <button className="px-2 py-1 bg-red-100 text-red-600 rounded hover:bg-red-200 leading-none">
+                                        <button className="px-2 py-1 cursor-pointer bg-red-100 text-red-600 rounded hover:bg-red-200 leading-none">
                                           <i className="ph ph-x text-sm"></i>
                                         </button>
                                       </div>
