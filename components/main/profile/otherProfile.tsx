@@ -1,6 +1,6 @@
 "use client";
 import Navbar from "@/components/main/landing-page/navbar/navbar";
-import ProfileVisibility from "@/components/main/profile/profileVisibility";
+import ProfileVisibility from "@/components/main/profile/about/profileVisibility";
 import Image from "next/image";
 import { User, Gear, CaretDown, PencilSimple, Plus } from "phosphor-react";
 import React, { useState } from "react";

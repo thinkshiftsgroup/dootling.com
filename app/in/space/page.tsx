@@ -1,16 +1,8 @@
 "use client";
 import React, { useRef, useState } from "react";
-import { Footer } from "@/components/main/landing-page/footer";
 import Navbar from "@/components/main/landing-page/navbar/navbar";
-import ActiveUsers from "@/components/main/landing-page/sidebar/activeUsers";
-import Suggestions from "@/components/main/landing-page/sidebar/suggestions";
 import Image from "next/image";
 import ContributionHeatmap from "@/components/main/landing-page/heatMap";
-import { GoShieldCheck } from "react-icons/go";
-import { GrMapLocation } from "react-icons/gr";
-import { BiMessageRoundedDetail } from "react-icons/bi";
-import { TbBrandFeedly } from "react-icons/tb";
-import { MdOutlineDashboard } from "react-icons/md";
 import { FiUsers } from "react-icons/fi";
 import { HiOutlineNewspaper } from "react-icons/hi";
 import { LuArrowUpToLine } from "react-icons/lu";
@@ -19,26 +11,21 @@ import { TbDots } from "react-icons/tb";
 
 import { FaThumbsUp, FaHeart } from "react-icons/fa";
 import { FaHandsClapping } from "react-icons/fa6";
+
+import ProfileFinance from "@/components/main/profile/finance";
+import ProfileFeeds from "@/components/main/profile/feeds";
+import FollowedTab from "@/components/main/profile/followed";
 import { BiCommentDetail } from "react-icons/bi";
 import { BiRepost } from "react-icons/bi";
 import { LuSend } from "react-icons/lu";
 import { IoWalletOutline } from "react-icons/io5";
+
 import ProfileAbout from "@/components/main/profile/about/about";
-import ProfileIn from "@/components/main/profile/otherProfile";
+import HeatmapConnections from "@/components/main/profile/heatMap";
+import AddHeatmapModal from "@/components/main/profile/addHeatMapModal";
+import SpaceHeatMapModal from "@/components/main/space/spaceHeatMapModal";
 
 const UserProfile = () => {
-  const galleryImages = [
-    "g1.jpg",
-    "g2.jpg",
-    "g3.jpg",
-    "g4.jpg",
-    "g5.jpg",
-    "g6.jpg",
-    "g7.jpg",
-    "g8.jpg",
-    "g9.jpg",
-  ];
-
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const [activeTab, setActiveTab] = useState("Feeds");
@@ -56,12 +43,13 @@ const UserProfile = () => {
 
   const items = [
     {
-      icon: (
+      icon: (isActive: boolean) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width={30}
           height={30}
           viewBox="0 0 20 20"
+          className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
         >
           <path
             fill="currentColor"
@@ -72,12 +60,13 @@ const UserProfile = () => {
       label: "Feeds",
     },
     {
-      icon: (
+      icon: (isActive: boolean) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="30"
-          height="30"
+          width={30}
+          height={30}
           viewBox="0 0 32 32"
+          className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
         >
           <path
             fill="currentColor"
@@ -91,29 +80,36 @@ const UserProfile = () => {
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width={30}
-          height={30}
+          width="30"
+          height="30"
           viewBox="0 0 24 24"
         >
           <path
-            fill="none"
-            stroke="currentColor"
-            strokeLinecap="square"
-            strokeWidth={2}
-            d="M16 20v-1a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v1M12.5 7a4 4 0 1 1-8 0a4 4 0 0 1 8 0Zm3 4a4 4 0 0 0 0-8M23 20v-1a4 4 0 0 0-4-4"
-          ></path>
+            fill="currentColor"
+            d="M18.385 9.083V8.07q.717.15 1.45.328q.732.178 1.524.378q.324.08.5.351q.177.27.122.593l-1.466 7.962q-.106.59-.553.953T18.925 19H5.152q-.59 0-1.025-.373t-.54-.944L2.025 9.72q-.056-.323.118-.605q.174-.283.498-.364q.734-.2 1.428-.356t1.373-.287V9.12l-1.188.251q-.6.126-1.22.278L4.46 17.5q.038.212.22.356t.395.144h13.85q.212 0 .394-.144t.222-.356l1.425-7.85q-.658-.171-1.306-.307t-1.275-.26M16 9.065q0-.427-.125-.829t-.394-.728q-.39-.506-.63-1.098q-.24-.59-.24-1.226q0-.401.105-.782q.105-.38.309-.74l.152-.27q.09-.177.291-.233q.201-.055.378.035t.233.289t-.035.375l-.177.294q-.13.244-.202.52t-.073.551q0 .427.154.82q.154.391.423.718q.41.468.62 1.05q.211.581.211 1.197q0 .42-.095.811q-.096.39-.26.77l-.159.326q-.09.177-.288.233t-.375-.034t-.233-.289t.035-.375l.152-.313q.112-.264.167-.53T16 9.066m-3.892 0q0-.428-.125-.83t-.395-.728q-.39-.506-.63-1.098q-.239-.59-.239-1.226q0-.401.105-.782t.309-.74l.151-.27q.091-.176.292-.232t.378.034t.232.289t-.034.375l-.177.294q-.13.244-.203.51q-.072.267-.072.542q0 .427.154.829t.423.728q.41.468.62 1.05q.21.581.21 1.197q0 .42-.094.811q-.096.39-.261.77l-.158.326q-.09.177-.288.233t-.375-.034t-.233-.289t.035-.375l.152-.313q.111-.264.167-.53t.056-.541m-3.887-.02q0-.427-.128-.819q-.127-.392-.397-.72q-.41-.486-.64-1.077q-.229-.591-.229-1.226q0-.402.102-.792t.312-.75l.157-.27q.09-.176.292-.232q.2-.056.377.034t.233.289t-.034.375l-.177.294q-.131.239-.206.508t-.075.544q0 .427.154.829t.423.728q.41.468.62 1.05q.21.581.21 1.197q0 .42-.095.811q-.095.39-.26.77l-.152.326q-.09.177-.292.233q-.2.056-.377-.034q-.177-.091-.233-.289t.035-.375l.157-.313q.112-.264.168-.54q.055-.276.055-.55"
+          />
         </svg>
+      ),
+      label: "Heatmap",
+    },
+    // { icon: <FiUsers size={30} />, label: "Followed" },
+    {
+      icon: (isActive: boolean) => (
+        <FiUsers
+          size={30}
+          className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
+        />
       ),
       label: "Followed",
     },
-    { icon: <FiUsers size={30} />, label: "About" },
     {
-      icon: (
+      icon: (isActive: boolean) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width={30}
           height={30}
           viewBox="0 0 512 512"
+          className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
         >
           <path
             fill="none"
@@ -127,41 +123,47 @@ const UserProfile = () => {
             fill="currentColor"
             d="M98.08 431.87a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m0-80a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m0-80a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m0-80a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m0-80a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m80 240a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m0-80a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m0-80a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m0-80a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m80 320a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m0-80a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m0-80a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79"
           ></path>
-          <ellipse
-            cx={256}
-            cy={176}
-            fill="currentColor"
-            rx={15.95}
-            ry={16.03}
-            transform="rotate(-45 255.99 175.996)"
-          ></ellipse>
-          <path
-            fill="currentColor"
-            d="M258.08 111.87a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79M400 400a16 16 0 1 0 16 16a16 16 0 0 0-16-16m0-80a16 16 0 1 0 16 16a16 16 0 0 0-16-16m0-80a16 16 0 1 0 16 16a16 16 0 0 0-16-16m-64 160a16 16 0 1 0 16 16a16 16 0 0 0-16-16m0-80a16 16 0 1 0 16 16a16 16 0 0 0-16-16m0-80a16 16 0 1 0 16 16a16 16 0 0 0-16-16"
-          ></path>
         </svg>
       ),
       label: "Spaces",
     },
     {
-      icon: (
+      icon: (isActive: boolean) => (
         <svg
-          xmlns="http://www.w3.org/2000/svg"
           width={30}
           height={30}
-          viewBox="0 0 24 24"
+          viewBox="0 0 163 163"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
         >
           <path
-            fill="none"
+            d="M0 135.562H162.676M0 157.252H162.676M27.1126 43.3795V27.112H43.3802M119.295 27.112H135.563V43.3795M27.1126 75.9146V92.1822H43.3802M119.295 92.1822H135.563V75.9146M81.3378 81.3372C75.5852 81.3372 70.0683 79.052 66.0006 74.9843C61.9329 70.9166 59.6477 65.3996 59.6477 59.6471C59.6477 53.8945 61.9329 48.3776 66.0006 44.3099C70.0683 40.2422 75.5852 37.957 81.3378 37.957C87.0904 37.957 92.6073 40.2422 96.675 44.3099C100.743 48.3776 103.028 53.8945 103.028 59.6471C103.028 65.3996 100.743 70.9166 96.675 74.9843C92.6073 79.052 87.0904 81.3372 81.3378 81.3372ZM16.2676 5.42188H146.408C149.284 5.42188 152.043 6.56447 154.077 8.59831C156.11 10.6322 157.253 13.3906 157.253 16.2669V103.027C157.253 105.904 156.11 108.662 154.077 110.696C152.043 112.73 149.284 113.872 146.408 113.872H16.2676C13.3913 113.872 10.6328 112.73 8.59896 110.696C6.56512 108.662 5.42252 105.904 5.42252 103.027V16.2669C5.42252 13.3906 6.56512 10.6322 8.59896 8.59831C10.6328 6.56447 13.3913 5.42188 16.2676 5.42188Z"
             stroke="currentColor"
-            strokeWidth={2}
-            d="M12 5v18M4 13l8-8l8 8M2 2h20"
-          ></path>
+            strokeWidth="10.845"
+          />
         </svg>
+      ),
+      label: "Finance",
+    },
+    {
+      icon: (isActive: boolean) => (
+        <HiOutlineNewspaper
+          size={30}
+          className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
+        />
+      ),
+      label: "Account",
+    },
+    {
+      icon: (isActive: boolean) => (
+        <LuArrowUpToLine
+          size={30}
+          className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
+        />
       ),
       label: "Top Contributors",
     },
-    // { icon: <IoWalletOutline size={30} />, label: "Wallet" },
   ];
 
   const reactions = [
@@ -216,19 +218,21 @@ const UserProfile = () => {
                               </h2>
                             </div>
 
-                            <ContributionHeatmap />
+                            <ContributionHeatmap pageType={"space"} />
                             <div className="max-w-5xl -mt-10 relative mx-auto  bg-white p-2">
                               <div className="flex items-start justify-between">
                                 <div className="flex gap-6">
-                                  <img
-                                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop"
+                                  <Image
+                                    width={100}
+                                    height={100}
+                                    src="/images/user/orgImg.png"
                                     alt="Profile"
                                     className="w-28 h-28 rounded-lg object-cover"
                                   />
 
                                   <div>
                                     <h1 className="text-3xl flex mt-1.5 items-center gap-1 font-bold text-black">
-                                      John Paul{" "}
+                                      Thinkshifts HQ
                                       <Image
                                         src="/images/icon/verified.svg"
                                         alt="icon"
@@ -253,7 +257,7 @@ const UserProfile = () => {
                                   </div>
                                 </div>
                                 <div className="flex items-start justify-between h-28">
-                                  <div className="flex text-black items-center mt-1.5 gap-8">
+                                  <div className="flex text-black items-center mt-1.5 gap-3">
                                     <div className="text-center">
                                       <p className="text-[20px] font-bold">
                                         444
@@ -280,16 +284,7 @@ const UserProfile = () => {
                                     </div>
                                   </div>
                                 </div>
-
-                                <button className="bg-blue-500 mt-3 hover:bg-blue-600 text-white px-2 flex items-center gap-2 py-1 rounded-sm text-[0.9rem]">
-                                  Message
-                                  <Image
-                                    src="/images/icon/message-01.svg"
-                                    alt="icon"
-                                    width={20}
-                                    height={20}
-                                  />
-                                </button>
+                                <SpaceHeatMapModal />
                               </div>
 
                               <span className="flex flex-wrap items-center gap-1.5 -mt-[2rem] text-xs ms-[8.5rem]">
@@ -310,7 +305,7 @@ const UserProfile = () => {
                       <div className="relative my-6">
                         <button
                           onClick={() => scroll("left")}
-                          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white p-1"
+                          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-1"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -332,7 +327,7 @@ const UserProfile = () => {
 
                         <button
                           onClick={() => scroll("right")}
-                          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white p-1"
+                          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-1"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -356,45 +351,58 @@ const UserProfile = () => {
                           ref={scrollRef}
                           className="relative bg-white flex justify-around items-center rounded-xl shadow-sm px-6 py-4 overflow-x-auto scrollbar-hide scroll-smooth"
                         >
-                          {items.map((item, idx) => (
-                            <div
-                              key={idx}
-                              onClick={() => setActiveTab(item.label)}
-                              className="relative cursor-pointer flex flex-col items-center w-[80px]"
-                            >
-                              {/* {idx !== items.length - 1 && (
-                                <span className="absolute right-[-30px] top-1/2 -translate-y-1/2 w-[1px] h-10 bg-gray-200"></span>
-                              )} */}
-
+                          {items.map((item, idx) => {
+                            const isActive = activeTab === item.label;
+                            return (
                               <div
-                                className={`${idx === 0 ? "bg-[#157BFF]" : "bg-[#157BFF]/10"
-                                  } w-[60px] h-[60px] flex justify-center items-center rounded-xl transition-all duration-200`}
+                                key={idx}
+                                onClick={() => setActiveTab(item.label)}
+                                className="relative cursor-pointer flex flex-col items-center w-[80px]"
                               >
-                                <span
-                                  className={`${idx === 0
-                                    ? "text-white"
-                                    : "text-[#157BFF]/50"
-                                    } text-2xl`}
-                                >
-                                  {item.icon}
-                                </span>
-                              </div>
+                                {/* {idx !== items.length - 1 && (
+                                  <span className="absolute right-[-30px] top-1/2 -translate-y-1/2 w-[1px] h-10 bg-gray-200"></span>
+                                )} */}
 
-                              <p
-                                className={`${idx === 0 ? "text-[#157BFF]" : "text-gray-500"
-                                  }  font-semibold whitespace-nowrap text-center mt-2 text-xs`}
-                              >
-                                {item.label}
-                              </p>
-                            </div>
-                          ))}
+                                <div
+                                  className={`${
+                                    isActive
+                                      ? "bg-[#157BFF]"
+                                      : "bg-[#157BFF]/10"
+                                  } w-[60px] h-[60px] flex justify-center items-center rounded-xl transition-all duration-200`}
+                                >
+                                  <span className="transition-colors duration-200">
+                                    {typeof item.icon === "function"
+                                      ? item.icon(isActive)
+                                      : item.icon}
+                                  </span>
+                                </div>
+
+                                <p
+                                  className={`${
+                                    isActive
+                                      ? "text-[#157BFF]"
+                                      : "text-gray-500"
+                                  } font-semibold whitespace-nowrap text-center mt-2 text-xs transition-colors duration-200`}
+                                >
+                                  {item.label}
+                                </p>
+                              </div>
+                            );
+                          })}
                         </div>
                       </div>
 
                       <div className="mt-6">
+                        {activeTab === "Feeds" && <ProfileFeeds />}
+                        {activeTab === "Account" && <ProfileAbout />}
+                        {activeTab === "Finanace" && <ProfileFinance />}
+                        {activeTab === "Followed" && <FollowedTab />}
                         {activeTab === "Feeds" && (
                           <div className="rounded-lg p-5 bg-white shadow-md mb-[40px]">
-                            <div className="flex items-center justify-between">
+                            <div
+                              className="flex items-center
+                                                   justify-between"
+                            >
                               <div className="flex items-center gap-2">
                                 <Image
                                   width={100}
@@ -466,7 +474,7 @@ const UserProfile = () => {
                                 src="/images/user/userImg.png"
                                 className="rounded w-10 h-10 object-cover"
                               />
-                              <div className="flex items-center justify-between  w-7/9">
+                              <div className="flex items-center justify-between w-7/9">
                                 <div className="flex flex-col items-center gap-1">
                                   <FaThumbsUp />
                                   <p className="font-bold">Like</p>
@@ -487,8 +495,8 @@ const UserProfile = () => {
                             </div>
                           </div>
                         )}
-
-                        {activeTab === "About" && <ProfileIn />}
+                        {activeTab === "Account" && <ProfileAbout />}
+                        {activeTab === "Heatmap" && <HeatmapConnections />}
                       </div>
                     </div>
                   </div>

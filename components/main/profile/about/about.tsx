@@ -10,6 +10,9 @@ import {
 } from "phosphor-react";
 import React, { useState } from "react";
 import ProfileVisibility from "./profileVisibility";
+import ChangePassword from "./changePassword";
+import EmailSms from "./emailSms";
+import ManageContact from "./manageContact";
 
 const mainBlue = "#1578ff";
 const mainText = "#2b2d42";
@@ -183,6 +186,9 @@ const ProfileAbout = () => {
                           id: "v-pills-privacy-tab",
                         },
                         { label: "Block List", id: "v-pills-block-tab" },
+                        { label: "Manage Contact", id: "manage-contact" },
+                        { label: "Change Password", id: "change-password" },
+                        { label: "Email and SMS", id: "email-sms" },
                         { label: "Export Data", id: "v-pills-export-tab" },
                       ].map((item, idx) => (
                         <button
@@ -214,171 +220,13 @@ const ProfileAbout = () => {
                     activeTab === "personal-info" ? "block" : "hidden"
                   }`}
                 >
-                  {/* <div className="flex items-center justify-between mb-4">
-                    <h4 className="text-lg font-semibold text-[#2b2d42]">
-                      Personal Info
-                    </h4>
-                    <button
-                      className="flex items-center justify-center w-9 h-9 bg-[#1578ff] text-white rounded-sm hover:bg-[#1578ff]/90 transition"
-                      aria-label="Edit personal info"
-                    >
-                      <PencilSimple size={18} />
-                    </button>
-                  </div>
-
-                  <hr className="border-gray-200 mb-3" />
-
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="space-y-3">
-                      <div>
-                        <h5 className="font-semibold text-[#2b2d4a]">
-                          About Me:
-                        </h5>
-                        <p className="text-sm text-[#738b9a]">
-                          Hi, I’m James, I’m 36 and I work as a Digital Designer
-                          for the “Daydreams” Agency in Pier 56.
-                        </p>
-                      </div>
-                      <div>
-                        <h5 className="font-semibold text-[#2b2d4a]">Email:</h5>
-                        <p className="text-sm text-[#738b9a]">
-                          Bnijohn@gmail.com
-                        </p>
-                      </div>
-                      <div>
-                        <h5 className="font-semibold text-[#2b2d4a]">
-                          Mobile:
-                        </h5>
-                        <p className="text-sm text-[#738b9a]">
-                          (001) 4544 565 456
-                        </p>
-                      </div>
-                      <div>
-                        <h5 className="font-semibold text-[#2b2d4a]">
-                          Address:
-                        </h5>
-                        <p className="text-sm text-[#738b9a]">
-                          United States of America
-                        </p>
-                      </div>
-                      <div>
-                        <h5 className="font-semibold text-[#2b2d4a]">
-                          Social Link:
-                        </h5>
-                        <p className="text-sm text-[#738b9a]">
-                          www.bootstrap.com
-                        </p>
-                      </div>
-                      <div>
-                        <h5 className="font-semibold text-[#2b2d4a]">
-                          Birth Date:
-                        </h5>
-                        <p className="text-sm text-[#738b9a]">24 January</p>
-                      </div>
-                      <div>
-                        <h5 className="font-semibold text-[#2b2d4a]">
-                          Birth Year:
-                        </h5>
-                        <p className="text-sm text-[#738b9a]">1994</p>
-                      </div>
-                    </div>
-
-                    <div className="space-y-3">
-                      <div>
-                        <h5 className="font-semibold text-[#2b2d4a]">
-                          Birthplace:
-                        </h5>
-                        <p className="text-sm text-[#738b9a]">
-                          Austin, Texas, USA
-                        </p>
-                      </div>
-                      <div>
-                        <h5 className="font-semibold text-[#2b2d4a]">
-                          Lives in:
-                        </h5>
-                        <p className="text-sm text-[#738b9a]">
-                          San Francisco, California, USA
-                        </p>
-                      </div>
-                      <div>
-                        <h5 className="font-semibold text-[#2b2d4a]">
-                          Gender:
-                        </h5>
-                        <p className="text-sm text-[#738b9a]">Female</p>
-                      </div>
-                      <div>
-                        <h5 className="font-semibold text-[#2b2d4a]">
-                          Interested in:
-                        </h5>
-                        <p className="text-sm text-[#738b9a]">Designing</p>
-                      </div>
-                      <div>
-                        <h5 className="font-semibold text-[#2b2d4a]">
-                          Language:
-                        </h5>
-                        <p className="text-sm text-[#738b9a]">
-                          English, French
-                        </p>
-                      </div>
-                      <div>
-                        <h5 className="font-semibold text-[#2b2d4a]">
-                          Joined:
-                        </h5>
-                        <p className="text-sm text-[#738b9a]">
-                          April 31st, 2014
-                        </p>
-                      </div>
-                      <div>
-                        <h5 className="font-semibold text-[#2b2d4a]">
-                          Status:
-                        </h5>
-                        <p className="text-sm text-[#738b9a]">Married</p>
-                      </div>
-                      <div>
-                        <h5 className="font-semibold text-[#2b2d4a]">
-                          Phone Number:
-                        </h5>
-                        <p className="text-sm text-[#738b9a]">
-                          (044) 555 - 4369 - 8957
-                        </p>
-                      </div>
-                      <div>
-                        <h5 className="font-semibold text-[#2b2d4a]">
-                          Political Incline:
-                        </h5>
-                        <p className="text-sm text-[#738b9a]">Democrat</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <h4 className="mt-8 mb-2 text-lg font-semibold text-[#2b2d42]">
-                    Websites and Social Links
-                  </h4>
-                  <hr className="border-gray-200 mb-2" />
-
-                  <div className="grid grid-cols-2 gap-2">
-                    <div>
-                      <h5 className="font-semibold text-[#2b2d4a]">Website:</h5>
-                      <p className="text-sm text-[#738b9a]">
-                        www.bootstrap.com
-                      </p>
-                    </div>
-                    <div>
-                      <h5 className="font-semibold text-[#2b2d4a]">
-                        Social Link:
-                      </h5>
-                      <p className="text-sm text-[#738b9a]">
-                        www.bootstrap.com
-                      </p>
-                    </div>
-                  </div> */}
                   <div>
                     <h4 className="text-lg font-semibold text-gray-800 mb-6">
                       Personal Information
                     </h4>
 
                     <form className="space-y-6">
-                      {/* <div className="flex mb-6">
+                      <div className="flex mb-6">
                         <div className="relative  ">
                           <Image
                             src="/images/user/11.png"
@@ -400,7 +248,7 @@ const ProfileAbout = () => {
                             className="hidden"
                           />
                         </div>
-                      </div> */}
+                      </div>
 
                       <div className="grid grid-cols-2 gap-4">
                         <div className="w-full flex flex-col gap-4">
@@ -576,7 +424,7 @@ const ProfileAbout = () => {
                     </form>
                   </div>
                 </div>
-                {/* <div
+                <div
                   id="hobbies-interests"
                   role="tabpanel"
                   className={`w-full bg-white rounded-sm transition-all ${
@@ -1123,7 +971,11 @@ const ProfileAbout = () => {
                       once we are able to fulfill your request.
                     </p>
                   </div>
-                </div> */}
+                </div>
+
+                <ChangePassword activeTab={activeTab} />
+                <EmailSms activeTab={activeTab}/>
+                <ManageContact activeTab={activeTab}/>
               </div>
             </div>
           </div>
