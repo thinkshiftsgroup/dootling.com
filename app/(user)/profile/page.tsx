@@ -393,7 +393,7 @@ const UserProfile = () => {
                       <div className="mt-6">
                         {activeTab === "Feeds" && <ProfileFeeds />}
                         {activeTab === "Account" && <ProfileAbout />}
-                        {activeTab === "Finanace" && <ProfileFinance />}
+                        {activeTab === "Finance" && <ProfileFinance />}
                         {activeTab === "Followed" && <FollowedTab />}
                         {activeTab === "Feeds" && (
                           <div className="rounded-lg p-5 bg-white shadow-md mb-[40px]">
