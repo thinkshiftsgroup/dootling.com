@@ -179,9 +179,9 @@ const Navbar = () => {
                     />
                   </svg>
 
-                  <span className="absolute -top-[3px] -right-1 flex items-center justify-center w-[16px] h-[16px] bg-red-600 text-[10px] rounded-full text-white">
+                  {/* <span className="absolute -top-[3px] -right-1 flex items-center justify-center w-[16px] h-[16px] bg-red-600 text-[10px] rounded-full text-white">
                     3
-                  </span>
+                  </span> */}
                 </div>
                 <p className="text-black text-xs">Account</p>
               </div>
