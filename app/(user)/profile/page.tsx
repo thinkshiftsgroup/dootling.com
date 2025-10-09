@@ -23,6 +23,7 @@ import { IoWalletOutline } from "react-icons/io5";
 import ProfileAbout from "@/components/main/profile/about/about";
 import HeatmapConnections from "@/components/main/profile/heatMap";
 import AddHeatmapModal from "@/components/main/profile/addHeatMapModal";
+import ProjectDashboard  from "@/components/main/profile/projects";
 
 const UserProfile = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -76,12 +77,13 @@ const UserProfile = () => {
       label: "Projects",
     },
     {
-      icon: (
+      icon: (isActive: boolean) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="30"
-          height="30"
+          width={30}
+          height={30}
           viewBox="0 0 24 24"
+          className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
         >
           <path
             fill="currentColor"
@@ -171,6 +173,25 @@ const UserProfile = () => {
     { icon: <FaHandsClapping className="text-yellow-500" />, label: "Clap" },
     { icon: <FaFire className="text-orange-500" />, label: "Fire" },
     { icon: <FaSmile className="text-amber-500" />, label: "Nice" },
+  ];
+
+  const myProjects = [
+    {
+      id: 1,
+      imageSrc: "/images/project.png",
+      isPrivate: true,
+      projectName: "E-commerce App",
+      collaborators: 12,
+      createdDate: "10/15/2025"
+    },
+    {
+      id: 2,
+      imageSrc: "/images/project.png",
+      isPrivate: false,
+      projectName: "Mobile App",
+      collaborators: 5,
+      createdDate: "09/20/2025"
+    }
   ];
 
   return (
@@ -361,11 +382,10 @@ const UserProfile = () => {
                                 )} */}
 
                                 <div
-                                  className={`${
-                                    isActive
+                                  className={`${isActive
                                       ? "bg-[#157BFF]"
                                       : "bg-[#157BFF]/10"
-                                  } w-[60px] h-[60px] flex justify-center items-center rounded-xl transition-all duration-200`}
+                                    } w-[60px] h-[60px] flex justify-center items-center rounded-xl transition-all duration-200`}
                                 >
                                   <span className="transition-colors duration-200">
                                     {typeof item.icon === "function"
@@ -375,11 +395,10 @@ const UserProfile = () => {
                                 </div>
 
                                 <p
-                                  className={`${
-                                    isActive
+                                  className={`${isActive
                                       ? "text-[#157BFF]"
                                       : "text-gray-500"
-                                  } font-semibold whitespace-nowrap text-center mt-2 text-xs transition-colors duration-200`}
+                                    } font-semibold whitespace-nowrap text-center mt-2 text-xs transition-colors duration-200`}
                                 >
                                   {item.label}
                                 </p>
@@ -494,6 +513,7 @@ const UserProfile = () => {
                         )}
                         {activeTab === "Account" && <ProfileAbout />}
                         {activeTab === "Heatmap" && <HeatmapConnections />}
+                        {activeTab === "Projects" && <ProjectDashboard projects={myProjects} />}
                       </div>
                     </div>
                   </div>
