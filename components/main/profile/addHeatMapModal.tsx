@@ -341,7 +341,7 @@ const AddHeatmapModal = () => {
 
                     <button
                       onClick={handleSubmit}
-                      className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-8 py-1 rounded-sm transition-colors"
+                      className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-8 py-3 rounded-sm transition-colors"
                     >
                       Submit
                     </button>

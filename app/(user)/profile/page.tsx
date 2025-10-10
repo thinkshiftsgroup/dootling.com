@@ -23,6 +23,7 @@ import { IoWalletOutline } from "react-icons/io5";
 import ProfileAbout from "@/components/main/profile/about/about";
 import HeatmapConnections from "@/components/main/profile/heatMap";
 import AddHeatmapModal from "@/components/main/profile/addHeatMapModal";
+import ProjectDashboard from "@/components/main/profile/project/projects";
 
 const UserProfile = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -79,8 +80,8 @@ const UserProfile = () => {
       icon: (isActive: boolean) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="30"
-          height="30"
+          width={30}
+          height={30}
           viewBox="0 0 24 24"
           className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
         >
@@ -148,6 +149,12 @@ const UserProfile = () => {
     },
     {
       icon: (isActive: boolean) => (
+        <svg className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`} xmlns="http://www.w3.org/2000/svg" width={30} height={30} viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeLinecap="round" strokeWidth={1.5}><path d="M14 21h-2c-4.714 0-7.071 0-8.536-1.465C2 18.072 2 15.715 2 11V7.944c0-1.816 0-2.724.38-3.406A3 3 0 0 1 3.538 3.38C4.22 3 5.128 3 6.944 3C8.108 3 8.69 3 9.2 3.191c1.163.436 1.643 1.493 2.168 2.542L12 7M8 7h8.75c2.107 0 3.16 0 3.917.506a3 3 0 0 1 .827.827C22 9.09 22 10.143 22 12.25q.001.957-.005 1.75"></path><path d="M17.686 20.432a1.941 1.941 0 0 0 2.746-2.746l-1.716-1.716a1.94 1.94 0 0 0-2.639-.098m.237-2.303a1.941 1.941 0 0 0-2.745 2.745l1.715 1.715a1.94 1.94 0 0 0 2.64.1"></path></g></svg>
+      ),
+      label: "Links",
+    },
+    {
+      icon: (isActive: boolean) => (
         <HiOutlineNewspaper
           size={30}
           className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
@@ -172,6 +179,25 @@ const UserProfile = () => {
     { icon: <FaHandsClapping className="text-yellow-500" />, label: "Clap" },
     { icon: <FaFire className="text-orange-500" />, label: "Fire" },
     { icon: <FaSmile className="text-amber-500" />, label: "Nice" },
+  ];
+
+  const myProjects = [
+    {
+      id: 1,
+      imageSrc: "/images/project.png",
+      isPrivate: true,
+      projectName: "E-commerce App",
+      collaborators: 12,
+      createdDate: "10/15/2025"
+    },
+    {
+      id: 2,
+      imageSrc: "/images/project.png",
+      isPrivate: false,
+      projectName: "Mobile App",
+      collaborators: 5,
+      createdDate: "09/20/2025"
+    }
   ];
 
   return (
@@ -303,7 +329,7 @@ const UserProfile = () => {
                       <div className="relative my-6">
                         <button
                           onClick={() => scroll("left")}
-                          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-1"
+                          className="absolute left-0 top-1/2 cursor-pointer -translate-y-1/2 z-10 p-1 group"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -325,7 +351,7 @@ const UserProfile = () => {
 
                         <button
                           onClick={() => scroll("right")}
-                          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-1"
+                          className="absolute right-0 top-1/2 cursor-pointer -translate-y-1/2 z-10 p-1 group"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -362,11 +388,10 @@ const UserProfile = () => {
                                 )} */}
 
                                 <div
-                                  className={`${
-                                    isActive
-                                      ? "bg-[#157BFF]"
-                                      : "bg-[#157BFF]/10"
-                                  } w-[60px] h-[60px] flex justify-center items-center rounded-xl transition-all duration-200`}
+                                  className={`${isActive
+                                    ? "bg-[#157BFF]"
+                                    : "bg-[#157BFF]/10"
+                                    } w-[60px] h-[60px] flex justify-center items-center rounded-xl transition-all duration-200`}
                                 >
                                   <span className="transition-colors duration-200">
                                     {typeof item.icon === "function"
@@ -376,11 +401,10 @@ const UserProfile = () => {
                                 </div>
 
                                 <p
-                                  className={`${
-                                    isActive
-                                      ? "text-[#157BFF]"
-                                      : "text-gray-500"
-                                  } font-semibold whitespace-nowrap text-center mt-2 text-xs transition-colors duration-200`}
+                                  className={`${isActive
+                                    ? "text-[#157BFF]"
+                                    : "text-gray-500"
+                                    } font-semibold whitespace-nowrap text-center mt-2 text-xs transition-colors duration-200`}
                                 >
                                   {item.label}
                                 </p>
@@ -495,6 +519,7 @@ const UserProfile = () => {
                         )}
                         {activeTab === "Account" && <ProfileAbout />}
                         {activeTab === "Heatmap" && <HeatmapConnections />}
+                        {activeTab === "Projects" && <ProjectDashboard projects={myProjects} />}
                       </div>
                     </div>
                   </div>
@@ -547,10 +572,10 @@ const UserProfile = () => {
                                         </small>
                                       </div>
                                       <div className="flex items-center flex-shrink-0 gap-2">
-                                        <button className="px-2 py-1 bg-blue-100 text-blue-600 rounded hover:bg-blue-200 leading-none">
+                                        <button className="px-2 py-1 cursor-pointer bg-blue-100 text-blue-600 rounded hover:bg-blue-200 leading-none">
                                           <i className="ph ph-plus text-sm"></i>
                                         </button>
-                                        <button className="px-2 py-1 bg-red-100 text-red-600 rounded hover:bg-red-200 leading-none">
+                                        <button className="px-2 py-1 cursor-pointer bg-red-100 text-red-600 rounded hover:bg-red-200 leading-none">
                                           <i className="ph ph-x text-sm"></i>
                                         </button>
                                       </div>

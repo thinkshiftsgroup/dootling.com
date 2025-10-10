@@ -44,7 +44,7 @@ const HeatmapConnections = () => {
     ];
 
     return (
-        <div className="tab-pane fade container mx-auto" id="about" role="tabpanel">
+        <div className="tab-pane fade container mx-auto" id="heatmap" role="tabpanel">
             <div className=" bg-gray-50">
                 <div className="max-w-5xl mx-auto">
                     <div className="bg-white rounded-2xl shadow-sm p-8">
@@ -87,7 +87,7 @@ const HeatmapConnections = () => {
                                             <p className="text-gray-500 mb-1">Granted {connection.granted}</p>
                                             <p className="text-gray-400">{connection.contributions}</p>
                                         </div>
-                                        <button className="text-blue-600 hover:text-blue-700 font-medium transition-colors">
+                                        <button className="text[#157BFF] hover:text-blue-700 font-medium transition-colors">
                                             Revoke
                                         </button>
                                     </div>
@@ -96,7 +96,7 @@ const HeatmapConnections = () => {
                         </div>
 
                         <div className="flex justify-center mt-8">
-                            <button className="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded-sm flex items-center gap-2 transition-colors text-[0.9rem]">
+                            <button className="bg-[#157BFF] hover:bg-blue-600 text-white px-2 py-1 rounded-sm flex items-center gap-2 transition-colors text-[0.9rem]">
                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                                 </svg>
