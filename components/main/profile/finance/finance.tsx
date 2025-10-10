@@ -100,7 +100,11 @@ const ProfileFinance = () => {
                     : "text-gray-300"
                 }`}
               >
-                All Transactions
+                {card.buttonText === "Fund Wallet"
+                  ? "All Transactions"
+                  : card.buttonText === "Manage Funds"
+                  ? "All Transactions"
+                  : "All Payout Transactions"}
               </p>
 
               {card.showButton && (
