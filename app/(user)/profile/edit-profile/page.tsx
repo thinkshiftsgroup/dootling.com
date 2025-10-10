@@ -5,7 +5,7 @@ import { Pencil } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { useProfileStore } from "@/stores/useProfileStore";
 import useProfileActions from "@/hooks/useProfileApi";
-
+import { toast } from "sonner";
 const EditProfile = () => {
   const [activeTab, setActiveTab] = useState("personal-information");
   const { profile, isLoading, isLoaded } = useProfileStore();
@@ -64,9 +64,9 @@ const EditProfile = () => {
     e.preventDefault();
     try {
       await updateProfileDetails(formData);
-      alert("Profile updated successfully!");
+      toast.success("Profile updated successfully! 🎉");
     } catch (error) {
-      alert("Failed to update profile.");
+      toast.error("Failed to update profile.");
     }
   };
 

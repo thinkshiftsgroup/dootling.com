@@ -13,7 +13,7 @@ import Head from "next/head";
 import { useRouter } from "next/navigation";
 import authApi from "@/api/auth";
 import axios from "axios";
-
+import { toast } from "sonner";
 export default function ForgotPasswordPage() {
   const router = useRouter();
 
@@ -172,7 +172,7 @@ export default function ForgotPasswordPage() {
       });
 
       setMessage("Password successfully reset! Redirecting to login...");
-
+      toast.success("Password Reset Successfull");
       setTimeout(() => {
         router.push("/login");
       }, 2000);

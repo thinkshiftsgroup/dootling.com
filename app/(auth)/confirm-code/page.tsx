@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/stores/useAuthStore";
 import authApi from "@/api/auth";
 import Cookies from "js-cookie";
+import { toast } from "sonner";
 interface VerifyResponse {
   token: string;
   user: {
@@ -98,7 +99,7 @@ export default function VerifyOTPPage() {
         email: unverifiedEmail,
       });
 
-      alert("Verification code sent successfully!");
+      toast.success("Verification code sent successfully!");
       setTimeLeft(60);
       setCanResend(false);
       setOtp(["", "", "", "", "", ""]);
@@ -151,7 +152,7 @@ export default function VerifyOTPPage() {
           expires: rememberMeDays,
           secure: process.env.NODE_ENV === "production",
         });
-
+        toast.success("Email verified successfully! 🎉");
         clearUnverifiedEmail();
 
         router.push("/profile");

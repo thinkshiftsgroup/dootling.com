@@ -9,6 +9,7 @@ import { useAuthStore } from "@/stores/useAuthStore";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { toast } from "sonner";
 interface LoginResponse {
   token: string;
   user: {
@@ -92,6 +93,7 @@ export default function LoginPage() {
             expires: rememberMeDays,
             secure: process.env.NODE_ENV === "production",
           });
+          toast.success("Welcome back! 🎉");
 
           router.push("/profile");
         } else {
