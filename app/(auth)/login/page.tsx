@@ -163,7 +163,7 @@ export default function LoginPage() {
                   onChange={handleInputChange}
                   onBlur={() => handleBlur("email")}
                   placeholder="marvin@example.com"
-                  className={`w-full h-12 px-4 rounded-lg border bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                  className={`w-full h-12 px-4 rounded-lg border bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     errors.email ? "border-red-500" : "border-gray-300"
                   }`}
                   required
@@ -191,7 +191,7 @@ export default function LoginPage() {
                   onChange={handleInputChange}
                   onBlur={() => handleBlur("password")}
                   placeholder="••••••"
-                  className={`w-full h-12 px-4 rounded-lg border bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                  className={`w-full h-12 px-4 rounded-lg border bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500  ${
                     errors.password ? "border-red-500" : "border-gray-300"
                   }`}
                   required
