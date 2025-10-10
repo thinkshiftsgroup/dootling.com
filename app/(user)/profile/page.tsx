@@ -23,6 +23,8 @@ import { IoWalletOutline } from "react-icons/io5";
 import ProfileAbout from "@/components/main/profile/about/about";
 import HeatmapConnections from "@/components/main/profile/heatMap";
 import AddHeatmapModal from "@/components/main/profile/addHeatMapModal";
+import ProfileSpace from "@/components/main/profile/profileSpace";
+import ProfileLinks from "@/components/main/profile/links";
 
 const UserProfile = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -145,6 +147,33 @@ const UserProfile = () => {
         </svg>
       ),
       label: "Finance",
+    },
+    {
+      icon: (isActive: boolean) => (
+        <svg
+          width="30"
+          height="30"
+          viewBox="0 0 163 163"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M54.2236 122.01C35.055 122.01 25.4639 122.01 19.5127 116.052C13.5547 110.1 13.5547 100.509 13.5547 81.3408C13.5547 62.1722 13.5547 52.5811 19.5127 46.6299C25.4639 40.6719 35.055 40.6719 54.2236 40.6719C73.3922 40.6719 82.9833 40.6719 88.9345 46.6299C94.8925 52.5811 94.8925 62.1722 94.8925 81.3408"
+            stroke="#B1D3FF"
+            stroke-width="10.1672"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M67.7812 81.3408C67.7812 100.509 67.7812 110.1 73.7392 116.052C79.6905 122.01 89.2815 122.01 108.45 122.01C127.619 122.01 137.21 122.01 143.161 116.052C145.195 114.018 146.537 111.565 147.418 108.453M149.119 81.3408C149.119 62.1722 149.119 52.5811 143.161 46.6299C137.21 40.6719 127.619 40.6719 108.45 40.6719"
+            stroke="#B1D3FF"
+            stroke-width="10.1672"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      ),
+      label: "Links",
     },
     {
       icon: (isActive: boolean) => (
@@ -395,6 +424,8 @@ const UserProfile = () => {
                         {activeTab === "Account" && <ProfileAbout />}
                         {activeTab === "Finance" && <ProfileFinance />}
                         {activeTab === "Followed" && <FollowedTab />}
+                        {activeTab === "Spaces" && <ProfileSpace />}
+                        {activeTab === "Links" && <ProfileLinks />}
                         {activeTab === "Feeds" && (
                           <div className="rounded-lg p-5 bg-white shadow-md mb-[40px]">
                             <div
@@ -493,7 +524,7 @@ const UserProfile = () => {
                             </div>
                           </div>
                         )}
-                        {activeTab === "Account" && <ProfileAbout />}
+                        {/* {activeTab === "Account" && <ProfileAbout />} */}
                         {activeTab === "Heatmap" && <HeatmapConnections />}
                       </div>
                     </div>

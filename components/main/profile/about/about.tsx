@@ -291,6 +291,18 @@ const ProfileAbout = () => {
                               <option>Software Engineer</option>
                             </select>
                           </div>
+                          {/* <div>
+                            <div>
+                              <label className="text-sm font-medium text-[#738b9a]">
+                                Headline <sup className="text-black">*</sup>
+                              </label>
+                              <textarea
+                                placeholder="Bni@01"
+                                className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                              />
+                            </div>
+                          </div> */}
+
                           <div>
                             <label className="text-sm font-medium text-[#738b9a]">
                               Pronouns<sup className="text-black">*</sup>
