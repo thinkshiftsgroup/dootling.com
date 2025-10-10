@@ -9,7 +9,7 @@ interface FundWalletSideModalProps {
   onClose: () => void;
 }
 
-const FundWalletSideModal: React.FC<FundWalletSideModalProps> = ({
+const RecallEscrowWallet: React.FC<FundWalletSideModalProps> = ({
   open,
   onClose,
 }) => {
@@ -55,11 +55,11 @@ const FundWalletSideModal: React.FC<FundWalletSideModalProps> = ({
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", stiffness: 80, damping: 15 }}
-            className="fixed top-0 right-0 h-screen w-full max-w-[500px] bg-white z-50 shadow-xl border-l border-gray-200 rounded-tl-2xl rounded-bl-2xl flex flex-col"
+            className="fixed top-0 right-0 h-screen w-full max-w-[550px] bg-white z-50 shadow-xl border-l border-gray-200 rounded-tl-2xl rounded-bl-2xl flex flex-col"
           >
-            <div className="flex items-center justify-between px-6 py-4 ">
+            <div className="flex items-center justify-between px-6 pt-4 ">
               <h2 className="text-lg font-bold text-gray-800">
-                Fund Account Wallet
+                Recall Escrow Wallet
               </h2>
               <Button
                 variant="ghost"
@@ -67,9 +67,20 @@ const FundWalletSideModal: React.FC<FundWalletSideModalProps> = ({
                 onClick={onClose}
                 className="hover:bg-gray-100 text-black rounded-full"
               >
-                <X className="w-7 h-7 " />
+                <X size={20} />
               </Button>
             </div>
+            <span className="text-[#157BFF] px-6 flex items-center whitespace-nowrap gap-1 text-xs">
+              <p className="text-[#157BFF] font-normal">
+                Maximum Allowed Per Transaction{" "}
+                <span className="font-bold">$5000</span>
+              </p>
+              |
+              <p className="text-[#157BFF] font-normal">
+                Maximum Allowed Per Transaction{" "}
+                <span className="font-bold">$5000</span>
+              </p>
+            </span>
 
             <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
               <div>
@@ -77,7 +88,7 @@ const FundWalletSideModal: React.FC<FundWalletSideModalProps> = ({
                   className="font-semibold text-gray-600 text-lg "
                   htmlFor="Amount"
                 >
-                  Amount *
+                  Recall Accessible Funds to Available Wallet Balance*
                 </label>
                 <div className="flex my-2">
                   <div className="w-1/3 -mr-10 bg-gray-200 rounded-md border p-4 border-gray-400/50 relative">
@@ -109,7 +120,12 @@ const FundWalletSideModal: React.FC<FundWalletSideModalProps> = ({
                 >
                   Purpose *
                 </label>
-                <select
+                <input
+                  type="text"
+                  className="w-full shadow-sm my-2 bg-white z-10 text-gray-600 rounded-md border py-5 px-3 border-gray-400/50 "
+                  placeholder=""
+                />
+                {/* <select
                   value={purpose}
                   onChange={(e) => setPurpose(e.target.value)}
                   className="w-full shadow-sm my-2 bg-white z-10 text-gray-600 rounded-md border py-5 px-3 border-gray-400/50 cursor-pointer"
@@ -119,7 +135,31 @@ const FundWalletSideModal: React.FC<FundWalletSideModalProps> = ({
                   <option value="escrow">Escrow Funding</option>
                   <option value="subscription">Subscription</option>
                   <option value="others">Others</option>
-                </select>
+                </select> */}
+              </div>
+              <div>
+                <label
+                  className="font-semibold text-gray-600 text-lg "
+                  htmlFor="Pasword"
+                >
+                  Account Password *
+                </label>
+                <input
+                  type="password"
+                  className="w-full shadow-sm my-2 bg-white z-10 text-gray-600 rounded-md border py-5 px-3 border-gray-400/50 "
+                  placeholder=""
+                />
+                {/* <select
+                  value={purpose}
+                  onChange={(e) => setPurpose(e.target.value)}
+                  className="w-full shadow-sm my-2 bg-white z-10 text-gray-600 rounded-md border py-5 px-3 border-gray-400/50 cursor-pointer"
+                >
+                  <option value="">Select</option>
+                  <option value="deposit">Deposit</option>
+                  <option value="escrow">Escrow Funding</option>
+                  <option value="subscription">Subscription</option>
+                  <option value="others">Others</option>
+                </select> */}
               </div>
 
               <button className="text-white w-full rounded-md font-semibold text-lg py-2 cursor-pointer bg-[#1571E8]">
@@ -133,4 +173,4 @@ const FundWalletSideModal: React.FC<FundWalletSideModalProps> = ({
   );
 };
 
-export default FundWalletSideModal;
+export default RecallEscrowWallet;
