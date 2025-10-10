@@ -2,59 +2,63 @@ import React from "react";
 
 const transactions = [
   {
-    project: "Apple Watch iOS Create",
-    client: "John Felix",
-    channel: "Zub X Qub",
-    amount: "+$150",
-    type: "credit",
-    date: "12.09.2019 12:53 PM",
-    transactionId: "1638hvdjshskdhtU",
-    status: "Escrow",
-  },
-  {
-    project: "Apple Watch iOS Create",
-    client: "Felix Hohn",
-    channel: "Bank",
-    amount: "-$150",
+    requestDate: "10.08.2024 11:25 AM",
+    amount: "-$320",
     type: "debit",
-    date: "12.09.2019 12:53 PM",
-    transactionId: "2638hvdjshskdhtU",
-    status: "Withdrawal",
+    beneficiary: "Sarah Johnson",
+    expectedDate: "13.08.2024 03:00 PM",
+    transactionId: "TXN-2398ABCD12",
+    status: "Processing",
   },
   {
-    project: "Apple Watch iOS Create",
-    client: "Felix Hohn",
-    channel: "Tom Pack Fig",
-    amount: "+$150",
+    requestDate: "15.08.2024 09:10 AM",
+    amount: "+$850",
     type: "credit",
-    date: "12.09.2019 12:53 PM",
-    transactionId: "8638hvdjshskdhtU",
-    status: "Credited",
+    beneficiary: "Michael Chen",
+    expectedDate: "18.08.2024 12:30 PM",
+    transactionId: "TXN-5834QWER45",
+    status: "Completed",
   },
   {
-    project: "Apple Watch iOS Create",
-    client: "Felix Hohn",
-    channel: "Link",
-    amount: "+$150",
+    requestDate: "22.08.2024 01:40 PM",
+    amount: "-$210",
+    type: "debit",
+    beneficiary: "Aisha Bello",
+    expectedDate: "25.08.2024 10:15 AM",
+    transactionId: "TXN-7812LKJH98",
+    status: "Rejected",
+  },
+  {
+    requestDate: "01.09.2024 04:00 PM",
+    amount: "+$1,250",
     type: "credit",
-    date: "12.09.2019 12:53 PM",
-    transactionId: "8638hvdjshskdhtU",
-    status: "Credited",
+    beneficiary: "John Felix",
+    expectedDate: "04.09.2024 02:00 PM",
+    transactionId: "TXN-9945POIU76",
+    status: "Completed",
+  },
+  {
+    requestDate: "06.09.2024 07:50 AM",
+    amount: "+$540",
+    type: "credit",
+    beneficiary: "Emily Davis",
+    expectedDate: "09.09.2024 05:15 PM",
+    transactionId: "TXN-4421NMKL33",
+    status: "Processing",
   },
 ];
 
-const TransactionsTable = () => {
+const PayoutTable = () => {
   return (
-    <div className="bg-white mt-10 rounded-md ">
+    <div className="bg-white mt-10 rounded-md">
       <div className="overflow-x-auto hide-scrollbar">
         <table className="w-full text-sm text-left">
-          <thead className="bg-[#F1F4F9] rounded-md text-black font-semibold">
+          <thead className="bg-[#F1F4F9] text-black font-semibold">
             <tr>
-              <th className="px-6 py-3">Project</th>
-              <th className="px-6 py-3">Client</th>
-              <th className="px-6 py-3">Channel</th>
+              <th className="px-6 py-3">Request Date</th>
               <th className="px-6 py-3">Amount</th>
-              <th className="px-6 py-3">Date</th>
+              <th className="px-6 py-3">Beneficiary</th>
+              <th className="px-6 py-3">Expected Date</th>
               <th className="px-6 py-3">Transaction ID</th>
               <th className="px-6 py-3">Status</th>
             </tr>
@@ -62,62 +66,47 @@ const TransactionsTable = () => {
 
           <tbody>
             {transactions.map((txn, i) => (
-              <tr key={i} className=" ">
-                <td className="pl-3 py-5 border-b-[#979797]/20 border-b text-gray-700">
-                  {txn.project}
+              <tr key={i} className="">
+                <td className="pl-3 py-5 border-b border-[#979797]/20 text-gray-700">
+                  {txn.requestDate}
                 </td>
-                <td className="px-6 py-5 border-b-[#979797]/20 border-b text-gray-700">
-                  {txn.client}
-                </td>
-                <td className="px-6 py-5 border-b-[#979797]/20 border-b font-medium text-gray-700">
-                  {txn.channel}
-                </td>
-                <td className="px-6 py-5 border-b-[#979797]/20 border-b">
+                <td className="px-6 py-5 border-b border-[#979797]/20">
                   <span
                     className={`flex flex-col px-3 py-1 rounded-md font-semibold ${
                       txn.type === "credit"
-                        ? "text-[#299D91] border border-[#299D91] "
-                        : "text-[#EA0234] border border-[#EA0234] "
+                        ? "text-[#299D91] border border-[#299D91]"
+                        : "text-[#EA0234] border border-[#EA0234]"
                     }`}
                   >
                     {txn.amount}
                     <span className="ml-5 text-gray-400 text-[10px]">
-                      1 Tax 7%
+                      Tax 7%
                     </span>
                   </span>
                 </td>
-                <td className="px-6 py-5 text-gray-600 border-b-[#979797]/20 border-b">
-                  {txn.date}
+                <td className="px-6 py-5 border-b border-[#979797]/20 text-gray-700">
+                  {txn.beneficiary}
                 </td>
-                <td className="px-6 py-5 text-gray-600 border-b-[#979797]/20 border-b">
+                <td className="px-6 py-5 border-b border-[#979797]/20 text-gray-700">
+                  {txn.expectedDate}
+                </td>
+                <td className="px-6 py-5 border-b border-[#979797]/20 text-gray-600">
                   {txn.transactionId}
                 </td>
-                <td className="pr-3 py-5 border-b-[#979797]/20 border-b">
-                  {txn.status === "Escrow" && (
+                <td className="pr-3 py-5 border-b border-[#979797]/20">
+                  {txn.status === "Processing" && (
                     <span className="bg-[#00B69B] flex items-center gap-1 text-white text-xs font-medium p-2 rounded">
-                      Escrow
-                      <svg
-                        width="10"
-                        height="10"
-                        viewBox="0 0 52 52"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M47.3337 1.4622C48.9765 0.495872 51.1024 1.84873 50.7159 3.78139L43.7583 45.5268C43.565 47.0729 41.9223 47.9426 40.5694 47.3628L28.5869 42.2413L22.4024 49.7786C21.0496 51.4214 18.3439 50.5517 18.3439 48.2325V40.4052L41.5357 12.0918C42.0189 11.512 41.2458 10.8356 40.7627 11.3188L13.0291 35.7669L2.68934 31.4184C0.949948 30.742 0.756682 28.2295 2.49607 27.2632L47.3337 1.4622Z"
-                          fill="white"
-                        />
-                      </svg>
+                      Processing
                     </span>
                   )}
-                  {txn.status === "Withdrawal" && (
+                  {txn.status === "Rejected" && (
                     <span className="bg-[#FF0000] text-white text-xs font-medium p-2 rounded">
-                      Withdrawal
+                      Rejected
                     </span>
                   )}
-                  {txn.status === "Credited" && (
+                  {txn.status === "Completed" && (
                     <span className="bg-[#157BFF] text-white text-xs font-medium p-2 rounded">
-                      Credited
+                      Completed
                     </span>
                   )}
                 </td>
@@ -130,4 +119,4 @@ const TransactionsTable = () => {
   );
 };
 
-export default TransactionsTable;
+export default PayoutTable;

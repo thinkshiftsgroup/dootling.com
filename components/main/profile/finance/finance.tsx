@@ -2,17 +2,31 @@
 import { ChevronDown } from "lucide-react";
 import React, { useState } from "react";
 import TransactionsTable from "./transactionsTable";
-import FundWalletSideModal from "./fundWallet";
+import FundWalletSideModal from "./fundEscrowWallet.tsx";
 import ManageEscrowFunds from "./manageEscrow";
 import FundAllocation from "./fundAllocation";
 import PayoutTransaction from "./payoutTransaction";
+import PayoutTransactions from "./payoutTransaction";
+import PayoutTable from "./payoutTransaction";
+import RecallEscrowWallet from "./recallEscrowFund";
+import WithdrawFunds from "./withdrawFunds";
 
 const ProfileFinance = () => {
-  const [showModal, setShowModal] = useState(false);
   const [showManageFunds, setManageFunds] = useState(false);
 
-  const [showTransactions, setShowTransactions] = useState(true);
-  const [showEscrowTransactions, setShowEscrowTransactions] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
+  // const [showTransactions, setShowTransactions] = useState(true);
+  // const [fundAllocation, setFundAllocation] = useState(false);
+  // const [showEscrowTransactions, setShowEscrowTransactions] = useState(false);
+
+  const [activeTab, setActiveTab] = useState<
+    "transactions" | "escrow" | "fund"
+  >("transactions");
+
+  const [recallFunds, setRecallFunds] = useState(false);
+
+  const [withdrawFunds, setWithdrawFunds] = useState(false);
 
   return (
     <div className="rounded-sm bg-white px-4 py-2">
@@ -31,15 +45,15 @@ const ProfileFinance = () => {
           </div>
           <div className="flex items-center justify-between mt-2">
             <p
-              onClick={() => setShowTransactions((prev) => !prev)}
+              onClick={() => setActiveTab("transactions")}
               className={`text-xs cursor-pointer transition-colors duration-200 ${
-                showTransactions ? "text-black" : "text-gray-300"
+                activeTab === "transactions" ? "text-black" : "text-gray-300"
               }`}
             >
               All Transactions
             </p>
             <button
-              onClick={() => setShowModal(true)}
+              onClick={() => setWithdrawFunds(true)}
               className="bg-[#FAAF40] cursor-pointer text-white text-[10px] flex items-center gap-1 p-1 rounded"
             >
               Withdraw Funds
@@ -79,14 +93,17 @@ const ProfileFinance = () => {
           <div className="flex items-center">
             <p
               className="text-white font-bold text-xl w-full px-3 py-2 rounded-sm leading-none"
-              style={{ backgroundColor: "#555454" }}
+              style={{ backgroundColor: "#A6A6A6" }}
             >
               $122.00
             </p>
           </div>
           <div className="mt-2">
             <div className="flex flex-row lg:flex-col gap-1">
-              <button className=" bg-black w-full text-white text-[9px] py-1 rounded flex items-center justify-center gap-1">
+              <button
+                onClick={() => setActiveTab("fund")}
+                className="bg-black w-full text-white text-[9px] py-1 rounded flex items-center justify-center gap-1"
+              >
                 Allocate Funds
                 <svg
                   width="12"
@@ -96,7 +113,7 @@ const ProfileFinance = () => {
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M36.1857 17.5806C37.8411 17.5796 39.4457 17.0091 40.7301 15.9648C42.0146 14.9206 42.9006 13.4663 43.2396 11.846H49.5039C49.7893 11.8439 50.0677 11.7579 50.3045 11.5986C50.5412 11.4393 50.7258 11.2138 50.8352 10.9502C50.9446 10.6866 50.9739 10.3967 50.9194 10.1166C50.865 9.83642 50.7293 9.57853 50.5292 9.37508C50.2559 9.10529 49.8879 8.95318 49.5039 8.9513H43.2498C42.9195 7.32046 42.0353 5.85404 40.7472 4.80069C39.459 3.74734 37.8463 3.17188 36.1823 3.17188C34.5183 3.17187 32.9056 3.74734 31.6175 4.80069C30.3293 5.85404 29.4452 7.32046 29.1148 8.9513H7.05109C6.6794 8.96937 6.32891 9.12974 6.07224 9.39919C5.81557 9.66864 5.6724 10.0265 5.6724 10.3986C5.6724 10.7708 5.81557 11.1286 6.07224 11.3981C6.32891 11.6675 6.6794 11.8279 7.05109 11.846H29.1285C29.4676 13.4674 30.3547 14.9226 31.6406 15.967C32.9264 17.0114 34.5326 17.5812 36.1891 17.5806M36.1891 14.5732C35.6371 14.5732 35.0905 14.4644 34.5805 14.2532C34.0705 14.0419 33.6071 13.7323 33.2168 13.342C32.8264 12.9516 32.5168 12.4882 32.3055 11.9782C32.0943 11.4682 31.9856 10.9216 31.9856 10.3696C31.9856 9.81756 32.0943 9.27095 32.3055 8.76094C32.5168 8.25094 32.8264 7.78754 33.2168 7.3972C33.6071 7.00686 34.0705 6.69723 34.5805 6.48598C35.0905 6.27473 35.6371 6.166 36.1891 6.166C37.304 6.166 38.3732 6.60887 39.1615 7.3972C39.9499 8.18553 40.3927 9.25473 40.3927 10.3696C40.3927 11.4844 39.9499 12.5536 39.1615 13.342C38.3732 14.1303 37.304 14.5732 36.1891 14.5732ZM21.1382 34.9999C22.7998 35.0007 24.4106 34.4277 25.6984 33.3778C26.9862 32.3279 27.8719 30.8655 28.2057 29.2379L49.5073 29.214C49.792 29.2113 50.0696 29.125 50.3057 28.9659C50.5417 28.8068 50.7258 28.5818 50.835 28.3189C50.9443 28.056 50.9738 27.7668 50.9201 27.4873C50.8663 27.2077 50.7316 26.9501 50.5326 26.7465C50.2593 26.4767 49.8913 26.3246 49.5073 26.3227L28.2057 26.3432C27.8705 24.7179 26.9849 23.2579 25.6983 22.2096C24.4117 21.1613 22.8029 20.5889 21.1434 20.5889C19.4838 20.5889 17.875 21.1613 16.5884 22.2096C15.3019 23.2579 14.4162 24.7179 14.081 26.3432L7.05109 26.3227C6.66769 26.3227 6.29999 26.475 6.02888 26.7461C5.75778 27.0172 5.60547 27.3849 5.60547 27.7683C5.60547 28.1517 5.75778 28.5194 6.02888 28.7906C6.29999 29.0617 6.66769 29.214 7.05109 29.214L14.081 29.2379C14.4146 30.8644 15.2993 32.3259 16.5857 33.3757C17.8721 34.4254 19.4779 34.9991 21.1382 34.9999ZM21.1417 31.9924C20.0268 31.9924 18.9576 31.5496 18.1693 30.7612C17.3809 29.9729 16.9381 28.9037 16.9381 27.7888C16.9381 26.674 17.3809 25.6048 18.1693 24.8165C18.9576 24.0281 20.0268 23.5853 21.1417 23.5853C22.2565 23.5853 23.3257 24.0281 24.114 24.8165C24.9024 25.6048 25.3453 26.674 25.3453 27.7888C25.3453 28.9037 24.9024 29.9729 24.114 30.7612C23.3257 31.5496 22.2565 31.9924 21.1417 31.9924ZM36.1721 52.2859C37.8374 52.2854 39.4513 51.7085 40.7396 50.6532C42.0279 49.5979 42.9112 48.1292 43.2396 46.4965L49.5039 46.5854C49.7893 46.5834 50.0677 46.4973 50.3045 46.338C50.5412 46.1787 50.7258 45.9532 50.8352 45.6896C50.9446 45.426 50.9739 45.1361 50.9194 44.856C50.865 44.5758 50.7293 44.3179 50.5292 44.1145C50.2559 43.8447 49.8879 43.6926 49.5039 43.6907L43.2293 43.5984C42.8893 41.9785 42.0023 40.5248 40.7172 39.4815C39.4322 38.4382 37.8273 37.8687 36.1721 37.8687C34.5168 37.8687 32.9119 38.4382 31.6269 39.4815C30.3418 40.5248 29.4548 41.9785 29.1148 43.5984L7.04768 43.6907C6.67598 43.7088 6.32549 43.8692 6.06882 44.1386C5.81215 44.4081 5.66898 44.7659 5.66898 45.1381C5.66898 45.5102 5.81215 45.868 6.06882 46.1375C6.32549 46.4069 6.67598 46.5673 7.04768 46.5854L29.1046 46.4965C29.4329 48.1292 30.3162 49.5979 31.6045 50.6532C32.8928 51.7085 34.5067 52.2854 36.1721 52.2859ZM36.1721 49.2784C35.0572 49.2784 33.988 48.8355 33.1997 48.0472C32.4113 47.2589 31.9685 46.1897 31.9685 45.0748C31.9685 43.96 32.4113 42.8908 33.1997 42.1024C33.988 41.3141 35.0572 40.8712 36.1721 40.8712C37.2869 40.8712 38.3561 41.3141 39.1444 42.1024C39.9328 42.8908 40.3756 43.96 40.3756 45.0748C40.3756 46.1897 39.9328 47.2589 39.1444 48.0472C38.3561 48.8355 37.2869 49.2784 36.1721 49.2784Z"
+                    d="M36.2053 17.5884C37.8606 17.5874 39.4652 17.0169 40.7497 15.9727C42.0341 14.9284 42.9202 13.4741 43.2591 11.8538H49.5235C49.8088 11.8518 50.0873 11.7657 50.324 11.6064C50.5608 11.4471 50.7454 11.2216 50.8547 10.958C50.9641 10.6944 50.9934 10.4045 50.939 10.1244C50.8846 9.84424 50.7488 9.58635 50.5487 9.38289C50.2755 9.1131 49.9075 8.96099 49.5235 8.95911H43.2693C42.939 7.32827 42.0548 5.86185 40.7667 4.8085C39.4786 3.75515 37.8658 3.17969 36.2018 3.17969C34.5379 3.17969 32.9251 3.75515 31.637 4.8085C30.3489 5.86185 29.4647 7.32827 29.1343 8.95911H7.07062C6.69893 8.97718 6.34844 9.13756 6.09177 9.407C5.8351 9.67645 5.69193 10.0343 5.69193 10.4064C5.69193 10.7786 5.8351 11.1364 6.09177 11.4059C6.34844 11.6753 6.69893 11.8357 7.07062 11.8538H29.148C29.4872 13.4752 30.3742 14.9305 31.6601 15.9748C32.9459 17.0192 34.5521 17.589 36.2087 17.5884M36.2087 14.581C35.6567 14.581 35.11 14.4723 34.6 14.261C34.09 14.0498 33.6266 13.7401 33.2363 13.3498C32.8459 12.9594 32.5363 12.496 32.3251 11.986C32.1138 11.476 32.0051 10.9294 32.0051 10.3774C32.0051 9.82538 32.1138 9.27876 32.3251 8.76875C32.5363 8.25875 32.8459 7.79535 33.2363 7.40501C33.6266 7.01467 34.09 6.70504 34.6 6.49379C35.11 6.28254 35.6567 6.17381 36.2087 6.17381C37.3235 6.17381 38.3927 6.61669 39.1811 7.40501C39.9694 8.19334 40.4123 9.26254 40.4123 10.3774C40.4123 11.4923 39.9694 12.5615 39.1811 13.3498C38.3927 14.1381 37.3235 14.581 36.2087 14.581ZM21.1578 35.0077C22.8193 35.0085 24.4301 34.4355 25.7179 33.3856C27.0057 32.3357 27.8914 30.8733 28.2253 29.2457L49.5269 29.2218C49.8115 29.2191 50.0891 29.1329 50.3252 28.9737C50.5612 28.8146 50.7453 28.5896 50.8545 28.3267C50.9638 28.0638 50.9934 27.7746 50.9396 27.4951C50.8858 27.2155 50.7511 26.9579 50.5521 26.7543C50.2789 26.4845 49.9109 26.3324 49.5269 26.3305L28.2253 26.351C27.89 24.7257 27.0044 23.2657 25.7178 22.2174C24.4313 21.1691 22.8225 20.5967 21.1629 20.5967C19.5033 20.5967 17.8945 21.1691 16.608 22.2174C15.3214 23.2657 14.4358 24.7257 14.1005 26.351L7.07062 26.3305C6.68722 26.3305 6.31952 26.4828 6.04841 26.7539C5.77731 27.0251 5.625 27.3928 5.625 27.7762C5.625 28.1596 5.77731 28.5273 6.04841 28.7984C6.31952 29.0695 6.68722 29.2218 7.07062 29.2218L14.1005 29.2457C14.4342 30.8722 15.3189 32.3337 16.6052 33.3835C17.8916 34.4332 19.4974 35.0069 21.1578 35.0077ZM21.1612 32.0002C20.0463 32.0002 18.9771 31.5574 18.1888 30.769C17.4005 29.9807 16.9576 28.9115 16.9576 27.7967C16.9576 26.6818 17.4005 25.6126 18.1888 24.8243C18.9771 24.0359 20.0463 23.5931 21.1612 23.5931C22.2761 23.5931 23.3453 24.0359 24.1336 24.8243C24.9219 25.6126 25.3648 26.6818 25.3648 27.7967C25.3648 28.9115 24.9219 29.9807 24.1336 30.769C23.3453 31.5574 22.2761 32.0002 21.1612 32.0002ZM36.1916 52.2937C37.8569 52.2932 39.4708 51.7163 40.7591 50.661C42.0474 49.6057 42.9307 48.137 43.2591 46.5043L49.5235 46.5932C49.8088 46.5912 50.0873 46.5051 50.324 46.3458C50.5608 46.1865 50.7454 45.961 50.8547 45.6974C50.9641 45.4339 50.9934 45.1439 50.939 44.8638C50.8846 44.5837 50.7488 44.3258 50.5487 44.1223C50.2755 43.8525 49.9075 43.7004 49.5235 43.6985L43.2488 43.6063C42.9088 41.9863 42.0218 40.5326 40.7368 39.4893C39.4517 38.446 37.8468 37.8765 36.1916 37.8765C34.5363 37.8765 32.9315 38.446 31.6464 39.4893C30.3614 40.5326 29.4744 41.9863 29.1343 43.6063L7.06721 43.6985C6.69552 43.7166 6.34502 43.877 6.08835 44.1464C5.83168 44.4159 5.68852 44.7737 5.68852 45.1459C5.68852 45.518 5.83168 45.8759 6.08835 46.1453C6.34502 46.4148 6.69552 46.5751 7.06721 46.5932L29.1241 46.5043C29.4524 48.137 30.3358 49.6057 31.6241 50.661C32.9124 51.7163 34.5262 52.2932 36.1916 52.2937ZM36.1916 49.2862C35.0767 49.2862 34.0075 48.8433 33.2192 48.055C32.4309 47.2667 31.988 46.1975 31.988 45.0826C31.988 43.9678 32.4309 42.8986 33.2192 42.1102C34.0075 41.3219 35.0767 40.8791 36.1916 40.8791C37.3064 40.8791 38.3756 41.3219 39.164 42.1102C39.9523 42.8986 40.3952 43.9678 40.3952 45.0826C40.3952 46.1975 39.9523 47.2667 39.164 48.055C38.3756 48.8433 37.3064 49.2862 36.1916 49.2862Z"
                     fill="white"
                   />
                 </svg>
@@ -119,7 +136,10 @@ const ProfileFinance = () => {
                   />
                 </svg>
               </button>
-              <button className=" w-full bg-[#FAAF40] text-white text-[9px] py-1 rounded flex items-center justify-center gap-1">
+              <button
+                onClick={() => setRecallFunds(true)}
+                className=" w-full bg-[#FAAF40] text-white text-[9px] py-1 rounded flex items-center justify-center gap-1"
+              >
                 Recall Funds
                 <svg
                   width="12"
@@ -161,16 +181,16 @@ const ProfileFinance = () => {
           <div className="flex items-center">
             <p
               className="text-white font-bold text-xl w-full px-3 py-2 rounded-sm leading-none"
-              style={{ backgroundColor: "#A6A6A6" }}
+              style={{ backgroundColor: "#555454" }}
             >
               $1220.00
             </p>
           </div>
           <div className="mt-2">
             <p
-              onClick={() => setShowEscrowTransactions((prev) => !prev)}
+              onClick={() => setActiveTab("escrow")}
               className={`text-xs pt-1 cursor-pointer transition-colors duration-200 ${
-                showEscrowTransactions ? "text-black" : "text-gray-300"
+                activeTab === "escrow" ? "text-black" : "text-gray-300"
               }`}
             >
               All Payout Transactions
@@ -179,57 +199,176 @@ const ProfileFinance = () => {
         </div>
       </div>
 
-      {showTransactions && (
+      {activeTab === "transactions" && (
         <div className="rounded bg-white p-4 shadow-md my-5">
           <div>
             <h1 className="text-lg font-semibold text-black mb-5">
               All Transactions
             </h1>
-            <div className="text-black border bg-[#F9F9FB] text-xs font-medium justify-around border-[#D5D5D5] flex items-center rounded-md">
-              <span className="flex items-center gap-2 px-3 cursor-pointer">
+            <div className="text-black whitespace-nowrap border bg-[#F9F9FB] text-xs font-medium justify-around border-[#D5D5D5] flex items-center rounded-md">
+              <span className="flex pl-1 w-1/3 cursor-pointer">
                 <svg
                   width="16"
                   height="16"
-                  viewBox="0 0 57 66"
+                  viewBox="0 0 91 91"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
                     fillRule="evenodd"
                     clipRule="evenodd"
-                    d="M28.4901 27.0768C43.0684 27.0768 54.8864 21.6223 54.8864 14.8939C54.8864 8.16542 43.0684 2.71094 28.4901 2.71094C13.9118 2.71094 2.09375 8.16542 2.09375 14.8939C2.09375 21.6223 13.9118 27.0768 28.4901 27.0768Z"
-                    stroke="black"
-                    strokeWidth="4.06098"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M2.09375 14.8828C2.1006 27.1077 10.5031 37.7273 22.3986 40.5455V57.5231C22.3986 60.8873 25.1259 63.6145 28.4901 63.6145C31.8543 63.6145 34.5816 60.8873 34.5816 57.5231V40.5455C46.4771 37.7273 54.8796 27.1077 54.8864 14.8828"
-                    stroke="black"
-                    strokeWidth="4.06098"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+                    d="M62.1609 56.8028L82.3762 77.0181C83.0867 77.7292 83.4857 78.6933 83.4853 79.6985C83.485 80.7038 83.0853 81.6676 82.3743 82.3782C81.6633 83.0887 80.6991 83.4877 79.6939 83.4874C78.6887 83.487 77.7248 83.0873 77.0142 82.3763L56.7989 62.161C50.7558 66.8416 43.1565 69.0443 35.547 68.3209C27.9376 67.5974 20.8895 64.0023 15.8366 58.2668C10.7837 52.5313 8.10559 45.0863 8.34705 37.4463C8.58851 29.8063 11.7314 22.5453 17.1364 17.1403C22.5414 11.7353 29.8024 8.59242 37.4424 8.35095C45.0824 8.10949 52.5274 10.7876 58.2629 15.8405C63.9984 20.8934 67.5935 27.9415 68.317 35.551C69.0404 43.1604 66.8377 50.7597 62.1571 56.8028M38.3947 60.9398C44.374 60.9398 50.1084 58.5646 54.3364 54.3366C58.5644 50.1086 60.9397 44.3742 60.9397 38.3949C60.9397 32.4156 58.5644 26.6812 54.3364 22.4532C50.1084 18.2252 44.374 15.85 38.3947 15.85C32.4155 15.85 26.6811 18.2252 22.4531 22.4532C18.2251 26.6812 15.8498 32.4156 15.8498 38.3949C15.8498 44.3742 18.2251 50.1086 22.4531 54.3366C26.6811 58.5646 32.4155 60.9398 38.3947 60.9398Z"
+                    fill="#041827"
                   />
                 </svg>
               </span>
+
               <div className="self-stretch w-px bg-[#D5D5D5]" />
-              <span className="flex items-center gap-2 py-2 px-3">
-                <p>Filter by</p>
+
+              <span className="flex items-center py-3 px-2 w-[220px]">
+                <select
+                  className="bg-transparent outline-none cursor-pointer w-full text-[#041827]"
+                  defaultValue=""
+                >
+                  <option value="" disabled>
+                    Transaction Channels
+                  </option>
+                  <option value="bank">Bank</option>
+                  <option value="wallet">Wallet</option>
+                  <option value="card">Card</option>
+                </select>
               </span>
+
               <div className="self-stretch w-px bg-[#D5D5D5]" />
-              <span className="flex cursor-pointer items-center gap-2 py-3 px-2">
-                <p>Date</p> <ChevronDown size={16} />
+
+              <span className="flex items-center py-3 px-2 w-[120px]">
+                <select
+                  className="bg-transparent outline-none cursor-pointer w-full text-[#041827]"
+                  defaultValue=""
+                >
+                  <option value="" disabled>
+                    Date
+                  </option>
+                  <option value="today">Today</option>
+                  <option value="this-week">This Week</option>
+                  <option value="this-month">This Month</option>
+                </select>
               </span>
+
               <div className="self-stretch w-px bg-[#D5D5D5]" />
-              <span className="flex cursor-pointer items-center gap-2 py-3 px-2">
-                <p>Projects</p> <ChevronDown size={16} />
+
+              <span className="flex items-center py-3 px-2 w-[140px]">
+                <select
+                  className="bg-transparent outline-none cursor-pointer w-full text-[#041827]"
+                  defaultValue=""
+                >
+                  <option value="" disabled>
+                    Projects
+                  </option>
+                  <option value="project-1">Project 1</option>
+                  <option value="project-2">Project 2</option>
+                </select>
               </span>
+
               <div className="self-stretch w-px bg-[#D5D5D5]" />
-              <span className="flex cursor-pointer items-center gap-2 py-3 px-2">
-                <p>Transaction Status</p> <ChevronDown size={16} />
+
+              <span className="flex items-center py-3 px-2 w-[200px]">
+                <select
+                  className="bg-transparent outline-none cursor-pointer w-full text-[#041827]"
+                  defaultValue=""
+                >
+                  <option value="" disabled>
+                    Transaction Status
+                  </option>
+                  <option value="success">Successful</option>
+                  <option value="pending">Pending</option>
+                  <option value="failed">Failed</option>
+                </select>
               </span>
+
               <div className="self-stretch w-px bg-[#D5D5D5]" />
-              <span className="flex cursor-pointer items-center gap-2 py-3 px-2">
+
+              <span className="flex cursor-pointer items-center py-3 px-2 text-[#EA0234]">
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 50 49"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="mr-1"
+                >
+                  <path
+                    d="M24.6619 10.3563V2.23438L14.5094 12.3868L24.6619 22.5393V14.4173C31.3828 14.4173 36.8448 19.8793 36.8448 26.6002C36.8448 33.3211 31.3828 38.7832 24.6619 38.7832C17.941 38.7832 12.4789 33.3211 12.4789 26.6002H8.41797C8.41797 35.575 15.6871 42.8441 24.6619 42.8441C33.6366 42.8441 40.9058 35.575 40.9058 26.6002C40.9058 17.6255 33.6366 10.3563 24.6619 10.3563Z"
+                    fill="#EA0234"
+                  />
+                </svg>
+                <p>Reset filter</p>
+              </span>
+            </div>
+          </div>
+          <TransactionsTable />
+        </div>
+      )}
+
+      {activeTab === "escrow" && (
+        <div className="rounded bg-white p-4 shadow-md my-5">
+          <div className="">
+            <h1 className="text-lg whitespace-nowrap font-semibold mb-2 text-black">
+              All Payout Transactions
+            </h1>
+            <div className="text-black w-full border bg-[#F9F9FB] text-xs font-medium justify-around border-[#D5D5D5] flex items-center rounded-md">
+              <span className="flex gap-2 pl-1 w-1/3 cursor-pointer">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 91 91"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M62.1609 56.8028L82.3762 77.0181C83.0867 77.7292 83.4857 78.6933 83.4853 79.6985C83.485 80.7038 83.0853 81.6676 82.3743 82.3782C81.6633 83.0887 80.6991 83.4877 79.6939 83.4874C78.6887 83.487 77.7248 83.0873 77.0142 82.3763L56.7989 62.161C50.7558 66.8416 43.1565 69.0443 35.547 68.3209C27.9376 67.5974 20.8895 64.0023 15.8366 58.2668C10.7837 52.5313 8.10559 45.0863 8.34705 37.4463C8.58851 29.8063 11.7314 22.5453 17.1364 17.1403C22.5414 11.7353 29.8024 8.59242 37.4424 8.35095C45.0824 8.10949 52.5274 10.7876 58.2629 15.8405C63.9984 20.8934 67.5935 27.9415 68.317 35.551C69.0404 43.1604 66.8377 50.7597 62.1571 56.8028M38.3947 60.9398C44.374 60.9398 50.1084 58.5646 54.3364 54.3366C58.5644 50.1086 60.9397 44.3742 60.9397 38.3949C60.9397 32.4156 58.5644 26.6812 54.3364 22.4532C50.1084 18.2252 44.374 15.85 38.3947 15.85C32.4155 15.85 26.6811 18.2252 22.4531 22.4532C18.2251 26.6812 15.8498 32.4156 15.8498 38.3949C15.8498 44.3742 18.2251 50.1086 22.4531 54.3366C26.6811 58.5646 32.4155 60.9398 38.3947 60.9398Z"
+                    fill="#041827"
+                  />
+                </svg>
+              </span>
+
+              <div className="self-stretch w-px bg-[#D5D5D5]" />
+
+              <span className="flex items-center py-3 ">
+                <select
+                  className="bg-transparent outline-none cursor-pointer w-full text-[#041827] appearance-none"
+                  defaultValue=""
+                >
+                  <option value="" disabled>
+                    Date
+                  </option>
+                  <option value="today">Today</option>
+                  <option value="this-week">This Week</option>
+                  <option value="this-month">This Month</option>
+                </select>
+              </span>
+
+              <div className="self-stretch w-px bg-[#D5D5D5]" />
+
+              <span className="flex items-center py-3 w-[180px]">
+                <select
+                  className="bg-transparent outline-none cursor-pointer w-full text-[#041827] appearance-none"
+                  defaultValue=""
+                >
+                  <option value="" disabled>
+                    Transaction Status
+                  </option>
+                  <option value="success">Successful</option>
+                  <option value="pending">Pending</option>
+                  <option value="failed">Failed</option>
+                </select>
+              </span>
+
+              <div className="self-stretch w-px bg-[#D5D5D5]" />
+
+              <span className="flex cursor-pointer items-center gap-2 py-3 px-2 text-[#EA0234]">
                 <svg
                   width="15"
                   height="15"
@@ -246,19 +385,16 @@ const ProfileFinance = () => {
               </span>
             </div>
           </div>
-          <TransactionsTable />
+          <PayoutTable />
         </div>
       )}
 
-      {showEscrowTransactions && (
-        <div className="rounded bg-white p-4 shadow-md my-5">
-          <h1 className="text-lg font-semibold text-black mb-5">
-            All Payout Transactions
-          </h1>
-          <TransactionsTable />
-        </div>
-      )}
+      {activeTab === "fund" && <FundAllocation />}
 
+      <WithdrawFunds
+        open={withdrawFunds}
+        onClose={() => setWithdrawFunds(false)}
+      />
       <FundWalletSideModal
         open={showModal}
         onClose={() => setShowModal(false)}
@@ -266,6 +402,10 @@ const ProfileFinance = () => {
       <ManageEscrowFunds
         open={showManageFunds}
         onClose={() => setManageFunds(false)}
+      />
+      <RecallEscrowWallet
+        open={recallFunds}
+        onClose={() => setRecallFunds(false)}
       />
     </div>
   );

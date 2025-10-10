@@ -1,4 +1,6 @@
-import React from "react";
+"use cclient";
+import React, { useState } from "react";
+import EscrowManager from "./escrowManager";
 
 const transactions = [
   {
@@ -9,7 +11,7 @@ const transactions = [
     type: "credit",
     date: "12.09.2019 12:53 PM",
     transactionId: "1638hvdjshskdhtU",
-    status: "Escrow",
+    status: "Manage Escrow",
   },
   {
     project: "Apple Watch iOS Create",
@@ -19,7 +21,7 @@ const transactions = [
     type: "debit",
     date: "12.09.2019 12:53 PM",
     transactionId: "2638hvdjshskdhtU",
-    status: "Withdrawal",
+    status: "Credited",
   },
   {
     project: "Apple Watch iOS Create",
@@ -44,6 +46,7 @@ const transactions = [
 ];
 
 const TransactionsTable = () => {
+  const [modal, setModal] = useState(false);
   return (
     <div className="bg-white mt-10 rounded-md ">
       <div className="overflow-x-auto hide-scrollbar">
@@ -93,9 +96,12 @@ const TransactionsTable = () => {
                   {txn.transactionId}
                 </td>
                 <td className="pr-3 py-5 border-b-[#979797]/20 border-b">
-                  {txn.status === "Escrow" && (
-                    <span className="bg-[#00B69B] flex items-center gap-1 text-white text-xs font-medium p-2 rounded">
-                      Escrow
+                  {txn.status === "Manage Escrow" && (
+                    <span
+                      onClick={() => setModal(true)}
+                      className="bg-black cursor-pointer flex items-center gap-1 text-white text-xs font-medium p-2 rounded"
+                    >
+                      Manage Escrow
                       <svg
                         width="10"
                         height="10"
@@ -110,11 +116,6 @@ const TransactionsTable = () => {
                       </svg>
                     </span>
                   )}
-                  {txn.status === "Withdrawal" && (
-                    <span className="bg-[#FF0000] text-white text-xs font-medium p-2 rounded">
-                      Withdrawal
-                    </span>
-                  )}
                   {txn.status === "Credited" && (
                     <span className="bg-[#157BFF] text-white text-xs font-medium p-2 rounded">
                       Credited
@@ -126,6 +127,8 @@ const TransactionsTable = () => {
           </tbody>
         </table>
       </div>
+
+      {modal && <EscrowManager open={modal} onClose={() => setModal(false)} />}
     </div>
   );
 };
