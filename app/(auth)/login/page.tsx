@@ -78,7 +78,7 @@ export default function LoginPage() {
       setIsSubmitting(true);
 
       try {
-        const response = await authApi.post<LoginResponse>("/auth/login", {
+        const response = await authApi.post<LoginResponse>("/auth/signin", {
           email: formData.email,
           password: formData.password,
         });
