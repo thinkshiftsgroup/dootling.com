@@ -149,7 +149,23 @@ const UserProfile = () => {
     },
     {
       icon: (isActive: boolean) => (
-        <svg className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`} xmlns="http://www.w3.org/2000/svg" width={30} height={30} viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeLinecap="round" strokeWidth={1.5}><path d="M14 21h-2c-4.714 0-7.071 0-8.536-1.465C2 18.072 2 15.715 2 11V7.944c0-1.816 0-2.724.38-3.406A3 3 0 0 1 3.538 3.38C4.22 3 5.128 3 6.944 3C8.108 3 8.69 3 9.2 3.191c1.163.436 1.643 1.493 2.168 2.542L12 7M8 7h8.75c2.107 0 3.16 0 3.917.506a3 3 0 0 1 .827.827C22 9.09 22 10.143 22 12.25q.001.957-.005 1.75"></path><path d="M17.686 20.432a1.941 1.941 0 0 0 2.746-2.746l-1.716-1.716a1.94 1.94 0 0 0-2.639-.098m.237-2.303a1.941 1.941 0 0 0-2.745 2.745l1.715 1.715a1.94 1.94 0 0 0 2.64.1"></path></g></svg>
+        <svg
+          className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
+          xmlns="http://www.w3.org/2000/svg"
+          width={30}
+          height={30}
+          viewBox="0 0 24 24"
+        >
+          <g
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeWidth={1.5}
+          >
+            <path d="M14 21h-2c-4.714 0-7.071 0-8.536-1.465C2 18.072 2 15.715 2 11V7.944c0-1.816 0-2.724.38-3.406A3 3 0 0 1 3.538 3.38C4.22 3 5.128 3 6.944 3C8.108 3 8.69 3 9.2 3.191c1.163.436 1.643 1.493 2.168 2.542L12 7M8 7h8.75c2.107 0 3.16 0 3.917.506a3 3 0 0 1 .827.827C22 9.09 22 10.143 22 12.25q.001.957-.005 1.75"></path>
+            <path d="M17.686 20.432a1.941 1.941 0 0 0 2.746-2.746l-1.716-1.716a1.94 1.94 0 0 0-2.639-.098m.237-2.303a1.941 1.941 0 0 0-2.745 2.745l1.715 1.715a1.94 1.94 0 0 0 2.64.1"></path>
+          </g>
+        </svg>
       ),
       label: "Links",
     },
@@ -188,7 +204,7 @@ const UserProfile = () => {
       isPrivate: true,
       projectName: "E-commerce App",
       collaborators: 12,
-      createdDate: "10/15/2025"
+      createdDate: "10/15/2025",
     },
     {
       id: 2,
@@ -196,8 +212,8 @@ const UserProfile = () => {
       isPrivate: false,
       projectName: "Mobile App",
       collaborators: 5,
-      createdDate: "09/20/2025"
-    }
+      createdDate: "09/20/2025",
+    },
   ];
 
   return (
@@ -225,7 +241,7 @@ const UserProfile = () => {
                                   fill="none"
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
-                                  <g clip-path="url(#clip0_3108_3780)">
+                                  <g>
                                     <path
                                       d="M0 11.5C0 8.45001 1.2116 5.52494 3.36827 3.36827C5.52494 1.2116 8.45001 0 11.5 0L80.5 0C83.55 0 86.4751 1.2116 88.6317 3.36827C90.7884 5.52494 92 8.45001 92 11.5V80.5C92 83.55 90.7884 86.4751 88.6317 88.6317C86.4751 90.7884 83.55 92 80.5 92H11.5C8.45001 92 5.52494 90.7884 3.36827 88.6317C1.2116 86.4751 0 83.55 0 80.5V11.5ZM51.3475 37.881L38.18 39.5312L37.7085 41.7163L40.296 42.1935C41.9865 42.596 42.32 43.2055 41.952 44.8903L37.7085 64.8312C36.593 69.989 38.3123 72.4155 42.3545 72.4155C45.4883 72.4155 49.128 70.9665 50.7783 68.977L51.2842 66.585C50.1342 67.597 48.4552 67.9995 47.3397 67.9995C45.7585 67.9995 45.1835 66.8897 45.5918 64.9348L51.3475 37.881ZM46 31.625C47.525 31.625 48.9875 31.0192 50.0659 29.9409C51.1442 28.8625 51.75 27.4 51.75 25.875C51.75 24.35 51.1442 22.8875 50.0659 21.8091C48.9875 20.7308 47.525 20.125 46 20.125C44.475 20.125 43.0125 20.7308 41.9341 21.8091C40.8558 22.8875 40.25 24.35 40.25 25.875C40.25 27.4 40.8558 28.8625 41.9341 29.9409C43.0125 31.0192 44.475 31.625 46 31.625Z"
                                       fill="#B3DBFF"
@@ -388,10 +404,11 @@ const UserProfile = () => {
                                 )} */}
 
                                 <div
-                                  className={`${isActive
-                                    ? "bg-[#157BFF]"
-                                    : "bg-[#157BFF]/10"
-                                    } w-[60px] h-[60px] flex justify-center items-center rounded-xl transition-all duration-200`}
+                                  className={`${
+                                    isActive
+                                      ? "bg-[#157BFF]"
+                                      : "bg-[#157BFF]/10"
+                                  } w-[60px] h-[60px] flex justify-center items-center rounded-xl transition-all duration-200`}
                                 >
                                   <span className="transition-colors duration-200">
                                     {typeof item.icon === "function"
@@ -401,10 +418,11 @@ const UserProfile = () => {
                                 </div>
 
                                 <p
-                                  className={`${isActive
-                                    ? "text-[#157BFF]"
-                                    : "text-gray-500"
-                                    } font-semibold whitespace-nowrap text-center mt-2 text-xs transition-colors duration-200`}
+                                  className={`${
+                                    isActive
+                                      ? "text-[#157BFF]"
+                                      : "text-gray-500"
+                                  } font-semibold whitespace-nowrap text-center mt-2 text-xs transition-colors duration-200`}
                                 >
                                   {item.label}
                                 </p>
@@ -519,7 +537,9 @@ const UserProfile = () => {
                         )}
                         {activeTab === "Account" && <ProfileAbout />}
                         {activeTab === "Heatmap" && <HeatmapConnections />}
-                        {activeTab === "Projects" && <ProjectDashboard projects={myProjects} />}
+                        {activeTab === "Projects" && (
+                          <ProjectDashboard projects={myProjects} />
+                        )}
                       </div>
                     </div>
                   </div>
