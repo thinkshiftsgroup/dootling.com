@@ -17,7 +17,7 @@ interface Biodata {
   pronouns: string | null;
   phone: string | null;
   languages: string | null;
-  state: string | null;
+  city: string | null;
   role: string | null;
   industry: string | null;
   tags: string | null;
