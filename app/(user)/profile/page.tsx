@@ -25,6 +25,7 @@ import HeatmapConnections from "@/components/main/profile/heatMap";
 import AddHeatmapModal from "@/components/main/profile/addHeatMapModal";
 import ProfileSpace from "@/components/main/profile/profileSpace";
 import ProfileLinks from "@/components/main/profile/links";
+import ProjectDashboard from "@/components/main/profile/project/projects";
 
 const UserProfile = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -81,8 +82,8 @@ const UserProfile = () => {
       icon: (isActive: boolean) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="30"
-          height="30"
+          width={30}
+          height={30}
           viewBox="0 0 24 24"
           className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
         >
@@ -151,26 +152,21 @@ const UserProfile = () => {
     {
       icon: (isActive: boolean) => (
         <svg
-          width="30"
-          height="30"
-          viewBox="0 0 163 163"
-          fill="none"
+          className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
           xmlns="http://www.w3.org/2000/svg"
+          width={30}
+          height={30}
+          viewBox="0 0 24 24"
         >
-          <path
-            d="M54.2236 122.01C35.055 122.01 25.4639 122.01 19.5127 116.052C13.5547 110.1 13.5547 100.509 13.5547 81.3408C13.5547 62.1722 13.5547 52.5811 19.5127 46.6299C25.4639 40.6719 35.055 40.6719 54.2236 40.6719C73.3922 40.6719 82.9833 40.6719 88.9345 46.6299C94.8925 52.5811 94.8925 62.1722 94.8925 81.3408"
-            stroke="#B1D3FF"
-            stroke-width="10.1672"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M67.7812 81.3408C67.7812 100.509 67.7812 110.1 73.7392 116.052C79.6905 122.01 89.2815 122.01 108.45 122.01C127.619 122.01 137.21 122.01 143.161 116.052C145.195 114.018 146.537 111.565 147.418 108.453M149.119 81.3408C149.119 62.1722 149.119 52.5811 143.161 46.6299C137.21 40.6719 127.619 40.6719 108.45 40.6719"
-            stroke="#B1D3FF"
-            stroke-width="10.1672"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
+          <g
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeWidth={1.5}
+          >
+            <path d="M14 21h-2c-4.714 0-7.071 0-8.536-1.465C2 18.072 2 15.715 2 11V7.944c0-1.816 0-2.724.38-3.406A3 3 0 0 1 3.538 3.38C4.22 3 5.128 3 6.944 3C8.108 3 8.69 3 9.2 3.191c1.163.436 1.643 1.493 2.168 2.542L12 7M8 7h8.75c2.107 0 3.16 0 3.917.506a3 3 0 0 1 .827.827C22 9.09 22 10.143 22 12.25q.001.957-.005 1.75"></path>
+            <path d="M17.686 20.432a1.941 1.941 0 0 0 2.746-2.746l-1.716-1.716a1.94 1.94 0 0 0-2.639-.098m.237-2.303a1.941 1.941 0 0 0-2.745 2.745l1.715 1.715a1.94 1.94 0 0 0 2.64.1"></path>
+          </g>
         </svg>
       ),
       label: "Links",
@@ -201,6 +197,25 @@ const UserProfile = () => {
     { icon: <FaHandsClapping className="text-yellow-500" />, label: "Clap" },
     { icon: <FaFire className="text-orange-500" />, label: "Fire" },
     { icon: <FaSmile className="text-amber-500" />, label: "Nice" },
+  ];
+
+  const myProjects = [
+    {
+      id: 1,
+      imageSrc: "/images/project.png",
+      isPrivate: true,
+      projectName: "E-commerce App",
+      collaborators: 12,
+      createdDate: "10/15/2025",
+    },
+    {
+      id: 2,
+      imageSrc: "/images/project.png",
+      isPrivate: false,
+      projectName: "Mobile App",
+      collaborators: 5,
+      createdDate: "09/20/2025",
+    },
   ];
 
   return (
@@ -332,7 +347,7 @@ const UserProfile = () => {
                       <div className="relative my-6">
                         <button
                           onClick={() => scroll("left")}
-                          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-1"
+                          className="absolute left-0 top-1/2 cursor-pointer -translate-y-1/2 z-10 p-1 group"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -354,7 +369,7 @@ const UserProfile = () => {
 
                         <button
                           onClick={() => scroll("right")}
-                          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-1"
+                          className="absolute right-0 top-1/2 cursor-pointer -translate-y-1/2 z-10 p-1 group"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -526,6 +541,9 @@ const UserProfile = () => {
                         )}
                         {/* {activeTab === "Account" && <ProfileAbout />} */}
                         {activeTab === "Heatmap" && <HeatmapConnections />}
+                        {activeTab === "Projects" && (
+                          <ProjectDashboard projects={myProjects} />
+                        )}
                       </div>
                     </div>
                   </div>
@@ -578,10 +596,10 @@ const UserProfile = () => {
                                         </small>
                                       </div>
                                       <div className="flex items-center flex-shrink-0 gap-2">
-                                        <button className="px-2 py-1 bg-blue-100 text-blue-600 rounded hover:bg-blue-200 leading-none">
+                                        <button className="px-2 py-1 cursor-pointer bg-blue-100 text-blue-600 rounded hover:bg-blue-200 leading-none">
                                           <i className="ph ph-plus text-sm"></i>
                                         </button>
-                                        <button className="px-2 py-1 bg-red-100 text-red-600 rounded hover:bg-red-200 leading-none">
+                                        <button className="px-2 py-1 cursor-pointer bg-red-100 text-red-600 rounded hover:bg-red-200 leading-none">
                                           <i className="ph ph-x text-sm"></i>
                                         </button>
                                       </div>
