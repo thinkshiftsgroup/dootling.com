@@ -8,6 +8,7 @@ import authApi from "@/api/auth";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import Cookies from "js-cookie";
 interface LoginResponse {
   token: string;
   user: {
@@ -83,7 +84,14 @@ export default function LoginPage() {
         });
 
         if (response.data.token && response.data.user) {
+          const { token, user } = response.data;
           loginUser(response.data.token, response.data.user);
+          const rememberMeDays = formData.rememberMe ? 28 : undefined;
+
+          Cookies.set("dootling_auth_token", token, {
+            expires: rememberMeDays,
+            secure: process.env.NODE_ENV === "production",
+          });
 
           router.push("/profile");
         } else {

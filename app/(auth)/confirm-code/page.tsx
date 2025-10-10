@@ -14,7 +14,7 @@ import Head from "next/head";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/stores/useAuthStore";
 import authApi from "@/api/auth";
-
+import Cookies from "js-cookie";
 interface VerifyResponse {
   token: string;
   user: {
@@ -141,6 +141,15 @@ export default function VerifyOTPPage() {
         loginUser(response.data.token, {
           ...response.data.user,
           name: response.data.user.name,
+        });
+
+        const { token, user } = response.data;
+
+        loginUser(response.data.token, response.data.user);
+        const rememberMeDays = 30;
+        Cookies.set("dootling_auth_token", token, {
+          expires: rememberMeDays,
+          secure: process.env.NODE_ENV === "production",
         });
 
         clearUnverifiedEmail();
