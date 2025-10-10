@@ -1,12 +1,74 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import Navbar from "@/components/main/landing-page/navbar/navbar";
 import { Pencil } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
+import { useProfileStore } from "@/stores/useProfileStore";
+import useProfileActions from "@/hooks/useProfileApi";
 
 const EditProfile = () => {
   const [activeTab, setActiveTab] = useState("personal-information");
+  const { profile, isLoading, isLoaded } = useProfileStore();
+  const { fetchUserProfile, updateProfileDetails } = useProfileActions();
+
+  const [formData, setFormData] = useState({
+    firstname: "",
+    lastname: "",
+    username: "",
+    email: "",
+    headline: "",
+    country: "",
+    state: "",
+    role: "",
+    industry: "",
+    dateOfBirth: "",
+    pronouns: "",
+  });
+
+  useEffect(() => {
+    if (!isLoaded) {
+      fetchUserProfile();
+    }
+  }, [isLoaded, fetchUserProfile]);
+
+  useEffect(() => {
+    if (profile) {
+      setFormData({
+        firstname: profile.firstname || "",
+        lastname: profile.lastname || "",
+        username: profile.username || "",
+        email: profile.email || "",
+        headline: profile.headline || "",
+        country: profile.country || "",
+        state: profile.state || "",
+        role: profile.role || "",
+        industry: profile.industry || "",
+        dateOfBirth: profile.dateOfBirth
+          ? new Date(profile.dateOfBirth).toISOString().split("T")[0]
+          : "",
+        pronouns: profile.pronouns || "",
+      });
+    }
+  }, [profile]);
+
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await updateProfileDetails(formData);
+      alert("Profile updated successfully!");
+    } catch (error) {
+      alert("Failed to update profile.");
+    }
+  };
 
   const tabs = [
     { id: "personal-information", label: "Personal Information" },
@@ -15,12 +77,20 @@ const EditProfile = () => {
     { id: "manage-contact", label: "Manage Contact" },
   ];
 
+  if (isLoading && !isLoaded) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <p className="text-lg text-gray-500">Loading profile data...</p>
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className="relative bg-gray-50 min-h-screen py-10">
         <div className="max-w-6xl mx-auto px-4">
           <div className="bg-white rounded-lg mb-6">
-            <ul className=" grid grid-cols-4 rounded-sm  text-sm font-medium text-center text-[#7e8b9a] ">
+            <ul className=" grid grid-cols-4 rounded-sm text-sm font-medium text-center text-[#7e8b9a] ">
               {tabs.map((tab, index) => (
                 <button
                   key={tab.id}
@@ -52,9 +122,9 @@ const EditProfile = () => {
                   Personal Information
                 </h4>
 
-                <form className="space-y-6">
+                <form className="space-y-6" onSubmit={handleSubmit}>
                   <div className="flex mb-6">
-                    <div className="relative  ">
+                    <div className="relative">
                       <Image
                         src="/images/user/11.png"
                         alt="profile"
@@ -85,6 +155,9 @@ const EditProfile = () => {
                         </label>
                         <input
                           type="text"
+                          name="firstname"
+                          value={formData.firstname}
+                          onChange={handleChange}
                           placeholder="Bni"
                           className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
                         />
@@ -96,6 +169,9 @@ const EditProfile = () => {
                         </label>
                         <input
                           type="text"
+                          name="username"
+                          value={formData.username}
+                          onChange={handleChange}
                           placeholder="Bni@01"
                           className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
                         />
@@ -105,7 +181,10 @@ const EditProfile = () => {
                           Headline
                         </label>
                         <textarea
-                          placeholder="Bni@01"
+                          name="headline"
+                          value={formData.headline}
+                          onChange={handleChange}
+                          placeholder="Your professional headline"
                           className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
                         />
                       </div>
@@ -113,7 +192,13 @@ const EditProfile = () => {
                         <label className="text-sm font-medium text-[#738b9a]">
                           Country
                         </label>
-                        <select className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 bg-white focus:ring-blue-500 focus:border-blue-500">
+                        <select
+                          name="country"
+                          value={formData.country}
+                          onChange={handleChange}
+                          className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 bg-white focus:ring-blue-500 focus:border-blue-500"
+                        >
+                          <option value="">Select Country</option>
                           <option>USA</option>
                           <option>Canada</option>
                           <option>India</option>
@@ -122,28 +207,6 @@ const EditProfile = () => {
                         </select>
                       </div>
                     </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="w-full flex flex-col gap-4">
-                        <div>
-                          <label className="text-sm font-medium text-[#738b9a]">
-                            Role
-                          </label>
-                          <select className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 bg-white focus:ring-blue-500 focus:border-blue-500">
-                            <option>Software Eng</option>
-                          </select>
-                        </div>
-
-                        <div>
-                          <label className="text-sm font-medium text-[#738b9a]">
-                            Industry
-                          </label>
-                          <select className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 bg-white focus:ring-blue-500 focus:border-blue-500">
-                            <option>Finance</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-
                     <div className="w-full flex flex-col gap-4">
                       <div>
                         <label className="text-sm font-medium text-[#738b9a]">
@@ -151,6 +214,9 @@ const EditProfile = () => {
                         </label>
                         <input
                           type="text"
+                          name="lastname"
+                          value={formData.lastname}
+                          onChange={handleChange}
                           placeholder="Jhon"
                           className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
                         />
@@ -162,15 +228,25 @@ const EditProfile = () => {
                         </label>
                         <input
                           type="text"
+                          name="email"
+                          value={formData.email}
+                          onChange={handleChange}
                           placeholder="Johndoe@gmail.com"
-                          className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                          disabled
+                          className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 bg-gray-100 focus:ring-blue-500 focus:border-blue-500"
                         />
                       </div>
                       <div>
                         <label className="text-sm font-medium text-[#738b9a]">
                           Pronoun
                         </label>
-                        <select className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 bg-white focus:ring-blue-500 focus:border-blue-500">
+                        <select
+                          name="pronouns"
+                          value={formData.pronouns}
+                          onChange={handleChange}
+                          className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 bg-white focus:ring-blue-500 focus:border-blue-500"
+                        >
+                          <option value="">Select Pronoun</option>
                           <option>He</option>
                           <option>She</option>
                           <option>They</option>
@@ -183,28 +259,24 @@ const EditProfile = () => {
                         </label>
                         <input
                           type="date"
+                          name="dateOfBirth"
+                          value={formData.dateOfBirth}
+                          onChange={handleChange}
                           className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
                         />
                       </div>
 
                       <div>
                         <label className="text-sm font-medium text-[#738b9a]">
-                          Age
-                        </label>
-                        <select className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 bg-white focus:ring-blue-500 focus:border-blue-500">
-                          <option>18–25</option>
-                          <option>26–35</option>
-                          <option>36–45</option>
-                          <option>46–62</option>
-                          <option>63+</option>
-                        </select>
-                      </div>
-
-                      <div>
-                        <label className="text-sm font-medium text-[#738b9a]">
                           State
                         </label>
-                        <select className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 bg-white focus:ring-blue-500 focus:border-blue-500">
+                        <select
+                          name="state"
+                          value={formData.state}
+                          onChange={handleChange}
+                          className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 bg-white focus:ring-blue-500 focus:border-blue-500"
+                        >
+                          <option value="">Select State</option>
                           <option>California</option>
                           <option>Florida</option>
                           <option>Georgia</option>
@@ -214,23 +286,45 @@ const EditProfile = () => {
                       </div>
                     </div>
 
-                    <div className="col-span-2">
-                      <label className="text-sm font-medium text-[#738b9a]">
-                        Address
-                      </label>
-                      <textarea
-                        className="w-full h-[128px] mt-1 border-[#f1f1f1] border rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
-                        defaultValue="37 Cardinal Lane Petersburg, VA 23803 United States of America Zip Code: 85001"
-                      />
+                    <div className="col-span-2 grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="text-sm font-medium text-[#738b9a]">
+                          Role
+                        </label>
+                        <select
+                          name="role"
+                          value={formData.role}
+                          onChange={handleChange}
+                          className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 bg-white focus:ring-blue-500 focus:border-blue-500"
+                        >
+                          <option value="">Select Role</option>
+                          <option>Software Eng</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium text-[#738b9a]">
+                          Industry
+                        </label>
+                        <select
+                          name="industry"
+                          value={formData.industry}
+                          onChange={handleChange}
+                          className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 bg-white focus:ring-blue-500 focus:border-blue-500"
+                        >
+                          <option value="">Select Industry</option>
+                          <option>Finance</option>
+                        </select>
+                      </div>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-3 pt-4">
                     <button
                       type="submit"
-                      className="bg-[#50b5ff] text-white px-5 py-2 rounded hover:bg-blue-700 transition"
+                      disabled={isLoading}
+                      className="bg-[#50b5ff] text-white px-5 py-2 rounded hover:bg-blue-700 transition disabled:bg-gray-400"
                     >
-                      Submit
+                      {isLoading ? "Saving..." : "Submit"}
                     </button>
                     <button
                       type="reset"
