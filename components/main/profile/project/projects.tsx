@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Lock, Globe, MoreHorizontal } from 'lucide-react';
+import AddProjectsModal from './addProject';
 
 // TypeScript interfaces
 interface Project {
@@ -39,7 +40,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   projectName,
   collaborators,
   createdDate
-}) => {
+}) => { 
   return (
     <div className="bg-white h-40 flex rounded-sm shadow-sm border border-[#f1f1f1] overflow-hidden hover:shadow-md transition-shadow">
       {/* Image Container */}
@@ -111,6 +112,7 @@ const TabButton: React.FC<TabButtonProps> = ({ active, onClick, icon, children }
 const ProjectDashboard: React.FC<ProjectDashboardProps> = ({ projects = [] }) => {
   const [activeTab, setActiveTab] = React.useState<string>('my-projects');
 
+  const [showModal, setShowModal] = useState(false);
   return (
     <div className="tab-pane fade container mx-auto" id="heatmap" role="tabpanel">
       <div className=" bg-gray-50">
@@ -145,7 +147,9 @@ const ProjectDashboard: React.FC<ProjectDashboardProps> = ({ projects = [] }) =>
                   </TabButton>
                 </div>
 
-                <button className="bg-[#157BFF] hover:bg-blue-700 text-white px-4 py-1.5 rounded-sm transition-colors cursor-pointer flex items-center gap-2">
+                <button  onClick={() => {
+                   setShowModal(true);
+                  }} className="bg-[#157BFF] hover:bg-blue-700 text-white px-4 py-1.5 rounded-sm transition-colors cursor-pointer flex items-center gap-2">
                   <span className="text-xl"><svg xmlns="http://www.w3.org/2000/svg" width={22} height={22} viewBox="0 0 24 24"><path fill="currentColor" d="M18 12.998h-5v5a1 1 0 0 1-2 0v-5H6a1 1 0 0 1 0-2h5v-5a1 1 0 0 1 2 0v5h5a1 1 0 0 1 0 2"></path></svg></span>
                   Create Project
                 </button>
@@ -196,6 +200,12 @@ const ProjectDashboard: React.FC<ProjectDashboardProps> = ({ projects = [] }) =>
           </div>
         </div>
       </div>
+       <div>
+        <AddProjectsModal
+          open={showModal}
+          onClose={() => setShowModal(false)}
+        />
+        </div>
     </div>
   );
 };
