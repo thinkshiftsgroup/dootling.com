@@ -1,7 +1,10 @@
+"use client";
 import Image from "next/image";
 import Navbar from "@/components/main/landing-page/navbar/navbar";
 import ActiveUsers from "@/components/main/landing-page/sidebar/activeUsers";
 import Suggestions from "@/components/main/landing-page/sidebar/suggestions";
+import { useState } from "react";
+import ReactionModal from "@/components/main/modal/reacttionModal";
 
 export default function Home() {
   const stories = [
@@ -132,6 +135,8 @@ export default function Home() {
       ],
     },
   ];
+
+  const [openLikesModal, setOpenLikesModal] = useState(true);
   return (
     <main className="main-content pb-20">
       <div className="relative">
@@ -550,9 +555,13 @@ export default function Home() {
                                     />
                                   </li>
                                 </ul>
-                                <div className="inline-flex items-center gap-1">
+                                {/* modal for likes */}
+                                <div
+                                  onClick={() => setOpenLikesModal(true)}
+                                  className="inline-flex cursor-pointer items-center gap-1"
+                                >
                                   <h6 className="m-0 text-sm">Aliana Molex</h6>
-                                  <span className="capitalize text-sm font-medium cursor-pointer">
+                                  <span className="capitalize text-sm font-medium">
                                     and 208 others liked this
                                   </span>
                                 </div>
@@ -872,7 +881,11 @@ export default function Home() {
                                     />
                                   </li>
                                 </ul>
-                                <div className="inline-flex items-center gap-1">
+                                {/* modal dor likes */}
+                                <div
+                                  onClick={() => setOpenLikesModal(true)}
+                                  className="inline-flex items-center gap-1"
+                                >
                                   <h6 className="m-0 text-sm">Aliana Molex</h6>
                                   <button
                                     className="capitalize text-sm font-medium cursor-pointer"
@@ -1425,7 +1438,8 @@ export default function Home() {
                                     />
                                   </li>
                                 </ul>
-                                <div className="inline-flex items-center gap-1">
+                                {/* modal for likes */}
+                                <div onClick={() => setOpenLikesModal(true)} className="inline-flex cursor-pointer items-center gap-1">
                                   <h6 className="m-0 text-sm">Aliana Molex</h6>
                                   {/* <span className="capitalize text-sm font-medium cursor-pointer"
                                     type="button" data-bs-toggle="modal" data-bs-target="#likemodal">and
@@ -1978,8 +1992,11 @@ export default function Home() {
                                     />
                                   </li>
                                 </ul>
-                                <div className="inline-flex items-center gap-1">
-                                  <h6 className="m-0 text-sm">Aliana Molex</h6>
+                                {/* modal for likes */}
+                                <div onClick={() => setOpenLikesModal(true)} className="inline-flex cursor-pointer items-center gap-1">
+                                  <h6 className="m-0 text-sm">
+                                    Aliana Molex A
+                                  </h6>
                                   <span className="capitalize text-sm font-medium cursor-pointer">
                                     and 208 others liked this
                                   </span>
@@ -2159,6 +2176,9 @@ export default function Home() {
           </div>
         </div>
       </div>
+      {openLikesModal && (
+        <ReactionModal setOpenLikesModal={setOpenLikesModal} />
+      )}
     </main>
   );
 }
