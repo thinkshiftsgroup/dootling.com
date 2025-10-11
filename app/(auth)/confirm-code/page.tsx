@@ -41,12 +41,12 @@ export default function VerifyOTPPage() {
 
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
-  useEffect(() => {
-    if (!unverifiedEmail) {
-      router.push("/signup");
-      alert("Please sign up or request a verification code first.");
-    }
-  }, [unverifiedEmail, router]);
+  // useEffect(() => {
+  //   if (!unverifiedEmail) {
+  //     router.push("/signup");
+  //     alert("Please sign up or request a verification code first.");
+  //   }
+  // }, [unverifiedEmail, router]);
 
   useEffect(() => {
     if (timeLeft > 0) {
@@ -144,18 +144,18 @@ export default function VerifyOTPPage() {
           name: response.data.user.name || "Dootling User",
         });
 
-        const { token, user } = response.data;
+        // const { token, user } = response.data;
 
-        loginUser(response.data.token, response.data.user);
-        const rememberMeDays = 30;
-        Cookies.set("dootling_auth_token", token, {
-          expires: rememberMeDays,
-          secure: process.env.NODE_ENV === "production",
-        });
+        // loginUser(response.data.token, response.data.user);
+        // const rememberMeDays = 30;
+        // Cookies.set("dootling_auth_token", token, {
+        //   expires: rememberMeDays,
+        //   secure: process.env.NODE_ENV === "production",
+        // });
         toast.success("Email verified successfully! 🎉");
         clearUnverifiedEmail();
 
-        router.push("/profile");
+        router.push("/login");
       } else {
         setError("Verification failed: Invalid server response.");
       }
