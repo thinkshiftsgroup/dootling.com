@@ -117,6 +117,20 @@ export default function Home() {
         },
       ],
     },
+    {
+      id: "travis",
+      name: "Travis John",
+      photo: "/images/user/17.jpg",
+      items: [
+        {
+          id: "marcum-1",
+          type: "photo",
+          thumb:
+            "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/9.jpg",
+          src: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/9.jpg",
+        },
+      ],
+    },
   ];
   return (
     <main className="main-content pb-20">
@@ -129,7 +143,6 @@ export default function Home() {
               <div className="flex flex-wrap -mx-4">
                 <div className="w-full lg:w-2/3 px-4" id="dynamicDivContainer">
                   <div id="content">
-                 
                     <div className="flex flex-wrap pb-4">
                       <div className="w-full">
                         <div className="mb-5">
@@ -147,17 +160,17 @@ export default function Home() {
                                   href="#"
                                   className="item-link flex flex-col items-center"
                                 >
-                                  <span className="item-preview block w-16 h-16 rounded-full overflow-hidden border-2 border-blue-500">
+                                  <span className="item-preview block  rounded-full overflow-hidden border-2 border-white">
                                     <Image
                                       src={story.photo}
                                       alt={story.name}
-                                      width={64}
-                                      height={64}
+                                      width={90}
+                                      height={90}
                                       className="object-cover w-full h-full"
                                     />
                                   </span>
                                   <span className="info text-center mt-1">
-                                    <strong className="name text-sm block">
+                                    <strong className="name text-xs block">
                                       {story.name}
                                     </strong>
                                     <span className="time text-xs text-gray-400"></span>
@@ -591,7 +604,7 @@ export default function Home() {
                               <div className="flex items-center justify-between gap-2 lg:gap-3">
                                 <div className="flex-shrink-0">
                                   <img
-                                    className="border border-2 rounded-full user-post-profile"
+                                    className=" border-2 rounded-full user-post-profile"
                                     src="/images/user/03.jpg"
                                     alt="user-image"
                                     loading="lazy"
@@ -1265,7 +1278,7 @@ export default function Home() {
                               <div className="flex items-center justify-between gap-2 lg:gap-3">
                                 <div className="flex-shrink-0">
                                   <img
-                                    className="border border-2 rounded-full user-post-profile"
+                                    className="border-2 rounded-full user-post-profile"
                                     src="/images/user/04.jpg"
                                     alt="user-image"
                                     loading="lazy"
@@ -1815,7 +1828,7 @@ export default function Home() {
                               <div className="flex items-center justify-between gap-2 lg:gap-3">
                                 <div className="flex-shrink-0">
                                   <img
-                                    className="border-2 border rounded-full user-post-profile"
+                                    className="border-2 rounded-full user-post-profile"
                                     src="/images/user/1.jpg"
                                     alt="user-image"
                                     loading="lazy"
@@ -1920,8 +1933,10 @@ export default function Home() {
                             <div className="user-post mt-4">
                               <div className="aspect-video">
                                 <iframe
-                                  className="w-full h-full"
-                                  src="https://www.youtube.com/embed/oHD33oKbKh4?si=VF-Qcp-pZdzUb3RX"
+                                  className="w-full h-full rounded-md"
+                                  src="https://www.youtube.com/embed/IEHKekzTzPg"
+                                  title="YouTube video"
+                                  // allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                   allowFullScreen
                                 ></iframe>
                               </div>

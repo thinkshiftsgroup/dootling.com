@@ -2,187 +2,373 @@
 import { ChevronDown } from "lucide-react";
 import React, { useState } from "react";
 import TransactionsTable from "./transactionsTable";
-import FundWalletSideModal from "./fundWallet";
+import FundWalletSideModal from "./fundEscrowWallet.tsx";
 import ManageEscrowFunds from "./manageEscrow";
 import FundAllocation from "./fundAllocation";
-
-const cards = [
-  {
-    title: "Available Wallet Balance",
-    amount: "$625.00",
-    bgColor: "#00B69B",
-    buttonText: "Fund Wallet",
-    svg: (
-      <svg
-        width="12"
-        height="12"
-        viewBox="0 0 52 52"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M47.5212 1.09501C49.164 0.128685 51.2899 1.48154 50.9034 3.4142L43.9458 45.1596C43.7525 46.7057 42.1098 47.5754 40.7569 46.9956L28.7744 41.8741L22.5899 49.4114C21.2371 51.0542 18.5314 50.1845 18.5314 47.8653V40.0381L41.7232 11.7246C42.2064 11.1448 41.4333 10.4684 40.9502 10.9516L13.2166 35.3997L2.87684 31.0512C1.13745 30.3748 0.944182 27.8623 2.68357 26.896L47.5212 1.09501Z"
-          fill="white"
-        />
-      </svg>
-    ),
-    showButton: true,
-  },
-  {
-    title: "In Escrow Wallet",
-    amount: "$122.00",
-    bgColor: "#000000",
-    buttonText: "Manage Funds",
-    svg: (
-      <svg
-        width="12"
-        height="12"
-        viewBox="0 0 55 55"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M35.7161 17.6375C37.3592 17.6365 38.9519 17.0702 40.2267 16.0338C41.5016 14.9973 42.3811 13.5538 42.7175 11.9455H48.9353C49.2185 11.9435 49.4949 11.8581 49.7299 11.7C49.9649 11.5419 50.1481 11.318 50.2567 11.0564C50.3652 10.7948 50.3943 10.507 50.3403 10.229C50.2863 9.95093 50.1516 9.69496 49.9529 9.49301C49.6817 9.22523 49.3164 9.07425 48.9353 9.07239H42.7277C42.3998 7.45367 41.5222 5.99816 40.2437 4.95264C38.9651 3.90712 37.3643 3.33594 35.7127 3.33594C34.0612 3.33594 32.4604 3.90712 31.1818 4.95264C29.9033 5.99816 29.0257 7.45367 28.6978 9.07239H6.79816C6.42923 9.09032 6.08134 9.2495 5.82658 9.51695C5.57182 9.78439 5.42972 10.1396 5.42972 10.509C5.42972 10.8783 5.57182 11.2335 5.82658 11.501C6.08134 11.7684 6.42923 11.9276 6.79816 11.9455H28.7114C29.048 13.5549 29.9285 14.9993 31.2048 16.0359C32.4811 17.0725 34.0753 17.6381 35.7195 17.6375M35.7195 14.6525C35.1716 14.6525 34.6291 14.5445 34.1229 14.3349C33.6166 14.1252 33.1567 13.8178 32.7692 13.4304C32.3818 13.043 32.0745 12.583 31.8648 12.0768C31.6551 11.5706 31.5472 11.028 31.5472 10.4801C31.5472 9.93221 31.6551 9.38965 31.8648 8.88344C32.0745 8.37723 32.3818 7.91728 32.7692 7.52984C33.1567 7.14241 33.6166 6.83507 34.1229 6.6254C34.6291 6.41572 35.1716 6.3078 35.7195 6.3078C36.8261 6.3078 37.8874 6.74738 38.6698 7.52984C39.4523 8.31231 39.8919 9.37356 39.8919 10.4801C39.8919 11.5867 39.4523 12.6479 38.6698 13.4304C37.8874 14.2129 36.8261 14.6525 35.7195 14.6525ZM20.7806 34.9273C22.4297 34.9281 24.0286 34.3594 25.3068 33.3173C26.585 32.2752 27.4641 30.8237 27.7955 29.2081L48.9387 29.1844C49.2212 29.1817 49.4968 29.0961 49.7311 28.9382C49.9654 28.7802 50.1481 28.5569 50.2565 28.296C50.3649 28.035 50.3943 27.748 50.3409 27.4705C50.2875 27.193 50.1538 26.9374 49.9563 26.7353C49.6851 26.4675 49.3198 26.3165 48.9387 26.3146L27.7955 26.335C27.4627 24.7217 26.5837 23.2726 25.3067 22.2321C24.0297 21.1916 22.4329 20.6234 20.7856 20.6234C19.1384 20.6234 17.5416 21.1916 16.2646 22.2321C14.9876 23.2726 14.1085 24.7217 13.7758 26.335L6.79816 26.3146C6.4176 26.3146 6.05264 26.4658 5.78355 26.7349C5.51446 27.004 5.36328 27.3689 5.36328 27.7495C5.36328 28.1301 5.51446 28.495 5.78355 28.7641C6.05264 29.0332 6.4176 29.1844 6.79816 29.1844L13.7758 29.2081C14.1069 30.8225 14.9851 32.2732 16.2619 33.3151C17.5387 34.3571 19.1325 34.9265 20.7806 34.9273ZM20.7839 31.9422C19.6774 31.9422 18.6161 31.5026 17.8337 30.7201C17.0512 29.9377 16.6116 28.8764 16.6116 27.7699C16.6116 26.6633 17.0512 25.602 17.8337 24.8196C18.6161 24.0371 19.6774 23.5975 20.7839 23.5975C21.8905 23.5975 22.9518 24.0371 23.7342 24.8196C24.5167 25.602 24.9563 26.6633 24.9563 27.7699C24.9563 28.8764 24.5167 29.9377 23.7342 30.7201C22.9518 31.5026 21.8905 31.9422 20.7839 31.9422ZM35.7026 52.0847C37.3555 52.0842 38.9574 51.5117 40.2361 50.4642C41.5149 49.4167 42.3916 47.959 42.7175 46.3384L48.9353 46.4266C49.2185 46.4246 49.4949 46.3392 49.7299 46.1811C49.9649 46.023 50.1481 45.7991 50.2567 45.5375C50.3652 45.2759 50.3943 44.9881 50.3403 44.7101C50.2863 44.432 50.1516 44.176 49.9529 43.9741C49.6817 43.7063 49.3164 43.5553 48.9353 43.5535L42.7073 43.4619C42.3698 41.854 41.4894 40.4111 40.2139 39.3756C38.9384 38.34 37.3455 37.7748 35.7026 37.7748C34.0596 37.7748 32.4667 38.34 31.1912 39.3756C29.9157 40.4111 29.0353 41.854 28.6978 43.4619L6.79476 43.5535C6.42584 43.5714 6.07795 43.7306 5.82319 43.998C5.56843 44.2655 5.42632 44.6207 5.42632 44.99C5.42632 45.3594 5.56843 45.7146 5.82319 45.9821C6.07795 46.2495 6.42584 46.4087 6.79476 46.4266L28.6876 46.3384C29.0135 47.959 29.8903 49.4167 31.169 50.4642C32.4477 51.5117 34.0496 52.0842 35.7026 52.0847ZM35.7026 49.0996C34.596 49.0996 33.5348 48.66 32.7523 47.8776C31.9698 47.0951 31.5302 46.0339 31.5302 44.9273C31.5302 43.8207 31.9698 42.7595 32.7523 41.977C33.5348 41.1945 34.596 40.755 35.7026 40.755C36.8091 40.755 37.8704 41.1945 38.6529 41.977C39.4353 42.7595 39.8749 43.8207 39.8749 44.9273C39.8749 46.0339 39.4353 47.0951 38.6529 47.8776C37.8704 48.66 36.8091 49.0996 35.7026 49.0996Z"
-          fill="white"
-        />
-      </svg>
-    ),
-    showButton: true,
-  },
-  {
-    title: "Total Payout",
-    amount: "$1220.00",
-    bgColor: "#157BFF",
-    showButton: false,
-  },
-];
+import PayoutTransaction from "./payoutTransaction";
+import PayoutTransactions from "./payoutTransaction";
+import PayoutTable from "./payoutTransaction";
+import RecallEscrowWallet from "./recallEscrowFund";
+import WithdrawFunds from "./withdrawFunds";
 
 const ProfileFinance = () => {
-  const [showModal, setShowModal] = useState(false);
   const [showManageFunds, setManageFunds] = useState(false);
 
-  const [showTransactions, setShowTransactions] = useState(true);
-  const [showEscrowTransactions, setShowEscrowTransactions] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
+  // const [showTransactions, setShowTransactions] = useState(true);
+  // const [fundAllocation, setFundAllocation] = useState(false);
+  // const [showEscrowTransactions, setShowEscrowTransactions] = useState(false);
+
+  const [activeTab, setActiveTab] = useState<
+    "transactions" | "escrow" | "fund"
+  >("transactions");
+
+  const [recallFunds, setRecallFunds] = useState(false);
+
+  const [withdrawFunds, setWithdrawFunds] = useState(false);
+
   return (
     <div className="rounded-sm bg-white px-4 py-2">
-      <div className="flex items-start justify-between gap-5 my-5">
-        {cards.map((card, index) => (
-          <div
-            key={index}
-            className="flex w-full h-[160px] flex-col justify-between gap-3 p-4 bg-white shadow-md min-w-[250px] rounded"
-          >
-            <h1 className="font-bold text-xl border-b-2 border-gray-100 pb-1 text-black leading-tight w-fit">
-              {card.title}
-            </h1>
-
-            <div className="flex items-center">
-              <p
-                className="text-white font-bold text-xl w-full px-3 py-2 rounded-sm leading-none"
-                style={{ backgroundColor: card.bgColor }}
+      <div className="flex items-start justify-between gap-2 my-5">
+        <div className="flex w-full h-[160px] overflow-y-scroll hide-scrollbar flex-col justify-between gap-3 p-2 bg-white shadow-md min-w-[250px] rounded">
+          <h1 className="font-bold text-base border-b-2 border-gray-100 pb-1 text-black leading-tight w-fit">
+            Available Wallet Balance
+          </h1>
+          <div className="flex items-center">
+            <p
+              className="text-white font-bold text-xl w-full px-3 py-2 rounded-sm leading-none"
+              style={{ backgroundColor: "#202224" }}
+            >
+              $625.00
+            </p>
+          </div>
+          <div className="flex items-center justify-between mt-2">
+            <p
+              onClick={() => setActiveTab("transactions")}
+              className={`text-xs cursor-pointer transition-colors duration-200 ${
+                activeTab === "transactions" ? "text-black" : "text-gray-300"
+              }`}
+            >
+              All Transactions
+            </p>
+            <button
+              onClick={() => setWithdrawFunds(true)}
+              className="bg-[#FAAF40] cursor-pointer text-white text-[10px] flex items-center gap-1 p-1 rounded"
+            >
+              Withdraw Funds
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 56 56"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                {card.amount}
-              </p>
-            </div>
+                <path
+                  d="M5.46484 20.2267C5.46484 17.4995 6.56302 15.8294 8.83683 14.5627L18.2009 9.35204C23.1062 6.62483 25.5601 5.25781 28.2485 5.25781C30.937 5.25781 33.3908 6.62483 38.2961 9.35204L47.6602 14.5627C49.9318 15.8294 51.0322 17.4995 51.0322 20.2267C51.0322 20.9649 51.0322 21.3363 50.9525 21.6393C50.5287 23.2341 49.0819 23.487 47.6853 23.487H8.81177C7.41513 23.487 5.97064 23.2364 5.54459 21.6393C5.46484 21.334 5.46484 20.9649 5.46484 20.2267Z"
+                  stroke="white"
+                  stroke-width="3.41755"
+                />
+                <path
+                  d="M28.2383 16.6484H28.2588"
+                  stroke="white"
+                  stroke-width="4.55674"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M10.0216 23.4844V42.8505M19.1351 23.4844V42.8505M37.362 23.4844V42.8505M46.4755 23.4844V42.8505M44.1971 42.8505H12.2999C10.4872 42.8505 8.74863 43.5706 7.4668 44.8525C6.18497 46.1343 5.46484 47.8728 5.46484 49.6856C5.46484 49.9877 5.58486 50.2775 5.7985 50.4911C6.01214 50.7048 6.3019 50.8248 6.60403 50.8248H49.893C50.1952 50.8248 50.4849 50.7048 50.6986 50.4911C50.9122 50.2775 51.0322 49.9877 51.0322 49.6856C51.0322 47.8728 50.3121 46.1343 49.0303 44.8525C47.7484 43.5706 46.0099 42.8505 44.1971 42.8505Z"
+                  stroke="white"
+                  stroke-width="3.41755"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
 
-            <div className="flex items-center justify-between mt-2">
-              <p
-                onClick={() => {
-                  if (card.buttonText === "Fund Wallet") {
-                    setShowTransactions((prev) => !prev);
-                  } else if (card.buttonText === "Manage Funds") {
-                    setShowEscrowTransactions((prev) => !prev);
-                  }
-                }}
-                className={`text-xs cursor-pointer transition-colors duration-200 ${
-                  (card.buttonText === "Fund Wallet" && showTransactions) ||
-                  (card.buttonText === "Manage Funds" && showEscrowTransactions)
-                    ? "text-[#157BFF]"
-                    : "text-gray-300"
-                }`}
+        <div className="flex w-full h-[160px] overflow-y-scroll hide-scrollbar flex-col justify-between gap-3 p-2 bg-white shadow-md min-w-[250px] rounded">
+          <h1 className="font-bold text-base border-b-2 border-gray-100 pb-1 text-black leading-tight w-fit">
+            In Escrow Wallet
+          </h1>
+          <div className="flex items-center">
+            <p
+              className="text-white font-bold text-xl w-full px-3 py-2 rounded-sm leading-none"
+              style={{ backgroundColor: "#A6A6A6" }}
+            >
+              $122.00
+            </p>
+          </div>
+          <div className="mt-2">
+            <div className="flex flex-row lg:flex-col gap-1">
+              <button
+                onClick={() => setActiveTab("fund")}
+                className="bg-black w-full text-white text-[9px] py-1 rounded flex items-center justify-center gap-1"
               >
-                All Transactions
-              </p>
-
-              {card.showButton && (
-                <button
-                  onClick={() => {
-                    if (card.buttonText === "Fund Wallet") {
-                      setShowModal(true);
-                    } else if (card.buttonText === "Manage Funds") {
-                      setManageFunds(true);
-                    }
-                  }}
-                  className="bg-[#FAAF40] cursor-pointer text-white text-xs flex items-center gap-2 px-2 py-1.5 rounded"
+                Allocate Funds
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 56 56"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  {card.buttonText} {card.svg}
-                </button>
-              )}
+                  <path
+                    d="M36.2053 17.5884C37.8606 17.5874 39.4652 17.0169 40.7497 15.9727C42.0341 14.9284 42.9202 13.4741 43.2591 11.8538H49.5235C49.8088 11.8518 50.0873 11.7657 50.324 11.6064C50.5608 11.4471 50.7454 11.2216 50.8547 10.958C50.9641 10.6944 50.9934 10.4045 50.939 10.1244C50.8846 9.84424 50.7488 9.58635 50.5487 9.38289C50.2755 9.1131 49.9075 8.96099 49.5235 8.95911H43.2693C42.939 7.32827 42.0548 5.86185 40.7667 4.8085C39.4786 3.75515 37.8658 3.17969 36.2018 3.17969C34.5379 3.17969 32.9251 3.75515 31.637 4.8085C30.3489 5.86185 29.4647 7.32827 29.1343 8.95911H7.07062C6.69893 8.97718 6.34844 9.13756 6.09177 9.407C5.8351 9.67645 5.69193 10.0343 5.69193 10.4064C5.69193 10.7786 5.8351 11.1364 6.09177 11.4059C6.34844 11.6753 6.69893 11.8357 7.07062 11.8538H29.148C29.4872 13.4752 30.3742 14.9305 31.6601 15.9748C32.9459 17.0192 34.5521 17.589 36.2087 17.5884M36.2087 14.581C35.6567 14.581 35.11 14.4723 34.6 14.261C34.09 14.0498 33.6266 13.7401 33.2363 13.3498C32.8459 12.9594 32.5363 12.496 32.3251 11.986C32.1138 11.476 32.0051 10.9294 32.0051 10.3774C32.0051 9.82538 32.1138 9.27876 32.3251 8.76875C32.5363 8.25875 32.8459 7.79535 33.2363 7.40501C33.6266 7.01467 34.09 6.70504 34.6 6.49379C35.11 6.28254 35.6567 6.17381 36.2087 6.17381C37.3235 6.17381 38.3927 6.61669 39.1811 7.40501C39.9694 8.19334 40.4123 9.26254 40.4123 10.3774C40.4123 11.4923 39.9694 12.5615 39.1811 13.3498C38.3927 14.1381 37.3235 14.581 36.2087 14.581ZM21.1578 35.0077C22.8193 35.0085 24.4301 34.4355 25.7179 33.3856C27.0057 32.3357 27.8914 30.8733 28.2253 29.2457L49.5269 29.2218C49.8115 29.2191 50.0891 29.1329 50.3252 28.9737C50.5612 28.8146 50.7453 28.5896 50.8545 28.3267C50.9638 28.0638 50.9934 27.7746 50.9396 27.4951C50.8858 27.2155 50.7511 26.9579 50.5521 26.7543C50.2789 26.4845 49.9109 26.3324 49.5269 26.3305L28.2253 26.351C27.89 24.7257 27.0044 23.2657 25.7178 22.2174C24.4313 21.1691 22.8225 20.5967 21.1629 20.5967C19.5033 20.5967 17.8945 21.1691 16.608 22.2174C15.3214 23.2657 14.4358 24.7257 14.1005 26.351L7.07062 26.3305C6.68722 26.3305 6.31952 26.4828 6.04841 26.7539C5.77731 27.0251 5.625 27.3928 5.625 27.7762C5.625 28.1596 5.77731 28.5273 6.04841 28.7984C6.31952 29.0695 6.68722 29.2218 7.07062 29.2218L14.1005 29.2457C14.4342 30.8722 15.3189 32.3337 16.6052 33.3835C17.8916 34.4332 19.4974 35.0069 21.1578 35.0077ZM21.1612 32.0002C20.0463 32.0002 18.9771 31.5574 18.1888 30.769C17.4005 29.9807 16.9576 28.9115 16.9576 27.7967C16.9576 26.6818 17.4005 25.6126 18.1888 24.8243C18.9771 24.0359 20.0463 23.5931 21.1612 23.5931C22.2761 23.5931 23.3453 24.0359 24.1336 24.8243C24.9219 25.6126 25.3648 26.6818 25.3648 27.7967C25.3648 28.9115 24.9219 29.9807 24.1336 30.769C23.3453 31.5574 22.2761 32.0002 21.1612 32.0002ZM36.1916 52.2937C37.8569 52.2932 39.4708 51.7163 40.7591 50.661C42.0474 49.6057 42.9307 48.137 43.2591 46.5043L49.5235 46.5932C49.8088 46.5912 50.0873 46.5051 50.324 46.3458C50.5608 46.1865 50.7454 45.961 50.8547 45.6974C50.9641 45.4339 50.9934 45.1439 50.939 44.8638C50.8846 44.5837 50.7488 44.3258 50.5487 44.1223C50.2755 43.8525 49.9075 43.7004 49.5235 43.6985L43.2488 43.6063C42.9088 41.9863 42.0218 40.5326 40.7368 39.4893C39.4517 38.446 37.8468 37.8765 36.1916 37.8765C34.5363 37.8765 32.9315 38.446 31.6464 39.4893C30.3614 40.5326 29.4744 41.9863 29.1343 43.6063L7.06721 43.6985C6.69552 43.7166 6.34502 43.877 6.08835 44.1464C5.83168 44.4159 5.68852 44.7737 5.68852 45.1459C5.68852 45.518 5.83168 45.8759 6.08835 46.1453C6.34502 46.4148 6.69552 46.5751 7.06721 46.5932L29.1241 46.5043C29.4524 48.137 30.3358 49.6057 31.6241 50.661C32.9124 51.7163 34.5262 52.2932 36.1916 52.2937ZM36.1916 49.2862C35.0767 49.2862 34.0075 48.8433 33.2192 48.055C32.4309 47.2667 31.988 46.1975 31.988 45.0826C31.988 43.9678 32.4309 42.8986 33.2192 42.1102C34.0075 41.3219 35.0767 40.8791 36.1916 40.8791C37.3064 40.8791 38.3756 41.3219 39.164 42.1102C39.9523 42.8986 40.3952 43.9678 40.3952 45.0826C40.3952 46.1975 39.9523 47.2667 39.164 48.055C38.3756 48.8433 37.3064 49.2862 36.1916 49.2862Z"
+                    fill="white"
+                  />
+                </svg>
+              </button>
+              <button
+                onClick={() => setShowModal(true)}
+                className=" bg-[#979797] w-full text-white text-[9px] py-1 rounded flex items-center justify-center gap-1"
+              >
+                Fund Wallet
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 55 54"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M25.6627 4.48438L42.0286 9.5973C42.485 9.73979 42.884 10.0245 43.1672 10.4097C43.4504 10.795 43.603 11.2607 43.6028 11.7389V15.6969H48.0878C48.6826 15.6969 49.253 15.9332 49.6735 16.3537C50.0941 16.7743 50.3304 17.3447 50.3304 17.9394V35.8795C50.3304 36.4743 50.0941 37.0447 49.6735 37.4652C49.253 37.8858 48.6826 38.122 48.0878 38.122L40.867 38.1243C39.9991 39.268 38.9451 40.2771 37.7274 41.1068L25.6627 49.3346L13.598 41.1091C11.7873 39.8744 10.3055 38.2162 9.28151 36.2785C8.25756 34.3408 7.72243 32.1823 7.72266 29.9907V11.7389C7.72293 11.2611 7.87579 10.7959 8.15896 10.4111C8.44214 10.0262 8.84082 9.74192 9.2969 9.59954L25.6627 4.48438ZM25.6627 9.18019L12.2077 13.3871V29.9907C12.2074 31.3636 12.5222 32.7183 13.1279 33.9504C13.7337 35.1824 14.6141 36.259 15.7015 37.0972L16.1253 37.4022L25.6627 43.9055L34.1439 38.122H23.4202C22.8255 38.122 22.2551 37.8858 21.8345 37.4652C21.414 37.0447 21.1777 36.4743 21.1777 35.8795V17.9394C21.1777 17.3447 21.414 16.7743 21.8345 16.3537C22.2551 15.9332 22.8255 15.6969 23.4202 15.6969H39.1178V13.3871L25.6627 9.18019ZM25.6627 26.9095V33.637H45.8453V26.9095H25.6627ZM25.6627 22.4245H45.8453V20.1819H25.6627V22.4245Z"
+                    fill="white"
+                  />
+                </svg>
+              </button>
+              <button
+                onClick={() => setRecallFunds(true)}
+                className=" w-full bg-[#FAAF40] text-white text-[9px] py-1 rounded flex items-center justify-center gap-1"
+              >
+                Recall Funds
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 57 56"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.875 29.8819V18.3906H49.2435V29.8819C49.2435 38.5486 49.2435 42.883 46.5499 45.5743C43.8564 48.2655 39.5242 48.2678 30.8575 48.2678H26.261C17.5943 48.2678 13.2598 48.2678 10.5685 45.5743C7.8773 42.8807 7.875 38.5486 7.875 29.8819Z"
+                    stroke="white"
+                    stroke-width="3.44737"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M7.875 18.3897L9.86298 13.9701C11.4074 10.5412 12.1773 8.82897 13.7401 7.8637C15.3029 6.89844 17.3093 6.89844 21.3197 6.89844H35.7987C39.8091 6.89844 41.8132 6.89844 43.3783 7.8637C44.9411 8.82897 45.711 10.5412 47.2555 13.9701L49.2435 18.3897M28.5592 18.3897V6.89844"
+                    stroke="white"
+                    stroke-width="3.44737"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    d="M20.5163 31.0262H33.1567C34.3757 31.0262 35.5449 31.5105 36.4069 32.3725C37.2689 33.2345 37.7532 34.4036 37.7532 35.6227C37.7532 36.8417 37.2689 38.0109 36.4069 38.8729C35.5449 39.7349 34.3757 40.2192 33.1567 40.2192H30.8584M23.9637 26.4297L19.3672 31.0262L23.9637 35.6227"
+                    stroke="white"
+                    stroke-width="3.44737"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
             </div>
           </div>
-        ))}
+        </div>
+
+        <div className="flex w-full h-[160px] overflow-y-scroll hide-scrollbar flex-col justify-between gap-3 p-2 bg-white shadow-md min-w-[250px] rounded">
+          <h1 className="font-bold text-base border-b-2 border-gray-100 pb-1 text-black leading-tight w-fit">
+            Total Payout
+          </h1>
+          <div className="flex items-center">
+            <p
+              className="text-white font-bold text-xl w-full px-3 py-2 rounded-sm leading-none"
+              style={{ backgroundColor: "#555454" }}
+            >
+              $1220.00
+            </p>
+          </div>
+          <div className="mt-2">
+            <p
+              onClick={() => setActiveTab("escrow")}
+              className={`text-xs pt-1 cursor-pointer transition-colors duration-200 ${
+                activeTab === "escrow" ? "text-black" : "text-gray-300"
+              }`}
+            >
+              All Payout Transactions
+            </p>
+          </div>
+        </div>
       </div>
 
-      {showTransactions && (
+      {activeTab === "transactions" && (
         <div className="rounded bg-white p-4 shadow-md my-5">
-          <div className="flex items-center justify-between mb-5 gap-5">
-            <h1 className="text-lg font-semibold text-black">
+          <div>
+            <h1 className="text-lg font-semibold text-black mb-5">
               All Transactions
             </h1>
-            <div className="text-black border bg-[#F9F9FB] text-xs font-medium justify-around border-[#D5D5D5] flex items-center rounded-md">
-              <span className="flex items-center gap-2 px-3 cursor-pointer">
+            <div className="text-black whitespace-nowrap border bg-[#F9F9FB] text-xs font-medium justify-around border-[#D5D5D5] flex items-center rounded-md">
+              <span className="flex pl-1 w-1/3 cursor-pointer">
                 <svg
                   width="16"
                   height="16"
-                  viewBox="0 0 57 66"
+                  viewBox="0 0 91 91"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
                     fillRule="evenodd"
                     clipRule="evenodd"
-                    d="M28.4901 27.0768C43.0684 27.0768 54.8864 21.6223 54.8864 14.8939C54.8864 8.16542 43.0684 2.71094 28.4901 2.71094C13.9118 2.71094 2.09375 8.16542 2.09375 14.8939C2.09375 21.6223 13.9118 27.0768 28.4901 27.0768Z"
-                    stroke="black"
-                    strokeWidth="4.06098"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M2.09375 14.8828C2.1006 27.1077 10.5031 37.7273 22.3986 40.5455V57.5231C22.3986 60.8873 25.1259 63.6145 28.4901 63.6145C31.8543 63.6145 34.5816 60.8873 34.5816 57.5231V40.5455C46.4771 37.7273 54.8796 27.1077 54.8864 14.8828"
-                    stroke="black"
-                    strokeWidth="4.06098"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+                    d="M62.1609 56.8028L82.3762 77.0181C83.0867 77.7292 83.4857 78.6933 83.4853 79.6985C83.485 80.7038 83.0853 81.6676 82.3743 82.3782C81.6633 83.0887 80.6991 83.4877 79.6939 83.4874C78.6887 83.487 77.7248 83.0873 77.0142 82.3763L56.7989 62.161C50.7558 66.8416 43.1565 69.0443 35.547 68.3209C27.9376 67.5974 20.8895 64.0023 15.8366 58.2668C10.7837 52.5313 8.10559 45.0863 8.34705 37.4463C8.58851 29.8063 11.7314 22.5453 17.1364 17.1403C22.5414 11.7353 29.8024 8.59242 37.4424 8.35095C45.0824 8.10949 52.5274 10.7876 58.2629 15.8405C63.9984 20.8934 67.5935 27.9415 68.317 35.551C69.0404 43.1604 66.8377 50.7597 62.1571 56.8028M38.3947 60.9398C44.374 60.9398 50.1084 58.5646 54.3364 54.3366C58.5644 50.1086 60.9397 44.3742 60.9397 38.3949C60.9397 32.4156 58.5644 26.6812 54.3364 22.4532C50.1084 18.2252 44.374 15.85 38.3947 15.85C32.4155 15.85 26.6811 18.2252 22.4531 22.4532C18.2251 26.6812 15.8498 32.4156 15.8498 38.3949C15.8498 44.3742 18.2251 50.1086 22.4531 54.3366C26.6811 58.5646 32.4155 60.9398 38.3947 60.9398Z"
+                    fill="#041827"
                   />
                 </svg>
               </span>
-              <div className="self-stretch w-px bg-[#D5D5D5]" />
-              <span className="flex items-center gap-2 py-2 px-3">
-                <p>Filter by</p>
-              </span>
-              <div className="self-stretch w-px bg-[#D5D5D5]" />
-
-              <span className="flex cursor-pointer items-center gap-2 py-3 px-2">
-                <p>Date</p>
-                <ChevronDown size={16} />
-              </span>
 
               <div className="self-stretch w-px bg-[#D5D5D5]" />
 
-              <span className="flex cursor-pointer items-center gap-2 py-3 px-2">
-                <p>Projects</p>
-                <ChevronDown size={16} />
-              </span>
-
-              <div className="self-stretch w-px bg-[#D5D5D5]" />
-
-              <span className="flex cursor-pointer items-center gap-2 py-3 px-2">
-                <p>Transaction Status</p>
-                <ChevronDown size={16} />
+              <span className="flex items-center py-3 px-2 w-[220px]">
+                <select
+                  className="bg-transparent outline-none cursor-pointer w-full text-[#041827]"
+                  defaultValue=""
+                >
+                  <option value="" disabled>
+                    Transaction Channels
+                  </option>
+                  <option value="bank">Bank</option>
+                  <option value="wallet">Wallet</option>
+                  <option value="card">Card</option>
+                </select>
               </span>
 
               <div className="self-stretch w-px bg-[#D5D5D5]" />
 
-              <span className="flex cursor-pointer items-center gap-2 py-3 px-2">
+              <span className="flex items-center py-3 px-2 w-[120px]">
+                <select
+                  className="bg-transparent outline-none cursor-pointer w-full text-[#041827]"
+                  defaultValue=""
+                >
+                  <option value="" disabled>
+                    Date
+                  </option>
+                  <option value="today">Today</option>
+                  <option value="this-week">This Week</option>
+                  <option value="this-month">This Month</option>
+                </select>
+              </span>
+
+              <div className="self-stretch w-px bg-[#D5D5D5]" />
+
+              <span className="flex items-center py-3 px-2 w-[140px]">
+                <select
+                  className="bg-transparent outline-none cursor-pointer w-full text-[#041827]"
+                  defaultValue=""
+                >
+                  <option value="" disabled>
+                    Projects
+                  </option>
+                  <option value="project-1">Project 1</option>
+                  <option value="project-2">Project 2</option>
+                </select>
+              </span>
+
+              <div className="self-stretch w-px bg-[#D5D5D5]" />
+
+              <span className="flex items-center py-3 px-2 w-[200px]">
+                <select
+                  className="bg-transparent outline-none cursor-pointer w-full text-[#041827]"
+                  defaultValue=""
+                >
+                  <option value="" disabled>
+                    Transaction Status
+                  </option>
+                  <option value="success">Successful</option>
+                  <option value="pending">Pending</option>
+                  <option value="failed">Failed</option>
+                </select>
+              </span>
+
+              <div className="self-stretch w-px bg-[#D5D5D5]" />
+
+              <span className="flex cursor-pointer items-center py-3 px-2 text-[#EA0234]">
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 50 49"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="mr-1"
+                >
+                  <path
+                    d="M24.6619 10.3563V2.23438L14.5094 12.3868L24.6619 22.5393V14.4173C31.3828 14.4173 36.8448 19.8793 36.8448 26.6002C36.8448 33.3211 31.3828 38.7832 24.6619 38.7832C17.941 38.7832 12.4789 33.3211 12.4789 26.6002H8.41797C8.41797 35.575 15.6871 42.8441 24.6619 42.8441C33.6366 42.8441 40.9058 35.575 40.9058 26.6002C40.9058 17.6255 33.6366 10.3563 24.6619 10.3563Z"
+                    fill="#EA0234"
+                  />
+                </svg>
+                <p>Reset filter</p>
+              </span>
+            </div>
+          </div>
+          <TransactionsTable />
+        </div>
+      )}
+
+      {activeTab === "escrow" && (
+        <div className="rounded bg-white p-4 shadow-md my-5">
+          <div className="">
+            <h1 className="text-lg whitespace-nowrap font-semibold mb-2 text-black">
+              All Payout Transactions
+            </h1>
+            <div className="text-black w-full border bg-[#F9F9FB] text-xs font-medium justify-around border-[#D5D5D5] flex items-center rounded-md">
+              <span className="flex gap-2 pl-1 w-1/3 cursor-pointer">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 91 91"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M62.1609 56.8028L82.3762 77.0181C83.0867 77.7292 83.4857 78.6933 83.4853 79.6985C83.485 80.7038 83.0853 81.6676 82.3743 82.3782C81.6633 83.0887 80.6991 83.4877 79.6939 83.4874C78.6887 83.487 77.7248 83.0873 77.0142 82.3763L56.7989 62.161C50.7558 66.8416 43.1565 69.0443 35.547 68.3209C27.9376 67.5974 20.8895 64.0023 15.8366 58.2668C10.7837 52.5313 8.10559 45.0863 8.34705 37.4463C8.58851 29.8063 11.7314 22.5453 17.1364 17.1403C22.5414 11.7353 29.8024 8.59242 37.4424 8.35095C45.0824 8.10949 52.5274 10.7876 58.2629 15.8405C63.9984 20.8934 67.5935 27.9415 68.317 35.551C69.0404 43.1604 66.8377 50.7597 62.1571 56.8028M38.3947 60.9398C44.374 60.9398 50.1084 58.5646 54.3364 54.3366C58.5644 50.1086 60.9397 44.3742 60.9397 38.3949C60.9397 32.4156 58.5644 26.6812 54.3364 22.4532C50.1084 18.2252 44.374 15.85 38.3947 15.85C32.4155 15.85 26.6811 18.2252 22.4531 22.4532C18.2251 26.6812 15.8498 32.4156 15.8498 38.3949C15.8498 44.3742 18.2251 50.1086 22.4531 54.3366C26.6811 58.5646 32.4155 60.9398 38.3947 60.9398Z"
+                    fill="#041827"
+                  />
+                </svg>
+              </span>
+
+              <div className="self-stretch w-px bg-[#D5D5D5]" />
+
+              <span className="flex items-center py-3 ">
+                <select
+                  className="bg-transparent outline-none cursor-pointer w-full text-[#041827] appearance-none"
+                  defaultValue=""
+                >
+                  <option value="" disabled>
+                    Date
+                  </option>
+                  <option value="today">Today</option>
+                  <option value="this-week">This Week</option>
+                  <option value="this-month">This Month</option>
+                </select>
+              </span>
+
+              <div className="self-stretch w-px bg-[#D5D5D5]" />
+
+              <span className="flex items-center py-3 w-[180px]">
+                <select
+                  className="bg-transparent outline-none cursor-pointer w-full text-[#041827] appearance-none"
+                  defaultValue=""
+                >
+                  <option value="" disabled>
+                    Transaction Status
+                  </option>
+                  <option value="success">Successful</option>
+                  <option value="pending">Pending</option>
+                  <option value="failed">Failed</option>
+                </select>
+              </span>
+
+              <div className="self-stretch w-px bg-[#D5D5D5]" />
+
+              <span className="flex cursor-pointer items-center gap-2 py-3 px-2 text-[#EA0234]">
                 <svg
                   width="15"
                   height="15"
@@ -199,24 +385,28 @@ const ProfileFinance = () => {
               </span>
             </div>
           </div>
-
-          <div>
-            <TransactionsTable />
-          </div>
+          <PayoutTable />
         </div>
       )}
-      {showEscrowTransactions && <FundAllocation />}
 
-      <div>
-        <FundWalletSideModal
-          open={showModal}
-          onClose={() => setShowModal(false)}
-        />
-        <ManageEscrowFunds
-          open={showManageFunds}
-          onClose={() => setManageFunds(false)}
-        />
-      </div>
+      {activeTab === "fund" && <FundAllocation />}
+
+      <WithdrawFunds
+        open={withdrawFunds}
+        onClose={() => setWithdrawFunds(false)}
+      />
+      <FundWalletSideModal
+        open={showModal}
+        onClose={() => setShowModal(false)}
+      />
+      <ManageEscrowFunds
+        open={showManageFunds}
+        onClose={() => setManageFunds(false)}
+      />
+      <RecallEscrowWallet
+        open={recallFunds}
+        onClose={() => setRecallFunds(false)}
+      />
     </div>
   );
 };

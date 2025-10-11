@@ -23,6 +23,8 @@ import { IoWalletOutline } from "react-icons/io5";
 import ProfileAbout from "@/components/main/profile/about/about";
 import HeatmapConnections from "@/components/main/profile/heatMap";
 import AddHeatmapModal from "@/components/main/profile/addHeatMapModal";
+import ProfileSpace from "@/components/main/profile/profileSpace";
+import ProfileLinks from "@/components/main/profile/links";
 import ProjectDashboard from "@/components/main/profile/project/projects";
 
 const UserProfile = () => {
@@ -437,6 +439,8 @@ const UserProfile = () => {
                         {activeTab === "Account" && <ProfileAbout />}
                         {activeTab === "Finance" && <ProfileFinance />}
                         {activeTab === "Followed" && <FollowedTab />}
+                        {activeTab === "Spaces" && <ProfileSpace />}
+                        {activeTab === "Links" && <ProfileLinks />}
                         {activeTab === "Feeds" && (
                           <div className="rounded-lg p-5 bg-white shadow-md mb-[40px]">
                             <div
@@ -535,7 +539,7 @@ const UserProfile = () => {
                             </div>
                           </div>
                         )}
-                        {activeTab === "Account" && <ProfileAbout />}
+                        {/* {activeTab === "Account" && <ProfileAbout />} */}
                         {activeTab === "Heatmap" && <HeatmapConnections />}
                         {activeTab === "Projects" && (
                           <ProjectDashboard projects={myProjects} />
