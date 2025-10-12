@@ -26,6 +26,9 @@ import AddHeatmapModal from "@/components/main/profile/addHeatMapModal";
 import ProfileSpace from "@/components/main/profile/profileSpace";
 import ProfileLinks from "@/components/main/profile/links";
 import ProjectDashboard from "@/components/main/profile/project/projects";
+import SimilarProfiles from "@/components/main/profile/side-card/similarProfiles";
+import TrendingProjects from "@/components/main/profile/side-card/tredingProjects";
+import TrendingSpaces from "@/components/main/profile/side-card/trendingSpaces";
 
 const UserProfile = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -263,7 +266,7 @@ const UserProfile = () => {
                             </div>
 
                             <ContributionHeatmap pageType={"profile"} />
-                            <div className="max-w-5xl -mt-10 relative mx-auto  bg-white p-2">
+                            <div className="max-w-5xl -mt-2 relative mx-auto  bg-white p-2">
                               <div className="flex items-start justify-between">
                                 <div className="flex gap-6">
                                   <img
@@ -549,7 +552,7 @@ const UserProfile = () => {
                   </div>
                   <div className="w-full col-span-2 ">
                     <div className="">
-                      <div className="rounded-lg shadow bg-white">
+                      {/* <div className="rounded-lg shadow bg-white">
                         <div className="flex justify-between p-4 border-b border-[#f1f1f1]">
                           <div className="header-title">
                             <h4 className="text-xl font-semibold">
@@ -610,7 +613,10 @@ const UserProfile = () => {
                             ))}
                           </ul>
                         </div>
-                      </div>
+                      </div> */}
+                      <SimilarProfiles />
+                      <TrendingProjects/>
+                      <TrendingSpaces/>
                     </div>
                   </div>
                 </div>
