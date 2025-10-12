@@ -196,7 +196,13 @@ const ContributionHeatmap: React.FC<ContributionHeatmapProps> = ({
                             : "#ebedf0",
                           borderRadius: "2px",
                         }}
-                        onMouseEnter={() => dayData && setHoveredCell(dayData)}
+                        onMouseEnter={(e) => {
+                          if (dayData) {
+                            const rect = e.currentTarget.getBoundingClientRect();
+                            setTooltipPosition({ x: rect.left + rect.width / 2, y: rect.top });
+                            setHoveredCell(dayData);
+                          }
+                        }}
                         onMouseLeave={() => setHoveredCell(null)}
                       />
                     );
