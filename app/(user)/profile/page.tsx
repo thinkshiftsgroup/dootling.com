@@ -549,7 +549,7 @@ const UserProfile = () => {
                   </div>
                   <div className="w-full col-span-2 ">
                     <div className="">
-                      <div className="rounded-lg shadow bg-white">
+                      {/* <div className="rounded-lg shadow bg-white">
                         <div className="flex justify-between p-4 border-b border-[#f1f1f1]">
                           <div className="header-title">
                             <h4 className="text-xl font-semibold">
@@ -610,7 +610,10 @@ const UserProfile = () => {
                             ))}
                           </ul>
                         </div>
-                      </div>
+                      </div> */}
+                      <SimilarProfiles />
+                      <TrendingProjects/>
+                      <TrendingSpaces/>
                     </div>
                   </div>
                 </div>
