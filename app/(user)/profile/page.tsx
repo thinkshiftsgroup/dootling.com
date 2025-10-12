@@ -26,6 +26,9 @@ import AddHeatmapModal from "@/components/main/profile/addHeatMapModal";
 import ProfileSpace from "@/components/main/profile/profileSpace";
 import ProfileLinks from "@/components/main/profile/links";
 import ProjectDashboard from "@/components/main/profile/project/projects";
+import SimilarProfiles from "@/components/main/profile/side-card/similarProfiles";
+import TrendingProjects from "@/components/main/profile/side-card/tredingProjects";
+import TrendingSpaces from "@/components/main/profile/side-card/trendingSpaces";
 
 const UserProfile = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
