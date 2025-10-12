@@ -263,7 +263,7 @@ const UserProfile = () => {
                             </div>
 
                             <ContributionHeatmap pageType={"profile"} />
-                            <div className="max-w-5xl -mt-10 relative mx-auto  bg-white p-2">
+                            <div className="max-w-5xl -mt-2 relative mx-auto  bg-white p-2">
                               <div className="flex items-start justify-between">
                                 <div className="flex gap-6">
                                   <img
