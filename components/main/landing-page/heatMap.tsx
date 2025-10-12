@@ -42,6 +42,7 @@ const ContributionHeatmap: React.FC<ContributionHeatmapProps> = ({
 
   const [data] = useState<DayData[]>(generateData());
   const [hoveredCell, setHoveredCell] = useState<DayData | null>(null);
+  const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
 
   const getColor = (level: number): string => {
     if (pageType === "space") {
@@ -115,14 +116,14 @@ const ContributionHeatmap: React.FC<ContributionHeatmapProps> = ({
   const monthLabels = getMonthLabels();
   const dayLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-  const cellSize = size === "mini" ? 6 : 13;
+  const cellSize = size === "mini" ? 6 : 14;
   const gap = size === "mini" ? 0.5 : 1;
   const fontSize = size === "mini" ? "0.6rem" : "0.75rem";
   const padding = size === "mini" ? "p-2" : "p-4";
   const width = size === "mini" ? "w-[100px]" : "w-full";
   const height = size === "mini" ? "h-[40px]" : "auto";
-  const bgColor = size === "mini" ? "" : "bg-white"
- 
+  const bgColor = size === "mini" ? "" : "bg-white";
+
   return (
     <div
       className={`${width} ${height} hide-scrollbar overflow-x-scroll ${padding} ${bgColor} rounded-md`}
@@ -140,11 +141,10 @@ const ContributionHeatmap: React.FC<ContributionHeatmapProps> = ({
                     marginLeft:
                       index === 0
                         ? `${label.weekIndex * (cellSize + gap)}px`
-                        : `${
-                            (label.weekIndex -
-                              monthLabels[index - 1].weekIndex) *
-                            (cellSize + gap)
-                          }px`,
+                        : `${(label.weekIndex -
+                          monthLabels[index - 1].weekIndex) *
+                        (cellSize + gap)
+                        }px`,
                   }}
                 >
                   {label.month}
