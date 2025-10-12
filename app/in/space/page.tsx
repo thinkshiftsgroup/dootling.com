@@ -203,7 +203,7 @@ const UserProfile = () => {
                             </div>
 
                             <ContributionHeatmap pageType={"space"} />
-                            <div className="max-w-5xl -mt-10 relative mx-auto  bg-white p-2">
+                            <div className="max-w-5xl -mt-2 relative mx-auto  bg-white p-2">
                               <div className="flex items-start gap-5">
                                 <div className="flex gap-6">
                                   <Image
