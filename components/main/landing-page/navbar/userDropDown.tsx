@@ -4,10 +4,22 @@ import Image from "next/image";
 import { Dropdown } from "./dropDown";
 import { User, UserGear, Gear, LockSimple, SignOut } from "phosphor-react";
 import { useRouter } from "next/navigation";
-import user from "@/public/images/user/userImg.jpg"
+import user from "@/public/images/user/userImg.jpg";
+
+import Cookies from "js-cookie";
+import { useAuthStore } from "@/stores/useAuthStore";
+import { toast } from "sonner";
 
 export default function UserDropdown() {
   const router = useRouter();
+  const logoutUser = useAuthStore((state: any) => state.logout);
+  const handleSignOut = () => {
+    Cookies.remove("dootling_auth_token");
+    logoutUser();
+    toast.info("You have been signed out.");
+    router.push("/");
+  };
+
   return (
     <Dropdown
       trigger={
@@ -17,7 +29,6 @@ export default function UserDropdown() {
             width={35}
             height={35}
             alt="user"
-            // priority
             className="rounded-sm mt-1.5 cursor-pointer"
           />
         </div>
@@ -26,7 +37,6 @@ export default function UserDropdown() {
       <div className="m-0 shadow-md rounded-lg bg-white w-56 sm:w-60">
         <div className="px-4 py-3">
           <div className="flex flex-col gap-1">
-
             <div
               onClick={() => router.push("/profile/profile-settings")}
               className="flex items-center gap-2 py-2 cursor-pointer hover:bg-gray-50 rounded-md"
@@ -46,7 +56,7 @@ export default function UserDropdown() {
                 Privacy Settings
               </a>
             </div>
-            <div className="bg-blue-600 text-white rounded px-4 py-2 text-sm font-medium w-full hover:bg-blue-700 transition flex items-center gap-2 justify-center">
+            <div    onClick={handleSignOut} className="bg-blue-600 text-white rounded px-4 py-2 text-sm font-medium w-full hover:bg-blue-700 transition flex items-center gap-2 justify-center">
               <SignOut size={20} className="text-white" />
               <p className=" font-normal text-white">Sign Out</p>
             </div>

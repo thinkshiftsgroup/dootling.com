@@ -148,7 +148,10 @@ const Navbar = () => {
               <MessageDropdown />
               <NotificationDropdown />
 
-              <div onClick={() => router.push("/profile")} className="cursor-pointer hidden lg:flex  flex-col items-center ">
+              <div
+                onClick={() => router.push("/profile")}
+                className="cursor-pointer hidden lg:flex  flex-col items-center "
+              >
                 <div className="relative">
                   <svg
                     width="25"
@@ -230,7 +233,6 @@ const Navbar = () => {
                       <a
                         onClick={() => router.push("/profile")}
                         className="flex items-center justify-between px-2 py-2 rounded-md hover:bg-gray-100 font-medium"
-                      >
                         <span>Account</span>
                       </a>
                     </li>
