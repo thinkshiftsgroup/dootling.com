@@ -93,7 +93,7 @@ const ProfileAbout = () => {
 
   return (
     <div className="tab-pane fade" id="about" role="tabpanel">
-      <div className="grid grid-cols-12 gap-3">
+      <div className="lg:grid block grid-cols-12 gap-3">
         <div className="col-span-4">
           <div className="w-full md:w-[350px] bg-white rounded-sm">
             <div className="p-5">
@@ -250,7 +250,7 @@ const ProfileAbout = () => {
                         </div>
                       </div> */}
 
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="lg:grid block grid-cols-2 gap-4">
                         <div className="w-full flex flex-col gap-4">
                           <div>
                             <label className="text-sm font-medium text-[#738b9a]">

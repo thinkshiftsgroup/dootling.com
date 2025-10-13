@@ -72,13 +72,13 @@ const RecallEscrowWallet: React.FC<FundWalletSideModalProps> = ({
             </div>
             <span className="text-[#157BFF] px-6 flex items-center whitespace-nowrap gap-1 text-xs">
               <p className="text-[#157BFF] font-normal">
-                Maximum Allowed Per Transaction{" "}
-                <span className="font-bold">$5000</span>
+                Accessible Funds
+                <span className="font-bold">$25500</span>
               </p>
               |
               <p className="text-[#157BFF] font-normal">
-                Maximum Allowed Per Transaction{" "}
-                <span className="font-bold">$5000</span>
+                Locked Funds
+                <span className="font-bold">$1655</span>
               </p>
             </span>
 

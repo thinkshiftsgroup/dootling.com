@@ -12,6 +12,7 @@ import { CaretDown } from "phosphor-react";
 import UserDropdown from "./userDropDown";
 import { useRouter } from "next/navigation";
 import SearchBar from "./searchBar";
+import { Menu } from "lucide-react";
 
 interface UserItem {
   name: string;
@@ -91,10 +92,10 @@ const Navbar = () => {
   ].filter((r) => r.toLowerCase().includes(query.toLowerCase()));
 
   return (
-    <nav className="nav w-full iq-navbar shadow-sm bg-white text-gray-800 xl:flex xl:flex-row py-2">
+    <nav className="nav w-full iq-navbar shadow-sm bg-white text-gray-800 xl:flex xl:flex-row md:px-0 px-2 sm:py-0 py-2">
       <div className="container mx-auto flex items-center justify-between">
         <div className="flex items-center justify-between w-2/6">
-          <div className="flex items-center relative pb-2 lg:pb-0">
+          <div className="flex items-center relative lg:pb-2 pb-0">
             <Image
               width={60}
               height={60}
@@ -108,7 +109,7 @@ const Navbar = () => {
           <SearchBar />
         </div>
         <div className="flex">
-          <ul className="navbar-nav navbar-list flex items-center flex-row">
+          <ul className="navbar-nav  flex items-center flex-row">
             <div className="flex items-center gap-4">
               <div
                 onClick={() => router.push("/")}
@@ -190,8 +191,8 @@ const Navbar = () => {
 
             <Sheet>
               <SheetTrigger asChild>
-                <div className="border lg:hidden block ml-2 border-black p-1 cursor-pointer">
-                  <VscMenu size={21} />
+                <div className=" lg:hidden block ml-2  p-1 cursor-pointer">
+                  <Menu size={21} />
                 </div>
               </SheetTrigger>
 
@@ -222,119 +223,19 @@ const Navbar = () => {
                         onClick={() => router.push("/")}
                         className="flex items-center justify-between px-2 py-2 rounded-md hover:bg-gray-100 font-medium"
                       >
-                        <span>Notofications</span>
+                        <span>Notifications</span>
                       </a>
                     </li>
                     <li>
                       <a
-                        onClick={() => router.push("/")}
+                        onClick={() => router.push("/profile")}
                         className="flex items-center justify-between px-2 py-2 rounded-md hover:bg-gray-100 font-medium"
                       >
                         <span>Account</span>
                       </a>
                     </li>
 
-                    {/* <li>
-                      <button
-                        onClick={() => setOpenBlog(!openBlog)}
-                        className="flex items-center justify-between w-full px-2 py-2 rounded-md hover:bg-gray-100 font-medium"
-                      >
-                        <span>Blog</span>
-                        <CaretDown
-                          size={16}
-                          className={`transition-transform ${
-                            openBlog ? "rotate-180" : ""
-                          }`}
-                        />
-                      </button>
-                      {openBlog && (
-                        <ul className="pl-4 border-l border-gray-200 mt-1 space-y-1">
-                          <li>
-                            <a
-                              href="/dashboard/blog-grid"
-                              className="block px-2 py-1 hover:bg-gray-50 rounded"
-                            >
-                              Blog Grid
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="/dashboard/blog-list"
-                              className="block px-2 py-1 hover:bg-gray-50 rounded"
-                            >
-                              Blog List
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="/dashboard/blog-detail"
-                              className="block px-2 py-1 hover:bg-gray-50 rounded"
-                            >
-                              Blog Detail
-                            </a>
-                          </li>
-                        </ul>
-                      )}
-                    </li>
-
-                    <li>
-                      <button
-                        onClick={() => setOpenStore(!openStore)}
-                        className="flex items-center justify-between w-full px-2 py-2 rounded-md hover:bg-gray-100 font-medium"
-                      >
-                        <span>Store</span>
-                        <CaretDown
-                          size={16}
-                          className={`transition-transform ${
-                            openStore ? "rotate-180" : ""
-                          }`}
-                        />
-                      </button>
-                      {openStore && (
-                        <ul className="pl-4 border-l border-gray-200 mt-1 space-y-1">
-                          <li>
-                            <a
-                              href="/dashboard/store-category-grid"
-                              className="block px-2 py-1 hover:bg-gray-50 rounded"
-                            >
-                              Category Grid
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="/dashboard/store-category-list"
-                              className="block px-2 py-1 hover:bg-gray-50 rounded"
-                            >
-                              Category List
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="/dashboard/store-detail"
-                              className="block px-2 py-1 hover:bg-gray-50 rounded"
-                            >
-                              Store Detail
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="/dashboard/product-detail"
-                              className="block px-2 py-1 hover:bg-gray-50 rounded"
-                            >
-                              Product Detail
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="/dashboard/store-checkout"
-                              className="block px-2 py-1 hover:bg-gray-50 rounded"
-                            >
-                              Checkout
-                            </a>
-                          </li>
-                        </ul>
-                      )}
-                    </li> */}
+                  
                   </ul>
                 </div>
               </SheetContent>

@@ -136,7 +136,7 @@ export default function Home() {
     },
   ];
 
-  const [openLikesModal, setOpenLikesModal] = useState(true);
+  const [openLikesModal, setOpenLikesModal] = useState(false);
   return (
     <main className="main-content pb-20">
       <div className="relative">
@@ -145,8 +145,11 @@ export default function Home() {
           <div className="position-relative"></div>
           <div className="content-inner " id="page_layout">
             <div className="container mx-auto">
-              <div className="flex flex-wrap -mx-4">
-                <div className="w-full lg:w-2/3 px-4" id="dynamicDivContainer">
+              <div className="flex flex-wrap">
+                <div
+                  className="w-full lg:w-2/3 px-0 md:px-4"
+                  id="dynamicDivContainer"
+                >
                   <div id="content">
                     <div className="flex flex-wrap pb-4">
                       <div className="w-full">
@@ -558,22 +561,24 @@ export default function Home() {
                                 {/* modal for likes */}
                                 <div
                                   onClick={() => setOpenLikesModal(true)}
-                                  className="inline-flex cursor-pointer items-center gap-1"
+                                  className="cursor-pointer"
                                 >
-                                  <h6 className="m-0 text-sm">Aliana Molex</h6>
-                                  <span className="capitalize text-sm font-medium">
-                                    and 208 others liked this
-                                  </span>
+                                  <h6 className="text-sm">
+                                    Aliana Molex{" "}
+                                    <span className="text-xs sm:text-sm font-medium">
+                                      and 208 others liked this
+                                    </span>
+                                  </h6>
                                 </div>
                               </div>
                             </div>
-                            <div className="comment-area mt-4 pt-4 border-t">
+                            <div className="comment-area text-xs sm:text-sm mt-4 pt-4 border-t">
                               <div className="flex justify-between items-center flex-wrap">
                                 <div className="like-block relative flex items-center flex-shrink-0">
                                   <div className="like-data">
                                     <div className="relative">
                                       <span className="cursor-pointer flex items-center justify-center gap-1">
-                                        <i className="ph ph-thumbs-up text-3xl"></i>
+                                        <i className="ph ph-thumbs-up text-xl"></i>
                                         <span className="font-medium">
                                           140 Likes
                                         </span>
@@ -884,21 +889,18 @@ export default function Home() {
                                 {/* modal dor likes */}
                                 <div
                                   onClick={() => setOpenLikesModal(true)}
-                                  className="inline-flex items-center gap-1"
+                                  className="cursor-pointer"
                                 >
-                                  <h6 className="m-0 text-sm">Aliana Molex</h6>
-                                  <button
-                                    className="capitalize text-sm font-medium cursor-pointer"
-                                    type="button"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#likemodal"
-                                  >
-                                    and 208 others liked this
-                                  </button>
+                                  <h6 className="text-sm">
+                                    Aliana Molex{" "}
+                                    <span className="text-xs sm:text-sm font-medium">
+                                      and 208 others liked this
+                                    </span>
+                                  </h6>
                                 </div>
                               </div>
                             </div>
-                            <div className="comment-area mt-4 pt-4 border-t">
+                            <div className="comment-area text-xs sm:text-sm mt-4 pt-4 border-t">
                               <div className="flex justify-between items-center flex-wrap">
                                 <div className="like-block relative flex items-center flex-shrink-0">
                                   <div className="like-data">
@@ -910,7 +912,7 @@ export default function Home() {
                                         aria-expanded="false"
                                         role="button"
                                       >
-                                        <i className="ph ph-thumbs-up text-3xl"></i>
+                                        <i className="ph ph-thumbs-up text-xl"></i>
                                         <span className="font-medium">
                                           140 Likes
                                         </span>
@@ -1439,15 +1441,20 @@ export default function Home() {
                                   </li>
                                 </ul>
                                 {/* modal for likes */}
-                                <div onClick={() => setOpenLikesModal(true)} className="inline-flex cursor-pointer items-center gap-1">
-                                  <h6 className="m-0 text-sm">Aliana Molex</h6>
-                                  {/* <span className="capitalize text-sm font-medium cursor-pointer"
-                                    type="button" data-bs-toggle="modal" data-bs-target="#likemodal">and
-                                    208 others liked this</span> */}
+                                <div
+                                  onClick={() => setOpenLikesModal(true)}
+                                  className="cursor-pointer"
+                                >
+                                  <h6 className="text-sm">
+                                    Aliana Molex{" "}
+                                    <span className="text-xs sm:text-sm font-medium">
+                                      and 208 others liked this
+                                    </span>
+                                  </h6>
                                 </div>
                               </div>
                             </div>
-                            <div className="comment-area mt-4 pt-4 border-t">
+                            <div className="comment-area text-xs sm:text-sm mt-4 pt-4 border-t">
                               <div className="flex justify-between items-center flex-wrap">
                                 <div className="like-block relative flex items-center flex-shrink-0">
                                   <div className="like-data">
@@ -1459,7 +1466,7 @@ export default function Home() {
                                         aria-expanded="false"
                                         role="button"
                                       >
-                                        <i className="ph ph-thumbs-up text-3xl"></i>
+                                        <i className="ph ph-thumbs-up text-xl"></i>
                                         <span className="font-medium">
                                           140 Likes
                                         </span>
@@ -1993,24 +2000,27 @@ export default function Home() {
                                   </li>
                                 </ul>
                                 {/* modal for likes */}
-                                <div onClick={() => setOpenLikesModal(true)} className="inline-flex cursor-pointer items-center gap-1">
-                                  <h6 className="m-0 text-sm">
-                                    Aliana Molex A
+                                <div
+                                  onClick={() => setOpenLikesModal(true)}
+                                  className="cursor-pointer"
+                                >
+                                  <h6 className="text-sm">
+                                    Aliana Molex{" "}
+                                    <span className="text-xs sm:text-sm font-medium">
+                                      and 208 others liked this
+                                    </span>
                                   </h6>
-                                  <span className="capitalize text-sm font-medium cursor-pointer">
-                                    and 208 others liked this
-                                  </span>
                                 </div>
                               </div>
                             </div>
 
-                            <div className="comment-area mt-4 pt-4 border-t">
+                            <div className="comment-area text-xs sm:text-sm mt-4 pt-4 border-t">
                               <div className="flex justify-between items-center flex-wrap">
                                 <div className="like-block relative flex items-center flex-shrink-0">
                                   <div className="like-data">
                                     <div className="relative">
                                       <span className="cursor-pointer flex items-center justify-center gap-1">
-                                        <i className="ph ph-thumbs-up text-3xl"></i>
+                                        <i className="ph ph-thumbs-up text-xl"></i>
                                         <span className="font-medium">
                                           140 Likes
                                         </span>
@@ -2167,7 +2177,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="w-full lg:w-1/3 px-4">
+                <div className="w-full hidden lg:block lg:w-1/3 px-4">
                   <ActiveUsers />
                   <Suggestions />
                 </div>
