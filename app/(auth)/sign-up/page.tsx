@@ -262,19 +262,19 @@ export default function SignupPage() {
               </div>
 
               <div>
-                <div className="flex items-start space-x-3">
+                <div className="flex items-center space-x-1">
                   <input
                     type="checkbox"
                     id="acceptTerms"
                     name="acceptTerms"
                     checked={formData.acceptTerms}
                     onChange={handleTermsChange}
-                    className="w-5 h-5 mt-1 cursor-pointer accent-blue-600"
+                    className="w-5 h-5  cursor-pointer accent-blue-600"
                     required
                   />
                   <label
                     htmlFor="acceptTerms"
-                    className="text-sm text-gray-900"
+                    className="sm:text-sm text-xs text-gray-900"
                   >
                     I Accept{" "}
                     <Link

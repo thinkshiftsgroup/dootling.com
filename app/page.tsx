@@ -6,6 +6,13 @@ import Suggestions from "@/components/main/landing-page/sidebar/suggestions";
 import { useState } from "react";
 import ReactionModal from "@/components/main/modal/reacttionModal";
 
+import { BiCommentDetail } from "react-icons/bi";
+import { BiRepost } from "react-icons/bi";
+import { LuSend } from "react-icons/lu";
+import { FaHeart, FaThumbsUp } from "react-icons/fa";
+import { FaHandsClapping } from "react-icons/fa6";
+import { TbDots } from "react-icons/tb";
+
 export default function Home() {
   const stories = [
     {
@@ -137,6 +144,7 @@ export default function Home() {
   ];
 
   const [openLikesModal, setOpenLikesModal] = useState(false);
+
   return (
     <main className="main-content pb-20">
       <div className="relative">
@@ -352,1823 +360,222 @@ export default function Home() {
                     </div>
 
                     <div className="flex flex-wrap social-post-container pb-4">
-                      <div className="w-full social-post mb-4">
-                        <div className="rounded-lg shadow bg-white">
-                          <div className="p-4">
-                            <div className="user-post-data">
-                              <div className="flex items-center justify-between gap-2 lg:gap-3">
-                                <div className="flex-shrink-0">
-                                  <img
-                                    className="border-2 rounded-full user-post-profile"
-                                    src="/images/user/01.jpg"
-                                    alt="user-image"
-                                    loading="lazy"
+                      {Array.from({ length: 3 }).map((_, i) => (
+                        <div key={i} className="rounded-lg p-5 w-full bg-white shadow-md mb-[40px]">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <Image
+                                width={100}
+                                height={100}
+                                alt="user"
+                                src="/images/user/userImg.png"
+                                className="rounded w-20 h-20 object-cover"
+                              />
+                              <div>
+                                <h1 className="sm:text-xl text-lg flex items-center gap-1 font-bold text-black">
+                                  John Paul{" "}
+                                  <Image
+                                    src="/images/icon/verified.svg"
+                                    alt="icon"
+                                    width={14}
+                                    height={14}
                                   />
-                                </div>
-                                <div className="w-full">
-                                  <div className="flex items-center justify-between">
-                                    <div>
-                                      <h6 className="mb-0 inline-block">
-                                        Anna Sthesia
-                                      </h6>
-                                      <span className="inline-block text-blue-600">
-                                        <i className="ph-fill ph-seal-check"></i>
-                                      </span>
-                                      <span className="mb-0 inline-block capitalize font-medium">
-                                        posted an update
-                                      </span>
-                                      <p className="mb-0">2 minutes ago</p>
-                                    </div>
-                                    <div className="card-post-toolbar">
-                                      <div className="relative">
-                                        <div className="leading-none cursor-pointer">
-                                          <i className="ph-bold ph-dots-three text-3xl text-body"></i>
-                                        </div>
-                                        <div className="hidden absolute right-0 mt-2 bg-white rounded-lg shadow-lg m-0 p-0">
-                                          <a
-                                            className="block p-3 hover:bg-gray-50"
-                                            href="#"
-                                          >
-                                            <div className="flex items-start gap-2">
-                                              <i className="ph ph-floppy-disk text-2xl"></i>
-                                              <div className="data">
-                                                <h6 className="font-semibold">
-                                                  Save Post
-                                                </h6>
-                                                <p className="mb-0 text-sm">
-                                                  Add this to your saved items
-                                                </p>
-                                              </div>
-                                            </div>
-                                          </a>
-                                          <a
-                                            className="block p-3 hover:bg-gray-50"
-                                            href="#"
-                                          >
-                                            <div className="flex items-start gap-2">
-                                              <i className="ph ph-x-circle text-2xl"></i>
-                                              <div className="data">
-                                                <h6 className="font-semibold">
-                                                  Hide Post
-                                                </h6>
-                                                <p className="mb-0 text-sm">
-                                                  See fewer posts like this.
-                                                </p>
-                                              </div>
-                                            </div>
-                                          </a>
-                                          <a
-                                            className="block p-3 hover:bg-gray-50"
-                                            href="#"
-                                          >
-                                            <div className="flex items-start gap-2">
-                                              <i className="ph ph-user-minus text-2xl"></i>
-                                              <div className="data">
-                                                <h6 className="font-semibold">
-                                                  Unfollow User
-                                                </h6>
-                                                <p className="mb-0 text-sm">
-                                                  Stop seeing posts but stay
-                                                  friends.
-                                                </p>
-                                              </div>
-                                            </div>
-                                          </a>
-                                          <a
-                                            className="block p-3 hover:bg-gray-50"
-                                            href="#"
-                                          >
-                                            <div className="flex items-start gap-2">
-                                              <i className="ph ph-bell text-2xl"></i>
-                                              <div className="data">
-                                                <h6 className="font-semibold">
-                                                  Notifications
-                                                </h6>
-                                                <p className="mb-0 text-sm">
-                                                  Turn on notifications for this
-                                                  post
-                                                </p>
-                                              </div>
-                                            </div>
-                                          </a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
+                                </h1>
+                                <p className="text-gray-500 text-xs">
+                                  90 days ago
+                                </p>
                               </div>
                             </div>
-                            <div className="mt-4">
-                              <p className="m-0">
-                                "Energy, the tangible expression of pure
-                                thought, propels intentions into powerful
-                                actions, bridging the gap between mind and
-                                manifestation."
-                              </p>
-                              <ul className="flex flex-wrap gap-1 m-0 p-0 list-none">
-                                <li>
-                                  <a
-                                    href="javascript:void(0);"
-                                    className="text-blue-600"
-                                  >
-                                    #friends
-                                  </a>
-                                </li>
-                                <li>
-                                  <a
-                                    href="javascript:void(0);"
-                                    className="text-blue-600"
-                                  >
-                                    #party
-                                  </a>
-                                </li>
-                                <li>
-                                  <a
-                                    href="javascript:void(0);"
-                                    className="text-blue-600"
-                                  >
-                                    #birthday
-                                  </a>
-                                </li>
-                                <li>
-                                  <a
-                                    href="javascript:void(0);"
-                                    className="text-blue-600"
-                                  >
-                                    #together
-                                  </a>
-                                </li>
-                                <li>
-                                  <a
-                                    href="javascript:void(0);"
-                                    className="text-blue-600"
-                                  >
-                                    #celebration
-                                  </a>
-                                </li>
-                              </ul>
-                            </div>
-                            <div className="user-post mt-4">
-                              <a
-                                data-fslightbox="gallery"
-                                href="/images/page-img/fun.jpg"
-                                className="rounded"
+                            <TbDots size={20} className="cursor-pointer" />
+                          </div>
+                          <h1 className="md:text-3xl text-xl sm:text-2xl  text-black my-4">
+                            Completed milestone: "Prototype testing" in Mobile
+                            App Development
+                          </h1>
+                          <div>
+                            <Image
+                              width={100}
+                              height={100}
+                              alt="feed image"
+                              className="w-full h-32 object-cover"
+                              src="/images/page-img/pizza.jpg"
+                            />
+                          </div>
+
+                          <div className="py-2.5 my-2.5 flex items-center  justify-between border-b-[#e5e5e5] border-b">
+                            <div className="flex items-center gap-2">
+                              <div
+                                onClick={() => setOpenLikesModal(true)}
+                                className="flex items-center"
                               >
-                                <img
-                                  src="/images/page-img/fun.jpg"
-                                  alt="post-image"
-                                  className="w-full rounded"
-                                  loading="lazy"
+                                <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-white border-2 border-white z-30">
+                                  <FaThumbsUp className="w-3 h-3" />
+                                </div>
+                                <div className="-ml-2 w-6 h-6 rounded-full bg-green-500 flex items-center justify-center text-white border-2 border-white z-20">
+                                  <FaHandsClapping className="w-3 h-3" />
+                                </div>
+                                <div className="-ml-2 w-6 h-6 rounded-full bg-rose-500 flex items-center justify-center text-white border-2 border-white z-10">
+                                  <FaHeart className="w-3 h-3" />
+                                </div>
+                              </div>
+
+                              <span className="text-gray-700 font-medium text-sm">
+                                293
+                              </span>
+                            </div>
+                            <div className="text-xs text-gray-500 flex items-center gap-1">
+                              <p>23 comments</p>
+                              <span className="inline-flex w-1 h-1 rounded-full bg-gray-500"></span>
+                              <p>4 reposts</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center justify-between flex-wrap gap-4 sm:gap-6 md:gap-10 lg:gap-[4rem]">
+                            <Image
+                              width={100}
+                              height={100}
+                              alt="user"
+                              src="/images/user/userImg.png"
+                              className="rounded-full w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 object-cover"
+                            />
+
+                            <div className="flex items-center justify-between flex-1 max-w-[500px] sm:max-w-[600px] md:max-w-[700px] lg:max-w-none">
+                              <div className="flex flex-col items-center gap-1">
+                                <FaThumbsUp className="text-gray-600 text-lg sm:text-xl" />
+                                <p className="font-bold text-xs sm:text-sm md:text-base">
+                                  Like
+                                </p>
+                              </div>
+
+                              <div className="flex flex-col items-center gap-1">
+                                <BiCommentDetail className="text-gray-600 text-lg sm:text-xl" />
+                                <p className="font-bold text-xs sm:text-sm md:text-base">
+                                  Comment
+                                </p>
+                              </div>
+
+                              <div className="flex flex-col items-center gap-1">
+                                <BiRepost className="text-gray-600 text-lg sm:text-xl" />
+                                <p className="font-bold text-xs sm:text-sm md:text-base">
+                                  Repost
+                                </p>
+                              </div>
+
+                              <div className="flex flex-col items-center gap-1">
+                                <LuSend className="text-gray-600 text-lg sm:text-xl" />
+                                <p className="font-bold text-xs sm:text-sm md:text-base">
+                                  Send
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+
+                      <div className="rounded-lg p-5 w-full bg-white shadow-md mb-[40px]">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <Image
+                              width={100}
+                              height={100}
+                              alt="user"
+                              src="/images/user/userImg.png"
+                              className="rounded w-20 h-20 object-cover"
+                            />
+                            <div>
+                              <h1 className="text-xl flex items-center gap-1 font-bold text-black">
+                                Bni Cyst{" "}
+                                <Image
+                                  src="/images/icon/verified.svg"
+                                  alt="icon"
+                                  width={14}
+                                  height={14}
                                 />
-                              </a>
-                            </div>
-                            <div className="post-meta-likes mt-4">
-                              <div className="flex items-center gap-2 flex-wrap">
-                                <ul className="flex m-0 p-0 list-none post-user-liked-list">
-                                  <li>
-                                    <img
-                                      src="/images/user/01.jpg"
-                                      alt="userimg"
-                                      className="rounded-full userimg"
-                                      loading="lazy"
-                                    />
-                                  </li>
-                                  <li>
-                                    <img
-                                      src="/images/user/02.jpg"
-                                      alt="userimg"
-                                      className="rounded-full userimg"
-                                      loading="lazy"
-                                    />
-                                  </li>
-                                  <li>
-                                    <img
-                                      src="/images/user/03.jpg"
-                                      alt="userimg"
-                                      className="rounded-full userimg"
-                                      loading="lazy"
-                                    />
-                                  </li>
-                                  <li>
-                                    <img
-                                      src="/images/user/04.jpg"
-                                      alt="userimg"
-                                      className="rounded-full userimg"
-                                      loading="lazy"
-                                    />
-                                  </li>
-                                </ul>
-                                {/* modal for likes */}
-                                <div
-                                  onClick={() => setOpenLikesModal(true)}
-                                  className="cursor-pointer"
-                                >
-                                  <h6 className="text-sm">
-                                    Aliana Molex{" "}
-                                    <span className="text-xs sm:text-sm font-medium">
-                                      and 208 others liked this
-                                    </span>
-                                  </h6>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="comment-area text-xs sm:text-sm mt-4 pt-4 border-t">
-                              <div className="flex justify-between items-center flex-wrap">
-                                <div className="like-block relative flex items-center flex-shrink-0">
-                                  <div className="like-data">
-                                    <div className="relative">
-                                      <span className="cursor-pointer flex items-center justify-center gap-1">
-                                        <i className="ph ph-thumbs-up text-xl"></i>
-                                        <span className="font-medium">
-                                          140 Likes
-                                        </span>
-                                      </span>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="flex items-center gap-3 flex-shrink-0">
-                                  <div className="total-comment-block flex justify-center items-center gap-1 cursor-pointer">
-                                    <i className="ph ph-chat-circle-text text-xl"></i>
-                                    <span className="font-medium">
-                                      20 Comment
-                                    </span>
-                                  </div>
-                                  <div className="share-block flex items-center feather-icon">
-                                    <a
-                                      href="javascript:void(0);"
-                                      className="flex justify-center items-center gap-1"
-                                    >
-                                      <i className="ph ph-share-network text-xl"></i>
-                                      <span className="font-medium">
-                                        99 Share
-                                      </span>
-                                    </a>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="w-full social-post mb-4">
-                        <div className="rounded-lg shadow bg-white">
-                          <div className="p-4">
-                            <div className="user-post-data">
-                              <div className="flex items-center justify-between gap-2 lg:gap-3">
-                                <div className="flex-shrink-0">
-                                  <img
-                                    className=" border-2 rounded-full user-post-profile"
-                                    src="/images/user/03.jpg"
-                                    alt="user-image"
-                                    loading="lazy"
-                                  />
-                                </div>
-                                <div className="w-full">
-                                  <div className="flex items-center justify-between">
-                                    <div>
-                                      <h6 className="mb-0 inline-block">
-                                        Barb Ackue
-                                      </h6>
-                                      <span className="inline-block text-blue-600">
-                                        <i className="ph-fill ph-seal-check"></i>
-                                      </span>
-                                      <span className="mb-0 inline-block capitalize font-medium">
-                                        Add a New Post
-                                      </span>
-                                      <p className="mb-0">1 Hour ago</p>
-                                    </div>
-                                    <div className="card-post-toolbar">
-                                      <div className="relative">
-                                        <div
-                                          className="leading-none cursor-pointer"
-                                          data-bs-toggle="dropdown"
-                                        >
-                                          <i className="ph-bold ph-dots-three font-size-30 text-body"></i>
-                                        </div>
-                                        <div className="hidden absolute right-0 mt-2 bg-white rounded-lg shadow-lg m-0 p-0">
-                                          <a
-                                            className="block p-3 hover:bg-gray-50"
-                                            href="#"
-                                          >
-                                            <div className="flex items-start gap-2">
-                                              <i className="ph ph-floppy-disk text-2xl"></i>
-                                              <div className="data">
-                                                <h6 className="font-semibold">
-                                                  Save Post
-                                                </h6>
-                                                <p className="mb-0 text-sm">
-                                                  Add this to your saved items
-                                                </p>
-                                              </div>
-                                            </div>
-                                          </a>
-                                          <a
-                                            className="block p-3 hover:bg-gray-50"
-                                            href="#"
-                                          >
-                                            <div className="flex items-start gap-2">
-                                              <i className="ph ph-x-circle text-2xl"></i>
-                                              <div className="data">
-                                                <h6 className="font-semibold">
-                                                  Hide Post
-                                                </h6>
-                                                <p className="mb-0 text-sm">
-                                                  See fewer posts like this.
-                                                </p>
-                                              </div>
-                                            </div>
-                                          </a>
-                                          <a
-                                            className="block p-3 hover:bg-gray-50"
-                                            href="#"
-                                          >
-                                            <div className="flex items-start gap-2">
-                                              <i className="ph ph-user-minus text-2xl"></i>
-                                              <div className="data">
-                                                <h6 className="font-semibold">
-                                                  Unfollow User
-                                                </h6>
-                                                <p className="mb-0 text-sm">
-                                                  Stop seeing posts but stay
-                                                  friends.
-                                                </p>
-                                              </div>
-                                            </div>
-                                          </a>
-                                          <a
-                                            className="block p-3 hover:bg-gray-50"
-                                            href="#"
-                                          >
-                                            <div className="flex items-start gap-2">
-                                              <i className="ph ph-bell text-2xl"></i>
-                                              <div className="data">
-                                                <h6 className="font-semibold">
-                                                  Notifications
-                                                </h6>
-                                                <p className="mb-0 text-sm">
-                                                  Turn on notifications for this
-                                                  post
-                                                </p>
-                                              </div>
-                                            </div>
-                                          </a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="mt-4">
-                              <p className="m-0">
-                                "Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit. Morbi nulla dolor, ornare at
-                                commodo non, feugiat non nisi. Phasellus
-                                faucibus mollis pharetra. Proin blandit ac massa
-                                sed rhoncus"
-                              </p>
-                              <ul className="flex flex-wrap gap-1 m-0 p-0 list-none">
-                                <li>
-                                  <a
-                                    href="javascript:void(0);"
-                                    className="text-blue-600"
-                                  >
-                                    #family
-                                  </a>
-                                </li>
-                                <li>
-                                  <a
-                                    href="javascript:void(0);"
-                                    className="text-blue-600"
-                                  >
-                                    #happiness
-                                  </a>
-                                </li>
-                                <li>
-                                  <a
-                                    href="javascript:void(0);"
-                                    className="text-blue-600"
-                                  >
-                                    #travelling
-                                  </a>
-                                </li>
-                                <li>
-                                  <a
-                                    href="javascript:void(0);"
-                                    className="text-blue-600"
-                                  >
-                                    #camping
-                                  </a>
-                                </li>
-                                <li>
-                                  <a
-                                    href="javascript:void(0);"
-                                    className="text-blue-600"
-                                  >
-                                    #climbing
-                                  </a>
-                                </li>
-                              </ul>
-                            </div>
-                            <div className="user-post mt-4">
-                              <div className="flex flex-wrap -mx-2">
-                                <div className="w-full md:w-1/3 px-2">
-                                  <a
-                                    data-fslightbox="gallery"
-                                    href="/images/page-img/boy.jpg"
-                                    className="rounded"
-                                  >
-                                    <img
-                                      src="/images/page-img/boy.jpg"
-                                      alt="post-image"
-                                      className="w-full rounded"
-                                      loading="lazy"
-                                    />
-                                  </a>
-                                </div>
-                                <div className="w-full md:w-1/3 px-2 mt-3 md:mt-0">
-                                  <a
-                                    data-fslightbox="gallery"
-                                    href="/images/page-img/bus.jpg"
-                                    className="rounded"
-                                  >
-                                    <img
-                                      src="/images/page-img/bus.jpg"
-                                      alt="post-image"
-                                      className="w-full rounded"
-                                      loading="lazy"
-                                    />
-                                  </a>
-                                </div>
-                                <div className="w-full md:w-1/3 px-2 mt-3 md:mt-0">
-                                  <a
-                                    data-fslightbox="gallery"
-                                    href="/images/page-img/fd.jpg"
-                                    className="rounded"
-                                  >
-                                    <img
-                                      src="/images/page-img/fd.jpg"
-                                      alt="post-image"
-                                      className="w-full rounded"
-                                      loading="lazy"
-                                    />
-                                  </a>
-                                </div>
-                              </div>
-                              <div className="flex flex-wrap -mx-2 mt-3">
-                                <div className="w-full md:w-1/2 px-2">
-                                  <a
-                                    data-fslightbox="gallery"
-                                    href="/images/page-img/mountain.jpg"
-                                    className="rounded"
-                                  >
-                                    <img
-                                      src="/images/page-img/mountain.jpg"
-                                      alt="post-image"
-                                      className="w-full rounded"
-                                      loading="lazy"
-                                    />
-                                  </a>
-                                </div>
-                                <div className="w-full md:w-1/2 px-2 mt-3 md:mt-0">
-                                  <div className="post-overlay-box h-full rounded">
-                                    <img
-                                      src="/images/page-img/pizza.jpg"
-                                      alt="post-image"
-                                      className="w-full h-full object-cover rounded"
-                                      loading="lazy"
-                                    />
-                                    <a
-                                      data-fslightbox="gallery"
-                                      href="/images/page-img/pizza.jpg"
-                                      className="rounded font-size-18"
-                                    >
-                                      +2
-                                    </a>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="post-meta-likes mt-4">
-                              <div className="flex items-center gap-2 flex-wrap">
-                                <ul className="flex m-0 p-0 list-none post-user-liked-list">
-                                  <li>
-                                    <img
-                                      src="/images/user/01.jpg"
-                                      alt="userimg"
-                                      className="rounded-full userimg"
-                                      loading="lazy"
-                                    />
-                                  </li>
-                                  <li>
-                                    <img
-                                      src="/images/user/02.jpg"
-                                      alt="userimg"
-                                      className="rounded-full userimg"
-                                      loading="lazy"
-                                    />
-                                  </li>
-                                  <li>
-                                    <img
-                                      src="/images/user/03.jpg"
-                                      alt="userimg"
-                                      className="rounded-full userimg"
-                                      loading="lazy"
-                                    />
-                                  </li>
-                                  <li>
-                                    <img
-                                      src="/images/user/04.jpg"
-                                      alt="userimg"
-                                      className="rounded-full userimg"
-                                      loading="lazy"
-                                    />
-                                  </li>
-                                </ul>
-                                {/* modal dor likes */}
-                                <div
-                                  onClick={() => setOpenLikesModal(true)}
-                                  className="cursor-pointer"
-                                >
-                                  <h6 className="text-sm">
-                                    Aliana Molex{" "}
-                                    <span className="text-xs sm:text-sm font-medium">
-                                      and 208 others liked this
-                                    </span>
-                                  </h6>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="comment-area text-xs sm:text-sm mt-4 pt-4 border-t">
-                              <div className="flex justify-between items-center flex-wrap">
-                                <div className="like-block relative flex items-center flex-shrink-0">
-                                  <div className="like-data">
-                                    <div className="relative">
-                                      <span
-                                        className="cursor-pointer flex items-center justify-center gap-1"
-                                        data-bs-toggle="dropdown"
-                                        aria-haspopup="true"
-                                        aria-expanded="false"
-                                        role="button"
-                                      >
-                                        <i className="ph ph-thumbs-up text-xl"></i>
-                                        <span className="font-medium">
-                                          140 Likes
-                                        </span>
-                                      </span>
-                                      <div className="hidden absolute mt-2 bg-white rounded-lg shadow-lg py-2">
-                                        <a
-                                          className="mx-2 inline-block"
-                                          href="javascript:void(0);"
-                                          data-bs-toggle="tooltip"
-                                          data-bs-placement="top"
-                                          title="Like"
-                                        >
-                                          <img
-                                            src="/images/icon/01.png"
-                                            className="w-full"
-                                            alt="like"
-                                            loading="lazy"
-                                          />
-                                        </a>
-                                        <a
-                                          className="mr-2 inline-block"
-                                          href="javascript:void(0);"
-                                          data-bs-toggle="tooltip"
-                                          data-bs-placement="top"
-                                          title="Love"
-                                        >
-                                          <img
-                                            src="/images/icon/02.png"
-                                            className="w-full"
-                                            alt="love"
-                                            loading="lazy"
-                                          />
-                                        </a>
-                                        <a
-                                          className="mr-2 inline-block"
-                                          href="javascript:void(0);"
-                                          data-bs-toggle="tooltip"
-                                          data-bs-placement="top"
-                                          title="Happy"
-                                        >
-                                          <img
-                                            src="/images/icon/03.png"
-                                            className="w-full"
-                                            alt="happy"
-                                            loading="lazy"
-                                          />
-                                        </a>
-                                        <a
-                                          className="mr-2 inline-block"
-                                          href="javascript:void(0);"
-                                          data-bs-toggle="tooltip"
-                                          data-bs-placement="top"
-                                          title="HaHa"
-                                        >
-                                          <img
-                                            src="/images/icon/04.png"
-                                            className="w-full"
-                                            alt="haha"
-                                            loading="lazy"
-                                          />
-                                        </a>
-                                        <a
-                                          className="mr-2 inline-block"
-                                          href="javascript:void(0);"
-                                          data-bs-toggle="tooltip"
-                                          data-bs-placement="top"
-                                          title="Think"
-                                        >
-                                          <img
-                                            src="/images/icon/05.png"
-                                            className="w-full"
-                                            alt="think"
-                                            loading="lazy"
-                                          />
-                                        </a>
-                                        <a
-                                          className="mr-2 inline-block"
-                                          href="javascript:void(0);"
-                                          data-bs-toggle="tooltip"
-                                          data-bs-placement="top"
-                                          title="Sad"
-                                        >
-                                          <img
-                                            src="/images/icon/06.png"
-                                            className="w-full"
-                                            alt="sad"
-                                            loading="lazy"
-                                          />
-                                        </a>
-                                        <a
-                                          className="mr-2 inline-block"
-                                          href="javascript:void(0);"
-                                          data-bs-toggle="tooltip"
-                                          data-bs-placement="top"
-                                          title="Lovely"
-                                        >
-                                          <img
-                                            src="/images/icon/07.png"
-                                            className="w-full"
-                                            alt="lovely"
-                                            loading="lazy"
-                                          />
-                                        </a>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="flex items-center gap-3 flex-shrink-0">
-                                  <button
-                                    className="total-comment-block flex justify-center items-center gap-1 cursor-pointer"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#commentcollapes2"
-                                    aria-expanded="false"
-                                    aria-controls="commentcollapes"
-                                  >
-                                    <i className="ph ph-chat-circle-text text-xl"></i>
-                                    <span className="font-medium">
-                                      20 Comment
-                                    </span>
-                                  </button>
-                                  <div className="share-block flex items-center feather-icon">
-                                    <a
-                                      href="javascript:void(0);"
-                                      data-bs-toggle="modal"
-                                      data-bs-target="#share-btn"
-                                      aria-controls="share-btn"
-                                      className="flex justify-center items-center gap-1"
-                                    >
-                                      <i className="ph ph-share-network text-xl"></i>
-                                      <span className="font-medium">
-                                        99 Share
-                                      </span>
-                                    </a>
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                className="hidden mt-4 pt-4 border-t"
-                                id="commentcollapes2"
-                              >
-                                <ul className="m-0 p-0 list-none comment-list">
-                                  <li className="mb-3">
-                                    <div className="comment-list-block">
-                                      <div className="flex items-center gap-3">
-                                        <div className="comment-list-user-img flex-shrink-0">
-                                          <img
-                                            src="/images/user/13.jpg"
-                                            alt="userimg"
-                                            className="avatar-48 rounded-full w-12 h-12"
-                                            loading="lazy"
-                                          />
-                                        </div>
-                                        <div className="comment-list-user-data">
-                                          <div className="inline-flex items-center gap-1 flex-wrap">
-                                            <h6 className="m-0">
-                                              Bob Frapples
-                                            </h6>
-                                            <span className="inline-block text-blue-600">
-                                              <i className="ph-fill ph-seal-check"></i>
-                                            </span>
-                                            <span className="font-medium text-sm capitalize">
-                                              3 min ago
-                                            </span>
-                                          </div>
-                                        </div>
-                                      </div>
-                                      <div className="comment-list-user-comment">
-                                        <div className="comment-list-comment">
-                                          "Just stumbled upon this post and it's
-                                          giving me all the feels! 🙌"
-                                        </div>
-                                        <div className="comment-list-action mt-2">
-                                          <ul className="flex items-center gap-2 m-0 p-0 list-none">
-                                            <li>
-                                              <div className="like-block relative flex items-center flex-shrink-0">
-                                                <div className="like-data">
-                                                  <div className="relative">
-                                                    <span
-                                                      className="cursor-pointer flex items-center justify-center gap-1"
-                                                      data-bs-toggle="dropdown"
-                                                      aria-haspopup="true"
-                                                      aria-expanded="false"
-                                                      role="button"
-                                                    >
-                                                      <i className="ph ph-thumbs-up text-3xl"></i>
-                                                      <span className="font-medium text-sm"></span>
-                                                    </span>
-                                                    <div className="hidden absolute mt-2 bg-white rounded-lg shadow-lg py-2">
-                                                      <a
-                                                        className="mx-2 inline-block"
-                                                        href="javascript:void(0);"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-placement="top"
-                                                        title="Like"
-                                                      >
-                                                        <img
-                                                          src="/images/icon/01.png"
-                                                          className="w-full"
-                                                          alt="like"
-                                                          loading="lazy"
-                                                        />
-                                                      </a>
-                                                      <a
-                                                        className="mr-2 inline-block"
-                                                        href="javascript:void(0);"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-placement="top"
-                                                        title="Love"
-                                                      >
-                                                        <img
-                                                          src="/images/icon/02.png"
-                                                          className="w-full"
-                                                          alt="love"
-                                                          loading="lazy"
-                                                        />
-                                                      </a>
-                                                      <a
-                                                        className="mr-2 inline-block"
-                                                        href="javascript:void(0);"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-placement="top"
-                                                        title="Happy"
-                                                      >
-                                                        <img
-                                                          src="/images/icon/03.png"
-                                                          className="w-full"
-                                                          alt="happy"
-                                                          loading="lazy"
-                                                        />
-                                                      </a>
-                                                      <a
-                                                        className="mr-2 inline-block"
-                                                        href="javascript:void(0);"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-placement="top"
-                                                        title="HaHa"
-                                                      >
-                                                        <img
-                                                          src="/images/icon/04.png"
-                                                          className="w-full"
-                                                          alt="haha"
-                                                          loading="lazy"
-                                                        />
-                                                      </a>
-                                                      <a
-                                                        className="mr-2 inline-block"
-                                                        href="javascript:void(0);"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-placement="top"
-                                                        title="Think"
-                                                      >
-                                                        <img
-                                                          src="/images/icon/05.png"
-                                                          className="w-full"
-                                                          alt="think"
-                                                          loading="lazy"
-                                                        />
-                                                      </a>
-                                                      <a
-                                                        className="mr-2 inline-block"
-                                                        href="javascript:void(0);"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-placement="top"
-                                                        title="Sad"
-                                                      >
-                                                        <img
-                                                          src="/images/icon/06.png"
-                                                          className="w-full"
-                                                          alt="sad"
-                                                          loading="lazy"
-                                                        />
-                                                      </a>
-                                                      <a
-                                                        className="mr-2 inline-block"
-                                                        href="javascript:void(0);"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-placement="top"
-                                                        title="Lovely"
-                                                      >
-                                                        <img
-                                                          src="/images/icon/07.png"
-                                                          className="w-full"
-                                                          alt="lovely"
-                                                          loading="lazy"
-                                                        />
-                                                      </a>
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            </li>
-                                            <li>
-                                              <span
-                                                className="font-medium text-sm cursor-pointer"
-                                                data-bs-toggle="collapse"
-                                                data-bs-target="#subcomment-collapse3"
-                                                role="button"
-                                                aria-expanded="false"
-                                                aria-controls="collapseExample"
-                                              >
-                                                Reply
-                                              </span>
-                                            </li>
-                                          </ul>
-                                          <div
-                                            className="add-comment-form-block hidden mt-3"
-                                            id="subcomment-collapse3"
-                                          >
-                                            <div className="flex items-center gap-3">
-                                              <div className="flex-shrink-0">
-                                                <img
-                                                  src="/images/user/1.jpg"
-                                                  alt="userimg"
-                                                  className="avatar-48 rounded-full w-12 h-12"
-                                                  loading="lazy"
-                                                />
-                                              </div>
-                                              <div className="add-comment-form">
-                                                <form>
-                                                  <input
-                                                    type="text"
-                                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                                    placeholder="Write a Comment..."
-                                                  />
-                                                  <button
-                                                    type="submit"
-                                                    className="px-5 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-size-12 capitalize"
-                                                  >
-                                                    post
-                                                  </button>
-                                                </form>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </li>
-                                </ul>
-                                <div className="add-comment-form-block">
-                                  <div className="flex items-center gap-3">
-                                    <div className="flex-shrink-0">
-                                      <img
-                                        src="/images/user/1.jpg"
-                                        alt="userimg"
-                                        className="avatar-48 rounded-full w-12 h-12"
-                                        loading="lazy"
-                                      />
-                                    </div>
-                                    <div className="add-comment-form">
-                                      <form>
-                                        <input
-                                          type="text"
-                                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                          placeholder="Write a Comment..."
-                                        />
-                                        <button
-                                          type="submit"
-                                          className="px-5 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-size-12 capitalize"
-                                        >
-                                          post
-                                        </button>
-                                      </form>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="w-full social-post mb-4">
-                        <div className="rounded-lg shadow bg-white">
-                          <div className="p-4">
-                            <div className="user-post-data">
-                              <div className="flex items-center justify-between gap-2 lg:gap-3">
-                                <div className="flex-shrink-0">
-                                  <img
-                                    className="border-2 rounded-full user-post-profile"
-                                    src="/images/user/04.jpg"
-                                    alt="user-image"
-                                    loading="lazy"
-                                  />
-                                </div>
-                                <div className="w-full">
-                                  <div className="flex items-center justify-between">
-                                    <div>
-                                      <h6 className="mb-0 inline-block">
-                                        Ira Membrit
-                                      </h6>
-                                      <span className="inline-block text-blue-600">
-                                        <i className="ph-fill ph-seal-check"></i>
-                                      </span>
-                                      <span className="mb-0 inline-block capitalize font-medium">
-                                        Update her Status
-                                      </span>
-                                      <p className="mb-0">6 Hours ago</p>
-                                    </div>
-                                    <div className="card-post-toolbar">
-                                      <div className="relative">
-                                        <div
-                                          className="leading-none cursor-pointer"
-                                          data-bs-toggle="dropdown"
-                                        >
-                                          <i className="ph-bold ph-dots-three font-size-30 text-body"></i>
-                                        </div>
-                                        <div className="hidden absolute right-0 mt-2 bg-white rounded-lg shadow-lg m-0 p-0">
-                                          <a
-                                            className="block p-3 hover:bg-gray-50"
-                                            href="#"
-                                          >
-                                            <div className="flex items-start gap-2">
-                                              <i className="ph ph-floppy-disk text-2xl"></i>
-                                              <div className="data">
-                                                <h6 className="font-semibold">
-                                                  Save Post
-                                                </h6>
-                                                <p className="mb-0 text-sm">
-                                                  Add this to your saved items
-                                                </p>
-                                              </div>
-                                            </div>
-                                          </a>
-                                          <a
-                                            className="block p-3 hover:bg-gray-50"
-                                            href="#"
-                                          >
-                                            <div className="flex items-start gap-2">
-                                              <i className="ph ph-x-circle text-2xl"></i>
-                                              <div className="data">
-                                                <h6 className="font-semibold">
-                                                  Hide Post
-                                                </h6>
-                                                <p className="mb-0 text-sm">
-                                                  See fewer posts like this.
-                                                </p>
-                                              </div>
-                                            </div>
-                                          </a>
-                                          <a
-                                            className="block p-3 hover:bg-gray-50"
-                                            href="#"
-                                          >
-                                            <div className="flex items-start gap-2">
-                                              <i className="ph ph-user-minus text-2xl"></i>
-                                              <div className="data">
-                                                <h6 className="font-semibold">
-                                                  Unfollow User
-                                                </h6>
-                                                <p className="mb-0 text-sm">
-                                                  Stop seeing posts but stay
-                                                  friends.
-                                                </p>
-                                              </div>
-                                            </div>
-                                          </a>
-                                          <a
-                                            className="block p-3 hover:bg-gray-50"
-                                            href="#"
-                                          >
-                                            <div className="flex items-start gap-2">
-                                              <i className="ph ph-bell text-2xl"></i>
-                                              <div className="data">
-                                                <h6 className="font-semibold">
-                                                  Notifications
-                                                </h6>
-                                                <p className="mb-0 text-sm">
-                                                  Turn on notifications for this
-                                                  post
-                                                </p>
-                                              </div>
-                                            </div>
-                                          </a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="mt-4">
-                              <p className="m-0">
-                                "Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit. Morbi nulla dolor, ornare at
-                                commodo non, feugiat non nisi. Phasellus
-                                faucibus mollis pharetra. Proin blandit ac massa
-                                sed rhoncus"
+                              </h1>
+                              <span className="m-0 inline-block text-sm font-normal">
+                                added new video in his timeline
+                              </span>
+                              <p className="text-gray-500 text-xs">
+                                90 days ago
                               </p>
                             </div>
-                            <div className="post-meta-likes mt-4">
-                              <div className="flex items-center gap-2 flex-wrap">
-                                <ul className="flex m-0 p-0 list-none post-user-liked-list">
-                                  <li>
-                                    <img
-                                      src="/images/user/01.jpg"
-                                      alt="userimg"
-                                      className="rounded-full userimg"
-                                      loading="lazy"
-                                    />
-                                  </li>
-                                  <li>
-                                    <img
-                                      src="/images/user/02.jpg"
-                                      alt="userimg"
-                                      className="rounded-full userimg"
-                                      loading="lazy"
-                                    />
-                                  </li>
-                                  <li>
-                                    <img
-                                      src="/images/user/03.jpg"
-                                      alt="userimg"
-                                      className="rounded-full userimg"
-                                      loading="lazy"
-                                    />
-                                  </li>
-                                  <li>
-                                    <img
-                                      src="/images/user/04.jpg"
-                                      alt="userimg"
-                                      className="rounded-full userimg"
-                                      loading="lazy"
-                                    />
-                                  </li>
-                                </ul>
-                                {/* modal for likes */}
-                                <div
-                                  onClick={() => setOpenLikesModal(true)}
-                                  className="cursor-pointer"
-                                >
-                                  <h6 className="text-sm">
-                                    Aliana Molex{" "}
-                                    <span className="text-xs sm:text-sm font-medium">
-                                      and 208 others liked this
-                                    </span>
-                                  </h6>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="comment-area text-xs sm:text-sm mt-4 pt-4 border-t">
-                              <div className="flex justify-between items-center flex-wrap">
-                                <div className="like-block relative flex items-center flex-shrink-0">
-                                  <div className="like-data">
-                                    <div className="relative">
-                                      <span
-                                        className="cursor-pointer flex items-center justify-center gap-1"
-                                        data-bs-toggle="dropdown"
-                                        aria-haspopup="true"
-                                        aria-expanded="false"
-                                        role="button"
-                                      >
-                                        <i className="ph ph-thumbs-up text-xl"></i>
-                                        <span className="font-medium">
-                                          140 Likes
-                                        </span>
-                                      </span>
-                                      <div className="hidden absolute mt-2 bg-white rounded-lg shadow-lg py-2">
-                                        <a
-                                          className="mx-2 inline-block"
-                                          href="javascript:void(0);"
-                                          data-bs-toggle="tooltip"
-                                          data-bs-placement="top"
-                                          title="Like"
-                                        >
-                                          <img
-                                            src="/images/icon/01.png"
-                                            className="w-full"
-                                            alt="like"
-                                            loading="lazy"
-                                          />
-                                        </a>
-                                        <a
-                                          className="mr-2 inline-block"
-                                          href="javascript:void(0);"
-                                          data-bs-toggle="tooltip"
-                                          data-bs-placement="top"
-                                          title="Love"
-                                        >
-                                          <img
-                                            src="/images/icon/02.png"
-                                            className="w-full"
-                                            alt="love"
-                                            loading="lazy"
-                                          />
-                                        </a>
-                                        <a
-                                          className="mr-2 inline-block"
-                                          href="javascript:void(0);"
-                                          data-bs-toggle="tooltip"
-                                          data-bs-placement="top"
-                                          title="Happy"
-                                        >
-                                          <img
-                                            src="/images/icon/03.png"
-                                            className="w-full"
-                                            alt="happy"
-                                            loading="lazy"
-                                          />
-                                        </a>
-                                        <a
-                                          className="mr-2 inline-block"
-                                          href="javascript:void(0);"
-                                          data-bs-toggle="tooltip"
-                                          data-bs-placement="top"
-                                          title="HaHa"
-                                        >
-                                          <img
-                                            src="/images/icon/04.png"
-                                            className="w-full"
-                                            alt="haha"
-                                            loading="lazy"
-                                          />
-                                        </a>
-                                        <a
-                                          className="mr-2 inline-block"
-                                          href="javascript:void(0);"
-                                          data-bs-toggle="tooltip"
-                                          data-bs-placement="top"
-                                          title="Think"
-                                        >
-                                          <img
-                                            src="/images/icon/05.png"
-                                            className="w-full"
-                                            alt="think"
-                                            loading="lazy"
-                                          />
-                                        </a>
-                                        <a
-                                          className="mr-2 inline-block"
-                                          href="javascript:void(0);"
-                                          data-bs-toggle="tooltip"
-                                          data-bs-placement="top"
-                                          title="Sad"
-                                        >
-                                          <img
-                                            src="/images/icon/06.png"
-                                            className="w-full"
-                                            alt="sad"
-                                            loading="lazy"
-                                          />
-                                        </a>
-                                        <a
-                                          className="mr-2 inline-block"
-                                          href="javascript:void(0);"
-                                          data-bs-toggle="tooltip"
-                                          data-bs-placement="top"
-                                          title="Lovely"
-                                        >
-                                          <img
-                                            src="/images/icon/07.png"
-                                            className="w-full"
-                                            alt="lovely"
-                                            loading="lazy"
-                                          />
-                                        </a>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="flex items-center gap-3 flex-shrink-0">
-                                  <button
-                                    className="total-comment-block flex justify-center items-center gap-1 cursor-pointer"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#commentcollapes3"
-                                    aria-expanded="false"
-                                    aria-controls="commentcollapes"
-                                  >
-                                    <i className="ph ph-chat-circle-text text-xl"></i>
-                                    <span className="font-medium">
-                                      20 Comment
-                                    </span>
-                                  </button>
-                                  <div className="share-block flex items-center feather-icon">
-                                    <a
-                                      href="javascript:void(0);"
-                                      data-bs-toggle="modal"
-                                      data-bs-target="#share-btn"
-                                      aria-controls="share-btn"
-                                      className="flex justify-center items-center gap-1"
-                                    >
-                                      <i className="ph ph-share-network text-xl"></i>
-                                      <span className="font-medium">
-                                        99 Share
-                                      </span>
-                                    </a>
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                className="hidden mt-4 pt-4 border-t"
-                                id="commentcollapes3"
-                              >
-                                <ul className="m-0 p-0 list-none comment-list">
-                                  <li className="mb-3">
-                                    <div className="comment-list-block">
-                                      <div className="flex items-center gap-3">
-                                        <div className="comment-list-user-img flex-shrink-0">
-                                          <img
-                                            src="/images/user/13.jpg"
-                                            alt="userimg"
-                                            className="avatar-48 rounded-full w-12 h-12"
-                                            loading="lazy"
-                                          />
-                                        </div>
-                                        <div className="comment-list-user-data">
-                                          <div className="inline-flex items-center gap-1 flex-wrap">
-                                            <h6 className="m-0">
-                                              Bob Frapples
-                                            </h6>
-                                            <span className="inline-block text-blue-600">
-                                              <i className="ph-fill ph-seal-check"></i>
-                                            </span>
-                                            <span className="font-medium text-sm capitalize">
-                                              3 min ago
-                                            </span>
-                                          </div>
-                                        </div>
-                                      </div>
-                                      <div className="comment-list-user-comment">
-                                        <div className="comment-list-comment">
-                                          "Just stumbled upon this post and it's
-                                          giving me all the feels! 🙌"
-                                        </div>
-                                        <div className="comment-list-action mt-2">
-                                          <ul className="flex items-center gap-2 m-0 p-0 list-none">
-                                            <li>
-                                              <div className="like-block relative flex items-center flex-shrink-0">
-                                                <div className="like-data">
-                                                  <div className="relative">
-                                                    <span
-                                                      className="cursor-pointer flex items-center justify-center gap-1"
-                                                      data-bs-toggle="dropdown"
-                                                      aria-haspopup="true"
-                                                      aria-expanded="false"
-                                                      role="button"
-                                                    >
-                                                      <i className="ph ph-thumbs-up text-3xl"></i>
-                                                      <span className="font-medium text-sm">
-                                                        Likes
-                                                      </span>
-                                                    </span>
-                                                    <div className="hidden absolute mt-2 bg-white rounded-lg shadow-lg py-2">
-                                                      <a
-                                                        className="mx-2 inline-block"
-                                                        href="javascript:void(0);"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-placement="top"
-                                                        title="Like"
-                                                      >
-                                                        <img
-                                                          src="/images/icon/01.png"
-                                                          className="w-full"
-                                                          alt="like"
-                                                          loading="lazy"
-                                                        />
-                                                      </a>
-                                                      <a
-                                                        className="mr-2 inline-block"
-                                                        href="javascript:void(0);"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-placement="top"
-                                                        title="Love"
-                                                      >
-                                                        <img
-                                                          src="/images/icon/02.png"
-                                                          className="w-full"
-                                                          alt="love"
-                                                          loading="lazy"
-                                                        />
-                                                      </a>
-                                                      <a
-                                                        className="mr-2 inline-block"
-                                                        href="javascript:void(0);"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-placement="top"
-                                                        title="Happy"
-                                                      >
-                                                        <img
-                                                          src="/images/icon/03.png"
-                                                          className="w-full"
-                                                          alt="happy"
-                                                          loading="lazy"
-                                                        />
-                                                      </a>
-                                                      <a
-                                                        className="mr-2 inline-block"
-                                                        href="javascript:void(0);"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-placement="top"
-                                                        title="HaHa"
-                                                      >
-                                                        <img
-                                                          src="/images/icon/04.png"
-                                                          className="w-full"
-                                                          alt="haha"
-                                                          loading="lazy"
-                                                        />
-                                                      </a>
-                                                      <a
-                                                        className="mr-2 inline-block"
-                                                        href="javascript:void(0);"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-placement="top"
-                                                        title="Think"
-                                                      >
-                                                        <img
-                                                          src="/images/icon/05.png"
-                                                          className="w-full"
-                                                          alt="think"
-                                                          loading="lazy"
-                                                        />
-                                                      </a>
-                                                      <a
-                                                        className="mr-2 inline-block"
-                                                        href="javascript:void(0);"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-placement="top"
-                                                        title="Sad"
-                                                      >
-                                                        <img
-                                                          src="/images/icon/06.png"
-                                                          className="w-full"
-                                                          alt="sad"
-                                                          loading="lazy"
-                                                        />
-                                                      </a>
-                                                      <a
-                                                        className="mr-2 inline-block"
-                                                        href="javascript:void(0);"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-placement="top"
-                                                        title="Lovely"
-                                                      >
-                                                        <img
-                                                          src="/images/icon/07.png"
-                                                          className="w-full"
-                                                          alt="lovely"
-                                                          loading="lazy"
-                                                        />
-                                                      </a>
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            </li>
-                                            <li>
-                                              <span
-                                                className="font-medium text-sm cursor-pointer"
-                                                data-bs-toggle="collapse"
-                                                data-bs-target="#subcomment-collapse3"
-                                                role="button"
-                                                aria-expanded="false"
-                                                aria-controls="collapseExample"
-                                              >
-                                                Reply
-                                              </span>
-                                            </li>
-                                          </ul>
-                                          <div
-                                            className="add-comment-form-block hidden mt-3"
-                                            id="subcomment-collapse3"
-                                          >
-                                            <div className="flex items-center gap-3">
-                                              <div className="flex-shrink-0">
-                                                <img
-                                                  src="/images/user/1.jpg"
-                                                  alt="userimg"
-                                                  className="avatar-48 rounded-full w-12 h-12"
-                                                  loading="lazy"
-                                                />
-                                              </div>
-                                              <div className="add-comment-form">
-                                                <form>
-                                                  <input
-                                                    type="text"
-                                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                                    placeholder="Write a Comment..."
-                                                  />
-                                                  <button
-                                                    type="submit"
-                                                    className="px-5 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-size-12 capitalize"
-                                                  >
-                                                    post
-                                                  </button>
-                                                </form>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </li>
-                                </ul>
-                                <div className="add-comment-form-block">
-                                  <div className="flex items-center gap-3">
-                                    <div className="flex-shrink-0">
-                                      <img
-                                        src="/images/user/1.jpg"
-                                        alt="userimg"
-                                        className="avatar-48 rounded-full w-12 h-12"
-                                        loading="lazy"
-                                      />
-                                    </div>
-                                    <div className="add-comment-form">
-                                      <form>
-                                        <input
-                                          type="text"
-                                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                          placeholder="Write a Comment..."
-                                        />
-                                        <button
-                                          type="submit"
-                                          className="px-5 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-size-12 capitalize"
-                                        >
-                                          post
-                                        </button>
-                                      </form>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+                          </div>
+                          <TbDots size={20} className="cursor-pointer" />
+                        </div>
+                        {/* <div className="my-4">
+                          <p className="m-0">
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing
+                            elit. Morbi nulla dolor, ornare at commodo non,
+                            feugiat non nisi. Phasellus faucibus mollis
+                            pharetra. Proin blandit ac massa sed rhoncus"
+                          </p>
+                        </div> */}
+                        <h1 className="text-3xl text-black my-4">
+                          Completed milestone: "Prototype testing" in Mobile App
+                          Development
+                        </h1>
+                        <div className="user-post mt-4">
+                          <div className="aspect-video">
+                            <iframe
+                              className="w-full h-full rounded-md"
+                              src="https://www.youtube.com/embed/IEHKekzTzPg"
+                              title="YouTube video"
+                              // allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                              allowFullScreen
+                            ></iframe>
                           </div>
                         </div>
-                      </div>
 
-                      <div className="w-full social-post mb-4">
-                        <div className="rounded-lg shadow bg-white">
-                          <div className="p-4">
-                            <div className="user-post-data">
-                              <div className="flex items-center justify-between gap-2 lg:gap-3">
-                                <div className="flex-shrink-0">
-                                  <img
-                                    className="border-2 rounded-full user-post-profile"
-                                    src="/images/user/1.jpg"
-                                    alt="user-image"
-                                    loading="lazy"
-                                  />
-                                </div>
-                                <div className="w-full">
-                                  <div className="flex items-center justify-between">
-                                    <div>
-                                      <h6 className="m-0 inline-block">
-                                        Bni Cyst
-                                      </h6>
-                                      <span className="inline-block text-blue-600">
-                                        <i className="ph-fill ph-seal-check"></i>
-                                      </span>
-                                      <span className="m-0 inline-block capitalize font-medium">
-                                        Added New Video in his Timeline
-                                      </span>
-                                      <p className="m-0">8 Hours ago</p>
-                                    </div>
-                                    <div className="card-post-toolbar">
-                                      <div className="relative">
-                                        <div className="leading-none cursor-pointer">
-                                          <i className="ph-bold ph-dots-three text-3xl text-body"></i>
-                                        </div>
-                                        <div className="hidden absolute right-0 mt-2 bg-white rounded-lg shadow-lg m-0 p-0">
-                                          <a
-                                            className="block p-3 hover:bg-gray-50"
-                                            href="#"
-                                          >
-                                            <div className="flex items-start gap-2">
-                                              <i className="ph ph-floppy-disk text-2xl"></i>
-                                              <div className="data">
-                                                <h6>Save Post</h6>
-                                                <p className="m-0 text-sm">
-                                                  Add this to your saved items
-                                                </p>
-                                              </div>
-                                            </div>
-                                          </a>
-                                          <a
-                                            className="block p-3 hover:bg-gray-50"
-                                            href="#"
-                                          >
-                                            <div className="flex items-start gap-2">
-                                              <i className="ph ph-x-circle text-2xl"></i>
-                                              <div className="data">
-                                                <h6>Hide Post</h6>
-                                                <p className="m-0 text-sm">
-                                                  See fewer posts like this.
-                                                </p>
-                                              </div>
-                                            </div>
-                                          </a>
-                                          <a
-                                            className="block p-3 hover:bg-gray-50"
-                                            href="#"
-                                          >
-                                            <div className="flex items-start gap-2">
-                                              <i className="ph ph-user-minus text-2xl"></i>
-                                              <div className="data">
-                                                <h6>Unfollow User</h6>
-                                                <p className="m-0 text-sm">
-                                                  Stop seeing posts but stay
-                                                  friends.
-                                                </p>
-                                              </div>
-                                            </div>
-                                          </a>
-                                          <a
-                                            className="block p-3 hover:bg-gray-50"
-                                            href="#"
-                                          >
-                                            <div className="flex items-start gap-2">
-                                              <i className="ph ph-bell text-2xl"></i>
-                                              <div className="data">
-                                                <h6>Notifications</h6>
-                                                <p className="m-0 text-sm">
-                                                  Turn on notifications for this
-                                                  post
-                                                </p>
-                                              </div>
-                                            </div>
-                                          </a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
+                        <div className="py-2.5 my-2.5 flex items-center  justify-between border-b-[#e5e5e5] border-b">
+                          <div
+                            onClick={() => setOpenLikesModal(true)}
+                            className="flex cursor-pointer items-center gap-2"
+                          >
+                            <div className="flex items-center">
+                              <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-white border-2 border-white z-30">
+                                <FaThumbsUp className="w-3 h-3" />
+                              </div>
+                              <div className="-ml-2 w-6 h-6 rounded-full bg-green-500 flex items-center justify-center text-white border-2 border-white z-20">
+                                <FaHandsClapping className="w-3 h-3" />
+                              </div>
+                              <div className="-ml-2 w-6 h-6 rounded-full bg-rose-500 flex items-center justify-center text-white border-2 border-white z-10">
+                                <FaHeart className="w-3 h-3" />
                               </div>
                             </div>
 
-                            <div className="mt-4">
-                              <p className="m-0">
-                                "Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit. Morbi nulla dolor, ornare at
-                                commodo non, feugiat non nisi. Phasellus
-                                faucibus mollis pharetra. Proin blandit ac massa
-                                sed rhoncus"
-                              </p>
+                            <span className="text-gray-700 font-medium text-sm">
+                              293
+                            </span>
+                          </div>
+                          <div className="text-xs text-gray-500 flex items-center gap-1">
+                            <p>23 comments</p>
+                            <span className="inline-flex w-1 h-1 rounded-full bg-gray-500"></span>
+                            <p>4 reposts</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-[4rem]">
+                          <Image
+                            width={100}
+                            height={100}
+                            alt="user"
+                            src="/images/user/userImg.png"
+                            className="rounded w-10 h-10 object-cover"
+                          />
+                          <div className="flex items-center justify-between w-7/9">
+                            <div className="flex flex-col items-center gap-1">
+                              <FaThumbsUp className="" />
+                              <p className="font-bold">Like</p>
                             </div>
-
-                            <div className="user-post mt-4">
-                              <div className="aspect-video">
-                                <iframe
-                                  className="w-full h-full rounded-md"
-                                  src="https://www.youtube.com/embed/IEHKekzTzPg"
-                                  title="YouTube video"
-                                  // allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                  allowFullScreen
-                                ></iframe>
-                              </div>
+                            <div className="flex flex-col items-center gap-1">
+                              <BiCommentDetail />
+                              <p className="font-bold">Comment</p>
                             </div>
-
-                            <div className="post-meta-likes mt-4">
-                              <div className="flex items-center gap-2 flex-wrap">
-                                <ul className="flex m-0 p-0 list-none post-user-liked-list">
-                                  <li>
-                                    <img
-                                      src="/images/user/01.jpg"
-                                      alt="userimg"
-                                      className="rounded-full userimg"
-                                      loading="lazy"
-                                    />
-                                  </li>
-                                  <li>
-                                    <img
-                                      src="/images/user/02.jpg"
-                                      alt="userimg"
-                                      className="rounded-full userimg"
-                                      loading="lazy"
-                                    />
-                                  </li>
-                                  <li>
-                                    <img
-                                      src="/images/user/03.jpg"
-                                      alt="userimg"
-                                      className="rounded-full userimg"
-                                      loading="lazy"
-                                    />
-                                  </li>
-                                  <li>
-                                    <img
-                                      src="/images/user/04.jpg"
-                                      alt="userimg"
-                                      className="rounded-full userimg"
-                                      loading="lazy"
-                                    />
-                                  </li>
-                                </ul>
-                                {/* modal for likes */}
-                                <div
-                                  onClick={() => setOpenLikesModal(true)}
-                                  className="cursor-pointer"
-                                >
-                                  <h6 className="text-sm">
-                                    Aliana Molex{" "}
-                                    <span className="text-xs sm:text-sm font-medium">
-                                      and 208 others liked this
-                                    </span>
-                                  </h6>
-                                </div>
-                              </div>
+                            <div className="flex flex-col items-center gap-1">
+                              <BiRepost />
+                              <p className="font-bold">Repost</p>
                             </div>
-
-                            <div className="comment-area text-xs sm:text-sm mt-4 pt-4 border-t">
-                              <div className="flex justify-between items-center flex-wrap">
-                                <div className="like-block relative flex items-center flex-shrink-0">
-                                  <div className="like-data">
-                                    <div className="relative">
-                                      <span className="cursor-pointer flex items-center justify-center gap-1">
-                                        <i className="ph ph-thumbs-up text-xl"></i>
-                                        <span className="font-medium">
-                                          140 Likes
-                                        </span>
-                                      </span>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="flex items-center gap-3 flex-shrink-0">
-                                  <div className="flex items-center gap-3 flex-shrink-0">
-                                    <div className="total-comment-block flex justify-center items-center gap-1 cursor-pointer">
-                                      <i className="ph ph-chat-circle-text text-xl"></i>
-                                      <span className="font-medium">
-                                        20 Comment
-                                      </span>
-                                    </div>
-                                    <div className="share-block flex items-center feather-icon">
-                                      <a
-                                        href="javascript:void(0);"
-                                        className="flex justify-center items-center gap-1"
-                                      >
-                                        <i className="ph ph-share-network text-xl"></i>
-                                        <span className="font-medium">
-                                          99 Share
-                                        </span>
-                                      </a>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div
-                                className="hidden mt-4 pt-4 border-t"
-                                id="commentcollapes4"
-                              >
-                                <ul className="m-0 p-0 list-none comment-list">
-                                  <li className="mb-3">
-                                    <div className="comment-list-block">
-                                      <div className="flex items-center gap-3">
-                                        <div className="comment-list-user-img flex-shrink-0">
-                                          <img
-                                            src="/images/user/13.jpg"
-                                            alt="userimg"
-                                            className="w-12 h-12 rounded-full userimg"
-                                            loading="lazy"
-                                          />
-                                        </div>
-                                        <div className="comment-list-user-data">
-                                          <div className="inline-flex items-center gap-1 flex-wrap">
-                                            <h6 className="m-0">
-                                              Bob Frapples
-                                            </h6>
-                                            <span className="inline-block text-blue-600"></span>
-                                            <span className="font-medium text-xs capitalize">
-                                              3 min ago
-                                            </span>
-                                          </div>
-                                        </div>
-                                      </div>
-                                      <div className="comment-list-user-comment">
-                                        <div className="comment-list-comment">
-                                          "Just stumbled upon this post and it's
-                                          giving me all the feels! 🙌"
-                                        </div>
-                                        <div className="comment-list-action mt-2">
-                                          <ul className="flex items-center gap-2 m-0 p-0 list-none">
-                                            <li>
-                                              <div className="like-block relative flex items-center flex-shrink-0">
-                                                <div className="like-data">
-                                                  <div className="relative">
-                                                    <span className="cursor-pointer flex items-center justify-center gap-1">
-                                                      <i className="ph ph-thumbs-up text-2xl"></i>
-                                                      <span className="font-medium text-xs">
-                                                        Likes
-                                                      </span>
-                                                    </span>
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            </li>
-                                            <li>
-                                              <span className="font-medium text-xs cursor-pointer">
-                                                Reply
-                                              </span>
-                                            </li>
-                                          </ul>
-                                          <div
-                                            className="add-comment-form-block hidden mt-3"
-                                            id="subcomment-collapse4"
-                                          >
-                                            <div className="flex items-center gap-3">
-                                              <div className="flex-shrink-0">
-                                                <img
-                                                  src="/images/user/1.jpg"
-                                                  alt="userimg"
-                                                  className="w-12 h-12 rounded-full userimg"
-                                                  loading="lazy"
-                                                />
-                                              </div>
-                                              <div className="add-comment-form">
-                                                <form className="flex gap-2">
-                                                  <input
-                                                    type="text"
-                                                    className="border rounded px-3 py-1 w-full"
-                                                    placeholder="Write a Comment..."
-                                                  />
-                                                  <button
-                                                    type="submit"
-                                                    className="bg-blue-600 text-white text-xs font-medium rounded px-5 py-1 capitalize"
-                                                  >
-                                                    Post
-                                                  </button>
-                                                </form>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </li>
-                                </ul>
-
-                                <div className="add-comment-form-block">
-                                  <div className="flex items-center gap-3">
-                                    <div className="flex-shrink-0">
-                                      <img
-                                        src="/images/user/1.jpg"
-                                        alt="userimg"
-                                        className="w-12 h-12 rounded-full userimg"
-                                        loading="lazy"
-                                      />
-                                    </div>
-                                    <div className="add-comment-form w-full" />
-                                    <form className="flex gap-2">
-                                      <input
-                                        type="text"
-                                        className="border rounded px-3 py-1 w-full"
-                                        placeholder="Write a Comment..."
-                                      />
-                                      <button
-                                        type="submit"
-                                        className="bg-blue-600 text-white text-xs font-medium rounded px-5 py-1 capitalize"
-                                      >
-                                        Post
-                                      </button>
-                                    </form>
-                                  </div>
-                                </div>
-                              </div>
+                            <div className="flex flex-col items-center gap-1">
+                              <LuSend />
+                              <p className="font-bold">Send</p>
                             </div>
                           </div>
                         </div>

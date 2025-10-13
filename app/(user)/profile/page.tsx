@@ -369,14 +369,14 @@ const UserProfile = () => {
                       <div className="relative my-6">
                         <button
                           onClick={() => scroll("left")}
-                          className="  absolute left-0 top-1/2 -translate-y-1/2 z-10 p-1 group bg-white/80 backdrop-blur-sm rounded-full shadow hover:bg-white transition"
+                          className=" bg-white rounded-full flex items-center justify-center absolute left-0 top-1/2 -translate-y-1/2 z-10 p-1 group "
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width={30}
                             height={30}
                             viewBox="0 0 24 24"
-                            className="text-gray-500 transition-transform duration-300 ease-in-out group-hover:scale-125"
+                            className="text-gray-500 "
                           >
                             <path
                               fill="none"
@@ -391,14 +391,14 @@ const UserProfile = () => {
 
                         <button
                           onClick={() => scroll("right")}
-                          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-1 group bg-white/80 backdrop-blur-sm rounded-full shadow hover:bg-white transition"
+                          className=" bg-white rounded-full flex items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 z-10 p-1 group "
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width={30}
                             height={30}
                             viewBox="0 0 24 24"
-                            className="text-gray-500 transition-transform duration-300 ease-in-out group-hover:scale-125"
+                            className="text-gray-500 "
                           >
                             <path
                               fill="none"
@@ -465,104 +465,6 @@ const UserProfile = () => {
                         {activeTab === "Followed" && <FollowedTab />}
                         {activeTab === "Spaces" && <ProfileSpace />}
                         {activeTab === "Links" && <ProfileLinks />}
-                        {activeTab === "Feeds" && (
-                          <div className="rounded-lg p-5 bg-white shadow-md mb-[40px]">
-                            <div
-                              className="flex items-center
-                                                   justify-between"
-                            >
-                              <div className="flex items-center gap-2">
-                                <Image
-                                  width={100}
-                                  height={100}
-                                  alt="user"
-                                  src="/images/user/userImg.png"
-                                  className="rounded w-20 h-20 object-cover"
-                                />
-                                <div>
-                                  <h1 className="text-xl flex items-center gap-1 font-bold text-black">
-                                    John Paul{" "}
-                                    <Image
-                                      src="/images/icon/verified.svg"
-                                      alt="icon"
-                                      width={14}
-                                      height={14}
-                                    />
-                                  </h1>
-                                  <p className="text-gray-500 text-xs">
-                                    90 days ago
-                                  </p>
-                                </div>
-                              </div>
-                              <TbDots size={20} className="cursor-pointer" />
-                            </div>
-                            <h1 className="text-3xl text-black my-4">
-                              Completed milestone: "Prototype testing" in Mobile
-                              App Development
-                            </h1>
-                            <div>
-                              <Image
-                                width={100}
-                                height={100}
-                                alt="feed image"
-                                className="w-full h-32 object-cover"
-                                src="/images/page-img/pizza.jpg"
-                              />
-                            </div>
-
-                            <div className="py-2.5 my-2.5 flex items-center  justify-between border-b-[#e5e5e5] border-b">
-                              <div className="flex items-center gap-2">
-                                <div className="flex items-center">
-                                  <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-white border-2 border-white z-30">
-                                    <FaThumbsUp className="w-2.5 h-2.5" />
-                                  </div>
-                                  <div className="-ml-2 w-6 h-6 rounded-full bg-green-500 flex items-center justify-center text-white border-2 border-white z-20">
-                                    <FaHandsClapping className="w-2.5 h-2.5" />
-                                  </div>
-                                  <div className="-ml-2 w-6 h-6 rounded-full bg-rose-500 flex items-center justify-center text-white border-2 border-white z-10">
-                                    <FaHeart className="w-2.5 h-2.5" />
-                                  </div>
-                                </div>
-
-                                <span className="text-gray-700 font-medium text-sm">
-                                  293
-                                </span>
-                              </div>
-                              <div className="text-xs text-gray-500 flex items-center gap-1">
-                                <p>23 comments</p>
-                                <span className="inline-flex w-1 h-1 rounded-full bg-gray-500"></span>
-                                <p>4 reposts</p>
-                              </div>
-                            </div>
-                            <div className="flex items-center gap-[4rem]">
-                              <Image
-                                width={100}
-                                height={100}
-                                alt="user"
-                                src="/images/user/userImg.png"
-                                className="rounded w-10 h-10 object-cover"
-                              />
-                              <div className="flex items-center justify-between w-7/9">
-                                <div className="flex flex-col items-center gap-1">
-                                  <FaThumbsUp />
-                                  <p className="font-bold">Like</p>
-                                </div>
-                                <div className="flex flex-col items-center gap-1">
-                                  <BiCommentDetail />
-                                  <p className="font-bold">Comment</p>
-                                </div>
-                                <div className="flex flex-col items-center gap-1">
-                                  <BiRepost />
-                                  <p className="font-bold">Repost</p>
-                                </div>
-                                <div className="flex flex-col items-center gap-1">
-                                  <LuSend />
-                                  <p className="font-bold">Send</p>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        )}
                         {activeTab === "Heatmap" && <HeatmapConnections />}
                         {activeTab === "Projects" && (
                           <ProjectDashboard projects={myProjects} />
@@ -570,75 +472,11 @@ const UserProfile = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="w-full hidden lg:block col-span-2 ">
+                  <div className="w-full my-4 lg:my-0 col-span-2 ">
                     <div className="">
-                      {/* <div className="rounded-lg shadow bg-white">
-                        <div className="flex justify-between p-4 border-b border-[#f1f1f1]">
-                          <div className="header-title">
-                            <h4 className="text-xl font-semibold">
-                              More Similar Profiles
-                            </h4>
-                          </div>
-                        </div>
-
-                        <div className="p-4 pt-0">
-                          <ul className="m-0 p-0 list-none">
-                            {[
-                              {
-                                name: "Annette Black",
-                                info: "33 Projects 6 Streaks",
-                                image: "/images/user/13.jpg",
-                              },
-                              {
-                                name: "Christopher Plessis",
-                                info: "33 Projects 6 Streaks",
-                                image: "/images/user/17.jpg",
-                              },
-                              {
-                                name: "Ellyse Perry",
-                                info: "33 Projects 6 Streaks",
-                                image: "/images/user/16.jpg",
-                              },
-                            ].map((user, index) => (
-                              <li key={index} className="mb-3 last:mb-0">
-                                <div className="flex items-center gap-2">
-                                  <Image
-                                    src={user.image}
-                                    alt={user.name}
-                                    width={60}
-                                    height={60}
-                                    className="object-cover rounded-sm w-[60px] h-[60px]"
-                                  />
-                                  <div className="flex-1">
-                                    <div className="flex items-center justify-between gap-2">
-                                      <div>
-                                        <h5 className="text-sm">{user.name}</h5>
-                                        <small className="capitalize flex items-center gap-1 text-gray-500">
-                                          <div className="w-2 h-2 flex-none rounded-full bg-black" />
-                                          <span
-                                            dangerouslySetInnerHTML={{
-                                              __html: user.info.replace(
-                                                /(\d+)/g,
-                                                `<span class='text-black font-medium'>$1</span>`
-                                              ),
-                                            }}
-                                          />
-                                        </small>
-                                      </div>
-                                      <button className="px-2 py-1 cursor-pointer bg-red-100 text-red-600 rounded hover:bg-red-200 leading-none">
-                                        <i className="ph ph-x text-sm"></i>
-                                      </button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div> */}
                       <SimilarProfiles />
-                      <TrendingProjects/>
-                      <TrendingSpaces/>
+                      <TrendingProjects />
+                      <TrendingSpaces />
                     </div>
                   </div>
                 </div>
