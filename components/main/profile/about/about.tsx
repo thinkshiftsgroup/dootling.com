@@ -234,7 +234,7 @@ const ProfileAbout = () => {
 
   return (
     <div className="tab-pane fade" id="about" role="tabpanel">
-      <div className="grid grid-cols-12 gap-3">
+      <div className="lg:grid block grid-cols-12 gap-3">
         <div className="col-span-4">
           <div className="w-full md:w-[350px] bg-white rounded-sm">
             <div className="p-5">
@@ -394,7 +394,7 @@ const ProfileAbout = () => {
                         </div>
                       </div> */}
 
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="lg:grid block grid-cols-2 gap-4">
                           <div className="w-full flex flex-col gap-4">
                             <div>
                               <label className="text-sm font-medium text-[#738b9a]">
@@ -409,7 +409,6 @@ const ProfileAbout = () => {
                                 className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
                               />
                             </div>
-
                             <div>
                               <label className="text-sm font-medium text-[#738b9a]">
                                 Username<sup className="text-black">*</sup>

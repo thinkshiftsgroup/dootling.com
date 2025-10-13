@@ -61,7 +61,7 @@ const AddHeatmapModal = () => {
       <span>
         <button
           onClick={() => setIsOpen(true)}
-          className="bg-[#157BFF] hover:bg-blue-600 text-white px-2 mt-3 flex items-center gap-2 py-1 rounded-sm text-[0.9rem]"
+          className="bg-[#157BFF] whitespace-nowrap hover:bg-blue-600 text-white px-2 mt-3 flex items-center gap-2 py-1 rounded-sm text-[0.9rem]"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

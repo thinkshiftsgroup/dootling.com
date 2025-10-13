@@ -114,7 +114,7 @@ const ReactionModal = ({ setOpenLikesModal }: ReactionModalProps) => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 cursor-pointer text-sm font-medium pb-2 border-b-2 transition-all ${
+                className={`flex items-center gap-1 sm:gap-2 cursor-pointer text-sm font-medium pb-2 border-b-2 transition-all ${
                   isActive
                     ? `${getBorderColor(tab.id)} border-b-3`
                     : "text-gray-500 border-transparent hover:text-black"
@@ -157,7 +157,7 @@ const ReactionModal = ({ setOpenLikesModal }: ReactionModalProps) => {
                     · {user.connection}
                   </span>
                 </p>
-                <p className="text-gray-500 text-sm">{user.description}</p>
+                <p className="text-gray-500 text-xs sm:text-sm">{user.description}</p>
               </div>
             </div>
           ))}

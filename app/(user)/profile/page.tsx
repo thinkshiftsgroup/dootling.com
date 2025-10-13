@@ -230,14 +230,14 @@ const UserProfile = () => {
             <div className="relative"></div>
             <div className="content-inner " id="page_layout">
               <div className="container mx-auto">
-                <div className="grid grid-cols-8 gap-4">
+                <div className="lg:grid block grid-cols-8 gap-4">
                   <div className="w-full col-span-6 ">
                     <div className="w-full  mx-auto">
-                      <div className="w-full h-[23.5rem]  rounded-lg bg-white shadow-md">
-                        <div className="max-w-7xl mx-auto px-4 pt-[20px]">
+                      <div className="w-full min-h-[23.5rem] rounded-lg bg-white shadow-md">
+                        <div className="max-w-7xl mx-auto px-2 sm:px-4 pt-[20px]">
                           <div className="relative">
                             <div className="flex justify-between items-center mb-4">
-                              <h2 className="text-black text-xl flex items-center gap-1.5 font-medium">
+                              <h2 className="text-black text-base sm:text-xl flex items-center gap-1.5 font-medium">
                                 1,193 contributions in the last year
                                 <svg
                                   width="18"
@@ -266,18 +266,18 @@ const UserProfile = () => {
                             </div>
 
                             <ContributionHeatmap pageType={"profile"} />
-                            <div className="max-w-5xl -mt-2 relative mx-auto  bg-white p-2">
-                              <div className="flex items-start justify-between">
-                                <div className="flex gap-6">
+                            <div className="max-w-5xl overflow-x-scroll hide-scrollbar -mt-10 relative mx-auto  bg-white p-2">
+                              <div className="flex gap-2 md:gap-5 lg:flex-row flex-col items-start justify-between">
+                                <div className="flex w-full lg:w-auto lg:flex-row flex-col gap-2 items-center lg:items-start">
                                   <img
                                     src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop"
                                     alt="Profile"
                                     className="w-28 h-28 rounded-lg object-cover"
                                   />
 
-                                  <div>
+                                  <div className="flex flex-col gap-1.5">
                                     <h1 className="text-3xl flex mt-1.5 items-center gap-1 font-bold text-black">
-                                      John Paul{" "}
+                                      John Paul
                                       <Image
                                         src="/images/icon/verified.svg"
                                         alt="icon"
@@ -285,64 +285,83 @@ const UserProfile = () => {
                                         height={14}
                                       />
                                     </h1>
-                                    <span className="flex font-normal items-center gap-2">
+                                    <span className="flex whitespace-nowrap flex-wrap lg:flex-nowrap font-normal items-center gap-1">
                                       <p className=" text-xs text-[#FAAF40] mt-1">
                                         Director in Technology
                                       </p>
-                                      <Image
-                                        src="/images/icon/iwwa_map.svg"
-                                        alt="icon"
-                                        width={16}
-                                        height={16}
-                                      />
-                                      <p className=" text-xs text-[#979797] mt-1">
-                                        United Kingdom
+                                      <span className="flex gap-2 items-center">
+                                        <Image
+                                          src="/images/icon/iwwa_map.svg"
+                                          alt="icon"
+                                          width={16}
+                                          height={16}
+                                        />
+                                        <p className=" text-xs text-[#979797]">
+                                          United Kingdom
+                                        </p>
+                                      </span>
+                                    </span>
+                                    <span className="flex whitespace-nowrap text-sm sm:text-xs flex-wrap lg:hidden items-center md:items-start gap-1.5">
+                                      <p className="text-[#b1afaf] border border-[#e3e0e0] rounded p-0.5">
+                                        #Advocate
+                                      </p>
+                                      <p className="text-[#b1afaf] border border-[#e3e0e0] rounded p-0.5">
+                                        Engineering With Precision
+                                      </p>
+                                      <p className="text-[#b1afaf] border border-[#e3e0e0] rounded p-0.5">
+                                        Havard Graduate
+                                      </p>
+                                    </span>
+                                    <span className="lg:flex hidden whitespace-nowrap text-sm sm:text-xs flex-nowrap items-center md:items-start gap-1.5">
+                                      <p className="text-[#b1afaf] border border-[#e3e0e0] rounded p-0.5">
+                                        #Advocate
+                                      </p>
+                                      <p className="text-[#b1afaf] border border-[#e3e0e0] rounded p-0.5">
+                                        Engineering With Precision
+                                      </p>
+                                      <p className="text-[#b1afaf] border border-[#e3e0e0] rounded p-0.5">
+                                        Havard Graduate
                                       </p>
                                     </span>
                                   </div>
                                 </div>
-                                <div className="flex items-start justify-between h-28">
+                                <div className="mx-auto lg:hidden block">
+                                  <AddHeatmapModal />
+                                </div>
+                                <div className="flex w-full items-start justify-center">
                                   <div className="flex text-black items-center mt-1.5 gap-8">
                                     <div className="text-center">
-                                      <p className="text-[20px] font-bold">
+                                      <p className="sm:text-base text-xl font-bold">
                                         444
                                       </p>
-                                      <p className="text-gray-600 text-sm">
+                                      <p className="text-gray-600 sm:text-xs text-sm">
                                         Endorsements
                                       </p>
                                     </div>
 
                                     <div className="text-center">
-                                      <p className="text-[20px] font-bold">5</p>
-                                      <p className="text-gray-600 text-sm">
+                                      <p className="sm:text-base text-xl font-bold">
+                                        5
+                                      </p>
+                                      <p className="text-gray-600 sm:text-xs text-sm">
                                         Projects
                                       </p>
                                     </div>
 
                                     <div className="text-center">
-                                      <p className="text-[20px] font-bold">
+                                      <p className="sm:text-base text-xl font-bold">
                                         12
                                       </p>
-                                      <p className="text-gray-600 text-sm">
+                                      <p className="text-gray-600 sm:text-xs text-sm">
                                         Streaks
                                       </p>
                                     </div>
                                   </div>
                                 </div>
-                                <AddHeatmapModal />
+                                <div className="lg:block hidden">
+                                  <AddHeatmapModal />
+                                </div>
                               </div>
-
-                              <span className="flex flex-wrap items-center gap-1.5 -mt-[2rem] text-xs ms-[8.5rem]">
-                                <p className="text-[#b1afaf] text-sm border border-[#e3e0e0] rounded p-0.5">
-                                  #Advocate
-                                </p>
-                                <p className="text-[#b1afaf] text-sm border border-[#e3e0e0] rounded p-0.5">
-                                  Engineering With Precision
-                                </p>
-                                <p className="text-[#b1afaf] text-sm border border-[#e3e0e0] rounded p-0.5">
-                                  Havard Graduate
-                                </p>
-                              </span>
                             </div>
                           </div>
                         </div>
@@ -350,51 +369,57 @@ const UserProfile = () => {
                       <div className="relative my-6">
                         <button
                           onClick={() => scroll("left")}
-                          className="absolute left-0 top-1/2 cursor-pointer -translate-y-1/2 z-10 p-1 group"
+                          className="  absolute left-0 top-1/2 -translate-y-1/2 z-10 p-1 group bg-white/80 backdrop-blur-sm rounded-full shadow hover:bg-white transition"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            width={35}
-                            height={35}
+                            width={30}
+                            height={30}
                             viewBox="0 0 24 24"
-                            className="text-gray-500 transform transition-transform duration-300 ease-in-out group-hover:scale-125"
+                            className="text-gray-500 transition-transform duration-300 ease-in-out group-hover:scale-125"
                           >
                             <path
                               fill="none"
                               stroke="currentColor"
                               strokeLinecap="round"
                               strokeLinejoin="round"
+                              strokeWidth={1.5}
                               d="m14 7l-5 5l5 5"
-                              strokeWidth={1}
-                            ></path>
+                            />
                           </svg>
                         </button>
 
                         <button
                           onClick={() => scroll("right")}
-                          className="absolute right-0 top-1/2 cursor-pointer -translate-y-1/2 z-10 p-1 group"
+                          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-1 group bg-white/80 backdrop-blur-sm rounded-full shadow hover:bg-white transition"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            width={35}
-                            height={35}
+                            width={30}
+                            height={30}
                             viewBox="0 0 24 24"
-                            className="text-gray-500 transform transition-transform duration-300 ease-in-out group-hover:scale-125"
+                            className="text-gray-500 transition-transform duration-300 ease-in-out group-hover:scale-125"
                           >
                             <path
                               fill="none"
                               stroke="currentColor"
                               strokeLinecap="round"
                               strokeLinejoin="round"
+                              strokeWidth={1.5}
                               d="m10 17l5-5l-5-5"
-                              strokeWidth={1}
-                            ></path>
+                            />
                           </svg>
                         </button>
 
                         <div
                           ref={scrollRef}
-                          className="relative bg-white flex justify-around items-center rounded-xl shadow-sm px-6 py-4 overflow-x-auto scrollbar-hide scroll-smooth"
+                          className="
+      relative flex items-center gap-4 
+      bg-white rounded-xl shadow-sm
+      px-4 sm:px-6 py-4
+      overflow-x-auto hide-scrollbar scroll-smooth
+      md:justify-center
+    "
                         >
                           {items.map((item, idx) => {
                             const isActive = activeTab === item.label;
@@ -402,18 +427,14 @@ const UserProfile = () => {
                               <div
                                 key={idx}
                                 onClick={() => setActiveTab(item.label)}
-                                className="relative cursor-pointer flex flex-col items-center w-[80px]"
+                                className="relative cursor-pointer flex flex-col items-center w-[70px] sm:w-[80px]"
                               >
-                                {/* {idx !== items.length - 1 && (
-                                  <span className="absolute right-[-30px] top-1/2 -translate-y-1/2 w-[1px] h-10 bg-gray-200"></span>
-                                )} */}
-
                                 <div
                                   className={`${
                                     isActive
                                       ? "bg-[#157BFF]"
                                       : "bg-[#157BFF]/10"
-                                  } w-[60px] h-[60px] flex justify-center items-center rounded-xl transition-all duration-200`}
+                                  } w-[55px] sm:w-[60px] h-[55px] sm:h-[60px] flex justify-center items-center rounded-xl transition-all duration-200`}
                                 >
                                   <span className="transition-colors duration-200">
                                     {typeof item.icon === "function"
@@ -427,7 +448,7 @@ const UserProfile = () => {
                                     isActive
                                       ? "text-[#157BFF]"
                                       : "text-gray-500"
-                                  } font-semibold whitespace-nowrap text-center mt-2 text-xs transition-colors duration-200`}
+                                  } font-semibold whitespace-nowrap text-center mt-2 text-[10px] sm:text-xs transition-colors duration-200`}
                                 >
                                   {item.label}
                                 </p>
@@ -542,7 +563,6 @@ const UserProfile = () => {
                             </div>
                           </div>
                         )}
-                        {/* {activeTab === "Account" && <ProfileAbout />} */}
                         {activeTab === "Heatmap" && <HeatmapConnections />}
                         {activeTab === "Projects" && (
                           <ProjectDashboard projects={myProjects} />
@@ -550,7 +570,7 @@ const UserProfile = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="w-full col-span-2 ">
+                  <div className="w-full hidden lg:block col-span-2 ">
                     <div className="">
                       {/* <div className="rounded-lg shadow bg-white">
                         <div className="flex justify-between p-4 border-b border-[#f1f1f1]">
@@ -587,25 +607,27 @@ const UserProfile = () => {
                                     alt={user.name}
                                     width={60}
                                     height={60}
-                                    className="avatar-60 avatar-borderd object-cover rounded-sm w-full h-auto inline-block"
+                                    className="object-cover rounded-sm w-[60px] h-[60px]"
                                   />
                                   <div className="flex-1">
                                     <div className="flex items-center justify-between gap-2">
                                       <div>
-                                        <h5>{user.name}</h5>
-                                        <small className="capitalize flex items-center gap-2">
+                                        <h5 className="text-sm">{user.name}</h5>
+                                        <small className="capitalize flex items-center gap-1 text-gray-500">
                                           <div className="w-2 h-2 flex-none rounded-full bg-black" />
-                                          {user.info}
+                                          <span
+                                            dangerouslySetInnerHTML={{
+                                              __html: user.info.replace(
+                                                /(\d+)/g,
+                                                `<span class='text-black font-medium'>$1</span>`
+                                              ),
+                                            }}
+                                          />
                                         </small>
                                       </div>
-                                      <div className="flex items-center flex-shrink-0 gap-2">
-                                        <button className="px-2 py-1 cursor-pointer bg-blue-100 text-blue-600 rounded hover:bg-blue-200 leading-none">
-                                          <i className="ph ph-plus text-sm"></i>
-                                        </button>
-                                        <button className="px-2 py-1 cursor-pointer bg-red-100 text-red-600 rounded hover:bg-red-200 leading-none">
-                                          <i className="ph ph-x text-sm"></i>
-                                        </button>
-                                      </div>
+                                      <button className="px-2 py-1 cursor-pointer bg-red-100 text-red-600 rounded hover:bg-red-200 leading-none">
+                                        <i className="ph ph-x text-sm"></i>
+                                      </button>
                                     </div>
                                   </div>
                                 </div>
