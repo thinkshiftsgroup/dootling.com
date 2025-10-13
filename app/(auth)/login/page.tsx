@@ -10,6 +10,10 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { toast } from "sonner";
+
+import { IoEye } from "react-icons/io5";
+import { IoEyeOff } from "react-icons/io5";
+
 interface LoginResponse {
   token: string;
   user: {
@@ -37,6 +41,7 @@ export default function LoginPage() {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -193,21 +198,33 @@ export default function LoginPage() {
                 >
                   Password
                 </label>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  onBlur={() => handleBlur("password")}
-                  placeholder="••••••"
-                  className={`w-full h-12 px-4 rounded-lg border bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500  ${
-                    errors.password ? "border-red-500" : "border-gray-300"
-                  }`}
-                  required
-                  minLength={6}
-                  maxLength={100}
-                />
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    id="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleInputChange}
+                    onBlur={() => handleBlur("password")}
+                    placeholder="••••••"
+                    className={`w-full h-12 px-4 rounded-lg border bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500  ${
+                      errors.password ? "border-red-500" : "border-gray-300"
+                    }`}
+                    required
+                    minLength={6}
+                    maxLength={100}
+                  />
+                  <span
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    className="absolute top-4 cursor-pointer right-2.5"
+                  >
+                    {showPassword ? (
+                      <IoEye size={20} />
+                    ) : (
+                      <IoEyeOff size={20} />
+                    )}
+                  </span>
+                </div>
                 {errors.password && (
                   <span className="text-red-500 text-sm mt-1 block">
                     Password must be at least 6 characters
@@ -225,13 +242,13 @@ export default function LoginPage() {
                     onChange={handleInputChange}
                     className="w-5 h-5 cursor-pointer accent-blue-600"
                   />
-                  <label htmlFor="rememberMe" className="text-sm text-gray-900">
+                  <label htmlFor="rememberMe" className="sm:text-sm text-xs text-gray-900">
                     Remember Me
                   </label>
                 </div>
                 <Link
                   href="/reset-password"
-                  className="text-sm text-blue-600 hover:underline font-medium"
+                  className="sm:text-sm text-xs text-blue-600 hover:underline font-medium"
                 >
                   Forgot Password?
                 </Link>
