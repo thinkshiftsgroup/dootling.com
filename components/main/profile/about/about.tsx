@@ -1,4 +1,5 @@
 "use client";
+import { useEffect } from "react";
 import Image from "next/image";
 import {
   User,
@@ -7,21 +8,121 @@ import {
   PencilSimple,
   Plus,
   Pencil,
+  Phone,
 } from "phosphor-react";
 import React, { useState } from "react";
 import ProfileVisibility from "./profileVisibility";
 import ChangePassword from "./changePassword";
 import EmailSms from "./emailSms";
 import ManageContact from "./manageContact";
-
+import { useProfileStore } from "@/stores/useProfileStore";
+import useProfileActions from "@/hooks/useProfileApi";
+import { toast } from "sonner";
+import { Skeleton } from "@/components/ui/skeleton";
 const mainBlue = "#1578ff";
 const mainText = "#2b2d42";
 const paragraph = "#7e8b9a";
 
+const PersonalInformationSkeleton = () => (
+  <div className="space-y-6">
+    <div className="flex mb-6">
+      <div className="relative">
+        <Skeleton className="rounded-full w-36 h-36 border" />
+        <Skeleton className="absolute bottom-0 right-0 p-2 rounded-full w-8 h-8" />
+      </div>
+    </div>
+
+    <div className="grid grid-cols-2 gap-4">
+      <div className="w-full flex flex-col gap-4">
+        {Array(4)
+          .fill(0)
+          .map((_, index) => (
+            <div key={`col1-${index}`}>
+              <Skeleton className="h-4 w-1/4 mb-1" />
+              <Skeleton className="w-full h-10 rounded-md" />
+            </div>
+          ))}
+      </div>
+      <div className="w-full flex flex-col gap-4">
+        {Array(4)
+          .fill(0)
+          .map((_, index) => (
+            <div key={`col2-${index}`}>
+              <Skeleton className="h-4 w-1/4 mb-1" />
+              <Skeleton className="w-full h-10 rounded-md" />
+            </div>
+          ))}
+      </div>
+      <div className="col-span-2 grid grid-cols-2 gap-4">
+        {Array(2)
+          .fill(0)
+          .map((_, index) => (
+            <div key={`col3-${index}`}>
+              <Skeleton className="h-4 w-1/4 mb-1" />
+              <Skeleton className="w-full h-10 rounded-md" />
+            </div>
+          ))}
+      </div>
+    </div>
+
+    <div className="flex items-center gap-3 pt-4">
+      <Skeleton className="w-20 h-10 rounded" />
+      <Skeleton className="w-20 h-10 rounded" />
+    </div>
+  </div>
+);
+
+interface FormData {
+  firstname: string;
+  lastname: string;
+  username: string;
+  email: string;
+  headline: string;
+  country: string;
+  phone: string;
+  languages: string;
+  city: string;
+  tags: string;
+  role: string;
+  industry: string;
+  dateOfBirth: string;
+  pronouns: string;
+}
 const ProfileAbout = () => {
   const [open, setOpen] = useState<string | null>("profile");
   const [activeTab, setActiveTab] = useState<string>("personal-info");
+  const { profile, isLoading, isLoaded } = useProfileStore();
 
+  const { fetchUserProfile, updateProfileDetails } = useProfileActions();
+
+  useEffect(() => {
+    if (!isLoaded) {
+      fetchUserProfile();
+    }
+  }, [isLoaded, fetchUserProfile]);
+
+  useEffect(() => {
+    if (profile) {
+      setFormData({
+        firstname: profile.firstname || "",
+        lastname: profile.lastname || "",
+        username: profile.username || "",
+        email: profile.email || "",
+        headline: profile.headline || "",
+        country: profile.country || "",
+        phone: profile.phone || "",
+        languages: profile.languages || "",
+        city: profile.city || "",
+        tags: profile.tags || "",
+        role: profile.role || "",
+        industry: profile.industry || "",
+        dateOfBirth: profile.dateOfBirth
+          ? new Date(profile.dateOfBirth).toISOString()
+          : "",
+        pronouns: profile.pronouns || "",
+      });
+    }
+  }, [profile]);
   const toggleAccordion = (section: string) => {
     setOpen(open === section ? null : section);
   };
@@ -90,6 +191,46 @@ const ProfileAbout = () => {
       img: "/images/user/02.jpg",
     },
   ];
+
+  const [formData, setFormData] = useState<FormData>({
+    firstname: "",
+    lastname: "",
+    username: "",
+    email: "",
+    headline: "",
+    country: "",
+    phone: "",
+    languages: "",
+    city: "",
+    tags: "",
+    role: "",
+    industry: "",
+    dateOfBirth: "",
+    pronouns: "",
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    const { name, value } = e.target;
+    let finalValue = value;
+    if (name === "dateOfBirth" && value) {
+      finalValue = new Date(value).toISOString();
+    }
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await updateProfileDetails(formData);
+      toast.success("Profile updated successfully! 🎉");
+    } catch (error) {
+      toast.error("Failed to update profile.");
+    }
+  };
 
   return (
     <div className="tab-pane fade" id="about" role="tabpanel">
@@ -214,19 +355,22 @@ const ProfileAbout = () => {
           <div className="card">
             <div className="card-body">
               <div id="profileTabContent" className="tab-content active show">
-                <div
-                  id="personal-info"
-                  className={`w-full bg-white rounded-sm transition-all ${
-                    activeTab === "personal-info" ? "block" : "hidden"
-                  }`}
-                >
-                  <div>
-                    <h4 className="text-lg font-semibold text-gray-800 mb-6">
-                      Personal Information
-                    </h4>
+                {isLoading && !isLoaded && activeTab === "personal-info" ? (
+                  <PersonalInformationSkeleton />
+                ) : (
+                  <div
+                    id="personal-info"
+                    className={`w-full bg-white rounded-sm transition-all ${
+                      activeTab === "personal-info" ? "block" : "hidden"
+                    }`}
+                  >
+                    <div>
+                      <h4 className="text-lg font-semibold text-gray-800 mb-6">
+                        Personal Information
+                      </h4>
 
-                    <form className="space-y-6">
-                      {/* <div className="flex mb-6">
+                      <form className="space-y-6" onSubmit={handleSubmit}>
+                        {/* <div className="flex mb-6">
                         <div className="relative  ">
                           <Image
                             src="/images/user/11.png"
@@ -250,48 +394,59 @@ const ProfileAbout = () => {
                         </div>
                       </div> */}
 
-                      <div className="lg:grid block grid-cols-2 gap-4">
-                        <div className="w-full flex flex-col gap-4">
-                          <div>
-                            <label className="text-sm font-medium text-[#738b9a]">
-                              First Name<sup className="text-black">*</sup>
-                            </label>
-                            <input
-                              type="text"
-                              placeholder="Bni"
-                              className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
-                            />
-                          </div>
-
-                          <div>
-                            <label className="text-sm font-medium text-[#738b9a]">
-                              Username<sup className="text-black">*</sup>
-                            </label>
-                            <input
-                              type="text"
-                              placeholder="Bni@01"
-                              className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
-                            />
-                          </div>
-                          <div>
-                            <label className="text-sm font-medium text-[#738b9a]">
-                              Phone<sup className="text-black">*</sup>
-                            </label>
-                            <input
-                              type="number"
-                              placeholder="090291827635"
-                              className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
-                            />
-                          </div>
-                          <div>
-                            <label className="text-sm font-medium text-[#738b9a]">
-                              Role<sup className="text-black">*</sup>
-                            </label>
-                            <select className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 bg-white focus:ring-blue-500 focus:border-blue-500">
-                              <option>Software Engineer</option>
-                            </select>
-                          </div>
-                          {/* <div>
+                        <div className="lg:grid block grid-cols-2 gap-4">
+                          <div className="w-full flex flex-col gap-4">
+                            <div>
+                              <label className="text-sm font-medium text-[#738b9a]">
+                                First Name<sup className="text-black">*</sup>
+                              </label>
+                              <input
+                                type="text"
+                                name="firstname"
+                                value={formData.firstname}
+                                onChange={handleChange}
+                                placeholder="Bni"
+                                className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                              />
+                            </div>
+                            <div>
+                              <label className="text-sm font-medium text-[#738b9a]">
+                                Username<sup className="text-black">*</sup>
+                              </label>
+                              <input
+                                type="text"
+                                value={formData.username}
+                                name="username"
+                                onChange={handleChange}
+                                placeholder="Bni@01"
+                                className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                              />
+                            </div>
+                            <div>
+                              <label className="text-sm font-medium text-[#738b9a]">
+                                Phone<sup className="text-black">*</sup>
+                              </label>
+                              <input
+                                type="number"
+                                name="phone"
+                                value={formData.phone}
+                                onChange={handleChange}
+                                placeholder="090291827635"
+                                className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                              />
+                            </div>
+                            <div>
+                              <label className="text-sm font-medium text-[#738b9a]">
+                                Role<sup className="text-black">*</sup>
+                              </label>
+                              <select
+                                name="role"
+                                className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 bg-white focus:ring-blue-500 focus:border-blue-500"
+                              >
+                                <option>Software Engineer</option>
+                              </select>
+                            </div>
+                            {/* <div>
                             <div>
                               <label className="text-sm font-medium text-[#738b9a]">
                                 Headline <sup className="text-black">*</sup>
@@ -303,127 +458,169 @@ const ProfileAbout = () => {
                             </div>
                           </div> */}
 
-                          <div>
-                            <label className="text-sm font-medium text-[#738b9a]">
-                              Pronouns<sup className="text-black">*</sup>
-                            </label>
-                            <select className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 bg-white focus:ring-blue-500 focus:border-blue-500">
-                              <option>He/Him</option>
-                              <option>She/Her</option>
-                              <option>They/Them</option>
-                            </select>
+                            <div>
+                              <label className="text-sm font-medium text-[#738b9a]">
+                                Pronouns<sup className="text-black">*</sup>
+                              </label>
+                              <select
+                                name="pronouns"
+                                className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 bg-white focus:ring-blue-500 focus:border-blue-500"
+                                value={formData.pronouns}
+                                onChange={handleChange}
+                              >
+                                <option>He/Him</option>
+                                <option>She/Her</option>
+                                <option>They/Them</option>
+                              </select>
+                            </div>
+                            <div>
+                              <label className="text-sm font-medium text-[#738b9a]">
+                                Country<sup className="text-black">*</sup>
+                              </label>
+                              <select
+                                name="country"
+                                className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 bg-white focus:ring-blue-500 focus:border-blue-500"
+                                value={formData.country}
+                                onChange={handleChange}
+                              >
+                                <option>USA</option>
+                                <option>Canada</option>
+                                <option>India</option>
+                                <option>Nigeria</option>
+                                <option>Germany</option>
+                              </select>
+                            </div>
                           </div>
-                          <div>
+
+                          <div className="w-full flex flex-col gap-4">
+                            <div>
+                              <label className="text-sm font-medium text-[#738b9a]">
+                                Last Name <sup className="text-black">*</sup>
+                              </label>
+                              <input
+                                type="text"
+                                name="lastname"
+                                placeholder="Jhon"
+                                value={formData.lastname}
+                                onChange={handleChange}
+                                className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                              />
+                            </div>
+
+                            <div>
+                              <label className="text-sm font-medium text-[#738b9a]">
+                                Email<sup className="text-black">*</sup>
+                              </label>
+                              <input
+                                type="text"
+                                name="email"
+                                placeholder="Sam@gmail.com"
+                                value={formData.email}
+                                onChange={handleChange}
+                                disabled
+                                className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                              />
+                            </div>
+                            <div>
+                              <label className="text-sm font-medium text-[#738b9a]">
+                                Languages<sup className="text-black">*</sup>
+                              </label>
+                              <input
+                                type="text"
+                                name="languages"
+                                placeholder="English, French"
+                                value={formData.languages}
+                                onChange={handleChange}
+                                className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                              />
+                            </div>
+
+                            <div>
+                              <label className="text-sm font-medium text-[#738b9a]">
+                                Industry<sup className="text-black">*</sup>
+                              </label>
+                              <select
+                                name="industry"
+                                className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 bg-white focus:ring-blue-500 focus:border-blue-500"
+                              >
+                                <option>Finance</option>
+                              </select>
+                            </div>
+                            <div>
+                              <label className="text-sm font-medium text-[#738b9a]">
+                                Date of Birth<sup className="text-black">*</sup>
+                              </label>
+                              <input
+                                type="date"
+                                name="dateOfBirth"
+                                value={
+                                  formData.dateOfBirth
+                                    ? formData.dateOfBirth.split("T")[0]
+                                    : ""
+                                }
+                                onChange={handleChange}
+                                className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                              />
+                            </div>
+                            <div>
+                              <label className="text-sm font-medium text-[#738b9a]">
+                                City<sup className="text-black">*</sup>
+                              </label>
+                              <select
+                                name="city"
+                                value={formData.city}
+                                onChange={handleChange}
+                                className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 bg-white focus:ring-blue-500 focus:border-blue-500"
+                              >
+                                <option>Los Angelis</option>
+                              </select>
+                            </div>
+                          </div>
+
+                          <div className="col-span-2">
                             <label className="text-sm font-medium text-[#738b9a]">
-                              Country<sup className="text-black">*</sup>
+                              Headline<sup className="text-black">*</sup>
                             </label>
-                            <select className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 bg-white focus:ring-blue-500 focus:border-blue-500">
-                              <option>USA</option>
-                              <option>Canada</option>
-                              <option>India</option>
-                              <option>Nigeria</option>
-                              <option>Germany</option>
-                            </select>
+                            <textarea
+                              name="headline"
+                              value={formData.headline}
+                              onChange={handleChange}
+                              className="w-full h-[128px] mt-1 border-[#f1f1f1] border rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                              defaultValue="Cracked software Engineer"
+                            />
+                          </div>
+                          <div className="col-span-2">
+                            <label className="text-sm font-medium text-[#738b9a]">
+                              Tags<sup className="text-black">*</sup>
+                            </label>
+                            <textarea
+                              name="tags"
+                              value={formData.tags}
+                              onChange={handleChange}
+                              className="w-full h-[128px] mt-1 border-[#f1f1f1] border rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                              defaultValue="Engineer, Architect etc.."
+                            />
                           </div>
                         </div>
 
-                        <div className="w-full flex flex-col gap-4">
-                          <div>
-                            <label className="text-sm font-medium text-[#738b9a]">
-                              Last Name <sup className="text-black">*</sup>
-                            </label>
-                            <input
-                              type="text"
-                              placeholder="Jhon"
-                              className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
-                            />
-                          </div>
-
-                          <div>
-                            <label className="text-sm font-medium text-[#738b9a]">
-                              Email<sup className="text-black">*</sup>
-                            </label>
-                            <input
-                              type="text"
-                              placeholder="Sam@gmail.com"
-                              className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
-                            />
-                          </div>
-                          <div>
-                            <label className="text-sm font-medium text-[#738b9a]">
-                              Languages<sup className="text-black">*</sup>
-                            </label>
-                            <input
-                              type="text"
-                              placeholder="English, French"
-                              className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
-                            />
-                          </div>
-
-                          <div>
-                            <label className="text-sm font-medium text-[#738b9a]">
-                              Industry<sup className="text-black">*</sup>
-                            </label>
-                            <select className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 bg-white focus:ring-blue-500 focus:border-blue-500">
-                              <option>Finance</option>
-                            </select>
-                          </div>
-                          <div>
-                            <label className="text-sm font-medium text-[#738b9a]">
-                              Date of Birth<sup className="text-black">*</sup>
-                            </label>
-                            <input
-                              type="date"
-                              className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
-                            />
-                          </div>
-                          <div>
-                            <label className="text-sm font-medium text-[#738b9a]">
-                              City<sup className="text-black">*</sup>
-                            </label>
-                            <select className="w-full mt-1 border border-[#f1f1f1] rounded-md text-sm p-2 bg-white focus:ring-blue-500 focus:border-blue-500">
-                              <option>Los Angelis</option>
-                            </select>
-                          </div>
+                        <div className="flex items-center gap-3 pt-4">
+                          <button
+                            type="submit"
+                            className="bg-[#1578ff] text-white px-5 py-2 rounded hover:bg-blue-700 transition"
+                          >
+                            Update Profile
+                          </button>
+                          <button
+                            type="reset"
+                            className="bg-[#ffebe8] text-[#ff9b8a] px-5 py-2 rounded hover:bg-[#f1f1f1] transition"
+                          >
+                            Cancel
+                          </button>
                         </div>
-
-                        <div className="col-span-2">
-                          <label className="text-sm font-medium text-[#738b9a]">
-                            Headline<sup className="text-black">*</sup>
-                          </label>
-                          <textarea
-                            className="w-full h-[128px] mt-1 border-[#f1f1f1] border rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
-                            defaultValue="Cracked software Engineer"
-                          />
-                        </div>
-                        <div className="col-span-2">
-                          <label className="text-sm font-medium text-[#738b9a]">
-                            Tags<sup className="text-black">*</sup>
-                          </label>
-                          <textarea
-                            className="w-full h-[128px] mt-1 border-[#f1f1f1] border rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
-                            defaultValue="Engineer, Architect etc.."
-                          />
-                        </div>
-                      </div>
-
-                      <div className="flex items-center gap-3 pt-4">
-                        <button
-                          type="submit"
-                          className="bg-[#1578ff] text-white px-5 py-2 rounded hover:bg-blue-700 transition"
-                        >
-                          Submit
-                        </button>
-                        <button
-                          type="reset"
-                          className="bg-[#ffebe8] text-[#ff9b8a] px-5 py-2 rounded hover:bg-[#f1f1f1] transition"
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    </form>
+                      </form>
+                    </div>
                   </div>
-                </div>
+                )}
                 <div
                   id="hobbies-interests"
                   role="tabpanel"
@@ -974,8 +1171,8 @@ const ProfileAbout = () => {
                 </div>
 
                 <ChangePassword activeTab={activeTab} />
-                <EmailSms activeTab={activeTab}/>
-                <ManageContact activeTab={activeTab}/>
+                <EmailSms activeTab={activeTab} />
+                <ManageContact activeTab={activeTab} />
               </div>
             </div>
           </div>

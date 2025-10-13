@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://api.dootling.com/api";
+const API_BASE_URL = "https://api.dootling.com/api";
 
 const authApi = axios.create({
   baseURL: API_BASE_URL,
