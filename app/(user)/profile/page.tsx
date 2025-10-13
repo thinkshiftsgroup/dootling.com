@@ -366,14 +366,14 @@ const UserProfile = () => {
                       <div className="relative my-6">
                         <button
                           onClick={() => scroll("left")}
-                          className="  absolute left-0 top-1/2 -translate-y-1/2 z-10 p-1 group bg-white/80 backdrop-blur-sm rounded-full shadow hover:bg-white transition"
+                          className="  absolute left-0 top-1/2 -translate-y-1/2 z-10 p-1 group "
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width={30}
                             height={30}
                             viewBox="0 0 24 24"
-                            className="text-gray-500 transition-transform duration-300 ease-in-out group-hover:scale-125"
+                            className="text-gray-500 "
                           >
                             <path
                               fill="none"
@@ -388,14 +388,14 @@ const UserProfile = () => {
 
                         <button
                           onClick={() => scroll("right")}
-                          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-1 group bg-white/80 backdrop-blur-sm rounded-full shadow hover:bg-white transition"
+                          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-1 group "
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width={30}
                             height={30}
                             viewBox="0 0 24 24"
-                            className="text-gray-500 transition-transform duration-300 ease-in-out group-hover:scale-125"
+                            className="text-gray-500 "
                           >
                             <path
                               fill="none"
