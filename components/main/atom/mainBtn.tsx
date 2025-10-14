@@ -18,7 +18,7 @@ const ReusableButton: React.FC<ReusableButtonProps> = ({
   variant = "primary",
 }) => {
   const baseStyle =
-    "my-4 text-white px-2 flex items-center gap-2 py-1 rounded-sm text-[0.9rem] transition-all duration-200";
+    "my-4 text-white px-2 flex  items-center gap-2 py-1 rounded-sm text-[0.9rem] transition-all duration-200";
 
   const variantStyles = {
     primary: "bg-[#157BFF] hover:bg-blue-600",
@@ -31,8 +31,8 @@ const ReusableButton: React.FC<ReusableButtonProps> = ({
       onClick={onClick}
       className={cn(baseStyle, variantStyles[variant], className)}
     >
-      {icon && <span className="flex items-center">{icon}</span>}
-      <span>{text}</span>
+      {icon && <span className="flex flex-none items-center">{icon}</span>}
+      <span className="sm:!text-base !text-sm" >{text}</span>
     </button>
   );
 };

@@ -55,14 +55,14 @@ const EscrowManager: React.FC<FundWalletSideModalProps> = ({
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", stiffness: 80, damping: 15 }}
-            className="fixed top-0 right-0 h-screen w-full max-w-1/2     bg-white z-50 shadow-xl border-l border-gray-200 rounded-tl-2xl rounded-bl-2xl flex flex-col"
+            className="fixed top-0 right-0 h-screen w-full max-w-[500px] bg-white z-50 shadow-xl border-l border-gray-200 rounded-none sm:!rounded-tl-2xl  sm:!rounded-bl-2xl flex flex-col"
           >
-            <div className="flex items-center justify-between px-6 py-4 ">
+            <div className="flex relative items-center justify-between px-6 py-4 ">
               <div className="flex flex-col gap-1">
-                <h2 className="text-lg font-bold text-gray-800">
+                <h2 className="sm:!text-lg text-sm font-bold text-gray-800">
                   Manage Escrow
                 </h2>
-                <p className="text-gray-600 font-normal">
+                <p className="text-gray-600 !text-xs sm:!text-base font-normal">
                   For:
                   <span className="font-bold text-[#157BFF]">
                     Thinkemphathy Vault App Project
@@ -73,7 +73,7 @@ const EscrowManager: React.FC<FundWalletSideModalProps> = ({
                 variant="ghost"
                 size="icon"
                 onClick={onClose}
-                className="hover:bg-gray-100 text-black rounded-full"
+                className="hover:bg-gray-100 absolute right-2 top-2 text-black rounded-full"
               >
                 <X className="w-7 h-7 " />
               </Button>
@@ -81,7 +81,7 @@ const EscrowManager: React.FC<FundWalletSideModalProps> = ({
 
             <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
               <div>
-                <p className="text-[#404040] flex items-center  gap-1 font-semibold">
+                <p className="text-[#404040] flex text-xs sm:!!justify-normal justify-between sm:!text-sm items-center  gap-1 font-semibold">
                   Joshua Israel{" "}
                   <span className="text-[#404040]/80">
                     (joshuaisrael@gmail.com)
@@ -106,7 +106,7 @@ const EscrowManager: React.FC<FundWalletSideModalProps> = ({
                     </defs>
                   </svg>
                 </p>
-                <div className="border border-[#D8D8D8] rounded-md overflow-hidden w-full">
+                <div className="border sm:!text-base !text-sm border-[#D8D8D8] rounded-md overflow-hidden w-full">
                   <div className="grid grid-cols-[50px_1fr_1fr_1fr] text-center text-[#000000]/80">
                     <div className="bg-[#F2F2F2] py-3 px-2 font-medium border-r border-[#D8D8D8]">
                       %
@@ -124,7 +124,7 @@ const EscrowManager: React.FC<FundWalletSideModalProps> = ({
 
               <div>
                 <label
-                  className="font-semibold text-gray-600 text-lg "
+                  className="font-semibold text-gray-600 sm:!text-lg text-sm "
                   htmlFor="Purpose"
                 >
                   Notes *
@@ -148,7 +148,7 @@ const EscrowManager: React.FC<FundWalletSideModalProps> = ({
               </div>
 
               <div className="flex justify-end">
-                <button className="text-white w-1/2 text-sm rounded-md font-semibol py-2 cursor-pointer bg-[#1571E8]">
+                <button className="text-white w-full sm:!w-1/2 text-sm rounded-md font-semibol py-2 cursor-pointer bg-[#1571E8]">
                   Request Escrow Action
                 </button>
               </div>

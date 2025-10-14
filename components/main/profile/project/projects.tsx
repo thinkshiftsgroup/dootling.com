@@ -125,7 +125,7 @@ const ProjectDashboard: React.FC<ProjectDashboardProps> = ({
 
   return (
     <div className="w-full bg-gray-50 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="bg-white rounded-2xl shadow-sm p-6">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8">
@@ -223,7 +223,7 @@ const ProjectDashboard: React.FC<ProjectDashboardProps> = ({
             </button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+          <div className="grid !grid-cols-1 sm:!grid-cols-2 lg:!grid-cols-3 gap-6 w-full">
             {projects.map((project) => (
               <ProjectCard key={project.id} {...project} />
             ))}

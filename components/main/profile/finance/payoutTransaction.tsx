@@ -55,22 +55,22 @@ const PayoutTable = () => {
         <table className="w-full text-sm text-left">
           <thead className="bg-[#F1F4F9] text-black font-semibold">
             <tr>
-              <th className="px-6 py-3">Request Date</th>
-              <th className="px-6 py-3">Amount</th>
-              <th className="px-6 py-3">Beneficiary</th>
-              <th className="px-6 py-3">Expected Date</th>
-              <th className="px-6 py-3">Transaction ID</th>
-              <th className="px-6 py-3">Status</th>
+              <th className=" px-3 lg:px-6 py-3">Request Date</th>
+              <th className=" px-3 lg:px-6 py-3">Amount</th>
+              <th className=" px-3 lg:px-6 py-3">Beneficiary</th>
+              <th className=" px-3 lg:px-6 py-3">Expected Date</th>
+              <th className=" px-3 lg:px-6 py-3">Transaction ID</th>
+              <th className=" px-3 lg:px-6 py-3">Status</th>
             </tr>
           </thead>
 
           <tbody>
             {transactions.map((txn, i) => (
               <tr key={i} className="">
-                <td className="pl-3 py-5 border-b border-[#979797]/20 text-gray-700">
+                <td className="pl-3 py-1 lg:py-5 border-b border-[#979797]/20 text-gray-700">
                   {txn.requestDate}
                 </td>
-                <td className="px-6 py-5 border-b border-[#979797]/20">
+                <td className=" px-3 lg:px-6 py-1 lg:py-5 border-b border-[#979797]/20">
                   <span
                     className={`flex flex-col px-3 py-1 rounded-md font-semibold ${
                       txn.type === "credit"
@@ -84,16 +84,16 @@ const PayoutTable = () => {
                     </span>
                   </span>
                 </td>
-                <td className="px-6 py-5 border-b border-[#979797]/20 text-gray-700">
+                <td className=" px-3 lg:px-6 py-1 lg:py-5 border-b border-[#979797]/20 text-gray-700">
                   {txn.beneficiary}
                 </td>
-                <td className="px-6 py-5 border-b border-[#979797]/20 text-gray-700">
+                <td className=" px-3 lg:px-6 py-1 lg:py-5 border-b border-[#979797]/20 text-gray-700">
                   {txn.expectedDate}
                 </td>
-                <td className="px-6 py-5 border-b border-[#979797]/20 text-gray-600">
+                <td className=" px-3 lg:px-6 py-1 lg:py-5 border-b border-[#979797]/20 text-gray-600">
                   {txn.transactionId}
                 </td>
-                <td className="pr-3 py-5 border-b border-[#979797]/20">
+                <td className="pr-3 py-1 lg:py-5 border-b border-[#979797]/20">
                   {txn.status === "Processing" && (
                     <span className="bg-[#00B69B] flex items-center gap-1 text-white text-xs font-medium p-2 rounded">
                       Processing
