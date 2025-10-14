@@ -17,7 +17,7 @@ interface UserProfileData {
     city: string | null;
     role: string | null;
     industry: string | null;
-    tags: string[] | null;
+    tags: string | null;
     headline: string | null;
 
     id: string;

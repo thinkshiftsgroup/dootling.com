@@ -64,7 +64,7 @@ export default function UserDropdown() {
       <div className="m-0 shadow-md rounded-lg bg-white w-60 sm:w-60">
         <div className="px-4 py-3">
           <div className="flex flex-col gap-1">
-            <div
+            {/* <div
               // onClick={() => router.push("/profile/profile-settings")}
               className="flex items-center gap-2 py-2 cursor-pointer hover:bg-gray-50 rounded-md"
             >
@@ -82,7 +82,7 @@ export default function UserDropdown() {
               <a className="text-base text-gray-800 font-normal">
                 Privacy Settings
               </a>
-            </div>
+            </div> */}
             <div
               onClick={handleSignOut}
               className="bg-blue-600 cursor-pointer text-white rounded px-4 py-2 text-sm font-medium w-full hover:bg-blue-700 transition flex items-center gap-2 justify-center"
