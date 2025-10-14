@@ -600,8 +600,7 @@ const UserProfile = () => {
                       </div>
                     </div>
                   </div>
-
-                  <div className="w-full my-4 lg:my-0 col-span-2 ">
+                  <div className="w-full my-4 lg:!my-0 col-span-2 ">
                     <div className="">
                       <SimilarProfiles />
                       <TrendingProjects />

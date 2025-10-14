@@ -89,7 +89,7 @@ export default function ChatPage() {
       </div>
 
       <div className="flex-1 flex flex-col">
-        <div className="p-4 flex items-center justify-between border-b bg-white">
+        <div className="p-3.5 flex items-center justify-between border-b bg-white">
           <div className="flex items-center gap-3">
             <Image
               src="/images/user/userImg.jpg"

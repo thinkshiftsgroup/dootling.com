@@ -9,7 +9,7 @@ const Messages = () => {
     <div>
       <Navbar />
       <div className="main-content pb-20">
-        <div className="content-inner">
+        <div className="mt-[1rem]">
           <div className="container mx-auto">
             <div className="lg:grid block grid-cols-10 gap-4">
               <div className="w-full col-span-7 ">
@@ -21,15 +21,15 @@ const Messages = () => {
                 </div>
               </div>
               <div className="w-full col-span-3 ">
-                <div className="rounded-lg p-1 shadow bg-white mb-4">
-                  <div className="flex justify-between p-2 py-3 border-b border-[#f1f1f1]">
+                <div className="rounded-lg shadow bg-white mb-4">
+                  <div className="flex justify-between px-2 py-5 border-b border-[#f1f1f1]">
                     <div className="header-title">
                       <h4 className="text-lg font-bold text-black">
                         Space Inboxes
                       </h4>
                     </div>
                   </div>
-                  <div className="flex flex-col gap-1.5">
+                  <div className="flex p-1 flex-col gap-1.5">
                     {Array.from({ length: 3 }).map((_, i) => (
                       <div
                         key={i}
@@ -44,7 +44,7 @@ const Messages = () => {
                             className="w-20 h-20 rounded-lg object-cover"
                           />
                           <div>
-                            <h1 className="font-semibold leading-normal text-base">
+                            <h1 className="font-semibold leading-normal text-sm">
                               ThinkShifts Group A2 HQ Landers
                             </h1>
                             <p className="text-[10px] pt-2 font-normal">
@@ -53,7 +53,7 @@ const Messages = () => {
                           </div>
                         </div>
 
-                        <div className="bg-[#157BFF] rounded-sm p-2">
+                        <div className="bg-[#157BFF] rounded-sm mr-3 p-2">
                           <svg
                             width="16"
                             height="16"
