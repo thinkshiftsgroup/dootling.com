@@ -20,7 +20,7 @@ const selectOptions: VisibilityOption[] = [
   { label: "All Members", value: "all-members" },
 ];
 
-const ProfileVisibility = ({ activeTab }: any) => {
+const ProfileVisibility = ({ activeTab, tabRefs }: any) => {
   const [visibility, setVisibility] = useState<Record<string, string>>({});
 
   const handleChange = (field: string, value: string) => {
@@ -108,7 +108,7 @@ const ProfileVisibility = ({ activeTab }: any) => {
   return (
     <div
       id="v-pills-visibility-tab"
-      role="tabpanel"
+      ref={tabRefs["v-pills-visibility-tab"]}
       className={`w-full space-y-8 ${
         activeTab === "v-pills-visibility-tab" ? "block" : "hidden"
       }`}

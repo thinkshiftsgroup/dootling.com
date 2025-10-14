@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import {
   User,
@@ -88,6 +88,21 @@ interface FormData {
   dateOfBirth: string;
   pronouns: string;
 }
+
+type TabId =
+  | "personal-info"
+  | "hobbies-interests"
+  | "v-pills-family"
+  | "v-pills-work-tab"
+  | "v-pills-lived-tab"
+  | "v-pills-visibility-tab"
+  | "v-pills-privacy-tab"
+  | "v-pills-block-tab"
+  | "manage-contact"
+  | "change-password"
+  | "email-sms"
+  | "v-pills-export-tab";
+
 const ProfileAbout = () => {
   const [open, setOpen] = useState<string | null>("profile");
   const [activeTab, setActiveTab] = useState<string>("personal-info");
@@ -123,12 +138,49 @@ const ProfileAbout = () => {
       });
     }
   }, [profile]);
+
   const toggleAccordion = (section: string) => {
     setOpen(open === section ? null : section);
   };
 
-  const handleTabClick = (id: string) => {
+  const tabRefs: Record<TabId, React.RefObject<HTMLDivElement | null>> = {
+    "personal-info": useRef<HTMLDivElement>(null),
+    "hobbies-interests": useRef<HTMLDivElement>(null),
+    "v-pills-family": useRef<HTMLDivElement>(null),
+    "v-pills-work-tab": useRef<HTMLDivElement>(null),
+    "v-pills-lived-tab": useRef<HTMLDivElement>(null),
+    "v-pills-visibility-tab": useRef<HTMLDivElement>(null),
+    "v-pills-privacy-tab": useRef<HTMLDivElement>(null),
+    "v-pills-block-tab": useRef<HTMLDivElement>(null),
+    "manage-contact": useRef<HTMLDivElement>(null),
+    "change-password": useRef<HTMLDivElement>(null),
+    "email-sms": useRef<HTMLDivElement>(null),
+    "v-pills-export-tab": useRef<HTMLDivElement>(null),
+  };
+
+  const handleTabClick = (id: TabId) => {
+    if (
+      [
+        "personal-info",
+        "hobbies-interests",
+        "v-pills-family",
+        "v-pills-work-tab",
+        "v-pills-lived-tab",
+      ].includes(id)
+    ) {
+      setOpen("profile");
+    } else {
+      setOpen("account");
+    }
+
     setActiveTab(id);
+
+    setTimeout(() => {
+      const element = tabRefs[id].current;
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 300); 
   };
 
   const familyMembers = [
@@ -268,10 +320,7 @@ const ProfileAbout = () => {
                           label: "Hobbies and Interests",
                           id: "hobbies-interests",
                         },
-                        {
-                          label: "Social Networks",
-                          id: "v-pills-family",
-                        },
+                        { label: "Social Networks", id: "v-pills-family" },
                         { label: "Work and Education", id: "v-pills-work-tab" },
                         {
                           label: "Places You've Lived",
@@ -280,7 +329,7 @@ const ProfileAbout = () => {
                       ].map((item, idx) => (
                         <button
                           key={idx}
-                          onClick={() => handleTabClick(item.id)}
+                          onClick={() => handleTabClick(item.id as TabId)}
                           className={`text-left font-medium text-sm py-2 px-2 rounded-sm hover:bg-[#1578ff]/10 transition ${
                             activeTab === item.id
                               ? " bg-[#1578ff]/10 text-[#1578ff]"
@@ -311,7 +360,7 @@ const ProfileAbout = () => {
                     />
                   </button>
 
-                  <div
+                  {/* <div
                     className={`transition-all duration-300 overflow-hidden ${
                       open === "account" ? "max-h-[400px] p-4" : "max-h-0 p-0"
                     }`}
@@ -345,7 +394,7 @@ const ProfileAbout = () => {
                         </button>
                       ))}
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
@@ -353,13 +402,14 @@ const ProfileAbout = () => {
         </div>
         <div className="col-span-8">
           <div className="card">
-            <div className="card-body my-2 sm:my-0">
+            <div className="card-body my-2 sm:!my-0">
               <div id="profileTabContent" className="tab-content active show">
                 {isLoading && !isLoaded && activeTab === "personal-info" ? (
                   <PersonalInformationSkeleton />
                 ) : (
                   <div
                     id="personal-info"
+                    ref={tabRefs["personal-info"]}
                     className={`w-full bg-white my-2 rounded-sm transition-all ${
                       activeTab === "personal-info" ? "block" : "hidden"
                     }`}
@@ -623,7 +673,7 @@ const ProfileAbout = () => {
                 )}
                 <div
                   id="hobbies-interests"
-                  role="tabpanel"
+                   ref={tabRefs["hobbies-interests"]}
                   className={`w-full bg-white rounded-sm transition-all ${
                     activeTab === "hobbies-interests" ? "block" : "hidden"
                   }`}
@@ -721,7 +771,7 @@ const ProfileAbout = () => {
 
                 <div
                   id="v-pills-family"
-                  role="tabpanel"
+                   ref={tabRefs["v-pills-family"]}
                   className={`${
                     activeTab === "v-pills-family" ? "block" : "hidden"
                   } tab-pane fade space-y-4`}
@@ -809,7 +859,7 @@ const ProfileAbout = () => {
 
                 <div
                   id="v-pills-work-tab"
-                  role="tabpanel"
+                   ref={tabRefs["v-pills-work-tab"]}
                   className={`${
                     activeTab === "v-pills-work-tab" ? "block" : "hidden"
                   } space-y-6`}
@@ -962,7 +1012,7 @@ const ProfileAbout = () => {
 
                 <div
                   id="v-pills-lived-tab"
-                  role="tabpanel"
+                   ref={tabRefs["v-pills-lived-tab"]}
                   className={`${
                     activeTab === "v-pills-lived-tab" ? "block" : "hidden"
                   } space-y-6`}
@@ -1043,11 +1093,11 @@ const ProfileAbout = () => {
                   </div>
                 </div>
 
-                <ProfileVisibility activeTab={activeTab} />
+                <ProfileVisibility activeTab={activeTab} tabRefs={tabRefs} />
 
                 <div
                   id="v-pills-privacy-tab"
-                  role="tabpanel"
+                   ref={tabRefs["v-pills-privacy-tab"]}
                   aria-labelledby="v-pills-privacy-tab"
                   className={`${
                     activeTab === "v-pills-privacy-tab" ? "block" : "hidden"
