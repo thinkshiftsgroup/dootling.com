@@ -140,8 +140,9 @@ const UserProfile = () => {
   const userInitials = useMemo(() => getInitials(username), [username]);
   const userHeadline = user?.biodata?.headline || "Software Developer";
   const userCountry = user?.biodata?.country || "United Kingdom";
-  const userTags = user?.biodata?.tags || ["Advocate"];
-
+  const userTags = (user?.biodata?.tags || "Advocate")
+    .split(",")
+    .map((tag) => tag.trim());
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState("Feeds");
 
