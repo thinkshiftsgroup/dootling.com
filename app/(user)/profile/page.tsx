@@ -65,13 +65,13 @@ const ProfileImageUploadTrigger = ({
           className="w-full h-full rounded-md object-cover"
         />
       ) : (
-        <div className="w-full h-full rounded-md bg-[#157BFF] flex items-center justify-center text-white text-2xl font-bold lg:text-3xl">
+        <div className="w-[120px] h-full rounded-md bg-[#157BFF] flex items-center justify-center text-white text-2xl font-bold lg:text-3xl">
           {userInitials}
         </div>
       )}
 
       <div
-        className="absolute inset-0 bg-black/50 rounded-none flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+        className="absolute inset-0 bg-black/50 rounded-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer w-[120px]"
         onClick={() => uploadRef.current?.openFileDialog()}
         title="Change Profile Photo"
       >
