@@ -14,6 +14,9 @@ import { useRouter } from "next/navigation";
 import SearchBar from "./searchBar";
 import { Menu } from "lucide-react";
 
+import { RiLoginCircleFill } from "react-icons/ri";
+import { useAuthStore } from "@/stores/useAuthStore";
+
 interface UserItem {
   name: string;
   username?: string;
@@ -91,6 +94,8 @@ const Navbar = () => {
     "Next.js Enthusiasts",
   ].filter((r) => r.toLowerCase().includes(query.toLowerCase()));
 
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+
   return (
     <nav className="nav w-full iq-navbar shadow-sm bg-white text-gray-800 xl:flex xl:flex-row md:px-0 px-2 sm:py-0 py-2">
       <div className="container mx-auto flex items-center justify-between">
@@ -145,51 +150,55 @@ const Navbar = () => {
                 </div>
                 <p className="text-black text-xs">Home</p>
               </div>
-              <MessageDropdown />
-              <NotificationDropdown />
-
-              <div
-                onClick={() => router.push("/profile")}
-                className="cursor-pointer hidden lg:flex  flex-col items-center "
-              >
-                <div className="relative">
-                  <svg
-                    width="25"
-                    height="25"
-                    viewBox="0 0 163 163"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+              {isLoggedIn ? (
+                <>
+                  <MessageDropdown />
+                  <NotificationDropdown />
+                  <div
+                    onClick={() => router.push("/profile")}
+                    className="cursor-pointer hidden lg:flex  flex-col items-center "
                   >
-                    <path
-                      d="M135.768 74.8815L81.5424 20.6562L20.5391 81.6596H34.0954V129.107C34.0954 132.702 35.5236 136.15 38.0659 138.692C40.6082 141.235 44.0563 142.663 47.6517 142.663H81.5424"
-                      stroke="#404040"
-                      strokeWidth="13.5563"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M61.2109 142.663V101.994C61.2109 98.3984 62.6392 94.9504 65.1815 92.4081C67.7238 89.8658 71.1719 88.4375 74.7672 88.4375H88.3235C90.5264 88.4375 92.6006 88.9594 94.4374 89.8948M108.658 149.441C108.658 149.441 108.658 135.885 128.992 122.328"
-                      stroke="#404040"
-                      strokeWidth="13.5563"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M128.991 142.661C123.598 142.661 118.426 140.519 114.612 136.705C110.799 132.892 108.656 127.72 108.656 122.327C108.656 116.934 110.799 111.761 114.612 107.948C118.426 104.135 123.598 101.992 128.991 101.992H149.325V122.327C149.325 127.72 147.183 132.892 143.369 136.705C139.556 140.519 134.384 142.661 128.991 142.661Z"
-                      stroke="#404040"
-                      strokeWidth="13.5563"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-
-                  {/* <span className="absolute -top-[3px] -right-1 flex items-center justify-center w-[16px] h-[16px] bg-red-600 text-[10px] rounded-full text-white">
-                    3
-                  </span> */}
+                    <div className="relative">
+                      <svg
+                        width="25"
+                        height="25"
+                        viewBox="0 0 163 163"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M135.768 74.8815L81.5424 20.6562L20.5391 81.6596H34.0954V129.107C34.0954 132.702 35.5236 136.15 38.0659 138.692C40.6082 141.235 44.0563 142.663 47.6517 142.663H81.5424"
+                          stroke="#404040"
+                          strokeWidth="13.5563"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M61.2109 142.663V101.994C61.2109 98.3984 62.6392 94.9504 65.1815 92.4081C67.7238 89.8658 71.1719 88.4375 74.7672 88.4375H88.3235C90.5264 88.4375 92.6006 88.9594 94.4374 89.8948M108.658 149.441C108.658 149.441 108.658 135.885 128.992 122.328"
+                          stroke="#404040"
+                          strokeWidth="13.5563"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M128.991 142.661C123.598 142.661 118.426 140.519 114.612 136.705C110.799 132.892 108.656 127.72 108.656 122.327C108.656 116.934 110.799 111.761 114.612 107.948C118.426 104.135 123.598 101.992 128.991 101.992H149.325V122.327C149.325 127.72 147.183 132.892 143.369 136.705C139.556 140.519 134.384 142.661 128.991 142.661Z"
+                          stroke="#404040"
+                          strokeWidth="13.5563"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                    <p className="text-black text-xs">Account</p>
+                  </div>
+                  <UserDropdown />
+                </>
+              ) : (
+                <div onClick={()=>router.push("/login")} className="cursor-pointer hidden lg:flex flex-col items-center">
+                  <RiLoginCircleFill size={25} />
+                  <p className="text-black text-xs">Sign in</p>
                 </div>
-                <p className="text-black text-xs">Account</p>
-              </div>
-              <UserDropdown />
+              )}
             </div>
 
             <Sheet>

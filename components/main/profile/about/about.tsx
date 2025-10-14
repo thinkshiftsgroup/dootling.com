@@ -353,14 +353,14 @@ const ProfileAbout = () => {
         </div>
         <div className="col-span-8">
           <div className="card">
-            <div className="card-body">
+            <div className="card-body my-2 sm:my-0">
               <div id="profileTabContent" className="tab-content active show">
                 {isLoading && !isLoaded && activeTab === "personal-info" ? (
                   <PersonalInformationSkeleton />
                 ) : (
                   <div
                     id="personal-info"
-                    className={`w-full bg-white rounded-sm transition-all ${
+                    className={`w-full bg-white my-2 rounded-sm transition-all ${
                       activeTab === "personal-info" ? "block" : "hidden"
                     }`}
                   >
