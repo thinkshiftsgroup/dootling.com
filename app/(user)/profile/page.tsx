@@ -7,7 +7,7 @@ import { FiUsers } from "react-icons/fi";
 import { HiOutlineNewspaper } from "react-icons/hi";
 import { LuArrowUpToLine } from "react-icons/lu";
 import { FaPencilAlt } from "react-icons/fa";
-
+import { FaCamera } from "react-icons/fa";
 import ProfileFinance from "@/components/main/profile/finance/finance";
 import ProfileFeeds from "@/components/main/profile/feeds";
 import FollowedTab from "@/components/main/profile/followed";
@@ -73,7 +73,7 @@ const ProfileImageUploadTrigger = ({
         onClick={() => uploadRef.current?.openFileDialog()}
         title="Change Profile Photo"
       >
-        <FaPencilAlt size={24} className="text-white" />
+        <FaCamera size={24} className="text-white" />
       </div>
 
       <div className="hidden">
@@ -419,9 +419,9 @@ const UserProfile = () => {
                                   </h1>
 
                                   <span className="flex whitespace-nowrap flex-wrap lg:flex-nowrap font-normal items-center gap-1">
-                                    <p className=" text-xs text-[#FAAF40] mt-1">
+                                    {/* <p className=" text-xs text-[#FAAF40] mt-1">
                                       {userHeadline}
-                                    </p>
+                                    </p> */}
                                     <span className="flex gap-2 items-center">
                                       <Image
                                         src="/images/icon/iwwa_map.svg"
