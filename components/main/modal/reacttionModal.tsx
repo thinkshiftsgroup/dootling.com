@@ -99,7 +99,7 @@ const ReactionModal = ({ setOpenLikesModal }: ReactionModalProps) => {
         className="w-[90vw] md:w-[480px] h-[80vh] bg-white rounded-lg shadow-lg flex flex-col"
       >
         <div className="flex justify-between items-center px-5 pt-4">
-          <h2 className="text-lg font-semibold text-gray-800">Reactions</h2>
+          <h2 className="text-lg font-semibold text-gray-800">Endorsements</h2>
           <X
             size={20}
             className="cursor-pointer text-gray-600 hover:text-black"

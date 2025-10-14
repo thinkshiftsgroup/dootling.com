@@ -119,39 +119,37 @@ const HeatmapConnections = () => {
     >
       <div className=" bg-gray-50">
         <div className="max-w-5xl mx-auto">
-          <div className="bg-white rounded-2xl shadow-sm p-8">
-            <div className="flex justify-between items-start mb-8">
-              <div className="w-9/10">
-                <h1 className="text-4xl font-medium text-gray-900 mb-3">
-                  Heatmap
-                </h1>
-                <p className="text-gray-600 leading-relaxed max-w-3xl">
-                  Manage Connections To Your Work Apps For Automatic
-                  Contribution Tracking On Your Profile. We Only Track{" "}
-                  <span className="font-semibold text-gray-900">
-                    Activity Metadata
-                  </span>
-                  , Never Your Private Data Or Content.
-                </p>
-              </div>
-              <div className="flex items-center gap-1 bg-[#F5F6FA] text-[#FAAF40] px-3 py-2 rounded-lg w-3/12">
+          <div className="bg-white rounded-2xl shadow-sm p-4 sm:p-8">
+            <div className="flex lg:flex-row flex-col justify-between items-start mb-3">
+              <h1 className="text-4xl font-medium text-gray-900">
+                Heatmap
+              </h1>
+              <div className="flex my-2 lg:my-0 items-center gap-1 bg-[#F5F6FA] text-[#FAAF40] px-3 py-2 rounded-lg">
                 <Image
                   src="/images/dootling-icon1.svg"
                   width={25}
                   height={25}
                   alt="icon"
                 />
-                <span className="font-medium flex flex-wrap">
+                <span className="font-medium">
                   Browser Extension
                 </span>
               </div>
             </div>
+            <p className="text-gray-600 leading-relaxed max-w-3xl mb-8">
+              Manage Connections To Your Work Apps For Automatic Contribution
+              Tracking On Your Profile. We Only Track{" "}
+              <span className="font-semibold text-gray-900">
+                Activity Metadata
+              </span>
+              , Never Your Private Data Or Content.
+            </p>
 
             <div className="space-y-0 rounded-sm shadow-sm py-5">
               {connections.map((connection, index) => (
                 <div
                   key={connection.name}
-                  className={`flex items-center justify-between py-6 px-5 ${
+                  className={`flex items-center lg:flex-row flex-col gap-0 lg:gap-2 justify-between py-6 px-5 ${
                     index !== connections.length - 1
                       ? "border-b border-gray-100"
                       : ""

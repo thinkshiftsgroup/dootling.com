@@ -59,7 +59,7 @@ const RecallEscrowWallet: React.FC<FundWalletSideModalProps> = ({
           >
             <div className="flex items-center justify-between px-6 pt-4 ">
               <h2 className="text-lg font-bold text-gray-800">
-                Recall Escrow Wallet
+                Recall Escrow Wallet Funds
               </h2>
               <Button
                 variant="ghost"
@@ -118,7 +118,7 @@ const RecallEscrowWallet: React.FC<FundWalletSideModalProps> = ({
                   className="font-semibold text-gray-600 text-lg "
                   htmlFor="Purpose"
                 >
-                  Purpose *
+                  Reasons *
                 </label>
                 <input
                   type="text"

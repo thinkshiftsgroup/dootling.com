@@ -117,7 +117,7 @@ const FundWalletSideModal: React.FC<FundWalletSideModalProps> = ({
                 </label>
                 <textarea
                   
-                  className="w-full h-[200px] shadow-sm my-2 bg-white z-10 text-gray-600 rounded-md border py-5 px-3 border-gray-400/50 "
+                  className="w-full h-[100px] shadow-sm my-2 bg-white z-10 text-gray-600 rounded-md border py-5 px-3 border-gray-400/50 "
                   placeholder=""
                 />
                 {/* <select
@@ -132,30 +132,7 @@ const FundWalletSideModal: React.FC<FundWalletSideModalProps> = ({
                   <option value="others">Others</option>
                 </select> */}
               </div>
-              <div>
-                <label
-                  className="font-semibold text-gray-600 text-lg "
-                  htmlFor="Pasword"
-                >
-                  Account Password *
-                </label>
-                <input
-                  type="password"
-                  className="w-full shadow-sm my-2 bg-white z-10 text-gray-600 rounded-md border py-5 px-3 border-gray-400/50 "
-                  placeholder=""
-                />
-                {/* <select
-                  value={purpose}
-                  onChange={(e) => setPurpose(e.target.value)}
-                  className="w-full shadow-sm my-2 bg-white z-10 text-gray-600 rounded-md border py-5 px-3 border-gray-400/50 cursor-pointer"
-                >
-                  <option value="">Select</option>
-                  <option value="deposit">Deposit</option>
-                  <option value="escrow">Escrow Funding</option>
-                  <option value="subscription">Subscription</option>
-                  <option value="others">Others</option>
-                </select> */}
-              </div>
+            
 
               <button className="text-white w-full rounded-md font-semibold text-lg py-2 cursor-pointer bg-[#1571E8]">
                 Proceed Now
