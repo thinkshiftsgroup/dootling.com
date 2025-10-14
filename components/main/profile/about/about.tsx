@@ -180,7 +180,7 @@ const ProfileAbout = () => {
       if (element) {
         element.scrollIntoView({ behavior: "smooth", block: "start" });
       }
-    }, 300); 
+    }, 300);
   };
 
   const familyMembers = [
@@ -360,7 +360,7 @@ const ProfileAbout = () => {
                     />
                   </button>
 
-                  {/* <div
+                  <div
                     className={`transition-all duration-300 overflow-hidden ${
                       open === "account" ? "max-h-[400px] p-4" : "max-h-0 p-0"
                     }`}
@@ -383,7 +383,7 @@ const ProfileAbout = () => {
                       ].map((item, idx) => (
                         <button
                           key={idx}
-                          onClick={() => handleTabClick(item.id)}
+                          onClick={() => handleTabClick(item.id as TabId)}
                           className={`text-left font-medium text-sm py-2 px-2 rounded-sm hover:bg-[#1578ff]/10 transition ${
                             activeTab === item.id
                               ? " bg-[#1578ff]/10 text-[#1578ff]"
@@ -394,7 +394,7 @@ const ProfileAbout = () => {
                         </button>
                       ))}
                     </div>
-                  </div> */}
+                  </div>
                 </div>
               </div>
             </div>
@@ -673,7 +673,7 @@ const ProfileAbout = () => {
                 )}
                 <div
                   id="hobbies-interests"
-                   ref={tabRefs["hobbies-interests"]}
+                  ref={tabRefs["hobbies-interests"]}
                   className={`w-full bg-white rounded-sm transition-all ${
                     activeTab === "hobbies-interests" ? "block" : "hidden"
                   }`}
@@ -771,7 +771,7 @@ const ProfileAbout = () => {
 
                 <div
                   id="v-pills-family"
-                   ref={tabRefs["v-pills-family"]}
+                  ref={tabRefs["v-pills-family"]}
                   className={`${
                     activeTab === "v-pills-family" ? "block" : "hidden"
                   } tab-pane fade space-y-4`}
@@ -859,7 +859,7 @@ const ProfileAbout = () => {
 
                 <div
                   id="v-pills-work-tab"
-                   ref={tabRefs["v-pills-work-tab"]}
+                  ref={tabRefs["v-pills-work-tab"]}
                   className={`${
                     activeTab === "v-pills-work-tab" ? "block" : "hidden"
                   } space-y-6`}
@@ -1012,7 +1012,7 @@ const ProfileAbout = () => {
 
                 <div
                   id="v-pills-lived-tab"
-                   ref={tabRefs["v-pills-lived-tab"]}
+                  ref={tabRefs["v-pills-lived-tab"]}
                   className={`${
                     activeTab === "v-pills-lived-tab" ? "block" : "hidden"
                   } space-y-6`}
@@ -1097,7 +1097,7 @@ const ProfileAbout = () => {
 
                 <div
                   id="v-pills-privacy-tab"
-                   ref={tabRefs["v-pills-privacy-tab"]}
+                  ref={tabRefs["v-pills-privacy-tab"]}
                   aria-labelledby="v-pills-privacy-tab"
                   className={`${
                     activeTab === "v-pills-privacy-tab" ? "block" : "hidden"
@@ -1133,7 +1133,7 @@ const ProfileAbout = () => {
 
                 <div
                   id="v-pills-block-tab"
-                  role="tabpanel"
+                  ref={tabRefs["v-pills-block-tab"]}
                   aria-labelledby="v-pills-block-tab"
                   className={`${
                     activeTab === "v-pills-block-tab" ? "block" : "hidden"
@@ -1192,7 +1192,7 @@ const ProfileAbout = () => {
 
                 <div
                   id="v-pills-export-tab"
-                  role="tabpanel"
+                  ref={tabRefs["v-pills-export-tab"]}
                   aria-labelledby="v-pills-export-tab"
                   className={`${
                     activeTab === "v-pills-export-tab" ? "block" : "hidden"
@@ -1220,9 +1220,9 @@ const ProfileAbout = () => {
                   </div>
                 </div>
 
-                <ChangePassword activeTab={activeTab} />
-                <EmailSms activeTab={activeTab} />
-                <ManageContact activeTab={activeTab} />
+                <ChangePassword tabRefs={tabRefs} activeTab={activeTab} />
+                <EmailSms tabRefs={tabRefs} activeTab={activeTab} />
+                <ManageContact tabRefs={tabRefs} activeTab={activeTab} />
               </div>
             </div>
           </div>
