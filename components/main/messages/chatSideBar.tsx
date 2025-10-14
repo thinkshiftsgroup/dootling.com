@@ -67,11 +67,11 @@ const ChatSidebar = () => {
         <span className=" flex items-center gap-1 text-white bg-[#157bff] rounded-tl-sm rounded-tr-sm p-2 cursor-pointer">
           <TbMessages className="w-4 h-4" /> Messages
         </span>
-        <span className="text-[#157BFF] cursor-pointer">
+        <span className="text-[#157BFF] flex items-center gap-1 cursor-pointer">
           <LiaUserFriendsSolid className="w-4 h-4" />
           Friends
         </span>
-        <span className="text-[#157BFF] cursor-pointer">
+        <span className="text-[#157BFF] flex items-center gap-1 cursor-pointer">
           <GrGroup className="w-4 h-4" />
           Groups
         </span>
