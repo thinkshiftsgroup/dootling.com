@@ -106,7 +106,6 @@ const Navbar = () => {
     "Next.js Enthusiasts",
   ].filter((r) => r.toLowerCase().includes(query.toLowerCase()));
 
-
   return (
     <nav className="nav w-full iq-navbar shadow-sm bg-white text-gray-800 xl:flex xl:flex-row md:px-0 px-2 sm:py-0 py-2">
       <div className="container mx-auto flex items-center justify-between">
@@ -163,7 +162,33 @@ const Navbar = () => {
               </div>
               {isLoggedIn ? (
                 <>
-                  <MessageDropdown />
+                  {/* <MessageDropdown /> */}
+                  <div
+                    onClick={() => router.push("/messages")}
+                    className=" hidden lg:block cursor-pointer text-black"
+                  >
+                    <div className="cursor-pointer flex flex-col items-center ">
+                      <div className="relative">
+                        <svg
+                          width="24"
+                          height="25"
+                          viewBox="0 0 154 114"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M40.0723 113.586C36.1439 113.586 32.8522 112.339 30.1973 109.846C27.5477 107.348 26.223 104.237 26.223 100.513V31.3963L0.0703125 0.265625H140.013C143.941 0.265625 147.233 1.51484 149.888 4.01328C152.537 6.50633 153.862 9.61724 153.862 13.346V100.513C153.862 104.237 152.537 107.348 149.888 109.846C147.233 112.339 143.941 113.586 140.013 113.586H40.0723ZM17.4407 8.35992L34.3173 28.2881V100.513C34.3173 101.755 34.9136 102.896 36.1061 103.937C37.2987 104.979 38.6207 105.497 40.0723 105.491H140.021C141.472 105.491 142.794 104.973 143.987 103.937C145.179 102.901 145.776 101.76 145.776 100.513V13.3379C145.776 12.0968 145.179 10.9555 143.987 9.91402C142.794 8.87256 141.47 8.35452 140.013 8.35992H17.4407ZM85.8375 93.35L91.5682 87.6193L77.3708 74.6684H120.4V66.5741H57.6693L85.8375 93.35ZM57.6693 47.2773H120.4L92.3777 20.5014L86.6469 26.2321L100.844 39.183H57.6693V47.2773Z"
+                            fill="#041827"
+                          />
+                        </svg>
+
+                        <span className="absolute -top-[3px] -right-1 flex items-center justify-center w-[16px] h-[16px] bg-[#EA0234] shadow-sm text-[10px] rounded-full text-white">
+                          3
+                        </span>
+                      </div>
+                      <p className="text-black text-xs">Messages</p>
+                    </div>
+                  </div>
                   <NotificationDropdown />
                   <div
                     onClick={() => router.push("/profile")}
