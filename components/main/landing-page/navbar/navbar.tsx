@@ -194,7 +194,10 @@ const Navbar = () => {
                   <UserDropdown />
                 </>
               ) : (
-                <div onClick={()=>router.push("/login")} className="cursor-pointer hidden lg:flex flex-col items-center">
+                <div
+                  onClick={() => router.push("/login")}
+                  className="cursor-pointer hidden lg:flex flex-col items-center"
+                >
                   <RiLoginCircleFill size={25} />
                   <p className="text-black text-xs">Sign in</p>
                 </div>
