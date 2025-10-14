@@ -1,25 +1,16 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useMemo, useCallback } from "react";
 import Navbar from "@/components/main/landing-page/navbar/navbar";
 import Image from "next/image";
 import ContributionHeatmap from "@/components/main/landing-page/heatMap";
 import { FiUsers } from "react-icons/fi";
 import { HiOutlineNewspaper } from "react-icons/hi";
 import { LuArrowUpToLine } from "react-icons/lu";
-import { FaChevronLeft, FaChevronRight, FaFire, FaSmile } from "react-icons/fa";
-import { TbDots } from "react-icons/tb";
-
-import { FaThumbsUp, FaHeart } from "react-icons/fa";
-import { FaHandsClapping } from "react-icons/fa6";
-
+import { FaPencilAlt } from "react-icons/fa";
+import { FaCamera } from "react-icons/fa";
 import ProfileFinance from "@/components/main/profile/finance/finance";
 import ProfileFeeds from "@/components/main/profile/feeds";
 import FollowedTab from "@/components/main/profile/followed";
-import { BiCommentDetail } from "react-icons/bi";
-import { BiRepost } from "react-icons/bi";
-import { LuSend } from "react-icons/lu";
-import { IoWalletOutline } from "react-icons/io5";
-
 import ProfileAbout from "@/components/main/profile/about/about";
 import HeatmapConnections from "@/components/main/profile/heatMap";
 import AddHeatmapModal from "@/components/main/profile/addHeatMapModal";
@@ -30,10 +21,136 @@ import SimilarProfiles from "@/components/main/profile/side-card/similarProfiles
 import TrendingProjects from "@/components/main/profile/side-card/tredingProjects";
 import TrendingSpaces from "@/components/main/profile/side-card/trendingSpaces";
 
-const UserProfile = () => {
-  const scrollRef = useRef<HTMLDivElement>(null);
+import { ImageUpload } from "@/components/ui/image-upload";
+import { useAuthStore } from "@/stores/useAuthStore";
+import apiInstance from "@/api/apiInstance";
+import { toast } from "sonner";
 
+interface ImageUploadRef {
+  openFileDialog: () => void;
+}
+
+interface ProfileImageUploadTriggerProps {
+  userInitials: string;
+  profilePhotoUrl: string | undefined;
+  tempProfileImage: string[];
+  handleImageUpload: (urls: string[]) => Promise<void>;
+}
+
+const getInitials = (name: string) => {
+  return name
+    .split(" ")
+    .map((n) => n[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+};
+
+const ProfileImageUploadTrigger = ({
+  userInitials,
+  profilePhotoUrl,
+  tempProfileImage,
+  handleImageUpload,
+}: ProfileImageUploadTriggerProps) => {
+  const uploadRef = useRef<ImageUploadRef | null>(null);
+  const imageSize = 96;
+  return (
+    <div className="relative group w-80 h-20 lg:w-24 lg:h-24">
+      {profilePhotoUrl ? (
+        <Image
+          src={profilePhotoUrl || "/placeholder.svg"}
+          alt="Profile"
+          width={imageSize}
+          height={imageSize}
+          className="w-full h-full rounded-md object-cover"
+        />
+      ) : (
+        <div className="w-full h-full rounded-md bg-[#157BFF] flex items-center justify-center text-white text-2xl font-bold lg:text-3xl">
+          {userInitials}
+        </div>
+      )}
+
+      <div
+        className="absolute inset-0 bg-black/50 rounded-none flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+        onClick={() => uploadRef.current?.openFileDialog()}
+        title="Change Profile Photo"
+      >
+        <FaCamera size={24} className="text-white" />
+      </div>
+
+      <div className="hidden">
+        <ImageUpload
+          ref={uploadRef}
+          label="Profile Photo"
+          value={tempProfileImage}
+          onChange={handleImageUpload}
+          multiple={false}
+          maxFiles={1}
+        />
+      </div>
+    </div>
+  );
+};
+
+const UserProfile = () => {
+  const { user, setUser, isInitialized, token, initializeAuth } =
+    useAuthStore();
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  const [profilePhotoUrl, setProfilePhotoUrl] = useState<string | undefined>(
+    user?.profilePhotoUrl
+  );
+
+  React.useEffect(() => {
+    setProfilePhotoUrl(user?.profilePhotoUrl);
+  }, [user?.profilePhotoUrl]);
+
+  React.useEffect(() => {
+    if (!isInitialized) {
+      console.log("-> Initializing Auth Store...");
+      initializeAuth();
+    }
+  }, [isInitialized, initializeAuth]);
+
+  React.useEffect(() => {
+    if (isInitialized) {
+      if (!user && token) {
+        const fetchUserProfile = async () => {
+          try {
+            const response = await apiInstance.get("/api/profile");
+            setUser(response.data);
+            toast.success("Profile data loaded successfully.");
+          } catch (error) {
+            console.error("Failed to fetch user profile:", error);
+            toast.error("Failed to load profile data.");
+          } finally {
+            setIsLoading(false);
+          }
+        };
+        fetchUserProfile();
+      } else {
+        console.log("-> CONDITION NOT MET: Finishing loading.");
+        setIsLoading(false);
+      }
+    }
+  }, [isInitialized, user, token, setUser]);
+
+  const username = user?.username || user?.firstname || "User";
+  const firstname = user?.firstname || "Dootling";
+  const lastname = user?.lastname || "User";
+  const userInitials = useMemo(() => getInitials(username), [username]);
+  const userHeadline = user?.biodata?.headline || "Software Developer";
+  const userCountry = user?.biodata?.country || "United Kingdom";
+  const userTags = (user?.biodata?.tags || "Advocate")
+    .split(",")
+    .map((tag) => tag.trim());
+  const scrollRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState("Feeds");
+
+  const [tempProfileImage, setTempProfileImage] = useState<string[]>(
+    user?.profilePhotoUrl ? [user.profilePhotoUrl] : []
+  );
 
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
@@ -45,6 +162,44 @@ const UserProfile = () => {
       }
     }
   };
+
+  const handleImageUpload = useCallback(
+    async (urls: string[]) => {
+      setTempProfileImage(urls);
+
+      if (urls.length > 0) {
+        const newUrl = urls[0];
+        try {
+          await apiInstance.patch(`/api/profile/photo`, {
+            profilePhotoUrl: newUrl,
+          });
+
+          setUser({ ...user!, profilePhotoUrl: newUrl });
+          setProfilePhotoUrl(newUrl);
+          toast.success("Profile photo updated successfully! 📸");
+        } catch (error) {
+          toast.error("Failed to save profile photo to the server.");
+          console.error("Profile photo update error:", error);
+          setTempProfileImage(
+            user?.profilePhotoUrl ? [user.profilePhotoUrl] : []
+          );
+        }
+      } else {
+        try {
+          await apiInstance.patch(`/api/profile/photo`, {
+            profilePhotoUrl: null,
+          });
+
+          setUser({ ...user!, profilePhotoUrl: undefined });
+          setProfilePhotoUrl(undefined);
+          toast.success("Profile photo removed.");
+        } catch (error) {
+          toast.error("Failed to remove profile photo.");
+        }
+      }
+    },
+    [user, setUser]
+  );
 
   const items = [
     {
@@ -92,13 +247,12 @@ const UserProfile = () => {
         >
           <path
             fill="currentColor"
-            d="M18.385 9.083V8.07q.717.15 1.45.328q.732.178 1.524.378q.324.08.5.351q.177.27.122.593l-1.466 7.962q-.106.59-.553.953T18.925 19H5.152q-.59 0-1.025-.373t-.54-.944L2.025 9.72q-.056-.323.118-.605q.174-.283.498-.364q.734-.2 1.428-.356t1.373-.287V9.12l-1.188.251q-.6.126-1.22.278L4.46 17.5q.038.212.22.356t.395.144h13.85q.212 0 .394-.144t.222-.356l1.425-7.85q-.658-.171-1.306-.307t-1.275-.26M16 9.065q0-.427-.125-.829t-.394-.728q-.39-.506-.63-1.098q-.24-.59-.24-1.226q0-.401.105-.782q.105-.38.309-.74l.152-.27q.09-.177.291-.233q.201-.055.378.035t.233.289t-.035.375l-.177.294q-.13.244-.202.52t-.073.551q0 .427.154.82q.154.391.423.718q.41.468.62 1.05q.211.581.211 1.197q0 .42-.095.811q-.096.39-.26.77l-.159.326q-.09.177-.288.233t-.375-.034t-.233-.289t.035-.375l.152-.313q.112-.264.167-.53T16 9.066m-3.892 0q0-.428-.125-.83t-.395-.728q-.39-.506-.63-1.098q-.239-.59-.239-1.226q0-.401.105-.782t.309-.74l.151-.27q.091-.176.292-.232t.378.034t.232.289t-.034.375l-.177.294q-.13.244-.203.51q-.072.267-.072.542q0 .427.154.829t.423.728q.41.468.62 1.05q.21.581.21 1.197q0 .42-.094.811q-.096.39-.261.77l-.158.326q-.09.177-.288.233t-.375-.034t-.233-.289t.035-.375l.152-.313q.111-.264.167-.53t.056-.541m-3.887-.02q0-.427-.128-.819q-.127-.392-.397-.72q-.41-.486-.64-1.077q-.229-.591-.229-1.226q0-.402.102-.792t.312-.75l.157-.27q.09-.176.292-.232q.2-.056.377.034t.233.289t-.034.375l-.177.294q-.131.239-.206.508t-.075.544q0 .427.154.829t.423.728q.41.468.62 1.05q.21.581.21 1.197q0 .42-.095.811q-.095.39-.26.77l-.152.326q-.09.177-.292.233q-.2.056-.377-.034q-.177-.091-.233-.289t.035-.375l.157-.313q.112-.264.168-.54q.055-.276.055-.55"
+            d="M18.385 9.083V8.07q.717.15 1.45.328q.732.178 1.524.378q.324.08.5.351q.177.27.122.593l-1.466 7.962q-.106.59-.553.953T18.925 19H5.152q-.59 0-1.025-.373t-.54-.944L2.025 9.72q-.056-.323.118-.605q.174-.283.498-.364q.734-.2 1.428-.356t1.373-.287V9.12l-1.188.251q-.6.126-1.22.278L4.46 17.5q.038.212.22.356t.395.144h13.85q.212 0 .394-.144t.222-.356l1.425-7.85q-.658-.171-1.306-.307t-1.275-.26M16 9.065q0-.427-.125-.829t-.394-.728q-.39-.506-.63-1.098q-.24-.59-.24-1.226q0-.401.105-.782q.105-.38.309-.74l.152-.27q.09-.177.291-.233q.201-.055.378.035t.233.289t-.035.375l-.177.294q-.13.244-.202.52t-.073.551q0 .427.154.82q.154.391.423.718q.41.468.62 1.05q.211.581.211 1.197q0 .42-.095.811q-.096.39-.26.77l-.159.326q-.09.177-.288.233t-.375-.034t-.233-.289t.035-.375l-.152-.313q.112-.264.167-.53T16 9.066m-3.892 0q0-.428-.125-.83t-.395-.728q-.39-.506-.63-1.098q-.239-.59-.239-1.226q0-.401.105-.782t.309-.74l.151-.27q.091-.176.292-.232t.378.034t.232.289t-.034.375l-.177.294q-.13.244-.203.51q-.072.267-.072.542q0 .427.154.829t.423.728q.41.468.62 1.05q.21.581.21 1.197q0 .42-.094.811q-.096.39-.261.77l-.158.326q-.09.177-.288.233t-.375-.034t-.233-.289t.035-.375l.152-.313q.111-.264.167-.53t.056-.541m-3.887-.02q0-.427-.128-.819q-.127-.392-.397-.72q-.41-.486-.64-1.077q-.229-.591-.229-1.226q0-.402.102-.792t.312-.75l.157-.27q.09-.176.292-.232q.2-.056.377.034t.233.289t-.034.375l-.177.294q-.131.239-.206.508t-.075.544q0 .427.154.829t.423.728q.41.468.62 1.05q.21.581.21 1.197q0 .42-.095.811q-.095.39-.26.77l-.152.326q-.09.177-.292.233q-.2.056-.377-.034q-.177-.091-.233-.289t.035-.375l.157-.313q.112-.264.168-.54q.055-.276.055-.55"
           />
         </svg>
       ),
       label: "Heatmap",
     },
-    // { icon: <FiUsers size={30} />, label: "Followed" },
     {
       icon: (isActive: boolean) => (
         <FiUsers
@@ -165,6 +319,7 @@ const UserProfile = () => {
             fill="none"
             stroke="currentColor"
             strokeLinecap="round"
+            strokeLinejoin="round"
             strokeWidth={1.5}
           >
             <path d="M14 21h-2c-4.714 0-7.071 0-8.536-1.465C2 18.072 2 15.715 2 11V7.944c0-1.816 0-2.724.38-3.406A3 3 0 0 1 3.538 3.38C4.22 3 5.128 3 6.944 3C8.108 3 8.69 3 9.2 3.191c1.163.436 1.643 1.493 2.168 2.542L12 7M8 7h8.75c2.107 0 3.16 0 3.917.506a3 3 0 0 1 .827.827C22 9.09 22 10.143 22 12.25q.001.957-.005 1.75"></path>
@@ -194,14 +349,6 @@ const UserProfile = () => {
     },
   ];
 
-  const reactions = [
-    { icon: <FaThumbsUp className="text-blue-500" />, label: "Like" },
-    { icon: <FaHeart className="text-red-500" />, label: "Love" },
-    { icon: <FaHandsClapping className="text-yellow-500" />, label: "Clap" },
-    { icon: <FaFire className="text-orange-500" />, label: "Fire" },
-    { icon: <FaSmile className="text-amber-500" />, label: "Nice" },
-  ];
-
   const myProjects = [
     {
       id: 1,
@@ -221,6 +368,22 @@ const UserProfile = () => {
     },
   ];
 
+  if (!isInitialized || isLoading) {
+    return (
+      <div className="text-center p-10 text-lg font-medium">
+        Loading profile data...
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="text-center p-10 text-lg font-medium">
+        Please log in to view this page.
+      </div>
+    );
+  }
+
   return (
     <div>
       <Navbar />
@@ -232,102 +395,67 @@ const UserProfile = () => {
               <div className="container mx-auto">
                 <div className="lg:grid block grid-cols-8 gap-4">
                   <div className="w-full col-span-6 ">
-                    <div className="w-full  mx-auto">
-                      <div className="w-full min-h-[23.5rem] rounded-lg bg-white shadow-md">
+                    <div className="w-full mx-auto">
+                      <div className="w-full min-h-[20.5rem] rounded-lg bg-white shadow-md">
                         <div className="max-w-7xl mx-auto px-2 sm:px-4 pt-[20px]">
                           <div className="relative">
                             <div className="flex justify-between items-center mb-4">
                               <h2 className="text-black text-base sm:text-xl flex items-center gap-1.5 font-medium">
                                 1,193 contributions in the last year
-                                <svg
-                                  width="18"
-                                  height="18"
-                                  viewBox="0 0 92 92"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <g>
-                                    <path
-                                      d="M0 11.5C0 8.45001 1.2116 5.52494 3.36827 3.36827C5.52494 1.2116 8.45001 0 11.5 0L80.5 0C83.55 0 86.4751 1.2116 88.6317 3.36827C90.7884 5.52494 92 8.45001 92 11.5V80.5C92 83.55 90.7884 86.4751 88.6317 88.6317C86.4751 90.7884 83.55 92 80.5 92H11.5C8.45001 92 5.52494 90.7884 3.36827 88.6317C1.2116 86.4751 0 83.55 0 80.5V11.5ZM51.3475 37.881L38.18 39.5312L37.7085 41.7163L40.296 42.1935C41.9865 42.596 42.32 43.2055 41.952 44.8903L37.7085 64.8312C36.593 69.989 38.3123 72.4155 42.3545 72.4155C45.4883 72.4155 49.128 70.9665 50.7783 68.977L51.2842 66.585C50.1342 67.597 48.4552 67.9995 47.3397 67.9995C45.7585 67.9995 45.1835 66.8897 45.5918 64.9348L51.3475 37.881ZM46 31.625C47.525 31.625 48.9875 31.0192 50.0659 29.9409C51.1442 28.8625 51.75 27.4 51.75 25.875C51.75 24.35 51.1442 22.8875 50.0659 21.8091C48.9875 20.7308 47.525 20.125 46 20.125C44.475 20.125 43.0125 20.7308 41.9341 21.8091C40.8558 22.8875 40.25 24.35 40.25 25.875C40.25 27.4 40.8558 28.8625 41.9341 29.9409C43.0125 31.0192 44.475 31.625 46 31.625Z"
-                                      fill="#B3DBFF"
-                                    />
-                                  </g>
-                                  <defs>
-                                    <clipPath id="clip0_3108_3780">
-                                      <rect
-                                        width="92"
-                                        height="92"
-                                        fill="white"
-                                      />
-                                    </clipPath>
-                                  </defs>
-                                </svg>
                               </h2>
                             </div>
 
                             <ContributionHeatmap pageType={"profile"} />
-                            <div className="max-w-5xl overflow-x-scroll hide-scrollbar -mt-10 relative mx-auto  bg-white p-2">
-                              <div className="flex gap-2 md:gap-5 lg:flex-row flex-col items-start justify-between">
-                                <div className="flex w-full lg:w-auto lg:flex-row flex-col gap-2 items-center lg:items-start">
-                                  <img
-                                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop"
-                                    alt="Profile"
-                                    className="w-28 h-28 rounded-lg object-cover"
-                                  />
+                            <div className="max-w-5xl overflow-x-scroll hide-scrollbar -mt-10 relative mx-auto bg-white p-2">
+                              <div className="flex gap-2 md:gap-5 lg:flex-row flex-col items-center lg:items-start">
+                                <ProfileImageUploadTrigger
+                                  userInitials={userInitials}
+                                  profilePhotoUrl={profilePhotoUrl}
+                                  tempProfileImage={tempProfileImage}
+                                  handleImageUpload={handleImageUpload}
+                                />
 
-                                  <div className="flex flex-col gap-1.5">
-                                    <h1 className="text-3xl flex mt-1.5 items-center gap-1 font-bold text-black">
-                                      John Paul
+                                <div className="flex flex-col gap-1.5">
+                                  <h1 className="text-3xl flex mt-1.5 items-center gap-1 whitespace-nowrap font-bold text-black">
+                                    {firstname} {lastname}
+                                  </h1>
+
+                                  <span className="flex whitespace-nowrap flex-wrap lg:flex-nowrap font-normal items-center gap-1">
+                                    {/* <p className=" text-xs text-[#FAAF40] mt-1">
+                                      {userHeadline}
+                                    </p> */}
+                                    <span className="flex gap-2 items-center">
                                       <Image
-                                        src="/images/icon/verified.svg"
+                                        src="/images/icon/iwwa_map.svg"
                                         alt="icon"
-                                        width={14}
-                                        height={14}
+                                        width={16}
+                                        height={16}
                                       />
-                                    </h1>
-                                    <span className="flex whitespace-nowrap flex-wrap lg:flex-nowrap font-normal items-center gap-1">
-                                      <p className=" text-xs text-[#FAAF40] mt-1">
-                                        Director in Technology
+
+                                      <p className=" text-xs text-[#979797]">
+                                        {userCountry}
                                       </p>
-                                      <span className="flex gap-2 items-center">
-                                        <Image
-                                          src="/images/icon/iwwa_map.svg"
-                                          alt="icon"
-                                          width={16}
-                                          height={16}
-                                        />
-                                        <p className=" text-xs text-[#979797]">
-                                          United Kingdom
+                                    </span>
+                                  </span>
+
+                                  <span className="flex whitespace-nowrap text-sm sm:text-xs flex-wrap items-center md:items-start gap-1.5">
+                                    {userTags.map(
+                                      (tag: string, index: number) => (
+                                        <p
+                                          key={index}
+                                          className="text-[#b1afaf] border border-[#e3e0e0] rounded p-0.5"
+                                        >
+                                          # {tag}
                                         </p>
-                                      </span>
-                                    </span>
-                                    <span className="flex whitespace-nowrap text-sm sm:text-xs flex-wrap lg:hidden items-center md:items-start gap-1.5">
-                                      <p className="text-[#b1afaf] border border-[#e3e0e0] rounded p-0.5">
-                                        #Advocate
-                                      </p>
-                                      <p className="text-[#b1afaf] border border-[#e3e0e0] rounded p-0.5">
-                                        Engineering With Precision
-                                      </p>
-                                      <p className="text-[#b1afaf] border border-[#e3e0e0] rounded p-0.5">
-                                        Havard Graduate
-                                      </p>
-                                    </span>
-                                    <span className="lg:flex hidden whitespace-nowrap text-sm sm:text-xs flex-nowrap items-center md:items-start gap-1.5">
-                                      <p className="text-[#b1afaf] border border-[#e3e0e0] rounded p-0.5">
-                                        #Advocate
-                                      </p>
-                                      <p className="text-[#b1afaf] border border-[#e3e0e0] rounded p-0.5">
-                                        Engineering With Precision
-                                      </p>
-                                      <p className="text-[#b1afaf] border border-[#e3e0e0] rounded p-0.5">
-                                        Havard Graduate
-                                      </p>
-                                    </span>
-                                  </div>
+                                      )
+                                    )}
+                                  </span>
                                 </div>
+
                                 <div className="mx-auto lg:hidden block">
                                   <AddHeatmapModal />
                                 </div>
+
                                 <div className="flex w-full items-start justify-center">
                                   <div className="flex text-black items-center mt-1.5 gap-8">
                                     <div className="text-center">
@@ -338,7 +466,6 @@ const UserProfile = () => {
                                         Endorsements
                                       </p>
                                     </div>
-
                                     <div className="text-center">
                                       <p className="sm:text-base text-xl font-bold">
                                         5
@@ -347,7 +474,6 @@ const UserProfile = () => {
                                         Projects
                                       </p>
                                     </div>
-
                                     <div className="text-center">
                                       <p className="sm:text-base text-xl font-bold">
                                         12
@@ -358,6 +484,7 @@ const UserProfile = () => {
                                     </div>
                                   </div>
                                 </div>
+
                                 <div className="lg:block hidden">
                                   <AddHeatmapModal />
                                 </div>
@@ -366,6 +493,7 @@ const UserProfile = () => {
                           </div>
                         </div>
                       </div>
+
                       <div className="relative my-6">
                         <button
                           onClick={() => scroll("left")}
@@ -414,12 +542,12 @@ const UserProfile = () => {
                         <div
                           ref={scrollRef}
                           className="
-      relative flex items-center gap-4 
-      bg-white rounded-xl shadow-sm
-      px-4 sm:px-6 py-4
-      overflow-x-auto hide-scrollbar scroll-smooth
-      md:justify-center
-    "
+                            relative flex items-center gap-4 
+                            bg-white rounded-xl shadow-sm
+                            px-4 sm:px-6 py-4
+                            overflow-x-auto hide-scrollbar scroll-smooth
+                            md:justify-center
+                          "
                         >
                           {items.map((item, idx) => {
                             const isActive = activeTab === item.label;
