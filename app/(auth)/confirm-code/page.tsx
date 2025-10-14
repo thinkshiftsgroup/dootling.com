@@ -139,10 +139,10 @@ export default function VerifyOTPPage() {
       );
 
       if (response.data.token && response.data.user) {
-        loginUser(response.data.token, {
-          ...response.data.user,
-          name: response.data.user.name || "Dootling User",
-        });
+        // loginUser(response.data.token, {
+        //   ...response.data.user,
+        //   name: response.data.user.name || "Dootling User",
+        // });
 
         // const { token, user } = response.data;
 

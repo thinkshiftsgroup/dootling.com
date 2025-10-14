@@ -25,12 +25,12 @@ const paragraph = "#7e8b9a";
 
 const PersonalInformationSkeleton = () => (
   <div className="space-y-6">
-    <div className="flex mb-6">
+    {/* <div className="flex mb-6">
       <div className="relative">
         <Skeleton className="rounded-full w-36 h-36 border" />
         <Skeleton className="absolute bottom-0 right-0 p-2 rounded-full w-8 h-8" />
       </div>
-    </div>
+    </div> */}
 
     <div className="grid grid-cols-2 gap-4">
       <div className="w-full flex flex-col gap-4">
@@ -610,12 +610,12 @@ const ProfileAbout = () => {
                           >
                             Update Profile
                           </button>
-                          <button
+                          {/* <button
                             type="reset"
                             className="bg-[#ffebe8] text-[#ff9b8a] px-5 py-2 rounded hover:bg-[#f1f1f1] transition"
                           >
                             Cancel
-                          </button>
+                          </button> */}
                         </div>
                       </form>
                     </div>

@@ -1,5 +1,5 @@
 "use client";
-
+import React from "react";
 import Image from "next/image";
 import { Dropdown } from "./dropDown";
 import { User, UserGear, Gear, LockSimple, SignOut } from "phosphor-react";
@@ -19,18 +19,45 @@ export default function UserDropdown() {
     toast.info("You have been signed out.");
     router.push("/");
   };
+  const user = useAuthStore((state) => state.user);
+  const userInitials = React.useMemo(() => {
+    const firstNameInitial = user?.firstname ? user.firstname[0] : "";
+    const lastNameInitial = user?.lastname ? user.lastname[0] : "";
+
+    if (firstNameInitial) {
+      return (firstNameInitial + lastNameInitial).toUpperCase();
+    }
+
+    if (user?.fullName) {
+      const parts = user.fullName.split(" ").filter((p) => p.length > 0);
+      if (parts.length > 1) {
+        return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+      }
+      return parts[0][0].toUpperCase();
+    }
+
+    return "US";
+  }, [user?.firstname, user?.lastname, user?.fullName]);
 
   return (
     <Dropdown
       trigger={
         <div className="cursor-pointer">
-          <Image
-            src={user}
-            width={35}
-            height={35}
-            alt="user"
-            className="rounded-sm mt-1.5 cursor-pointer"
-          />
+          {user?.profilePhotoUrl ? (
+            <div className="w-[25px] h-[25px] rounded-full overflow-hidden">
+              <Image
+                src={user.profilePhotoUrl}
+                alt="Profile Photo"
+                width={35}
+                height={35}
+                className="rounded-sm mt-1.5 cursor-pointer"
+              />
+            </div>
+          ) : (
+            <div className="w-[35px] h-[35px] rounded-md p-2 bg-[#157BFF] flex items-center justify-center text-white text-xs font-bold">
+              {userInitials}
+            </div>
+          )}
         </div>
       }
     >
