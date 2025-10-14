@@ -77,11 +77,19 @@ const ChatSidebar = () => {
         </span>
       </div>
 
-      <div className="overflow-y-auto flex-1">
+      <div className="overflow-y-auto mx-1 flex-1">
+        <div className="flex items-center border  rounded-sm w-full px-3 py-2">
+          <FiSearch className="text-[#157bff]" size={18} />
+          <input
+            type="text"
+            placeholder="Search for messages or users..."
+            className="bg-transparent outline-none w-full px-2 text-sm text-gray-700 placeholder-gray-400"
+          />
+        </div>
         {chatList.map((chat, i) => (
           <div
             key={i}
-            className={`flex items-center justify-between px-4 py-3 cursor-pointer border-b border-gray-100 hover:bg-gray-50 ${
+            className={`flex items-center bg-white rounded-sm my-2 justify-between px-4 py-3 cursor-pointer border-b border-gray-100 hover:bg-gray-50 ${
               chat.active ? "bg-[#E8F0FE]" : ""
             }`}
           >
