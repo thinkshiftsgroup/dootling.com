@@ -4,7 +4,6 @@ import Image from "next/image";
 import { Dropdown } from "./dropDown";
 import { User, UserGear, Gear, LockSimple, SignOut } from "phosphor-react";
 import { useRouter } from "next/navigation";
-import user from "@/public/images/user/userImg.jpg";
 
 import Cookies from "js-cookie";
 import { useAuthStore } from "@/stores/useAuthStore";
@@ -44,17 +43,17 @@ export default function UserDropdown() {
       trigger={
         <div className="cursor-pointer">
           {user?.profilePhotoUrl ? (
-            <div className="w-[25px] h-[25px] rounded-full overflow-hidden">
+            <div className="w-[40px] h-[40px] overflow-hidden rounded-md flex items-center justify-center">
               <Image
                 src={user.profilePhotoUrl}
                 alt="Profile Photo"
-                width={35}
-                height={35}
-                className="rounded-sm mt-1.5 cursor-pointer"
+                width={40}
+                height={40}
+                className="w-full h-full object-cover rounded-md cursor-pointer"
               />
             </div>
           ) : (
-            <div className="w-[35px] h-[35px] rounded-md p-2 bg-[#157BFF] flex items-center justify-center text-white text-xs font-bold">
+            <div className="w-[40px] h-[40px] rounded-md bg-[#157BFF] flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
               {userInitials}
             </div>
           )}
