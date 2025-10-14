@@ -30,7 +30,7 @@ const ProfileFinance = () => {
 
   return (
     <div className="rounded-sm bg-white px-4 py-2">
-      <div className="flex items-start justify-between gap-2 my-5">
+      <div className="flex xl:flex-row flex-col items-start justify-between gap-2 my-5">
         <div className="flex w-full h-[160px] overflow-y-scroll hide-scrollbar flex-col justify-between gap-3 p-2 bg-white shadow-md min-w-[250px] rounded">
           <h1 className="font-bold text-base border-b-2 border-gray-100 pb-1 text-black leading-tight w-fit">
             Available Wallet Balance
@@ -199,10 +199,15 @@ const ProfileFinance = () => {
         </div>
       </div>
 
+      <div className="hidden sm:flex md:justify-center lg:justify-between bg-gray-200 p-4">
+        <span>Item 1</span>
+        <span>Item 2</span>
+      </div>
+
       {activeTab === "transactions" && (
         <div className="rounded bg-white p-4 shadow-md my-5">
           <div>
-            <h1 className="text-lg font-semibold text-black mb-5">
+            <h1 className=" text-base lg:text-lg font-semibold text-black mb-5">
               All Transactions
             </h1>
             <div className="text-black whitespace-nowrap border bg-[#F9F9FB] text-xs font-medium justify-around border-[#D5D5D5] flex items-center rounded-md">
@@ -313,7 +318,7 @@ const ProfileFinance = () => {
       {activeTab === "escrow" && (
         <div className="rounded bg-white p-4 shadow-md my-5">
           <div className="">
-            <h1 className="text-lg whitespace-nowrap font-semibold mb-2 text-black">
+            <h1 className=" text-base lg:text-lg whitespace-nowrap font-semibold mb-2 text-black">
               All Payout Transactions
             </h1>
             <div className="text-black w-full border bg-[#F9F9FB] text-xs font-medium justify-around border-[#D5D5D5] flex items-center rounded-md">

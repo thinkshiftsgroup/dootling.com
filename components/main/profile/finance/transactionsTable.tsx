@@ -53,29 +53,29 @@ const TransactionsTable = () => {
         <table className="w-full text-sm text-left">
           <thead className="bg-[#F1F4F9] rounded-md text-black font-semibold">
             <tr>
-              <th className="px-6 py-3">Project</th>
-              <th className="px-6 py-3">Client</th>
-              <th className="px-6 py-3">Channel</th>
-              <th className="px-6 py-3">Amount</th>
-              <th className="px-6 py-3">Date</th>
-              <th className="px-6 py-3">Transaction ID</th>
-              <th className="px-6 py-3">Status</th>
+              <th className=" px-3 lg:px-6 py-3">Project</th>
+              <th className=" px-3 lg:px-6 py-3">Client</th>
+              <th className=" px-3 lg:px-6 py-3">Channel</th>
+              <th className=" px-3 lg:px-6 py-3">Amount</th>
+              <th className=" px-3 lg:px-6 py-3">Date</th>
+              <th className=" px-3 lg:px-6 py-3">Transaction ID</th>
+              <th className=" px-3 lg:px-6 py-3">Status</th>
             </tr>
           </thead>
 
           <tbody>
             {transactions.map((txn, i) => (
               <tr key={i} className=" ">
-                <td className="pl-3 py-5 border-b-[#979797]/20 border-b text-gray-700">
+                <td className="pl-3 py-1 lg:py-5 border-b-[#979797]/20 border-b text-gray-700">
                   {txn.project}
                 </td>
-                <td className="px-6 py-5 border-b-[#979797]/20 border-b text-gray-700">
+                <td className="lg:px-6 px-3 py-1 lg:py-5 border-b-[#979797]/20 border-b text-gray-700">
                   {txn.client}
                 </td>
-                <td className="px-6 py-5 border-b-[#979797]/20 border-b font-medium text-gray-700">
+                <td className="lg:px-6 px-3 py-1 lg:py-5 border-b-[#979797]/20 border-b font-medium text-gray-700">
                   {txn.channel}
                 </td>
-                <td className="px-6 py-5 border-b-[#979797]/20 border-b">
+                <td className="lg:px-6 px-3 py-1 lg:py-5 border-b-[#979797]/20 border-b">
                   <span
                     className={`flex flex-col px-3 py-1 rounded-md font-semibold ${
                       txn.type === "credit"
@@ -89,13 +89,13 @@ const TransactionsTable = () => {
                     </span>
                   </span>
                 </td>
-                <td className="px-6 py-5 text-gray-600 border-b-[#979797]/20 border-b">
+                <td className="lg:px-6 px-3 py-1 lg:py-5 text-gray-600 border-b-[#979797]/20 border-b">
                   {txn.date}
                 </td>
-                <td className="px-6 py-5 text-gray-600 border-b-[#979797]/20 border-b">
+                <td className="lg:px-6 px-3 py-1 lg:py-5 text-gray-600 border-b-[#979797]/20 border-b">
                   {txn.transactionId}
                 </td>
-                <td className="pr-3 py-5 border-b-[#979797]/20 border-b">
+                <td className="pr-3 py-1 lg:py-5 border-b-[#979797]/20 border-b">
                   {txn.status === "Manage Escrow" && (
                     <span
                       onClick={() => setModal(true)}

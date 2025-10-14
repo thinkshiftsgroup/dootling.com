@@ -15,7 +15,10 @@ import SearchBar from "./searchBar";
 import { Menu } from "lucide-react";
 
 import { RiLoginCircleFill } from "react-icons/ri";
+
+import Cookies from "js-cookie";
 import { useAuthStore } from "@/stores/useAuthStore";
+import { toast } from "sonner";
 
 interface UserItem {
   name: string;
@@ -76,6 +79,15 @@ const Navbar = () => {
   const [query, setQuery] = useState("");
 
   const router = useRouter();
+  const logoutUser = useAuthStore((state: any) => state.logout);
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+
+  const handleSignOut = () => {
+    Cookies.remove("dootling_auth_token");
+    logoutUser();
+    toast.info("You have been signed out.");
+    router.push("/");
+  };
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -94,7 +106,6 @@ const Navbar = () => {
     "Next.js Enthusiasts",
   ].filter((r) => r.toLowerCase().includes(query.toLowerCase()));
 
-  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
 
   return (
     <nav className="nav w-full iq-navbar shadow-sm bg-white text-gray-800 xl:flex xl:flex-row md:px-0 px-2 sm:py-0 py-2">
@@ -194,7 +205,10 @@ const Navbar = () => {
                   <UserDropdown />
                 </>
               ) : (
-                <div onClick={()=>router.push("/login")} className="cursor-pointer hidden lg:flex flex-col items-center">
+                <div
+                  onClick={() => router.push("/login")}
+                  className="cursor-pointer hidden lg:flex flex-col items-center"
+                >
                   <RiLoginCircleFill size={25} />
                   <p className="text-black text-xs">Sign in</p>
                 </div>
@@ -210,42 +224,69 @@ const Navbar = () => {
 
               <SheetContent
                 side="right"
-                className="w-64  sm:w-72 p-4 bg-white text-gray-800 overflow-y-auto shadow-xl"
+                className="w-64 sm:w-72 p-4 bg-white text-gray-800 overflow-y-auto shadow-xl"
               >
                 <div className="flex flex-col gap-4">
                   <ul className="flex flex-col gap-2 mt-5 text-base">
                     <li>
                       <a
                         onClick={() => router.push("/")}
-                        className="flex items-center justify-between px-2 py-2 rounded-md hover:bg-gray-100 font-medium"
+                        className="flex items-center justify-between px-2 py-2 rounded-md hover:bg-gray-100 font-medium cursor-pointer"
                       >
                         <span>Home</span>
                       </a>
                     </li>
-                    <li>
-                      <a
-                        onClick={() => router.push("/")}
-                        className="flex items-center justify-between px-2 py-2 rounded-md hover:bg-gray-100 font-medium"
-                      >
-                        <span>Messages</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        onClick={() => router.push("/")}
-                        className="flex items-center justify-between px-2 py-2 rounded-md hover:bg-gray-100 font-medium"
-                      >
-                        <span>Notifications</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        onClick={() => router.push("/profile")}
-                        className="flex items-center justify-between px-2 py-2 rounded-md hover:bg-gray-100 font-medium"
-                      >
-                        <span>Account</span>
-                      </a>
-                    </li>
+
+                    {isLoggedIn ? (
+                      <>
+                        <li>
+                          <a
+                            onClick={() => router.push("/messages")}
+                            className="flex items-center justify-between px-2 py-2 rounded-md hover:bg-gray-100 font-medium cursor-pointer"
+                          >
+                            <span>Messages</span>
+                          </a>
+                        </li>
+
+                        <li>
+                          <a
+                            onClick={() => router.push("/notifications")}
+                            className="flex items-center justify-between px-2 py-2 rounded-md hover:bg-gray-100 font-medium cursor-pointer"
+                          >
+                            <span>Notifications</span>
+                          </a>
+                        </li>
+
+                        <li>
+                          <a
+                            onClick={() => router.push("/profile")}
+                            className="flex items-center justify-between px-2 py-2 rounded-md hover:bg-gray-100 font-medium cursor-pointer"
+                          >
+                            <span>Account</span>
+                          </a>
+                        </li>
+
+                        <li>
+                          <a
+                            onClick={() => {
+                              handleSignOut();
+                            }}
+                            className="flex items-center justify-between px-2 py-2 rounded-md hover:bg-gray-100 font-medium text-red-500 cursor-pointer"
+                          >
+                            <span>Logout</span>
+                          </a>
+                        </li>
+                      </>
+                    ) : (
+                      <li>
+                        <a
+                          onClick={() => router.push("/login")}
+                          className="flex items-center justify-between px-2 py-2 rounded-md hover:bg-gray-100 font-medium cursor-pointer"
+                        >
+                          <span>Sign in</span>
+                        </a>
+                      </li>
+                    )}
                   </ul>
                 </div>
               </SheetContent>

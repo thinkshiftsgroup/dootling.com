@@ -55,10 +55,10 @@ const WithdrawFunds: React.FC<FundWalletSideModalProps> = ({
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", stiffness: 80, damping: 15 }}
-            className="fixed top-0 right-0 h-screen w-full max-w-[500px] bg-white z-50 shadow-xl border-l border-gray-200 rounded-tl-2xl rounded-bl-2xl flex flex-col"
+            className="fixed top-0 right-0 h-screen w-full max-w-[500px] bg-white z-50 shadow-xl border-l border-gray-200 rounded-none sm:!rounded-tl-2xl  sm:!rounded-bl-2xl flex flex-col"
           >
             <div className="flex items-center justify-between px-6 pt-4 ">
-              <h2 className="text-lg font-bold text-gray-800">
+              <h2 className="sm:!text-lg text-sm font-bold text-gray-800">
                 Withdraw Funds
               </h2>
               <Button
@@ -85,17 +85,17 @@ const WithdrawFunds: React.FC<FundWalletSideModalProps> = ({
             <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
               <div>
                 <label
-                  className="font-semibold text-gray-600 text-lg "
+                  className="font-semibold text-gray-600 sm:!text-lg text-sm "
                   htmlFor="Amount"
                 >
                   Amount *
                 </label>
                 <div className="flex my-2">
-                  <div className="w-1/3 -mr-10 bg-gray-200 rounded-md border p-4 border-gray-400/50 relative">
+                  <div className="w-1/3 -mr-10 bg-gray-200 rounded-md border px-0.5 sm:!px-4 py-4 border-gray-400/50 relative">
                     <select
                       value={currency}
                       onChange={handleCurrencyChange}
-                      className="bg-gray-200 font-bold text-lg uppercase w-full focus:outline-none cursor-pointer"
+                      className="bg-gray-200 font-bold sm:!text-lg text-sm uppercase w-full focus:outline-none cursor-pointer"
                     >
                       <option value="USD">USD</option>
                       <option value="NGN">NGN</option>
@@ -115,7 +115,7 @@ const WithdrawFunds: React.FC<FundWalletSideModalProps> = ({
 
               <div>
                 <label
-                  className="font-semibold text-gray-600 text-lg "
+                  className="font-semibold text-gray-600 sm:!text-lg text-sm "
                   htmlFor="Purpose"
                 >
                   Payout *
@@ -173,7 +173,7 @@ const WithdrawFunds: React.FC<FundWalletSideModalProps> = ({
               </div>
               <div>
                 <label
-                  className="font-semibold text-gray-600 text-lg "
+                  className="font-semibold text-gray-600 sm:!text-lg text-sm "
                   htmlFor="Pasword"
                 >
                   Account Password *
@@ -196,7 +196,7 @@ const WithdrawFunds: React.FC<FundWalletSideModalProps> = ({
                 </select> */}
               </div>
 
-              <button className="text-white w-full rounded-md font-semibold text-lg py-2 cursor-pointer bg-[#1571E8]">
+              <button className="text-white w-full rounded-md font-semibold text-sm sm:!text-lg py-2 cursor-pointer bg-[#1571E8]">
                 Withdraw Now
               </button>
             </div>
