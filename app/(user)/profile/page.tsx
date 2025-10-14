@@ -53,15 +53,15 @@ const ProfileImageUploadTrigger = ({
   handleImageUpload,
 }: ProfileImageUploadTriggerProps) => {
   const uploadRef = useRef<ImageUploadRef | null>(null);
-  const imageSize = 96;
+
   return (
-    <div className="relative group w-80 h-20 lg:w-24 lg:h-24">
+    <div className="relative group w-[120px] h-[120px] ">
       {profilePhotoUrl ? (
         <Image
           src={profilePhotoUrl || "/placeholder.svg"}
           alt="Profile"
-          width={imageSize}
-          height={imageSize}
+          width={120}
+          height={120}
           className="w-full h-full rounded-md object-cover"
         />
       ) : (
