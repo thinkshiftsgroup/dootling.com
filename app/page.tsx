@@ -13,6 +13,7 @@ import { LuSend } from "react-icons/lu";
 import { FaHeart, FaThumbsUp } from "react-icons/fa";
 import { FaHandsClapping } from "react-icons/fa6";
 import { TbDots } from "react-icons/tb";
+import SimilarProfiles from "@/components/main/profile/side-card/similarProfiles";
 
 export default function Home() {
   const stories = [
@@ -162,11 +163,54 @@ export default function Home() {
                   <div id="content">
                     <div className="flex flex-wrap pb-4">
                       <div className="w-full">
-                        <div className="mb-5">
+                        <div className="mb-2">
                           <div
                             id="stories"
-                            className="storiesWrapper flex gap-3 overflow-x-auto no-scrollbar stories user-icon carousel snapgram"
+                            className="relative storiesWrapper flex gap-3 overflow-x-hidden no-scrollbar stories user-icon carousel snapgram"
                           >
+                            <button
+                              onClick={() => scroll()}
+                              className="bg-white rounded-full flex items-center justify-center absolute left-0 top-1/2 -translate-y-1/2 z-10 group -mt-3"
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width={25}
+                                height={25}
+                                viewBox="0 0 24 24"
+                                className="text-gray-500 transform transition-transform duration-300 ease-in-out group-hover:scale-125"
+                              >
+                                <path
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="m14 7l-5 5l5 5"
+                                  strokeWidth={1}
+                                ></path>
+                              </svg>
+                            </button>
+
+                            <button
+                              onClick={() => scroll()}
+                              className=" bg-white rounded-full flex items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 z-10 group -mt-3"
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width={25}
+                                height={25}
+                                viewBox="0 0 24 24"
+                                className="text-gray-500 transform transition-transform duration-300 ease-in-out group-hover:scale-125"
+                              >
+                                <path
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="m10 17l5-5l-5-5"
+                                  strokeWidth={1}
+                                ></path>
+                              </svg>
+                            </button>
                             {stories.map((story) => (
                               <div
                                 key={story.id}
@@ -214,7 +258,7 @@ export default function Home() {
                         </div>
                       </div>
                     </div>
-                    <div className="flex flex-wrap pb-4">
+                    {/* <div className="flex flex-wrap pb-4">
                       <div className="w-full">
                         <div className="mb-5">
                           <div
@@ -223,45 +267,7 @@ export default function Home() {
                           ></div>
                         </div>
                       </div>
-                    </div>
-                    <div className="flex flex-wrap pb-4 hidden">
-                      <div className="w-full">
-                        <div
-                          id="post-modal-data"
-                          className="rounded-lg shadow bg-white create-post-modal"
-                        >
-                          <div className="flex justify-between items-center p-4 border-b border-[#f1f1f1]">
-                            <div className="header-title">
-                              <h5 className="text-xl font-semibold">
-                                Add a Post
-                              </h5>
-                            </div>
-                            <div className="relative">
-                              <button
-                                type="button"
-                                className="px-4 py-2 border border-[#f1f1f1] text-black rounded-sm cursor-pointer"
-                              >
-                                Post
-                              </button>
-                            </div>
-                          </div>
-                          <div className="p-4">
-                            <div>
-                              <form
-                                className="post-text w-full"
-                                action="javascript:void();"
-                              >
-                                <input
-                                  type="text"
-                                  className="w-full rounded p-0 border-0"
-                                  placeholder="What's new?"
-                                />
-                              </form>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    </div> */}
                     <AddPostModal />
 
                     <div className="flex flex-wrap social-post-container pb-4">
@@ -490,7 +496,8 @@ export default function Home() {
                 </div>
 
                 <div className="w-full hidden lg:block lg:w-1/3 px-4">
-                  <ActiveUsers />
+                  {/* <ActiveUsers /> */}
+                  <SimilarProfiles />
                   <Suggestions />
                 </div>
               </div>
