@@ -217,8 +217,8 @@ const FundAllocation = () => {
                 Developer Project Dev Team{" "}
                 <span className="font-bold">Audit Trials</span>
               </h1>
-              <div className="text-black w-full border bg-[#F9F9FB] text-xs font-medium justify-around border-[#D5D5D5] flex items-center rounded-md">
-                <span className="flex gap-2 pl-1 w-1/3 cursor-pointer">
+              <div className="!text-black !p-2 sm:!p-0 !whitespace-nowrap !border !bg-[#F9F9FB] !text-xs !font-medium !justify-around !border-[#D5D5D5] sm:!hidden !flex sm:!flex-row !flex-col !items-center !rounded-md">
+                <span className="flex gap-2 pl-0 sm:!pl-1 w-full sm:!w-1/3 cursor-pointer">
                   <svg
                     width="16"
                     height="16"
@@ -237,9 +237,9 @@ const FundAllocation = () => {
 
                 <div className="self-stretch w-px bg-[#D5D5D5]" />
 
-                <span className="flex items-center py-3 ">
+                <span className="flex items-center sm:!w-auto w-full py-3 ">
                   <select
-                    className="bg-transparent outline-none cursor-pointer w-full text-[#041827] appearance-none"
+                    className="bg-transparent outline-none cursor-pointer w-full text-[#041827] "
                     defaultValue=""
                   >
                     <option value="" disabled>
@@ -253,9 +253,9 @@ const FundAllocation = () => {
 
                 <div className="self-stretch w-px bg-[#D5D5D5]" />
 
-                <span className="flex items-center py-3 w-[180px]">
+                <span className="flex items-center py-3 w-full sm:!w-[180px]">
                   <select
-                    className="bg-transparent outline-none cursor-pointer w-full text-[#041827] appearance-none"
+                    className="bg-transparent outline-none cursor-pointer w-full text-[#041827] "
                     defaultValue=""
                   >
                     <option value="" disabled>

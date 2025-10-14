@@ -1,5 +1,5 @@
 "use client";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Filter } from "lucide-react";
 import React, { useState } from "react";
 import TransactionsTable from "./transactionsTable";
 import FundWalletSideModal from "./fundEscrowWallet.tsx";
@@ -15,6 +15,8 @@ const ProfileFinance = () => {
   const [showManageFunds, setManageFunds] = useState(false);
 
   const [showModal, setShowModal] = useState(false);
+  const [showTransactionFilter, setShowTransactionFilter] = useState(false);
+  const [showAPT, setShowAPT] = useState(false);
 
   // const [showTransactions, setShowTransactions] = useState(true);
   // const [fundAllocation, setFundAllocation] = useState(false);
@@ -199,19 +201,22 @@ const ProfileFinance = () => {
         </div>
       </div>
 
-      <div className="hidden sm:flex md:justify-center lg:justify-between bg-gray-200 p-4">
-        <span>Item 1</span>
-        <span>Item 2</span>
-      </div>
-
       {activeTab === "transactions" && (
-        <div className="rounded bg-white p-4 shadow-md my-5">
+        <div className="!rounded !bg-white !p-4 !shadow-md !my-5">
           <div>
-            <h1 className=" text-base lg:text-lg font-semibold text-black mb-5">
-              All Transactions
-            </h1>
-            <div className="text-black whitespace-nowrap border bg-[#F9F9FB] text-xs font-medium justify-around border-[#D5D5D5] flex items-center rounded-md">
-              <span className="flex pl-1 w-1/3 cursor-pointer">
+            <div className="!flex !items-center !justify-between !mb-5">
+              <h1 className="!text-base lg:!text-lg !font-semibold !text-black">
+                All Transactions
+              </h1>
+              <Filter
+                className="block sm:!hidden"
+                onClick={() => setShowTransactionFilter((prev) => !prev)}
+                size={20}
+              />
+            </div>
+
+            <div className="!text-black !p-2 sm:!p-0 !whitespace-nowrap !border !bg-[#F9F9FB] !text-xs !font-medium !justify-around !border-[#D5D5D5] hidden sm:!flex sm:!flex-row !flex-col !items-center !rounded-md">
+              <span className="!flex sm:!pl-1 !pl-0 !w-full sm:!w-1/3 !cursor-pointer">
                 <svg
                   width="16"
                   height="16"
@@ -228,11 +233,11 @@ const ProfileFinance = () => {
                 </svg>
               </span>
 
-              <div className="self-stretch w-px bg-[#D5D5D5]" />
+              <div className="!self-stretch !w-px !bg-[#D5D5D5]" />
 
-              <span className="flex items-center py-3 px-2 w-[220px]">
+              <span className="!flex !items-center !py-3 !px-0 sm:!px-2 !w-full sm:!w-[220px]">
                 <select
-                  className="bg-transparent outline-none cursor-pointer w-full text-[#041827]"
+                  className="!bg-transparent !outline-none !cursor-pointer !w-full !text-[#041827]"
                   defaultValue=""
                 >
                   <option value="" disabled>
@@ -244,11 +249,11 @@ const ProfileFinance = () => {
                 </select>
               </span>
 
-              <div className="self-stretch w-px bg-[#D5D5D5]" />
+              <div className="!self-stretch !w-px !bg-[#D5D5D5]" />
 
-              <span className="flex items-center py-3 px-2 w-[120px]">
+              <span className="!flex !items-center !py-3 !px-0 sm:!px-2 !w-full sm:!w-[120px]">
                 <select
-                  className="bg-transparent outline-none cursor-pointer w-full text-[#041827]"
+                  className="!bg-transparent !outline-none !cursor-pointer !w-full !text-[#041827]"
                   defaultValue=""
                 >
                   <option value="" disabled>
@@ -260,11 +265,11 @@ const ProfileFinance = () => {
                 </select>
               </span>
 
-              <div className="self-stretch w-px bg-[#D5D5D5]" />
+              <div className="!self-stretch !w-px !bg-[#D5D5D5]" />
 
-              <span className="flex items-center py-3 px-2 w-[140px]">
+              <span className="!flex !items-center !py-3 !px-0 sm:!px-2 !w-full sm:!w-[140px]">
                 <select
-                  className="bg-transparent outline-none cursor-pointer w-full text-[#041827]"
+                  className="!bg-transparent !outline-none !cursor-pointer !w-full !text-[#041827]"
                   defaultValue=""
                 >
                   <option value="" disabled>
@@ -275,11 +280,11 @@ const ProfileFinance = () => {
                 </select>
               </span>
 
-              <div className="self-stretch w-px bg-[#D5D5D5]" />
+              <div className="!self-stretch !w-px !bg-[#D5D5D5]" />
 
-              <span className="flex items-center py-3 px-2 w-[200px]">
+              <span className="!flex !items-center !py-3 !px-0 sm:!px-2 !w-full sm:!w-[200px]">
                 <select
-                  className="bg-transparent outline-none cursor-pointer w-full text-[#041827]"
+                  className="!bg-transparent !outline-none !cursor-pointer !w-full !text-[#041827]"
                   defaultValue=""
                 >
                   <option value="" disabled>
@@ -291,16 +296,16 @@ const ProfileFinance = () => {
                 </select>
               </span>
 
-              <div className="self-stretch w-px bg-[#D5D5D5]" />
+              <div className="!self-stretch !w-px !bg-[#D5D5D5]" />
 
-              <span className="flex cursor-pointer items-center py-3 px-2 text-[#EA0234]">
+              <span className="!flex !cursor-pointer !items-center !py-3 !px-2 !text-[#EA0234]">
                 <svg
                   width="15"
                   height="15"
                   viewBox="0 0 50 49"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  className="mr-1"
+                  className="!mr-1"
                 >
                   <path
                     d="M24.6619 10.3563V2.23438L14.5094 12.3868L24.6619 22.5393V14.4173C31.3828 14.4173 36.8448 19.8793 36.8448 26.6002C36.8448 33.3211 31.3828 38.7832 24.6619 38.7832C17.941 38.7832 12.4789 33.3211 12.4789 26.6002H8.41797C8.41797 35.575 15.6871 42.8441 24.6619 42.8441C33.6366 42.8441 40.9058 35.575 40.9058 26.6002C40.9058 17.6255 33.6366 10.3563 24.6619 10.3563Z"
@@ -310,7 +315,111 @@ const ProfileFinance = () => {
                 <p>Reset filter</p>
               </span>
             </div>
+
+            {showTransactionFilter && (
+              <div className="!text-black !p-2 sm:!p-0 !whitespace-nowrap !border !bg-[#F9F9FB] !text-xs !font-medium !justify-around !border-[#D5D5D5] sm:!hidden !flex sm:!flex-row !flex-col !items-center !rounded-md">
+                <span className="!flex sm:!pl-1 !pl-0 !w-full sm:!w-1/3 !cursor-pointer">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 91 91"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M62.1609 56.8028L82.3762 77.0181C83.0867 77.7292 83.4857 78.6933 83.4853 79.6985C83.485 80.7038 83.0853 81.6676 82.3743 82.3782C81.6633 83.0887 80.6991 83.4877 79.6939 83.4874C78.6887 83.487 77.7248 83.0873 77.0142 82.3763L56.7989 62.161C50.7558 66.8416 43.1565 69.0443 35.547 68.3209C27.9376 67.5974 20.8895 64.0023 15.8366 58.2668C10.7837 52.5313 8.10559 45.0863 8.34705 37.4463C8.58851 29.8063 11.7314 22.5453 17.1364 17.1403C22.5414 11.7353 29.8024 8.59242 37.4424 8.35095C45.0824 8.10949 52.5274 10.7876 58.2629 15.8405C63.9984 20.8934 67.5935 27.9415 68.317 35.551C69.0404 43.1604 66.8377 50.7597 62.1571 56.8028M38.3947 60.9398C44.374 60.9398 50.1084 58.5646 54.3364 54.3366C58.5644 50.1086 60.9397 44.3742 60.9397 38.3949C60.9397 32.4156 58.5644 26.6812 54.3364 22.4532C50.1084 18.2252 44.374 15.85 38.3947 15.85C32.4155 15.85 26.6811 18.2252 22.4531 22.4532C18.2251 26.6812 15.8498 32.4156 15.8498 38.3949C15.8498 44.3742 18.2251 50.1086 22.4531 54.3366C26.6811 58.5646 32.4155 60.9398 38.3947 60.9398Z"
+                      fill="#041827"
+                    />
+                  </svg>
+                </span>
+
+                <div className="!self-stretch !w-px !bg-[#D5D5D5]" />
+
+                <span className="!flex !items-center !py-3 !px-0 sm:!px-2 !w-full sm:!w-[220px]">
+                  <select
+                    className="!bg-transparent !outline-none !cursor-pointer !w-full !text-[#041827]"
+                    defaultValue=""
+                  >
+                    <option value="" disabled>
+                      Transaction Channels
+                    </option>
+                    <option value="bank">Bank</option>
+                    <option value="wallet">Wallet</option>
+                    <option value="card">Card</option>
+                  </select>
+                </span>
+
+                <div className="!self-stretch !w-px !bg-[#D5D5D5]" />
+
+                <span className="!flex !items-center !py-3 !px-0 sm:!px-2 !w-full sm:!w-[120px]">
+                  <select
+                    className="!bg-transparent !outline-none !cursor-pointer !w-full !text-[#041827]"
+                    defaultValue=""
+                  >
+                    <option value="" disabled>
+                      Date
+                    </option>
+                    <option value="today">Today</option>
+                    <option value="this-week">This Week</option>
+                    <option value="this-month">This Month</option>
+                  </select>
+                </span>
+
+                <div className="!self-stretch !w-px !bg-[#D5D5D5]" />
+
+                <span className="!flex !items-center !py-3 !px-0 sm:!px-2 !w-full sm:!w-[140px]">
+                  <select
+                    className="!bg-transparent !outline-none !cursor-pointer !w-full !text-[#041827]"
+                    defaultValue=""
+                  >
+                    <option value="" disabled>
+                      Projects
+                    </option>
+                    <option value="project-1">Project 1</option>
+                    <option value="project-2">Project 2</option>
+                  </select>
+                </span>
+
+                <div className="!self-stretch !w-px !bg-[#D5D5D5]" />
+
+                <span className="!flex !items-center !py-3 !px-0 sm:!px-2 !w-full sm:!w-[200px]">
+                  <select
+                    className="!bg-transparent !outline-none !cursor-pointer !w-full !text-[#041827]"
+                    defaultValue=""
+                  >
+                    <option value="" disabled>
+                      Transaction Status
+                    </option>
+                    <option value="success">Successful</option>
+                    <option value="pending">Pending</option>
+                    <option value="failed">Failed</option>
+                  </select>
+                </span>
+
+                <div className="!self-stretch !w-px !bg-[#D5D5D5]" />
+
+                <span className="!flex !cursor-pointer !items-center !py-3 !px-2 !text-[#EA0234]">
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 50 49"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="!mr-1"
+                  >
+                    <path
+                      d="M24.6619 10.3563V2.23438L14.5094 12.3868L24.6619 22.5393V14.4173C31.3828 14.4173 36.8448 19.8793 36.8448 26.6002C36.8448 33.3211 31.3828 38.7832 24.6619 38.7832C17.941 38.7832 12.4789 33.3211 12.4789 26.6002H8.41797C8.41797 35.575 15.6871 42.8441 24.6619 42.8441C33.6366 42.8441 40.9058 35.575 40.9058 26.6002C40.9058 17.6255 33.6366 10.3563 24.6619 10.3563Z"
+                      fill="#EA0234"
+                    />
+                  </svg>
+                  <p>Reset filter</p>
+                </span>
+              </div>
+            )}
           </div>
+
           <TransactionsTable />
         </div>
       )}
@@ -318,10 +427,17 @@ const ProfileFinance = () => {
       {activeTab === "escrow" && (
         <div className="rounded bg-white p-4 shadow-md my-5">
           <div className="">
-            <h1 className=" text-base lg:text-lg whitespace-nowrap font-semibold mb-2 text-black">
-              All Payout Transactions
-            </h1>
-            <div className="text-black w-full border bg-[#F9F9FB] text-xs font-medium justify-around border-[#D5D5D5] flex items-center rounded-md">
+            <div className="!flex !items-center !justify-between !mb-5">
+              <h1 className=" text-base lg:text-lg whitespace-nowrap font-semibold mb-2 text-black">
+                All Payout Transactions
+              </h1>
+              <Filter
+                className="block sm:!hidden"
+                onClick={() => setShowAPT((prev) => !prev)}
+                size={20}
+              />
+            </div>
+            <div className="!text-black !p-2 sm:!p-0 !whitespace-nowrap !border !bg-[#F9F9FB] !text-xs !font-medium !justify-around !border-[#D5D5D5] hidden sm:!flex sm:!flex-row !flex-col !items-center !rounded-md">
               <span className="flex gap-2 pl-1 w-1/3 cursor-pointer">
                 <svg
                   width="16"
@@ -389,6 +505,77 @@ const ProfileFinance = () => {
                 <p>Reset filter</p>
               </span>
             </div>
+
+            {showAPT && (
+              <div className="!text-black !p-2 sm:!p-0 !whitespace-nowrap !border !bg-[#F9F9FB] !text-xs !font-medium !justify-around !border-[#D5D5D5] sm:!hidden !flex sm:!flex-row !flex-col !items-center !rounded-md">
+                <span className="flex gap-2 pl-0 sm:!pl-1 w-full sm:!w-1/3 cursor-pointer">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 91 91"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M62.1609 56.8028L82.3762 77.0181C83.0867 77.7292 83.4857 78.6933 83.4853 79.6985C83.485 80.7038 83.0853 81.6676 82.3743 82.3782C81.6633 83.0887 80.6991 83.4877 79.6939 83.4874C78.6887 83.487 77.7248 83.0873 77.0142 82.3763L56.7989 62.161C50.7558 66.8416 43.1565 69.0443 35.547 68.3209C27.9376 67.5974 20.8895 64.0023 15.8366 58.2668C10.7837 52.5313 8.10559 45.0863 8.34705 37.4463C8.58851 29.8063 11.7314 22.5453 17.1364 17.1403C22.5414 11.7353 29.8024 8.59242 37.4424 8.35095C45.0824 8.10949 52.5274 10.7876 58.2629 15.8405C63.9984 20.8934 67.5935 27.9415 68.317 35.551C69.0404 43.1604 66.8377 50.7597 62.1571 56.8028M38.3947 60.9398C44.374 60.9398 50.1084 58.5646 54.3364 54.3366C58.5644 50.1086 60.9397 44.3742 60.9397 38.3949C60.9397 32.4156 58.5644 26.6812 54.3364 22.4532C50.1084 18.2252 44.374 15.85 38.3947 15.85C32.4155 15.85 26.6811 18.2252 22.4531 22.4532C18.2251 26.6812 15.8498 32.4156 15.8498 38.3949C15.8498 44.3742 18.2251 50.1086 22.4531 54.3366C26.6811 58.5646 32.4155 60.9398 38.3947 60.9398Z"
+                      fill="#041827"
+                    />
+                  </svg>
+                </span>
+
+                <div className="self-stretch w-px bg-[#D5D5D5]" />
+
+                <span className="flex items-center sm:!w-auto w-full py-3 ">
+                  <select
+                    className="bg-transparent outline-none cursor-pointer w-full text-[#041827] "
+                    defaultValue=""
+                  >
+                    <option value="" disabled>
+                      Date
+                    </option>
+                    <option value="today">Today</option>
+                    <option value="this-week">This Week</option>
+                    <option value="this-month">This Month</option>
+                  </select>
+                </span>
+
+                <div className="self-stretch w-px bg-[#D5D5D5]" />
+
+                <span className="flex items-center py-3 w-full sm:!w-[180px]">
+                  <select
+                    className="bg-transparent outline-none cursor-pointer w-full text-[#041827] "
+                    defaultValue=""
+                  >
+                    <option value="" disabled>
+                      Transaction Status
+                    </option>
+                    <option value="success">Successful</option>
+                    <option value="pending">Pending</option>
+                    <option value="failed">Failed</option>
+                  </select>
+                </span>
+
+                <div className="self-stretch w-px bg-[#D5D5D5]" />
+
+                <span className="flex cursor-pointer items-center gap-2 py-3 px-2 text-[#EA0234]">
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 50 49"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M24.6619 10.3563V2.23438L14.5094 12.3868L24.6619 22.5393V14.4173C31.3828 14.4173 36.8448 19.8793 36.8448 26.6002C36.8448 33.3211 31.3828 38.7832 24.6619 38.7832C17.941 38.7832 12.4789 33.3211 12.4789 26.6002H8.41797C8.41797 35.575 15.6871 42.8441 24.6619 42.8441C33.6366 42.8441 40.9058 35.575 40.9058 26.6002C40.9058 17.6255 33.6366 10.3563 24.6619 10.3563Z"
+                      fill="#EA0234"
+                    />
+                  </svg>
+                  <p>Reset filter</p>
+                </span>
+              </div>
+            )}
           </div>
           <PayoutTable />
         </div>
