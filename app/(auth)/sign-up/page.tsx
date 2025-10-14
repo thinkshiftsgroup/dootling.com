@@ -104,10 +104,10 @@ export default function SignupPage() {
         });
 
         if (response.data.token && response.data.user) {
-          loginUser(response.data.token, {
-            ...response.data.user,
-            name: formData.fullName,
-          });
+          // loginUser(response.data.token, {
+          //   ...response.data.user,
+          //   name: formData.fullName,
+          // });
 
           setUnverifiedEmail(formData.email);
 
