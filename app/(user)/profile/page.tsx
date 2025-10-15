@@ -376,13 +376,13 @@ const UserProfile = () => {
     );
   }
 
-  if (!user) {
-    return (
-      <div className="text-center p-10 text-lg font-medium">
-        Please log in to view this page.
-      </div>
-    );
-  }
+  // if (!user) {
+  //   return (
+  //     <div className="text-center p-10 text-lg font-medium">
+  //       Please log in to view this page.
+  //     </div>
+  //   );
+  // }
 
   return (
     <div>
