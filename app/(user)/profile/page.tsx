@@ -26,6 +26,7 @@ import { useAuthStore } from "@/stores/useAuthStore";
 import apiInstance from "@/api/apiInstance";
 import { toast } from "sonner";
 import TopContributorsTab from "@/components/main/profile/topContributors/topContributors";
+import { LuCalendarFold } from "react-icons/lu";
 
 interface ImageUploadRef {
   openFileDialog: () => void;
@@ -343,6 +344,15 @@ const UserProfile = () => {
         />
       ),
       label: "Account",
+    },
+    {
+      icon: (isActive: boolean) => (
+        <LuCalendarFold
+          size={30}
+          className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
+        />
+      ),
+      label: "Dootime",
     },
     {
       icon: (isActive: boolean) => (

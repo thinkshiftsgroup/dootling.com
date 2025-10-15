@@ -19,6 +19,7 @@ const chatList = [
     message: "Lorem ipsum",
     time: "01:10 PM",
     img: "/images/user/userImg.jpg",
+    
   },
   {
     name: "Ira Membrit",
@@ -31,6 +32,7 @@ const chatList = [
     message: "Lorem ipsum",
     time: "05:09 AM",
     img: "/images/user/userImg.jpg",
+    
   },
   {
     name: "Barb Ackue",
@@ -43,12 +45,13 @@ const chatList = [
     message: "Lorem ipsum",
     time: "01:10 PM",
     img: "/images/user/userImg.jpg",
+    
   },
 ];
 
 const ChatSidebar = () => {
   return (
-    <div className="w-full col-span-3 md:w-[320px] bg-white border-r shadow-sm flex flex-col h-[93vh]">
+    <div className="w-full col-span-3 md:w-[320px] bg-white border-r shadow-sm flex flex-col h-[86vh]">
       <div className="p-4 border-b flex items-center gap-2">
         <div className="flex items-center bg-white rounded-sm w-full px-3 py-2">
           <FiSearch className="text-[#157bff]" size={18} />
@@ -106,15 +109,7 @@ const ChatSidebar = () => {
       </div>
 
       <div className="mx-1 flex-1">
-        <div className="flex items-center border  rounded-sm w-full px-3 py-2">
-          <FiSearch className="text-[#157bff]" size={18} />
-          <input
-            type="text"
-            placeholder="Search for messages or users..."
-            className="bg-transparent outline-none w-full px-2 text-sm text-gray-700 placeholder-gray-400"
-          />
-        </div>
-        <div className="overflow-y-scroll h-[68vh]">
+        <div className="overflow-y-scroll h-[64vh]">
           {chatList.map((chat, i) => (
             <div
               key={i}

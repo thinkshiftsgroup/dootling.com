@@ -8,9 +8,10 @@ import ProjectMessage from "@/components/main/projects/projectMessage";
 const Projects = () => {
   return (
     <div className="">
-      <Navbar />
+      <Navbar fixed={true} />
 
-      <div className="pt-[1rem] h-[95vh] hide-scrollbar overflow-y-hidden">
+
+      <div className="pt-[5rem] h-[95vh] hide-scrollbar overflow-y-hidden">
         <div className="container mx-auto">
           <div className="w-full col-span-7 ">
             <div className="w-full mx-auto">

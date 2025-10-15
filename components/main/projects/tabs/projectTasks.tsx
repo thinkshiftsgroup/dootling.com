@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import { FaHeart, FaThumbsUp } from "react-icons/fa";
-import { FaHandsClapping } from "react-icons/fa6";
+import { FaAngleLeft } from "react-icons/fa6";
+import { FaAngleRight } from "react-icons/fa6";
 import AddTaskModal from "./addTaskModal";
 import ManageTasks from "./manageTasks";
 
@@ -83,8 +83,8 @@ const ProjectTasks = () => {
           </p>
         </div>
       </div>
-      <div className="overflow-x-auto w-full">
-        <table className="w-full border-collapse">
+      <div className="overflow-x-auto">
+        <table className="min-w-full border-collapse">
           <thead className="bg-[#E7F1FF]/30 font-medium text-sm text-left">
             <tr>
               <th className="py-3 px-2">Assigned</th>
@@ -163,7 +163,7 @@ const ProjectTasks = () => {
               </td>
 
               <td className="py-3 px-2">
-                <div className="flex items-center justify-center gap-1">
+                <div className="flex items-center justify-center gap-2">
                   <svg
                     width="20"
                     height="20"
@@ -259,7 +259,7 @@ const ProjectTasks = () => {
               </td>
 
               <td className="py-3 px-2">
-                <div className="flex items-center justify-center gap-1">
+                <div className="flex items-center justify-center gap-2">
                   <svg
                     width="20"
                     height="20"
@@ -293,6 +293,34 @@ const ProjectTasks = () => {
             </tr>
           </tbody>
         </table>
+      </div>
+      <div className="flex items-center justify-between py-3 px-2">
+        <p className="text-xs text-gray-600">
+          Showing <span className="font-medium">1</span> to{" "}
+          <span className="font-medium">10</span> of{" "}
+          <span className="font-medium">50</span> results
+        </p>
+
+        <div className="flex items-center gap-2">
+          <button
+            className="px-3 py-1 text-xs disabled:opacity-50"
+            disabled
+          >
+            <FaAngleLeft />
+          </button>
+          <button className="px-3 py-1 border rounded-md text-xs hover:bg-gray-100 bg-blue-50 border-blue-400 text-blue-600">
+            1
+          </button>
+          <button className="px-3 py-1 border rounded-md text-xs hover:bg-gray-100">
+            2
+          </button>
+          <button className="px-3 py-1 border rounded-md text-xs hover:bg-gray-100">
+            3
+          </button>
+          <button className="px-3 py-1 text-[#157bff] text-xs ">
+            <FaAngleRight/>
+          </button>
+        </div>
       </div>
       {addTaskModal && (
         <AddTaskModal
