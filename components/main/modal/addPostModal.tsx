@@ -63,7 +63,7 @@ export default function AddPostModal() {
                             <input
                                 type="text"
                                 readOnly
-                                className="w-full rounded p-2 border-0 bg-transparent cursor-pointer text-gray-400"
+                                className="w-full rounded p-2 border-0 bg-transparent cursor-pointer text-gray-600 placeholder-gray-400"
                                 placeholder="What's new?"
                             />
                             <div className="relative">
