@@ -1,10 +1,10 @@
 import React from "react";
 
-const ManageContact = ({ activeTab }: any) => {
+const ManageContact = ({ activeTab, tabRefs }: any) => {
   return (
     <div
       id="manage-contact"
-      role="tabpanel"
+       ref={tabRefs["manage-contact"]}
       className={`w-full space-y-8 ${
         activeTab === "manage-contact" ? "block" : "hidden"
       }`}

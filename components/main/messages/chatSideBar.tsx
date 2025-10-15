@@ -48,7 +48,7 @@ const chatList = [
 
 const ChatSidebar = () => {
   return (
-    <div className="w-full bg-white col-span-3 md:w-[320px] border-r shadow-sm flex flex-col h-full">
+    <div className="w-full col-span-3 md:w-[320px] bg-white border-r shadow-sm flex flex-col h-[93vh]">
       <div className="p-4 border-b flex items-center gap-2">
         <div className="flex items-center bg-white rounded-sm w-full px-3 py-2">
           <FiSearch className="text-[#157bff]" size={18} />
@@ -105,7 +105,7 @@ const ChatSidebar = () => {
         </span>
       </div>
 
-      <div className="overflow-y-auto mx-1 flex-1">
+      <div className="mx-1 flex-1">
         <div className="flex items-center border  rounded-sm w-full px-3 py-2">
           <FiSearch className="text-[#157bff]" size={18} />
           <input
@@ -114,36 +114,40 @@ const ChatSidebar = () => {
             className="bg-transparent outline-none w-full px-2 text-sm text-gray-700 placeholder-gray-400"
           />
         </div>
-        {chatList.map((chat, i) => (
-          <div
-            key={i}
-            className={`flex items-center bg-white rounded-sm my-2 justify-between px-4 py-3 cursor-pointer border-b border-gray-100 hover:bg-gray-50 ${
-              chat.active ? "bg-[#E8F0FE]" : ""
-            }`}
-          >
-            <div className="flex items-center gap-3">
-              <div className="relative">
-                <Image
-                  src={chat.img}
-                  alt={chat.name}
-                  width={40}
-                  height={40}
-                  className="rounded-full"
-                />
-                {chat.active && (
-                  <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-white rounded-full"></span>
-                )}
+        <div className="overflow-y-scroll h-[68vh]">
+          {chatList.map((chat, i) => (
+            <div
+              key={i}
+              className={`flex items-center bg-white rounded-sm my-2 justify-between px-4 py-3 cursor-pointer border-b border-gray-100 hover:bg-gray-50 ${
+                chat.active ? "bg-[#E8F0FE]" : ""
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <div className="relative">
+                  <Image
+                    src={chat.img}
+                    alt={chat.name}
+                    width={40}
+                    height={40}
+                    className="rounded-full"
+                  />
+                  {chat.active && (
+                    <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-white rounded-full"></span>
+                  )}
+                </div>
+                <div className="flex flex-col">
+                  <p className="text-sm font-medium text-gray-800">
+                    {chat.name}
+                  </p>
+                  <p className="text-xs text-gray-500 truncate w-[150px]">
+                    {chat.message}
+                  </p>
+                </div>
               </div>
-              <div className="flex flex-col">
-                <p className="text-sm font-medium text-gray-800">{chat.name}</p>
-                <p className="text-xs text-gray-500 truncate w-[150px]">
-                  {chat.message}
-                </p>
-              </div>
+              <span className="text-[11px] text-gray-400">{chat.time}</span>
             </div>
-            <span className="text-[11px] text-gray-400">{chat.time}</span>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

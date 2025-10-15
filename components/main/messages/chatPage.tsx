@@ -59,35 +59,7 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="flex col-span-5 shadow-sm h-screen bg-[#F8FAFC] text-gray-800">
-      <div className="hidden md:flex flex-col w-[320px] border-r bg-white shadow-sm">
-        <div className="p-4 border-b flex items-center justify-between">
-          <h1 className="font-semibold text-lg">Messages</h1>
-          <Search className="w-5 h-5 text-gray-500 cursor-pointer" />
-        </div>
-        <div className="p-2 overflow-y-auto">
-          {[...Array(6)].map((_, i) => (
-            <div
-              key={i}
-              className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 cursor-pointer"
-            >
-              <Image
-                src="/images/user/orgImg.png"
-                alt="User"
-                width={40}
-                height={40}
-                className="rounded-full object-cover"
-              />
-              <div className="flex-1">
-                <h2 className="font-medium text-sm">User {i + 1}</h2>
-                <p className="text-xs text-gray-500">Last message preview...</p>
-              </div>
-              <p className="text-[10px] text-gray-400">3:20 PM</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
+    <div className="flex col-span-5 shadow-sm h-[93vh] bg-[#F8FAFC] text-gray-800">
       <div className="flex-1 flex flex-col">
         <div className="p-3.5 flex items-center justify-between border-b bg-white">
           <div className="flex items-center gap-3">
@@ -119,10 +91,10 @@ export default function ChatPage() {
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-6 space-y-4">
-          {messages.map((msg) => (
+        <div className="flex-1 overflow-y-scroll p-6 space-y-4">
+          {messages.map((msg, idx) => (
             <div
-              key={msg.id}
+              key={idx}
               className={`flex items-end gap-2 ${
                 msg.isMe ? "justify-end" : "justify-start"
               }`}
