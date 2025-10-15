@@ -361,7 +361,7 @@ const UserProfile = () => {
           className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
         />
       ),
-      label: "Top Creators",
+      label: "Top Contributors",
     },
   ];
 
@@ -609,7 +609,7 @@ const UserProfile = () => {
                         {activeTab === "Followed" && <FollowedTab />}
                         {activeTab === "Links" && <ProfileLinks />}
                         {activeTab === "Heatmap" && <HeatmapConnections />}
-                        {activeTab === "Top Creators" && <TopContributorsTab />}
+                        {activeTab === "Top Contributors" && <TopContributorsTab />}
                         {activeTab === "Spaces" && (
                           <ProfileSpace Spaces={myProjects} />
                         )}
