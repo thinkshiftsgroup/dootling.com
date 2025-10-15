@@ -682,89 +682,79 @@ const ProfileAbout = () => {
                     <h4 className="text-lg font-semibold text-[#2b2d42]">
                       Hobbies and Interests
                     </h4>
-                    <button
-                      className="flex items-center justify-center w-9 h-9 bg-[#1578ff] text-white rounded-sm hover:bg-[#1578ff]/90 transition"
-                      aria-label="Edit hobbies and interests"
-                    >
-                      <PencilSimple size={18} />
-                    </button>
                   </div>
 
                   <hr className="border-gray-200 mb-6" />
 
-                  <div className="space-y-4 text-[#7e8b9a]">
+                  <div className=" text-[#7e8b9a]">
                     <div>
                       <h5 className="font-semibold text-[#2b2d42] mb-1">
                         Hobbies:
                       </h5>
-                      <p className="text-sm leading-relaxed text-[#7e8b9a]">
-                        Hi, I’m Bni, I’m 26 and I work as a Web Designer for the
-                        iqonicdesign. I like to ride the bike to work, swimming,
-                        and working out. I also like reading design magazines,
-                        go to museums, and binge watching a good TV show while
-                        it’s raining outside.
-                      </p>
+                      <textarea
+                        placeholder="Input hobbies"
+                        className="w-full border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
                     </div>
 
                     <div>
                       <h5 className="font-semibold text-[#2b2d42] mb-1">
                         Favourite TV Shows:
                       </h5>
-                      <p className="text-sm leading-relaxed text-[#7e8b9a]">
-                        Breaking Good, RedDevil, People of Interest, The Running
-                        Dead, Found, American Guy.
-                      </p>
+                      <textarea
+                        placeholder="Input Favourite TV Shows"
+                        className="w-full border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
                     </div>
 
                     <div>
                       <h5 className="font-semibold text-[#2b2d42] mb-1">
                         Favourite Movies:
                       </h5>
-                      <p className="text-sm leading-relaxed text-[#7e8b9a]">
-                        Idiocratic, The Scarred Wizard and the Fire Crown, Crime
-                        Squad, Ferrum Man.
-                      </p>
+                      <textarea
+                        placeholder="Input Favourite Movies"
+                        className="w-full border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
                     </div>
 
                     <div>
                       <h5 className="font-semibold text-[#2b2d42] mb-1">
                         Favourite Games:
                       </h5>
-                      <p className="text-sm leading-relaxed text-[#7e8b9a]">
-                        The First of Us, Assassin’s Squad, Dark Assylum, NMAK16,
-                        Last Cause 4, Grand Snatch Auto.
-                      </p>
+                      <textarea
+                        placeholder="Input Favourite Games"
+                        className="w-full border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
                     </div>
 
                     <div>
                       <h5 className="font-semibold text-[#2b2d42] mb-1">
                         Favourite Music Bands / Artists:
                       </h5>
-                      <p className="text-sm leading-relaxed text-[#7e8b9a]">
-                        Iron Maid, DC/AC, Megablow, The Ill, Kung Fighters,
-                        System of a Revenge.
-                      </p>
+                      <textarea
+                        placeholder="Input Favourite Music Bands / Artists"
+                        className="w-full border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
                     </div>
 
                     <div>
                       <h5 className="font-semibold text-[#2b2d42] mb-1">
                         Favourite Books:
                       </h5>
-                      <p className="text-sm leading-relaxed text-[#7e8b9a]">
-                        The Crime of the Century, Egyptian Mythology 101, The
-                        Scarred Wizard, Lord of the Wings, Amongst Gods, The
-                        Oracle, A Tale of Air and Water.
-                      </p>
+                      <textarea
+                        placeholder="Input Favourite Books"
+                        className="w-full border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
                     </div>
 
                     <div>
                       <h5 className="font-semibold text-[#2b2d42] mb-1">
                         Favourite Writers:
                       </h5>
-                      <p className="text-sm leading-relaxed text-[#7e8b9a]">
-                        Martin T. Georgeston, Jhonathan R. Token, Ivana Rowle,
-                        Alexandria Platt, Marcus Roth.
-                      </p>
+                      <textarea
+                        placeholder="Input Favourite Writers"
+                        className="w-full border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
                     </div>
                   </div>
                 </div>
