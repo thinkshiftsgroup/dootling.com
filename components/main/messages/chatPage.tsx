@@ -59,7 +59,7 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="flex col-span-5 shadow-sm h-[93vh] bg-[#F8FAFC] text-gray-800">
+    <div className="flex col-span-5 shadow-sm h-[86vh] bg-[#F8FAFC] text-gray-800">
       <div className="flex-1 flex flex-col">
         <div className="p-3.5 flex items-center justify-between border-b bg-white">
           <div className="flex items-center gap-3">

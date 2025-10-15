@@ -5,13 +5,14 @@ import Image from "next/image";
 import { Send, Search } from "lucide-react";
 import { FiPhone } from "react-icons/fi";
 import { GoDeviceCameraVideo } from "react-icons/go";
-import { RxDotsVertical } from "react-icons/rx";
+import { FiLock } from "react-icons/fi";
 import { ImAttachment } from "react-icons/im";
 import { CiFaceSmile } from "react-icons/ci";
 import { IoMicOutline } from "react-icons/io5";
 import ProjectInnerTabs from "./tabs/chat";
 import ProjectTasks from "./tabs/projectTasks";
 import { IoAtOutline } from "react-icons/io5";
+import FilesTab from "./tabs/filesTab";
 
 const ProjectMessage = () => {
   const [messages, setMessages] = useState([
@@ -160,7 +161,10 @@ const ProjectMessage = () => {
               className="rounded-full"
             />
             <div>
-              <h1 className="font-semibold">Project 1</h1>
+              <h1 className="font-semibold flex gap-0.5">
+                Paul Molive
+                <FiLock size={10} className="text-gray-400" />
+              </h1>
               <p className="text-xs text-green-500">Online</p>
             </div>
           </div>
@@ -202,9 +206,7 @@ const ProjectMessage = () => {
 
         {tabs === "chat" && <ProjectInnerTabs messages={messages} />}
         {tabs === "tasks" && <ProjectTasks />}
-        {tabs === "files" && (
-          <div className="flex-1 overflow-y-scroll p-6 space-y-4"></div>
-        )}
+        {tabs === "files" && <FilesTab />}
 
         {tabs === "chat" && (
           <div className="p-4 border-t bg-white flex items-center gap-2">
