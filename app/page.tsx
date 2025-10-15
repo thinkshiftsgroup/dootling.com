@@ -495,7 +495,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="w-full hidden lg:block lg:w-1/3 px-4">
+                <div className="w-full hidden lg:block lg:w-1/3 ps-5">
                   {/* <ActiveUsers /> */}
                   <SimilarProfiles />
                   <Suggestions />

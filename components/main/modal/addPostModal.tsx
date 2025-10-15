@@ -83,7 +83,7 @@ export default function AddPostModal() {
             {/* Modal Overlay */}
             {isOpen && (
                 <div>
-                    <div className="fixed inset-0 z-50 flex backdrop-blur-[1px] items-center justify-center bg-black/60  p-4"></div>
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60  p-4"></div>
                     <div className="fixed inset-0 z-50 flex items-center justify-center  bg-opacity-50 p-4">
                         <div className={`w-full max-w-2xl mt-8 bg-white rounded-2xl shadow-2xl overflow-hidden 
             ${isOpen ? "animate-in fade-in slide-in-from-top-4" : "animate-out fade-out slide-out-to-top"}
