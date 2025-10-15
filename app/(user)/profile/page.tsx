@@ -62,7 +62,7 @@ const ProfileImageUploadTrigger = ({
           alt="Profile"
           width={120}
           height={120}
-          className="w-full h-full rounded-md object-cover"
+          className="w-[120px] h-full rounded-md object-cover"
         />
       ) : (
         <div className="w-[120px] h-full rounded-md bg-[#157BFF] flex items-center justify-center text-white text-2xl font-bold lg:text-3xl">
