@@ -12,137 +12,9 @@ import { LuSend } from "react-icons/lu";
 import { FaHeart, FaThumbsUp } from "react-icons/fa";
 import { FaHandsClapping } from "react-icons/fa6";
 import { TbDots } from "react-icons/tb";
+import StoriesLanding from "@/components/main/landing-page/index/stories";
 
 export default function Home() {
-  const stories = [
-    {
-      id: "bni",
-      name: "Your Story",
-      photo: "/images/user/1.jpg",
-      items: [
-        {
-          id: "bni-1",
-          type: "video",
-          thumb:
-            "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/4.jpg",
-          src: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/4.mp4",
-        },
-        {
-          id: "bni-2",
-          type: "photo",
-          thumb:
-            "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/5.jpg",
-          src: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/5.jpg",
-        },
-        {
-          id: "bni-3",
-          type: "photo",
-          thumb:
-            "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/3.png",
-          src: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/3.png",
-        },
-      ],
-    },
-    {
-      id: "bob",
-      name: "Bob Frapples",
-      photo: "/images/user/13.jpg",
-      items: [
-        {
-          id: "bob-1",
-          type: "photo",
-          thumb:
-            "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/1.jpg",
-          src: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/1.jpg",
-        },
-        {
-          id: "bob-2",
-          type: "video",
-          thumb:
-            "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/2.jpg",
-          src: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/2.mp4",
-        },
-      ],
-    },
-    {
-      id: "greta",
-      name: "Greta Life",
-      photo: "/images/user/14.jpg",
-      items: [
-        {
-          id: "greta-1",
-          type: "photo",
-          thumb:
-            "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/6.jpg",
-          src: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/6.jpg",
-        },
-        {
-          id: "greta-2",
-          type: "photo",
-          thumb:
-            "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/7.jpg",
-          src: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/7.jpg",
-        },
-      ],
-    },
-    {
-      id: "pete",
-      name: "Pete Sariya",
-      photo: "/images/user/15.jpg",
-      items: [
-        {
-          id: "pete-1",
-          type: "photo",
-          thumb:
-            "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/8.jpg",
-          src: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/8.jpg",
-        },
-      ],
-    },
-    {
-      id: "paige",
-      name: "Paige Turner",
-      photo: "/images/user/16.jpg",
-      items: [
-        {
-          id: "paige-1",
-          type: "photo",
-          thumb:
-            "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/9.jpg",
-          src: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/9.jpg",
-        },
-      ],
-    },
-    {
-      id: "marcum",
-      name: "Marcum Shaw",
-      photo: "/images/user/17.jpg",
-      items: [
-        {
-          id: "marcum-1",
-          type: "photo",
-          thumb:
-            "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/9.jpg",
-          src: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/9.jpg",
-        },
-      ],
-    },
-    {
-      id: "travis",
-      name: "Travis John",
-      photo: "/images/user/17.jpg",
-      items: [
-        {
-          id: "marcum-1",
-          type: "photo",
-          thumb:
-            "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/9.jpg",
-          src: "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/9.jpg",
-        },
-      ],
-    },
-  ];
-
   const [openLikesModal, setOpenLikesModal] = useState(false);
 
   return (
@@ -159,70 +31,7 @@ export default function Home() {
                   id="dynamicDivContainer"
                 >
                   <div id="content">
-                    <div className="flex flex-wrap pb-4">
-                      <div className="w-full">
-                        <div className="mb-5">
-                          <div
-                            id="stories"
-                            className="storiesWrapper flex gap-3 overflow-x-auto no-scrollbar stories user-icon carousel snapgram"
-                          >
-                            {stories.map((story) => (
-                              <div
-                                key={story.id}
-                                className="story flex flex-col items-center"
-                                data-id={story.id}
-                              >
-                                <a
-                                  href="#"
-                                  className="item-link flex flex-col items-center"
-                                >
-                                  <span className="item-preview block  rounded-full overflow-hidden border-2 border-white">
-                                    <Image
-                                      src={story.photo}
-                                      alt={story.name}
-                                      width={90}
-                                      height={90}
-                                      className="object-cover w-full h-full"
-                                    />
-                                  </span>
-                                  <span className="info text-center mt-1">
-                                    <strong className="name text-xs block">
-                                      {story.name}
-                                    </strong>
-                                    <span className="time text-xs text-gray-400"></span>
-                                  </span>
-                                </a>
-
-                                <ul className="hidden">
-                                  {story.items.map((item) => (
-                                    <li key={item.id}>
-                                      <a href={item.src} data-type={item.type}>
-                                        <img
-                                          src={item.thumb}
-                                          alt={story.name}
-                                          className="w-full h-auto"
-                                          loading="lazy"
-                                        />
-                                      </a>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex flex-wrap pb-4">
-                      <div className="w-full">
-                        <div className="mb-5">
-                          <div
-                            id="stories"
-                            className="storiesWrapper flex gap-3"
-                          ></div>
-                        </div>
-                      </div>
-                    </div>
+                    <StoriesLanding />
                     <div className="flex flex-wrap pb-4">
                       <div className="w-full">
                         <div
@@ -361,7 +170,10 @@ export default function Home() {
 
                     <div className="flex flex-wrap social-post-container pb-4">
                       {Array.from({ length: 3 }).map((_, i) => (
-                        <div key={i} className="rounded-lg p-5 w-full bg-white shadow-md mb-[40px]">
+                        <div
+                          key={i}
+                          className="rounded-lg p-5 w-full bg-white shadow-md mb-[40px]"
+                        >
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
                               <Image

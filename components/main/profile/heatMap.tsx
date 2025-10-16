@@ -1,6 +1,7 @@
 import React from "react";
 
 import Image from "next/image";
+import AddHeatmapModal from "./addHeatMapModal";
 
 const HeatmapConnections = () => {
   const connections = [
@@ -121,19 +122,21 @@ const HeatmapConnections = () => {
         <div className="max-w-5xl mx-auto">
           <div className="bg-white rounded-2xl shadow-sm !p-4 sm:!p-8">
             <div className="flex sm:!flex-row !flex-col justify-between items-start mb-3">
-              <h1 className="text-4xl font-medium text-gray-900">
-                Heatmap
-              </h1>
-              <div className="flex !my-2 md:!my-0 items-center gap-1 bg-[#F5F6FA] text-[#FAAF40] px-3 py-2 rounded-lg">
-                <Image
-                  src="/images/dootling-icon1.svg"
-                  width={25}
-                  height={25}
-                  alt="icon"
-                />
-                <span className="font-medium">
-                  Browser Extension
-                </span>
+              <h1 className="text-4xl font-medium text-gray-900">Heatmap</h1>
+              <div className="flex items-center gap-2 justify-between">
+                <div className="flex !my-2 md:!my-0 items-center gap-1 bg-[#F5F6FA] text-[#FAAF40] px-3 py-2 rounded-lg">
+                  <Image
+                    src="/images/dootling-icon1.svg"
+                    width={25}
+                    height={25}
+                    alt="icon"
+                  />
+                  <span className="font-medium">Browser Extension</span>
+                </div>
+
+                <div className="mx-auto lg:hidden block">
+                  <AddHeatmapModal />
+                </div>
               </div>
             </div>
             <p className="text-gray-600 leading-relaxed max-w-3xl mb-8">

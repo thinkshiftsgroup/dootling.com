@@ -11,6 +11,7 @@ import ReactionModal from "../modal/reacttionModal";
 
 const ProfileFeeds = () => {
   const [openLikesModal, setOpenLikesModal] = useState(false);
+  
 
   return (
     <div className="rounded-lg p-5 w-full bg-white shadow-md mb-[40px]">
