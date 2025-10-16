@@ -12,7 +12,7 @@ const ConvertProjectToEscrow = ({ setOpenModal }: any) => {
     setUserName("");
   };
 
-  const [tabs, setTabs] = useState("tabA");
+  const [tabs, setTabs] = useState("Overview");
 
   return (
     <div
@@ -43,33 +43,57 @@ const ConvertProjectToEscrow = ({ setOpenModal }: any) => {
         <div className="mb-2">
           <ul className="flex w-full items-center gap-4 *:cursor-pointer font-medium text-gray-500">
             <li
-              onClick={() => setTabs("tabA")}
+              onClick={() => setTabs("Overview")}
               className={`${
-                tabs === "tabA" ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]" : ""
+                tabs === "Overview" ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]" : ""
               }`}
             >
-              Tab A
+              Overview
             </li>
             <li
-              onClick={() => setTabs("tabB")}
+              onClick={() => setTabs("Milsetones")}
               className={`${
-                tabs === "tabB" ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]" : ""
+                tabs === "Milsetones" ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]" : ""
               }`}
             >
-              Tab B
+              MileStones
             </li>
             <li
-              onClick={() => setTabs("tabC")}
+              onClick={() => setTabs("Funds")}
               className={`${
-                tabs === "tabC" ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]" : ""
+                tabs === "Funds" ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]" : ""
               }`}
             >
-              Tab C
+              Funds
+            </li>
+            <li
+              onClick={() => setTabs("Team")}
+              className={`${
+                tabs === "Team" ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]" : ""
+              }`}
+            >
+              Team
+            </li>
+            <li
+              onClick={() => setTabs("Audit Log")}
+              className={`${
+                tabs === "Audit Log" ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]" : ""
+              }`}
+            >
+              Audit Log
+            </li>
+            <li
+              onClick={() => setTabs("Settings")}
+              className={`${
+                tabs === "Settings" ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]" : ""
+              }`}
+            >
+              Settings
             </li>
           </ul>
         </div>
 
-        {tabs === "tabA" && (
+        {tabs === "Overview" && (
           <div className="bg-[#fafafa] my-5 rounded-md p-2 space-y-2">
             <div className="">
               <p className="text-[#404040] flex items-center mb-2 gap-1 font-semibold">
@@ -113,7 +137,7 @@ const ConvertProjectToEscrow = ({ setOpenModal }: any) => {
           </div>
         )}
 
-        {tabs === "tabA" && (
+        {tabs === "Overview" && (
           <div>
             <label
               className="text-[#404040] text-sm sm:!text-lg font-semibold"
@@ -138,7 +162,7 @@ const ConvertProjectToEscrow = ({ setOpenModal }: any) => {
             </div>
           </div>
         )}
-        {tabs === "tabA" && (
+        {tabs === "Overview" && (
           <div className="flex text-xs sm:!text-sm flex-col gap-2">
             {userList.map((user: any, idx) => {
               return (
@@ -208,7 +232,7 @@ const ConvertProjectToEscrow = ({ setOpenModal }: any) => {
           </div>
         )}
 
-        {tabs === "tabA" && (
+        {tabs === "Overview" && (
           <div className="my-2">
             <p className="text-[#404040] text-sm sm:!text-base flex items-center  gap-1 font-semibold">
               Contract Clauses *
@@ -224,7 +248,7 @@ const ConvertProjectToEscrow = ({ setOpenModal }: any) => {
           </div>
         )}
 
-        {tabs === "tabA" && (
+        {tabs === "Overview" && (
           <div className="flex sm:!flex-row flex-col my-2 items-center justify-between">
             <p className="sm:!text-sm text-xs">
               * You have to read and agree to our terms and conditions to
@@ -307,16 +331,31 @@ const ConvertProjectToEscrow = ({ setOpenModal }: any) => {
         )}
 
         {/* tab B */}
-        {tabs === "tabB" && (
+        {tabs === "Milsetones" && (
           <div>
-            <p>TabB</p>
+            <p>Milsetones</p>
           </div>
         )}
 
         {/* tab C */}
-        {tabs === "tabC" && (
+        {tabs === "Funds" && (
           <div>
-            <p>TabC</p>
+            <p>Funds</p>
+          </div>
+        )}
+        {tabs === "Team" && (
+          <div>
+            <p>Team</p>
+          </div>
+        )}
+        {tabs === "Audit Log" && (
+          <div>
+            <p>Audit Log</p>
+          </div>
+        )}
+        {tabs === "Settings" && (
+          <div>
+            <p>Settings</p>
           </div>
         )}
       </div>
