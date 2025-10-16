@@ -66,11 +66,9 @@ export default function NotificationsPage() {
     <div>
       <Navbar />
       <div className="container mx-auto mt-[1rem]">
-        <h1 className="text-lg font-semibold mb-5">
-          Notification
-        </h1>
+        <h1 className="text-lg mx-2 md:!mx-0 font-semibold mb-5">Notification</h1>
 
-        <div className="space-y-5 mb-5">
+        <div className="space-y-5 mx-2 md:!mx-0 mb-5">
           {notifications.map((notif) => (
             <div
               key={notif.id}
@@ -89,9 +87,7 @@ export default function NotificationsPage() {
                 <div>
                   <p className="text-sm text-gray-800 font-medium">
                     {notif.name}{" "}
-                    <span className="font-medium ">
-                      {notif.action}
-                    </span>
+                    <span className="font-medium ">{notif.action}</span>
                   </p>
                   <p className="text-xs my-2 text-gray-400">{notif.time}</p>
                 </div>

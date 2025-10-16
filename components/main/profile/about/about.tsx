@@ -298,7 +298,7 @@ const ProfileAbout = () => {
                   >
                     <span className="flex items-center gap-2 font-semibold text-white">
                       <User size={20} className="" />
-                      Profile Setting
+                      Account Setups
                     </span>
                     <CaretDown
                       size={18}
@@ -320,7 +320,7 @@ const ProfileAbout = () => {
                           label: "Hobbies and Interests",
                           id: "hobbies-interests",
                         },
-                        { label: "Social Networks", id: "v-pills-family" },
+                        { label: "Pay Account & KYC", id: "v-pills-family" },
                         { label: "Work and Education", id: "v-pills-work-tab" },
                         {
                           label: "Places You've Lived",

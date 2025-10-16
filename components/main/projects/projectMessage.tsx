@@ -13,6 +13,7 @@ import ProjectInnerTabs from "./tabs/chat";
 import ProjectTasks from "./tabs/projectTasks";
 import { IoAtOutline } from "react-icons/io5";
 import FilesTab from "./tabs/filesTab";
+import ProjectInfoTab from "./tabs/projectInfoTab";
 
 const ProjectMessage = () => {
   const [messages, setMessages] = useState([
@@ -145,6 +146,36 @@ const ProjectMessage = () => {
         </svg>
       ),
     },
+    {
+      id: "info",
+      label: "Info",
+      color: "#0088FF",
+      icon: (
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 352 352"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M175.738 248.964V161.094"
+            stroke="#0088FF"
+            stroke-width="21.9675"
+            stroke-linecap="round"
+          />
+          <path
+            d="M175.739 102.515C183.827 102.515 190.384 109.071 190.384 117.16C190.384 125.248 183.827 131.805 175.739 131.805C167.651 131.805 161.094 125.248 161.094 117.16C161.094 109.071 167.651 102.515 175.739 102.515Z"
+            fill="#0088FF"
+          />
+          <path
+            d="M29.2891 175.739C29.2891 106.703 29.2891 72.1843 50.7294 50.7294C72.199 29.2891 106.703 29.2891 175.739 29.2891C244.776 29.2891 279.294 29.2891 300.734 50.7294C322.189 72.199 322.189 106.703 322.189 175.739C322.189 244.776 322.189 279.294 300.734 300.734C279.309 322.189 244.776 322.189 175.739 322.189C106.703 322.189 72.1843 322.189 50.7294 300.734C29.2891 279.309 29.2891 244.776 29.2891 175.739Z"
+            stroke="#0088FF"
+            stroke-width="21.9675"
+          />
+        </svg>
+      ),
+    },
   ];
 
   const [tabs, setTabs] = useState("chat");
@@ -161,7 +192,7 @@ const ProjectMessage = () => {
               className="rounded-full"
             />
             <div>
-              <h1 className="font-semibold flex gap-0.5">
+              <h1 className="font-semibold flex items-center gap-0.5">
                 Paul Molive
                 <FiLock size={10} className="text-gray-400" />
               </h1>
@@ -207,6 +238,7 @@ const ProjectMessage = () => {
         {tabs === "chat" && <ProjectInnerTabs messages={messages} />}
         {tabs === "tasks" && <ProjectTasks />}
         {tabs === "files" && <FilesTab />}
+        {tabs === "info" && <ProjectInfoTab />}
 
         {tabs === "chat" && (
           <div className="p-4 border-t bg-white flex items-center gap-2">

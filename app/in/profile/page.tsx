@@ -1,20 +1,12 @@
 "use client";
 import React, { useRef, useState } from "react";
-import { Footer } from "@/components/main/landing-page/footer";
 import Navbar from "@/components/main/landing-page/navbar/navbar";
-import ActiveUsers from "@/components/main/landing-page/sidebar/activeUsers";
-import Suggestions from "@/components/main/landing-page/sidebar/suggestions";
 import Image from "next/image";
 import ContributionHeatmap from "@/components/main/landing-page/heatMap";
-import { GoShieldCheck } from "react-icons/go";
-import { GrMapLocation } from "react-icons/gr";
-import { BiMessageRoundedDetail } from "react-icons/bi";
-import { TbBrandFeedly } from "react-icons/tb";
-import { MdOutlineDashboard } from "react-icons/md";
 import { FiUsers } from "react-icons/fi";
 import { HiOutlineNewspaper } from "react-icons/hi";
 import { LuArrowUpToLine } from "react-icons/lu";
-import { FaChevronLeft, FaChevronRight, FaFire, FaSmile } from "react-icons/fa";
+import { FaFire, FaSmile } from "react-icons/fa";
 import { TbDots } from "react-icons/tb";
 
 import { FaThumbsUp, FaHeart } from "react-icons/fa";
@@ -22,24 +14,12 @@ import { FaHandsClapping } from "react-icons/fa6";
 import { BiCommentDetail } from "react-icons/bi";
 import { BiRepost } from "react-icons/bi";
 import { LuSend } from "react-icons/lu";
-import { IoWalletOutline } from "react-icons/io5";
-import ProfileAbout from "@/components/main/profile/about/about";
 import ProfileIn from "@/components/main/profile/otherProfile";
+import InReactionModal from "@/components/main/landing-page/in/inReactionModal";
 
-const UserProfile = () => {
-  const galleryImages = [
-    "g1.jpg",
-    "g2.jpg",
-    "g3.jpg",
-    "g4.jpg",
-    "g5.jpg",
-    "g6.jpg",
-    "g7.jpg",
-    "g8.jpg",
-    "g9.jpg",
-  ];
-
+const InProfile = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [openLikesModal, setOpenLikesModal] = useState(false);
 
   const [activeTab, setActiveTab] = useState("Feeds");
 
@@ -123,25 +103,6 @@ const UserProfile = () => {
       ),
       label: "Spaces",
     },
-    // {
-    //   icon: (isActive: boolean) => (
-    //     <svg
-    //       width={30}
-    //       height={30}
-    //       viewBox="0 0 163 163"
-    //       fill="none"
-    //       xmlns="http://www.w3.org/2000/svg"
-    //       className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
-    //     >
-    //       <path
-    //         d="M0 135.562H162.676M0 157.252H162.676M27.1126 43.3795V27.112H43.3802M119.295 27.112H135.563V43.3795M27.1126 75.9146V92.1822H43.3802M119.295 92.1822H135.563V75.9146M81.3378 81.3372C75.5852 81.3372 70.0683 79.052 66.0006 74.9843C61.9329 70.9166 59.6477 65.3996 59.6477 59.6471C59.6477 53.8945 61.9329 48.3776 66.0006 44.3099C70.0683 40.2422 75.5852 37.957 81.3378 37.957C87.0904 37.957 92.6073 40.2422 96.675 44.3099C100.743 48.3776 103.028 53.8945 103.028 59.6471C103.028 65.3996 100.743 70.9166 96.675 74.9843C92.6073 79.052 87.0904 81.3372 81.3378 81.3372ZM16.2676 5.42188H146.408C149.284 5.42188 152.043 6.56447 154.077 8.59831C156.11 10.6322 157.253 13.3906 157.253 16.2669V103.027C157.253 105.904 156.11 108.662 154.077 110.696C152.043 112.73 149.284 113.872 146.408 113.872H16.2676C13.3913 113.872 10.6328 112.73 8.59896 110.696C6.56512 108.662 5.42252 105.904 5.42252 103.027V16.2669C5.42252 13.3906 6.56512 10.6322 8.59896 8.59831C10.6328 6.56447 13.3913 5.42188 16.2676 5.42188Z"
-    //         stroke="currentColor"
-    //         strokeWidth="10.845"
-    //       />
-    //     </svg>
-    //   ),
-    //   label: "Finance",
-    // },
     {
       icon: (isActive: boolean) => (
         <HiOutlineNewspaper
@@ -160,14 +121,6 @@ const UserProfile = () => {
       ),
       label: "Top Contributors",
     },
-  ];
-
-  const reactions = [
-    { icon: <FaThumbsUp className="text-blue-500" />, label: "Like" },
-    { icon: <FaHeart className="text-red-500" />, label: "Love" },
-    { icon: <FaHandsClapping className="text-yellow-500" />, label: "Clap" },
-    { icon: <FaFire className="text-orange-500" />, label: "Fire" },
-    { icon: <FaSmile className="text-amber-500" />, label: "Nice" },
   ];
 
   return (
@@ -308,51 +261,57 @@ const UserProfile = () => {
                       <div className="relative my-6">
                         <button
                           onClick={() => scroll("left")}
-                          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-1"
+                          className=" bg-white rounded-full flex items-center justify-center absolute left-0 top-1/2 -translate-y-1/2 z-10 p-1 group "
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            width={35}
-                            height={35}
+                            width={30}
+                            height={30}
                             viewBox="0 0 24 24"
-                            className="text-gray-500 transform transition-transform duration-300 ease-in-out group-hover:scale-125"
+                            className="text-gray-500 "
                           >
                             <path
                               fill="none"
                               stroke="currentColor"
                               strokeLinecap="round"
                               strokeLinejoin="round"
+                              strokeWidth={1.5}
                               d="m14 7l-5 5l5 5"
-                              strokeWidth={1}
-                            ></path>
+                            />
                           </svg>
                         </button>
 
                         <button
                           onClick={() => scroll("right")}
-                          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-1"
+                          className=" bg-white rounded-full flex items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 z-10 p-1 group "
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            width={35}
-                            height={35}
+                            width={30}
+                            height={30}
                             viewBox="0 0 24 24"
-                            className="text-gray-500 transform transition-transform duration-300 ease-in-out group-hover:scale-125"
+                            className="text-gray-500 "
                           >
                             <path
                               fill="none"
                               stroke="currentColor"
                               strokeLinecap="round"
                               strokeLinejoin="round"
+                              strokeWidth={1.5}
                               d="m10 17l5-5l-5-5"
-                              strokeWidth={1}
-                            ></path>
+                            />
                           </svg>
                         </button>
 
                         <div
                           ref={scrollRef}
-                          className="relative bg-white flex justify-around items-center rounded-xl shadow-sm px-6 py-4 overflow-x-auto scrollbar-hide scroll-smooth"
+                          className="
+                            relative flex items-center gap-4 
+                            bg-white rounded-xl shadow-sm
+                            px-4 sm:!px-6 py-4
+                            overflow-x-auto hide-scrollbar scroll-smooth
+                            md:!justify-center
+                          "
                         >
                           {items.map((item, idx) => {
                             const isActive = activeTab === item.label;
@@ -360,14 +319,14 @@ const UserProfile = () => {
                               <div
                                 key={idx}
                                 onClick={() => setActiveTab(item.label)}
-                                className="relative cursor-pointer flex flex-col items-center w-[80px]"
+                                className="relative cursor-pointer flex flex-col items-center w-[70px] sm:w-[80px]"
                               >
                                 <div
                                   className={`${
                                     isActive
                                       ? "bg-[#157BFF]"
                                       : "bg-[#157BFF]/10"
-                                  } w-[60px] h-[60px] flex justify-center items-center rounded-xl transition-all duration-200`}
+                                  } w-[55px] sm:w-[60px] h-[55px] sm:h-[60px] flex justify-center items-center rounded-xl transition-all duration-200`}
                                 >
                                   <span className="transition-colors duration-200">
                                     {typeof item.icon === "function"
@@ -381,7 +340,7 @@ const UserProfile = () => {
                                     isActive
                                       ? "text-[#157BFF]"
                                       : "text-gray-500"
-                                  } font-semibold whitespace-nowrap text-center mt-2 text-xs transition-colors duration-200`}
+                                  } font-semibold whitespace-nowrap text-center mt-2 text-[10px] sm:text-xs transition-colors duration-200`}
                                 >
                                   {item.label}
                                 </p>
@@ -435,7 +394,10 @@ const UserProfile = () => {
                             </div>
 
                             <div className="py-2.5 my-2.5 flex items-center  justify-between border-b-[#e5e5e5] border-b">
-                              <div className="flex items-center gap-2">
+                              <div
+                                onClick={() => setOpenLikesModal(true)}
+                                className="flex cursor-pointer items-center gap-2"
+                              >
                                 <div className="flex items-center">
                                   <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-white border-2 border-white z-30">
                                     <FaThumbsUp className="w-2.5 h-2.5" />
@@ -563,9 +525,12 @@ const UserProfile = () => {
             </div>
           </div>
         </div>
+        {openLikesModal && (
+          <InReactionModal setOpenLikesModal={setOpenLikesModal} />
+        )}
       </main>
     </div>
   );
 };
 
-export default UserProfile;
+export default InProfile;

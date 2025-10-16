@@ -27,6 +27,7 @@ import apiInstance from "@/api/apiInstance";
 import { toast } from "sonner";
 import TopContributorsTab from "@/components/main/profile/topContributors/topContributors";
 import { LuCalendarFold } from "react-icons/lu";
+import ReferralSideTab from "@/components/main/profile/side-card/referralSideTab";
 
 interface ImageUploadRef {
   openFileDialog: () => void;
@@ -253,7 +254,6 @@ const UserProfile = () => {
           <path
             fill="none"
             stroke="currentColor"
-
             strokeWidth={1}
             d="M18.385 9.083V8.07q.717.15 1.45.328q.732.178 1.524.378q.324.08.5.351q.177.27.122.593l-1.466 7.962q-.106.59-.553.953T18.925 19H5.152q-.59 0-1.025-.373t-.54-.944L2.025 9.72q-.056-.323.118-.605q.174-.283.498-.364q.734-.2 1.428-.356t1.373-.287V9.12l-1.188.251q-.6.126-1.22.278L4.46 17.5q.038.212.22.356t.395.144h13.85q.212 0 .394-.144t.222-.356l1.425-7.85q-.658-.171-1.306-.307t-1.275-.26M16 9.065q0-.427-.125-.829t-.394-.728q-.39-.506-.63-1.098q-.24-.59-.24-1.226q0-.401.105-.782q.105-.38.309-.74l.152-.27q.09-.177.291-.233q.201-.055.378.035t.233.289t-.035.375l-.177.294q-.13.244-.202.52t-.073.551q0 .427.154.82q.154.391.423.718q.41.468.62 1.05q.211.581.211 1.197q0 .42-.095.811q-.096.39-.26.77l-.159.326q-.09.177-.288.233t-.375-.034t-.233-.289t.035-.375l-.152-.313q.112-.264.167-.53T16 9.066m-3.892 0q0-.428-.125-.83t-.395-.728q-.39-.506-.63-1.098q-.239-.59-.239-1.226q0-.401.105-.782t.309-.74l.151-.27q.091-.176.292-.232t.378.034t.232.289t-.034.375l-.177.294q-.13.244-.203.51q-.072.267-.072.542q0 .427.154.829t.423.728q.41.468.62 1.05q.21.581.21 1.197q0 .42-.094.811q-.096.39-.261.77l-.158.326q-.09.177-.288.233t-.375-.034t-.233-.289t.035-.375l.152-.313q.111-.264.167-.53t.056-.541m-3.887-.02q0-.427-.128-.819q-.127-.392-.397-.72q-.41-.486-.64-1.077q-.229-.591-.229-1.226q0-.402.102-.792t.312-.75l.157-.27q.09-.176.292-.232q.2-.056.377.034t.233.289t-.034.375l-.177.294q-.131.239-.206.508t-.075.544q0 .427.154.829t.423.728q.41.468.62 1.05q.21.581.21 1.197q0 .42-.095.811q-.095.39-.26.77l-.152.326q-.09.177-.292.233q-.2.056-.377-.034q-.177-.091-.233-.289t.035-.375l.157-.313q.112-.264.168-.54q.055-.276.055-.55"
           />
@@ -362,7 +362,7 @@ const UserProfile = () => {
           className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
         />
       ),
-      label: "Top Creators",
+      label: "Top Contributors",
     },
   ];
 
@@ -408,9 +408,9 @@ const UserProfile = () => {
         <div className="relative">
           <div>
             <div className="relative"></div>
-            <div className="content-inner " id="page_layout">
-              <div className="container mx-auto">
-                <div className="lg:grid block grid-cols-8 gap-4">
+          
+              <div className="container mt-[1rem] md:!mt-[3rem]  mx-auto">
+                <div className="lg:grid mx-2 md:!mx-0 block grid-cols-8 gap-4">
                   <div className="w-full col-span-6 ">
                     <div className="w-full mx-auto">
                       <div className="w-full min-h-[20.5rem] rounded-lg bg-white shadow-md">
@@ -455,7 +455,7 @@ const UserProfile = () => {
                                     </span>
                                   </span>
 
-                                  <span className="flex whitespace-nowrap text-sm sm:text-xs flex-wrap items-center md:items-start gap-1.5">
+                                  <span className="flex whitespace-nowrap text-sm sm:!text-xs flex-wrap items-center md:!items-start gap-1.5">
                                     {userTags.map(
                                       (tag: string, index: number) => (
                                         <p
@@ -469,9 +469,7 @@ const UserProfile = () => {
                                   </span>
                                 </div>
 
-                                <div className="mx-auto lg:hidden block">
-                                  <AddHeatmapModal />
-                                </div>
+                  
 
                                 <div className="flex w-full items-start justify-center">
                                   <div className="flex text-black items-center mt-1.5 gap-8">
@@ -608,7 +606,9 @@ const UserProfile = () => {
                         {activeTab === "Followed" && <FollowedTab />}
                         {activeTab === "Link" && <ProfileLinks />}
                         {activeTab === "Heatmap" && <HeatmapConnections />}
-                        {activeTab === "Top Creators" && <TopContributorsTab />}
+                        {activeTab === "Top Contributors" && (
+                          <TopContributorsTab />
+                        )}
                         {activeTab === "Spaces" && (
                           <ProfileSpace Spaces={myProjects} />
                         )}
@@ -623,11 +623,12 @@ const UserProfile = () => {
                       <SimilarProfiles />
                       <TrendingProjects />
                       <TrendingSpaces />
+                      <ReferralSideTab />
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            
           </div>
         </div>
       </main>

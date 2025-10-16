@@ -9,8 +9,7 @@ import { TbMessages } from "react-icons/tb";
 const ProjectChatSidebar = () => {
   const chatList = [
     {
-      name: "Paul Molive",
-      message: "Lorem ipsum",
+      name: "Joshua Israel Enterprises Limited",
       time: "03:20 PM",
       img: "/images/user/orgImg.png",
       active: true,
@@ -18,35 +17,30 @@ const ProjectChatSidebar = () => {
     },
     {
       name: "Paige Turner",
-      message: "Lorem ipsum",
       time: "01:10 PM",
       img: "/images/user/userImg.jpg",
       private: false,
     },
     {
       name: "Ira Membrit",
-      message: "Lorem ipsum",
       time: "01:10 PM",
       img: "/images/user/orgImg.png",
       private: true,
     },
     {
       name: "John Travolta",
-      message: "Lorem ipsum",
       time: "05:09 AM",
       img: "/images/user/userImg.jpg",
       private: false,
     },
     {
       name: "Barb Ackue",
-      message: "Lorem ipsum",
       time: "01:10 PM",
       img: "/images/user/orgImg.png",
       private: true,
     },
     {
       name: "Maya Didas",
-      message: "Lorem ipsum",
       time: "01:10 PM",
       img: "/images/user/userImg.jpg",
       private: false,
@@ -94,11 +88,8 @@ const ProjectChatSidebar = () => {
                   <p className="text-sm font-medium text-gray-800">
                     {chat.name}
                   </p>
-                  <p className="text-xs text-gray-500 truncate w-[150px]">
-                    {chat.message}
-                  </p>
                   {chat.private && (
-                    <p className="p-0.5 text-[10px] rounded-[2px] bg-[#E2F7E8] text-[#525256] absolute top-1 right-1">
+                    <p className="p-0.5 text-[8px] rounded-[2px] bg-[#E2F7E8] text-[#525256] absolute top-0 right-1">
                       Contributor
                     </p>
                   )}
