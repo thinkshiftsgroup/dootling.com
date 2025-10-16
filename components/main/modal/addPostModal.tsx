@@ -89,7 +89,7 @@ export default function AddPostModal() {
             ${isOpen ? "animate-in fade-in slide-in-from-top-4" : "animate-out fade-out slide-out-to-top"}
             duration-200`}>
                             {/* Modal Header */}
-                            <div className="flex justify-between items-center px-3 md:px-6 py-2 border-b border-gray-300">
+                            <div className="flex justify-between items-center px-3 sm:px-6 py-2 border-b border-gray-300">
                                 <button
                                     onClick={closeModal}
                                     className="text-gray-800 hover:text-gray-900 font-semibold"
@@ -108,7 +108,7 @@ export default function AddPostModal() {
                             </div>
 
                             {/* Modal Content */}
-                            <div className="p-3 md:p-6 py-3">
+                            <div className="p-3 sm:p-6 py-3">
                                 <div className="flex gap-2">
                                     {/* User Avatar */}
                                     <div className="flex-shrink-0 items-center flex flex-col">
@@ -139,7 +139,7 @@ export default function AddPostModal() {
                                     {/* Content Area */}
                                     <div className="flex-1">
                                         <div className="flex items-center mb-0">
-                                            <span className="font-semibold text-base md:text-lg text-gray-900">John Paul</span>
+                                            <span className="font-semibold text-base sm:text-lg text-gray-900">John Paul</span>
                                             <span className="text-gray-400 me-1"><svg xmlns="http://www.w3.org/2000/svg" width={18} height={18} viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="m10 17l5-5m0 0l-5-5"></path></svg></span>
                                             {/* <input
                                             type="text"
@@ -195,28 +195,28 @@ export default function AddPostModal() {
                                         {/* Action Icons */}
                                         <div className="flex gap-4 mt-4 mb-[32px]">
                                             <button className="text-gray-400 hover:text-gray-600 transition-colors">
-                                                <svg className="w-4 h-4 md:w-5 md:h-5" xmlns="http://www.w3.org/2000/svg" width={18} height={18} viewBox="0 0 512 512"><path fill="none" stroke="currentColor" strokeLinejoin="round" strokeWidth={32} d="M432 112V96a48.14 48.14 0 0 0-48-48H64a48.14 48.14 0 0 0-48 48v256a48.14 48.14 0 0 0 48 48h16"></path><rect width={400} height={336} x={96} y={128} fill="none" stroke="currentColor" strokeLinejoin="round" strokeWidth={32} rx={45.99} ry={45.99}></rect><ellipse cx={372.92} cy={219.64} fill="none" stroke="currentColor" strokeMiterlimit={10} strokeWidth={32} rx={30.77} ry={30.55}></ellipse><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={32} d="M342.15 372.17L255 285.78a30.93 30.93 0 0 0-42.18-1.21L96 387.64M265.23 464l118.59-117.73a31 31 0 0 1 41.46-1.87L496 402.91"></path></svg>
+                                                <svg className="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width={18} height={18} viewBox="0 0 512 512"><path fill="none" stroke="currentColor" strokeLinejoin="round" strokeWidth={32} d="M432 112V96a48.14 48.14 0 0 0-48-48H64a48.14 48.14 0 0 0-48 48v256a48.14 48.14 0 0 0 48 48h16"></path><rect width={400} height={336} x={96} y={128} fill="none" stroke="currentColor" strokeLinejoin="round" strokeWidth={32} rx={45.99} ry={45.99}></rect><ellipse cx={372.92} cy={219.64} fill="none" stroke="currentColor" strokeMiterlimit={10} strokeWidth={32} rx={30.77} ry={30.55}></ellipse><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={32} d="M342.15 372.17L255 285.78a30.93 30.93 0 0 0-42.18-1.21L96 387.64M265.23 464l118.59-117.73a31 31 0 0 1 41.46-1.87L496 402.91"></path></svg>
                                             </button>
                                             <button className="text-gray-400 hover:text-gray-600 transition-colors">
-                                                <svg className="w-4 h-4 md:w-5 md:h-5" xmlns="http://www.w3.org/2000/svg" width={18} height={18} viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeWidth={1.9} d="M3 12v6.967c0 2.31 2.534 3.769 4.597 2.648l3.203-1.742M3 8V5.033c0-2.31 2.534-3.769 4.597-2.648l12.812 6.968a2.998 2.998 0 0 1 0 5.294l-6.406 3.484"></path></svg>
+                                                <svg className="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width={18} height={18} viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeWidth={1.9} d="M3 12v6.967c0 2.31 2.534 3.769 4.597 2.648l3.203-1.742M3 8V5.033c0-2.31 2.534-3.769 4.597-2.648l12.812 6.968a2.998 2.998 0 0 1 0 5.294l-6.406 3.484"></path></svg>
                                             </button>
                                             <button className="text-gray-400 hover:text-gray-600 transition-colors">
-                                                <svg className="w-4 h-4 md:w-5 md:h-5" xmlns="http://www.w3.org/2000/svg" width={18} height={18} viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 13a5 5 0 0 0 8 1l4-4a1 1 0 0 0-7-7l-2 2m3 6a5 5 0 0 0-8-1l-4 4a1 1 0 0 0 7 7l2-2"></path></svg>
+                                                <svg className="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width={18} height={18} viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 13a5 5 0 0 0 8 1l4-4a1 1 0 0 0-7-7l-2 2m3 6a5 5 0 0 0-8-1l-4 4a1 1 0 0 0 7 7l2-2"></path></svg>
                                             </button>
                                             <button className="text-gray-400 hover:text-gray-600 transition-colors">
-                                                <svg className="w-4 h-4 md:w-5 md:h-5" xmlns="http://www.w3.org/2000/svg" width={18} height={18} viewBox="0 0 48 48"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M24.707 9.565L9.858 24.415a9 9 0 0 0 0 12.727v0a9 9 0 0 0 12.728 0l17.678-17.677a6 6 0 0 0 0-8.486v0a6 6 0 0 0-8.486 0L14.101 28.657a3 3 0 0 0 0 4.243v0a3 3 0 0 0 4.242 0l14.85-14.85"></path></svg>
+                                                <svg className="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width={18} height={18} viewBox="0 0 48 48"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M24.707 9.565L9.858 24.415a9 9 0 0 0 0 12.727v0a9 9 0 0 0 12.728 0l17.678-17.677a6 6 0 0 0 0-8.486v0a6 6 0 0 0-8.486 0L14.101 28.657a3 3 0 0 0 0 4.243v0a3 3 0 0 0 4.242 0l14.85-14.85"></path></svg>
                                             </button>
                                             <button className="text-gray-400 hover:text-gray-600 transition-colors">
-                                                <Smile className="w-4 h-4 md:w-5 md:h-5" />
+                                                <Smile className="w-4 h-4 sm:w-5 sm:h-5" />
                                             </button>
                                             {/* <button className="text-gray-400 hover:text-gray-600 transition-colors">
-                                            <AlignLeft className="w-4 h-4 md:w-5 md:h-5" />
+                                            <AlignLeft className="w-4 h-4 sm:w-5 sm:h-5" />
                                         </button>
                                         <button className="text-gray-400 hover:text-gray-600 transition-colors">
-                                            <MessageSquare className="w-4 h-4 md:w-5 md:h-5" />
+                                            <MessageSquare className="w-4 h-4 sm:w-5 sm:h-5" />
                                         </button> */}
                                             <button className="text-gray-400 hover:text-gray-600 transition-colors">
-                                                <svg className="w-4 h-4 md:w-5 md:h-5" xmlns="http://www.w3.org/2000/svg" width={18} height={18} viewBox="0 0 24 24"><path fill="currentColor" d="M12.004 11.73q.667 0 1.14-.475t.472-1.143t-.476-1.14t-1.143-.472t-1.14.476t-.472 1.143t.475 1.14t1.144.472M12 19.677q2.82-2.454 4.458-4.991t1.638-4.39q0-2.744-1.737-4.53Q14.62 3.981 12 3.981T7.641 5.766t-1.737 4.53q0 1.852 1.638 4.39T12 19.677m0 1.342q-3.525-3.117-5.31-5.814q-1.786-2.697-1.786-4.909q0-3.173 2.066-5.234Q9.037 3 12 3t5.03 2.062q2.066 2.061 2.066 5.234q0 2.212-1.785 4.909q-1.786 2.697-5.311 5.814m0-10.903" strokeWidth={0.8} stroke="currentColor"></path></svg>
+                                                <svg className="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width={18} height={18} viewBox="0 0 24 24"><path fill="currentColor" d="M12.004 11.73q.667 0 1.14-.475t.472-1.143t-.476-1.14t-1.143-.472t-1.14.476t-.472 1.143t.475 1.14t1.144.472M12 19.677q2.82-2.454 4.458-4.991t1.638-4.39q0-2.744-1.737-4.53Q14.62 3.981 12 3.981T7.641 5.766t-1.737 4.53q0 1.852 1.638 4.39T12 19.677m0 1.342q-3.525-3.117-5.31-5.814q-1.786-2.697-1.786-4.909q0-3.173 2.066-5.234Q9.037 3 12 3t5.03 2.062q2.066 2.061 2.066 5.234q0 2.212-1.785 4.909q-1.786 2.697-5.311 5.814m0-10.903" strokeWidth={0.8} stroke="currentColor"></path></svg>
                                             </button>
                                         </div>
 
@@ -231,10 +231,10 @@ export default function AddPostModal() {
                             </div>
 
                             {/* Modal Footer */}
-                            <div className="flex justify-between items-center px-3 md:px-6 py-4">
+                            <div className="flex justify-between items-center px-3 sm:px-6 py-4">
                                 <Dropdown
                                     trigger={
-                                        <span className="text-base md:text-lg text-gray-400 font-medium">Anyone can reply and quote</span>
+                                        <span className="text-base sm:text-lg text-gray-400 font-medium">Anyone can reply and quote</span>
                                     }
 
 
