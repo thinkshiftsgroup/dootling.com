@@ -164,7 +164,7 @@ const AddHeatmapModal = () => {
                       Date
                     </label>
                     <input
-                      type="text"
+                      type="date"
                       value={date}
                       onChange={(e) => setDate(e.target.value)}
                       className="w-full border border-[#f1f1f1] rounded-md text-sm p-2 focus:outline-none focus:border-blue-500 transition-colors"
