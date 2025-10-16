@@ -139,7 +139,7 @@ const HeatmapConnections = () => {
                 </div>
               </div>
             </div>
-            <p className="text-gray-600 leading-relaxed max-w-3xl mb-8">
+            <p className="text-gray-600 leading-relaxed max-w-3xl sm:mb-8 mb-4">
               Manage Connections To Your Work Apps For Automatic Contribution
               Tracking On Your Profile. We Only Track{" "}
               <span className="font-semibold text-gray-900">
@@ -152,23 +152,27 @@ const HeatmapConnections = () => {
               {connections.map((connection, index) => (
                 <div
                   key={connection.name}
-                  className={`flex items-center md:!flex-row !flex-col gap-0 lg:gap-2 justify-between py-6 px-5 ${
-                    index !== connections.length - 1
-                      ? "border-b border-gray-100"
-                      : ""
-                  }`}
+                  className={`flex items-center md:!flex-row !flex-col gap-0 lg:gap-2 justify-between py-6 px-5 ${index !== connections.length - 1
+                    ? "border-b border-gray-100"
+                    : ""
+                    }`}
                 >
                   <div className="flex items-center gap-6 flex-1">
                     <div className="flex-shrink-0">{connection.icon}</div>
                     <div>
-                      <h3 className="text-xl font-semibold text-gray-900 mb-1">
-                        {connection.name}
-                      </h3>
+                      <div className="flex justify-between items-center">
+                        <h3 className="text-xl font-semibold text-gray-900 mb-1">
+                          {connection.name}
+                        </h3>
+                        <button className="text[#157BFF] hover:text-blue-700 font-medium transition-colors sm:hidden">
+                          Revoke
+                        </button>
+                      </div>
                       <p className="text-gray-500">{connection.description}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-8">
-                    <div className="text-right">
+                    <div className="text-right flex sm:block justify-between gap-8 flex-1">
                       <p className="text-gray-500 mb-1">
                         Granted {connection.granted}
                       </p>
@@ -176,7 +180,7 @@ const HeatmapConnections = () => {
                         {connection.contributions}
                       </p>
                     </div>
-                    <button className="text[#157BFF] hover:text-blue-700 font-medium transition-colors">
+                    <button className="text[#157BFF] hover:text-blue-700 font-medium transition-colors hidden sm:block">
                       Revoke
                     </button>
                   </div>

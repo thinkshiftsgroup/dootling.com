@@ -114,7 +114,7 @@ const Navbar = ({ fixed }: NavbarProps) => {
     >
       <div className="container mx-auto flex items-center justify-between">
         <div className="flex items-center justify-between w-2/6">
-          <div className="flex items-center relative lg:pb-2 pb-0">
+          <div onClick={() => router.push("/")} className="flex items-center relative lg:pb-2 pb-0 cursor-pointer">
             <Image
               width={60}
               height={60}

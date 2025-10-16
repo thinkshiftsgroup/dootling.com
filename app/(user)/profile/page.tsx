@@ -15,7 +15,7 @@ import ProfileAbout from "@/components/main/profile/about/about";
 import HeatmapConnections from "@/components/main/profile/heatMap";
 import AddHeatmapModal from "@/components/main/profile/addHeatMapModal";
 import ProfileSpace from "@/components/main/space/profileSpace";
-import ProfileLinks from "@/components/main/profile/links";
+import ProfileLinks from "@/components/main/profile/link/links";
 import ProjectDashboard from "@/components/main/profile/project/projects";
 import SimilarProfiles from "@/components/main/profile/side-card/similarProfiles";
 import TrendingProjects from "@/components/main/profile/side-card/tredingProjects";
@@ -56,25 +56,27 @@ const ProfileImageUploadTrigger = ({
   handleImageUpload,
 }: ProfileImageUploadTriggerProps) => {
   const uploadRef = useRef<ImageUploadRef | null>(null);
-  const imageSize = 96;
+
   return (
-    <div className="relative group w-80 h-20 lg:w-24 lg:h-24">
+    <div className="relative group w-[120px] h-[120px] ">
       {profilePhotoUrl ? (
-        <Image
-          src={profilePhotoUrl || "/placeholder.svg"}
-          alt="Profile"
-          width={imageSize}
-          height={imageSize}
-          className="w-full h-full rounded-md object-cover"
-        />
+        <div className="w-[120px] h-full rounded-md bg-[#157BFF] flex items-center justify-center text-white text-7xl font-bold lg:text-8xl">
+          <Image
+            src={profilePhotoUrl || "/placeholder.svg"}
+            alt="Profile"
+            width={120}
+            height={120}
+            className="w-[120px] h-full rounded-md object-cover"
+          />
+        </div>
       ) : (
-        <div className="w-full h-full rounded-md bg-[#157BFF] flex items-center justify-center text-white text-2xl font-bold lg:text-3xl">
+        <div className="w-[120px] h-full rounded-md bg-[#157BFF] flex items-center justify-center text-white text-7xl font-bold lg:text-8xl">
           {userInitials}
         </div>
       )}
 
       <div
-        className="absolute inset-0 bg-black/50 rounded-none flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+        className="absolute inset-0 bg-black/50 rounded-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer w-[120px]"
         onClick={() => uploadRef.current?.openFileDialog()}
         title="Change Profile Photo"
       >
@@ -246,9 +248,8 @@ const UserProfile = () => {
           width={30}
           height={30}
           viewBox="0 0 24 24"
-          className={` font-bold ${
-            isActive ? "text-white" : "text-[#157BFF]/50"
-          }`}
+          className={` font-bold ${isActive ? "text-white" : "text-[#157BFF]/50"
+            }`}
         >
           <path
             fill="none"
@@ -334,7 +335,7 @@ const UserProfile = () => {
           </g>
         </svg>
       ),
-      label: "Links",
+      label: "Link",
     },
     {
       icon: (isActive: boolean) => (
@@ -392,13 +393,13 @@ const UserProfile = () => {
     );
   }
 
-  if (!user) {
-    return (
-      <div className="text-center p-10 text-lg font-medium">
-        Please log in to view this page.
-      </div>
-    );
-  }
+  // if (!user) {
+  //   return (
+  //     <div className="text-center p-10 text-lg font-medium">
+  //       Please log in to view this page.
+  //     </div>
+  //   );
+  // }
 
   return (
     <div>
@@ -572,11 +573,10 @@ const UserProfile = () => {
                                 className="relative cursor-pointer flex flex-col items-center w-[70px] sm:w-[80px]"
                               >
                                 <div
-                                  className={`${
-                                    isActive
-                                      ? "bg-[#157BFF]"
-                                      : "bg-[#157BFF]/10"
-                                  } w-[55px] sm:w-[60px] h-[55px] sm:h-[60px] flex justify-center items-center rounded-xl transition-all duration-200`}
+                                  className={`${isActive
+                                    ? "bg-[#157BFF]"
+                                    : "bg-[#157BFF]/10"
+                                    } w-[55px] sm:w-[60px] h-[55px] sm:h-[60px] flex justify-center items-center rounded-xl transition-all duration-200`}
                                 >
                                   <span className="transition-colors duration-200">
                                     {typeof item.icon === "function"
@@ -586,11 +586,10 @@ const UserProfile = () => {
                                 </div>
 
                                 <p
-                                  className={`${
-                                    isActive
-                                      ? "text-[#157BFF]"
-                                      : "text-gray-500"
-                                  } font-semibold whitespace-nowrap text-center mt-2 text-[10px] sm:text-xs transition-colors duration-200`}
+                                  className={`${isActive
+                                    ? "text-[#157BFF]"
+                                    : "text-gray-500"
+                                    } font-semibold whitespace-nowrap text-center mt-2 text-[10px] sm:text-xs transition-colors duration-200`}
                                 >
                                   {item.label}
                                 </p>
@@ -605,7 +604,7 @@ const UserProfile = () => {
                         {activeTab === "Account" && <ProfileAbout />}
                         {activeTab === "Finance" && <ProfileFinance />}
                         {activeTab === "Followed" && <FollowedTab />}
-                        {activeTab === "Links" && <ProfileLinks />}
+                        {activeTab === "Link" && <ProfileLinks />}
                         {activeTab === "Heatmap" && <HeatmapConnections />}
                         {activeTab === "Top Contributors" && (
                           <TopContributorsTab />

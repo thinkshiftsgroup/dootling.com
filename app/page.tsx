@@ -5,6 +5,7 @@ import ActiveUsers from "@/components/main/landing-page/sidebar/activeUsers";
 import Suggestions from "@/components/main/landing-page/sidebar/suggestions";
 import { useState } from "react";
 import ReactionModal from "@/components/main/modal/reacttionModal";
+import AddPostModal from "@/components/main/modal/addPostModal";
 
 import { BiCommentDetail } from "react-icons/bi";
 import { BiRepost } from "react-icons/bi";
@@ -13,6 +14,7 @@ import { FaHeart, FaThumbsUp } from "react-icons/fa";
 import { FaHandsClapping } from "react-icons/fa6";
 import { TbDots } from "react-icons/tb";
 import StoriesLanding from "@/components/main/landing-page/index/stories";
+import SimilarProfiles from "@/components/main/profile/side-card/similarProfiles";
 
 export default function Home() {
   const [openLikesModal, setOpenLikesModal] = useState(false);
@@ -32,142 +34,7 @@ export default function Home() {
                 >
                   <div id="content">
                     <StoriesLanding />
-                    <div className="flex flex-wrap pb-4">
-                      <div className="w-full">
-                        <div
-                          id="post-modal-data"
-                          className="rounded-lg shadow bg-white create-post-modal"
-                        >
-                          <div className="flex justify-between items-center p-4 border-b border-[#f1f1f1]">
-                            <div className="header-title">
-                              <h5 className="text-xl font-semibold">
-                                Add a Post
-                              </h5>
-                            </div>
-                            <div className="relative">
-                              <div
-                                className="leading-none cursor-pointer"
-                                id="post-option"
-                              >
-                                <i className="ph-bold ph-dots-three text-3xl text-body"></i>
-                              </div>
-                              <div
-                                className="hidden absolute right-0 mt-2 bg-white rounded-lg shadow-lg"
-                                aria-labelledby="post-option"
-                              >
-                                <a
-                                  className="block px-4 py-2 hover:bg-gray-100"
-                                  href="#"
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#post-modal"
-                                >
-                                  Check in
-                                </a>
-                                <a
-                                  className="block px-4 py-2 hover:bg-gray-100"
-                                  href="#"
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#post-modal"
-                                >
-                                  Live Video
-                                </a>
-                                <a
-                                  className="block px-4 py-2 hover:bg-gray-100"
-                                  href="#"
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#post-modal"
-                                >
-                                  GIF
-                                </a>
-                                <a
-                                  className="block px-4 py-2 hover:bg-gray-100"
-                                  href="#"
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#post-modal"
-                                >
-                                  Watch Party
-                                </a>
-                                <a
-                                  className="block px-4 py-2 hover:bg-gray-100"
-                                  href="#"
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#post-modal"
-                                >
-                                  Play with Friend
-                                </a>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="p-4">
-                            <div>
-                              <form
-                                className="post-text w-full"
-                                action="javascript:void();"
-                              >
-                                <input
-                                  type="text"
-                                  className="w-full rounded p-0 border-0"
-                                  placeholder="Write And Share Your Post With Your Friends..."
-                                />
-                              </form>
-                            </div>
-                          </div>
-                          <div className="bg-blue-50 rounded-b-lg p-4">
-                            <div className="flex items-center justify-between flex-wrap gap-3">
-                              <div className="create-post-data">
-                                <ul className="flex items-center gap-4 m-0 p-0 list-none">
-                                  <li>
-                                    <a
-                                      href="javascript:void(0);"
-                                      className="text-body"
-                                    >
-                                      <i className="ph ph-camera text-3xl"></i>
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a
-                                      href="javascript:void(0);"
-                                      className="text-body"
-                                    >
-                                      <i className="ph ph-user-plus text-3xl"></i>
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a
-                                      href="javascript:void(0);"
-                                      className="text-body"
-                                    >
-                                      <i className="ph ph-map-pin text-3xl"></i>
-                                    </a>
-                                  </li>
-                                </ul>
-                              </div>
-                              <div>
-                                <ul className="flex items-center gap-4 m-0 p-0 list-none">
-                                  <li>
-                                    <a
-                                      href="javascript:void(0);"
-                                      className="text-body font-medium"
-                                    >
-                                      Discard
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <button
-                                      type="button"
-                                      className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                                    >
-                                      Post
-                                    </button>
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
+                    <AddPostModal />
                     <div className="flex flex-wrap social-post-container pb-4">
                       {Array.from({ length: 3 }).map((_, i) => (
                         <div
@@ -396,8 +263,9 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="w-full hidden lg:block lg:w-1/3 px-4">
-                  <ActiveUsers />
+                <div className="w-full hidden lg:block lg:w-1/3 ps-5">
+                  {/* <ActiveUsers /> */}
+                  <SimilarProfiles />
                   <Suggestions />
                 </div>
               </div>
