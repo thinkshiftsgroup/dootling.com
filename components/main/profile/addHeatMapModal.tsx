@@ -83,7 +83,7 @@ const AddHeatmapModal = () => {
             <div className="fixed inset-0 flex items-center justify-center p-4 z-50 animate-fadeIn">
               <div className="p-3 px-6 overflow-y-scroll hide-scrollbar shadow-md max-w-3xl w-full max-h-[92vh] rounded-sm m-auto animate-slideUp bg-white">
                 <div className="flex justify-between items-start mb-2">
-                  <h2 className="text-2xl md:!text-3xl font-medium text-gray-900 mb-3">
+                  <h2 className="text-2xl sm:!text-3xl font-medium text-gray-900 mb-3">
                     Add Heatmap
                   </h2>
                   <button
