@@ -2501,3 +2501,18 @@ pre {
   display: none;
 }
 
+@keyframes slide {
+  0% {
+    left: -30%;
+  }
+  50% {
+    left: 100%;
+  }
+  100% {
+    left: -30%;
+  }
+}
+
+.animate-slide {
+  animation: slide 1.8s ease-in-out infinite;
+}

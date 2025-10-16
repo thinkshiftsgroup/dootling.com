@@ -29,6 +29,7 @@ import TopContributorsTab from "@/components/main/profile/topContributors/topCon
 import { LuCalendarFold } from "react-icons/lu";
 import ReferralSideTab from "@/components/main/profile/side-card/referralSideTab";
 import DootimeTab from "@/components/main/profile/dootime/dootime";
+import LinkedInLoader from "@/components/main/atom/loader";
 
 interface ImageUploadRef {
   openFileDialog: () => void;
@@ -398,9 +399,7 @@ const UserProfile = () => {
 
   if (!isInitialized || isLoading) {
     return (
-      <div className="text-center p-10 text-lg font-medium">
-        Loading profile data...
-      </div>
+      <LinkedInLoader/>
     );
   }
 
