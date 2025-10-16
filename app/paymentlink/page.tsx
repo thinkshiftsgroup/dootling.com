@@ -27,9 +27,9 @@ export default function PaymentPage() {
   return (
     <div className="min-h-screen bg-gray-50 py-5 lg:py-8 px-4 lg:px-5">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div className="grid grid-cols-12 lg:grid-cols-12 gap-6">
           {/* Left Column */}
-          <div className="lg:col-span-4">
+          <div className="col-span-4">
             <div className="lg:pl-0">
               {/* Header */}
               <div className="flex gap-3 lg:gap-4 items-start mb-8 lg:mb-12">
@@ -100,9 +100,9 @@ export default function PaymentPage() {
           </div>
 
           {/* Right Column */}
-          <div className="lg:col-span-8">
+          <div className="col-span-8">
             <div className="bg-gray-100 rounded-2xl p-0 lg:p-8">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 lg:gap-6">
+              <div className="grid grid-cols-12 lg:grid-cols-12 gap-0 lg:gap-6">
                 <div className="hidden lg:block lg:col-span-5 p-12">
                   <h3 className="text-2xl font-semibold text-black mb-8 leading-tight">
                     SEO Services and Project Management
