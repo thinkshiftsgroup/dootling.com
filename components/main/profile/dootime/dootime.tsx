@@ -1,68 +1,53 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import DataTable from "./dataTable";
+import SetupDootimeLink from "./setUpDootimeLink";
 
 const DootimeTab = () => {
   const [showModal, setShowModal] = useState(false);
+
   return (
     <div className="rounded-lg p-3 w-full bg-white shadow-md mb-[40px]">
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex w-full items-center justify-between max-w-7xl mx-auto">
-          <div className="relative flex-shrink-0">
-            <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-              <svg
-                className="w-5 h-5 text-[#157BFF]"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                ></path>
-              </svg>
-            </div>
-            <input
-              type="text"
-              placeholder="Search"
-              className="w-55 pl-12 pr-4 py-2 border border-[#157BFF] rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-600 text-gray-600"
-            />
-          </div>
+      <div className="flex items-center mb-3">
+        <div className="flex w-full justify-between items-center">
+          <div className="flex items-center gap-5">
+            <div className="flex items-center gap-1 justify-center">
+              <div className="flex -space-x-2">
+                <img
+                  src="https://i.pravatar.cc/40?img=1"
+                  alt="Avatar"
+                  className="w-8 h-8 rounded-full border-2 border-white"
+                />
+                <img
+                  src="https://i.pravatar.cc/40?img=2"
+                  alt="Avatar"
+                  className="w-8 h-8 rounded-full border-2 border-white"
+                />
+                <img
+                  src="https://i.pravatar.cc/40?img=3"
+                  alt="Avatar"
+                  className="w-8 h-8 rounded-full border-2 border-white"
+                />
+                <div className="w-8 h-8 rounded-full border-2 border-white bg-cyan-400 flex items-center justify-center">
+                  <span className="text-white text-sm font-semibold">S</span>
+                </div>
+              </div>
 
-          <div className="flex items-center gap-1 flex-1 justify-center">
-            <div className="flex -space-x-2">
-              <img
-                src="https://i.pravatar.cc/40?img=1"
-                alt="Avatar"
-                className="w-8 h-8 rounded-full border-2 border-white"
-              />
-              <img
-                src="https://i.pravatar.cc/40?img=2"
-                alt="Avatar"
-                className="w-8 h-8 rounded-full border-2 border-white"
-              />
-              <img
-                src="https://i.pravatar.cc/40?img=3"
-                alt="Avatar"
-                className="w-8 h-8 rounded-full border-2 border-white"
-              />
-              <div className="w-8 h-8 rounded-full border-2 border-white bg-cyan-400 flex items-center justify-center">
-                <span className="text-white text-sm font-semibold">S</span>
+              <div className="flex items-center gap-1">
+                <span className="font-medium text-gray-900">Aliana Molex</span>
+                <span className="text-gray-500 font-medium">
+                  And 208 Others
+                </span>
               </div>
             </div>
-
-            <div className="flex items-center gap-1">
-              <span className="font-medium text-gray-900">Aliana Molex</span>
-              <span className="text-gray-500 font-medium">And 208 Others</span>
-            </div>
+            <span className="text-sm font-bold text-gray-900">$40,0050</span>
           </div>
 
           <div className="flex items-center gap-16 flex-shrink-0">
-            <span className="text-sm font-medium text-gray-900">$40,0050</span>
-
-            <button className="bg-[#157BFF] hover:bg-blue-600 text-white px-2 py-1 rounded-sm flex items-center gap-2 transition-colors whitespace-nowrap text-[0.9rem] cursor-pointer">
+            <button
+              onClick={() => setShowModal(true)}
+              className="bg-[#157BFF] hover:bg-blue-600 text-white px-2 py-1 rounded-sm flex items-center gap-2 transition-colors whitespace-nowrap text-[0.9rem] cursor-pointer"
+            >
               <svg
                 width="20"
                 height="20"
@@ -82,10 +67,7 @@ const DootimeTab = () => {
       </div>
 
       <DataTable />
-      {/* <SetupLinkSideModal
-        open={showModal}
-        onClose={() => setShowModal(false)}
-      /> */}
+      <SetupDootimeLink open={showModal} onClose={() => setShowModal(false)} />
     </div>
   );
 };
