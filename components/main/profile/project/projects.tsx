@@ -76,7 +76,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         </div>
 
         <div>
-          <p className="text-sm text-gray-600">{collaborators} Collaborators</p>
+          <p className="text-sm text-gray-600">{collaborators} Contributors</p>
           <p className="text-xs text-gray-400 mt-1">Created {createdDate}</p>
         </div>
 

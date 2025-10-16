@@ -15,7 +15,7 @@ import ProfileAbout from "@/components/main/profile/about/about";
 import HeatmapConnections from "@/components/main/profile/heatMap";
 import AddHeatmapModal from "@/components/main/profile/addHeatMapModal";
 import ProfileSpace from "@/components/main/space/profileSpace";
-import ProfileLinks from "@/components/main/profile/links";
+import ProfileLinks from "@/components/main/profile/link/links";
 import ProjectDashboard from "@/components/main/profile/project/projects";
 import SimilarProfiles from "@/components/main/profile/side-card/similarProfiles";
 import TrendingProjects from "@/components/main/profile/side-card/tredingProjects";
@@ -59,13 +59,15 @@ const ProfileImageUploadTrigger = ({
   return (
     <div className="relative group w-[120px] h-[120px] ">
       {profilePhotoUrl ? (
-        <Image
-          src={profilePhotoUrl || "/placeholder.svg"}
-          alt="Profile"
-          width={120}
-          height={120}
-          className="w-[120px] h-full rounded-md object-cover"
-        />
+        <div className="w-[120px] h-full rounded-md bg-[#157BFF] flex items-center justify-center text-white text-7xl font-bold lg:text-8xl">
+          <Image
+            src={profilePhotoUrl || "/placeholder.svg"}
+            alt="Profile"
+            width={120}
+            height={120}
+            className="w-[120px] h-full rounded-md object-cover"
+          />
+        </div>
       ) : (
         <div className="w-[120px] h-full rounded-md bg-[#157BFF] flex items-center justify-center text-white text-7xl font-bold lg:text-8xl">
           {userInitials}
@@ -245,14 +247,13 @@ const UserProfile = () => {
           width={30}
           height={30}
           viewBox="0 0 24 24"
-          className={` font-bold ${
-            isActive ? "text-white" : "text-[#157BFF]/50"
-          }`}
+          className={` font-bold ${isActive ? "text-white" : "text-[#157BFF]/50"
+            }`}
         >
           <path
             fill="none"
             stroke="currentColor"
-            
+
             strokeWidth={1}
             d="M18.385 9.083V8.07q.717.15 1.45.328q.732.178 1.524.378q.324.08.5.351q.177.27.122.593l-1.466 7.962q-.106.59-.553.953T18.925 19H5.152q-.59 0-1.025-.373t-.54-.944L2.025 9.72q-.056-.323.118-.605q.174-.283.498-.364q.734-.2 1.428-.356t1.373-.287V9.12l-1.188.251q-.6.126-1.22.278L4.46 17.5q.038.212.22.356t.395.144h13.85q.212 0 .394-.144t.222-.356l1.425-7.85q-.658-.171-1.306-.307t-1.275-.26M16 9.065q0-.427-.125-.829t-.394-.728q-.39-.506-.63-1.098q-.24-.59-.24-1.226q0-.401.105-.782q.105-.38.309-.74l.152-.27q.09-.177.291-.233q.201-.055.378.035t.233.289t-.035.375l-.177.294q-.13.244-.202.52t-.073.551q0 .427.154.82q.154.391.423.718q.41.468.62 1.05q.211.581.211 1.197q0 .42-.095.811q-.096.39-.26.77l-.159.326q-.09.177-.288.233t-.375-.034t-.233-.289t.035-.375l-.152-.313q.112-.264.167-.53T16 9.066m-3.892 0q0-.428-.125-.83t-.395-.728q-.39-.506-.63-1.098q-.239-.59-.239-1.226q0-.401.105-.782t.309-.74l.151-.27q.091-.176.292-.232t.378.034t.232.289t-.034.375l-.177.294q-.13.244-.203.51q-.072.267-.072.542q0 .427.154.829t.423.728q.41.468.62 1.05q.21.581.21 1.197q0 .42-.094.811q-.096.39-.261.77l-.158.326q-.09.177-.288.233t-.375-.034t-.233-.289t.035-.375l.152-.313q.111-.264.167-.53t.056-.541m-3.887-.02q0-.427-.128-.819q-.127-.392-.397-.72q-.41-.486-.64-1.077q-.229-.591-.229-1.226q0-.402.102-.792t.312-.75l.157-.27q.09-.176.292-.232q.2-.056.377.034t.233.289t-.034.375l-.177.294q-.131.239-.206.508t-.075.544q0 .427.154.829t.423.728q.41.468.62 1.05q.21.581.21 1.197q0 .42-.095.811q-.095.39-.26.77l-.152.326q-.09.177-.292.233q-.2.056-.377-.034q-.177-.091-.233-.289t.035-.375l.157-.313q.112-.264.168-.54q.055-.276.055-.55"
           />
@@ -334,7 +335,7 @@ const UserProfile = () => {
           </g>
         </svg>
       ),
-      label: "Links",
+      label: "Link",
     },
     {
       icon: (isActive: boolean) => (
@@ -574,11 +575,10 @@ const UserProfile = () => {
                                 className="relative cursor-pointer flex flex-col items-center w-[70px] sm:w-[80px]"
                               >
                                 <div
-                                  className={`${
-                                    isActive
-                                      ? "bg-[#157BFF]"
-                                      : "bg-[#157BFF]/10"
-                                  } w-[55px] sm:w-[60px] h-[55px] sm:h-[60px] flex justify-center items-center rounded-xl transition-all duration-200`}
+                                  className={`${isActive
+                                    ? "bg-[#157BFF]"
+                                    : "bg-[#157BFF]/10"
+                                    } w-[55px] sm:w-[60px] h-[55px] sm:h-[60px] flex justify-center items-center rounded-xl transition-all duration-200`}
                                 >
                                   <span className="transition-colors duration-200">
                                     {typeof item.icon === "function"
@@ -588,11 +588,10 @@ const UserProfile = () => {
                                 </div>
 
                                 <p
-                                  className={`${
-                                    isActive
-                                      ? "text-[#157BFF]"
-                                      : "text-gray-500"
-                                  } font-semibold whitespace-nowrap text-center mt-2 text-[10px] sm:text-xs transition-colors duration-200`}
+                                  className={`${isActive
+                                    ? "text-[#157BFF]"
+                                    : "text-gray-500"
+                                    } font-semibold whitespace-nowrap text-center mt-2 text-[10px] sm:text-xs transition-colors duration-200`}
                                 >
                                   {item.label}
                                 </p>
@@ -607,7 +606,7 @@ const UserProfile = () => {
                         {activeTab === "Account" && <ProfileAbout />}
                         {activeTab === "Finance" && <ProfileFinance />}
                         {activeTab === "Followed" && <FollowedTab />}
-                        {activeTab === "Links" && <ProfileLinks />}
+                        {activeTab === "Link" && <ProfileLinks />}
                         {activeTab === "Heatmap" && <HeatmapConnections />}
                         {activeTab === "Top Creators" && <TopContributorsTab />}
                         {activeTab === "Spaces" && (
