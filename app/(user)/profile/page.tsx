@@ -28,6 +28,7 @@ import { toast } from "sonner";
 import TopContributorsTab from "@/components/main/profile/topContributors/topContributors";
 import { LuCalendarFold } from "react-icons/lu";
 import ReferralSideTab from "@/components/main/profile/side-card/referralSideTab";
+import DootimeTab from "@/components/main/profile/dootime/dootime";
 
 interface ImageUploadRef {
   openFileDialog: () => void;
@@ -248,8 +249,9 @@ const UserProfile = () => {
           width={30}
           height={30}
           viewBox="0 0 24 24"
-          className={` font-bold ${isActive ? "text-white" : "text-[#157BFF]/50"
-            }`}
+          className={` font-bold ${
+            isActive ? "text-white" : "text-[#157BFF]/50"
+          }`}
         >
           <path
             fill="none"
@@ -348,10 +350,19 @@ const UserProfile = () => {
     },
     {
       icon: (isActive: boolean) => (
-        <LuCalendarFold
-          size={30}
+        <svg
           className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
-        />
+          width="30"
+          height="30"
+          viewBox="0 0 343 342"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M286.849 0.0234375C301.574 0.0234375 315.696 5.87294 326.108 16.2851C336.52 26.6973 342.37 40.8192 342.37 55.5443V252.003C342.37 266.728 336.52 280.85 326.108 291.262C315.696 301.674 301.574 307.523 286.849 307.523H201.603C204.439 300.998 205.771 294.079 205.771 287.246C205.771 285.435 205.658 283.652 205.43 281.898H286.849C294.778 281.898 302.382 278.749 307.988 273.142C313.595 267.536 316.745 259.931 316.745 252.003V55.5443C316.745 47.6154 313.595 40.0113 307.988 34.4047C302.382 28.7982 294.778 25.6484 286.849 25.6484H90.3906C82.4618 25.6484 74.8576 28.7982 69.2511 34.4047C63.6445 40.0113 60.4948 47.6154 60.4948 55.5443V145.403C51.3731 146.062 42.5625 148.998 34.8698 153.944V55.5443C34.8698 40.8192 40.7193 26.6973 51.1315 16.2851C61.5436 5.87294 75.6656 0.0234375 90.3906 0.0234375H286.849ZM184.349 51.2734C187.445 51.2736 190.436 52.3948 192.77 54.4299C195.103 56.4649 196.621 59.2761 197.042 62.3434L197.161 64.0859V153.773H261.19C264.436 153.774 267.561 155.008 269.933 157.224C272.305 159.44 273.747 162.474 273.969 165.713C274.19 168.951 273.173 172.153 271.125 174.671C269.076 177.19 266.148 178.836 262.932 179.279L261.19 179.398H184.349C181.253 179.398 178.261 178.277 175.928 176.242C173.595 174.207 172.077 171.396 171.656 168.328L171.536 166.586V64.0859C171.536 60.6879 172.886 57.4289 175.289 55.0261C177.692 52.6233 180.951 51.2734 184.349 51.2734ZM64.7656 239.19C74.9599 239.19 84.7366 235.14 91.945 227.932C99.1535 220.724 103.203 210.947 103.203 200.753C103.203 190.558 99.1535 180.782 91.945 173.573C84.7366 166.365 74.9599 162.315 64.7656 162.315C54.5714 162.315 44.7946 166.365 37.5862 173.573C30.3778 180.782 26.3281 190.558 26.3281 200.753C26.3281 210.947 30.3778 220.724 37.5862 227.932C44.7946 235.14 54.5714 239.19 64.7656 239.19ZM64.7656 341.69C110.532 341.69 128.828 314.886 128.828 288.305C128.828 270.623 116.528 256.273 101.375 256.273H28.156C13.0031 256.273 0.703125 270.623 0.703125 288.305C0.703125 314.989 18.9994 341.69 64.7656 341.69ZM180.078 217.836C180.078 225.765 176.928 233.369 171.322 238.975C165.715 244.582 158.111 247.732 150.182 247.732C142.253 247.732 134.649 244.582 129.043 238.975C123.436 233.369 120.286 225.765 120.286 217.836C120.286 209.907 123.436 202.303 129.043 196.696C134.649 191.09 142.253 187.94 150.182 187.94C158.111 187.94 165.715 191.09 171.322 196.696C176.928 202.303 180.078 209.907 180.078 217.836ZM135.935 324.607C142.836 313.332 145.877 300.605 145.877 288.305C145.862 280.161 143.992 272.129 140.411 264.815H166.719C178.848 264.815 188.688 274.86 188.688 287.246C188.688 305.866 174.048 324.607 137.438 324.607H135.935Z"
+            fill="currentColor"
+          />
+        </svg>
       ),
       label: "Dootime",
     },
@@ -393,14 +404,6 @@ const UserProfile = () => {
     );
   }
 
-  // if (!user) {
-  //   return (
-  //     <div className="text-center p-10 text-lg font-medium">
-  //       Please log in to view this page.
-  //     </div>
-  //   );
-  // }
-
   return (
     <div>
       <Navbar />
@@ -408,227 +411,223 @@ const UserProfile = () => {
         <div className="relative">
           <div>
             <div className="relative"></div>
-          
-              <div className="container mt-[1rem] md:!mt-[3rem]  mx-auto">
-                <div className="lg:grid mx-2 md:!mx-0 block grid-cols-8 gap-4">
-                  <div className="w-full col-span-6 ">
-                    <div className="w-full mx-auto">
-                      <div className="w-full min-h-[20.5rem] rounded-lg bg-white shadow-md">
-                        <div className="max-w-7xl mx-auto px-2 sm:px-4 pt-[20px]">
-                          <div className="relative">
-                            <div className="flex justify-between items-center mb-4">
-                              <h2 className="text-black text-base sm:text-xl flex items-center gap-1.5 font-medium">
-                                1,193 contributions in the last year
-                              </h2>
-                            </div>
 
-                            <ContributionHeatmap pageType={"profile"} />
-                            <div className="max-w-5xl overflow-x-scroll hide-scrollbar -mt-10 relative mx-auto bg-white p-2">
-                              <div className="flex gap-2 md:gap-5 lg:flex-row flex-col items-center lg:items-start">
-                                <ProfileImageUploadTrigger
-                                  userInitials={userInitials}
-                                  profilePhotoUrl={profilePhotoUrl}
-                                  tempProfileImage={tempProfileImage}
-                                  handleImageUpload={handleImageUpload}
-                                />
+            <div className="container mt-[1rem] md:!mt-[3rem]  mx-auto">
+              <div className="lg:grid mx-2 md:!mx-0 block grid-cols-8 gap-4">
+                <div className="w-full col-span-6 ">
+                  <div className="w-full mx-auto">
+                    <div className="w-full min-h-[20.5rem] rounded-lg bg-white shadow-md">
+                      <div className="max-w-7xl mx-auto px-2 sm:px-4 pt-[20px]">
+                        <div className="relative">
+                          <div className="flex justify-between items-center mb-4">
+                            <h2 className="text-black text-base sm:text-xl flex items-center gap-1.5 font-medium">
+                              1,193 contributions in the last year
+                            </h2>
+                          </div>
 
-                                <div className="flex flex-col gap-1.5">
-                                  <h1 className="text-3xl flex mt-1.5 items-center gap-1 whitespace-nowrap font-bold text-black">
-                                    {firstname} {lastname}
-                                  </h1>
+                          <ContributionHeatmap pageType={"profile"} />
+                          <div className="max-w-5xl overflow-x-scroll hide-scrollbar -mt-10 relative mx-auto bg-white p-2">
+                            <div className="flex gap-2 md:gap-5 lg:flex-row flex-col items-center lg:items-start">
+                              <ProfileImageUploadTrigger
+                                userInitials={userInitials}
+                                profilePhotoUrl={profilePhotoUrl}
+                                tempProfileImage={tempProfileImage}
+                                handleImageUpload={handleImageUpload}
+                              />
 
-                                  <span className="flex whitespace-nowrap flex-wrap lg:flex-nowrap font-normal items-center gap-1">
-                                    {/* <p className=" text-xs text-[#FAAF40] mt-1">
+                              <div className="flex flex-col gap-1.5">
+                                <h1 className="text-3xl flex mt-1.5 items-center gap-1 whitespace-nowrap font-bold text-black">
+                                  {firstname} {lastname}
+                                </h1>
+
+                                <span className="flex whitespace-nowrap flex-wrap lg:flex-nowrap font-normal items-center gap-1">
+                                  {/* <p className=" text-xs text-[#FAAF40] mt-1">
                                       {userHeadline}
                                     </p> */}
-                                    <span className="flex gap-2 items-center">
-                                      <Image
-                                        src="/images/icon/iwwa_map.svg"
-                                        alt="icon"
-                                        width={16}
-                                        height={16}
-                                      />
+                                  <span className="flex gap-2 items-center">
+                                    <Image
+                                      src="/images/icon/iwwa_map.svg"
+                                      alt="icon"
+                                      width={16}
+                                      height={16}
+                                    />
 
-                                      <p className=" text-xs text-[#979797]">
-                                        {userCountry}
-                                      </p>
-                                    </span>
+                                    <p className=" text-xs text-[#979797]">
+                                      {userCountry}
+                                    </p>
                                   </span>
+                                </span>
 
-                                  <span className="flex whitespace-nowrap text-sm sm:!text-xs flex-wrap items-center md:!items-start gap-1.5">
-                                    {userTags.map(
-                                      (tag: string, index: number) => (
-                                        <p
-                                          key={index}
-                                          className="text-[#b1afaf] border border-[#e3e0e0] rounded p-0.5"
-                                        >
-                                          # {tag}
-                                        </p>
-                                      )
-                                    )}
-                                  </span>
-                                </div>
+                                <span className="flex whitespace-nowrap text-sm sm:!text-xs flex-wrap items-center md:!items-start gap-1.5">
+                                  {userTags.map(
+                                    (tag: string, index: number) => (
+                                      <p
+                                        key={index}
+                                        className="text-[#b1afaf] border border-[#e3e0e0] rounded p-0.5"
+                                      >
+                                        # {tag}
+                                      </p>
+                                    )
+                                  )}
+                                </span>
+                              </div>
 
-                  
-
-                                <div className="flex w-full items-start justify-center">
-                                  <div className="flex text-black items-center mt-1.5 gap-8">
-                                    <div className="text-center">
-                                      <p className="sm:text-base text-xl font-bold">
-                                        444
-                                      </p>
-                                      <p className="text-gray-600 sm:text-xs text-sm">
-                                        Endorsements
-                                      </p>
-                                    </div>
-                                    <div className="text-center">
-                                      <p className="sm:text-base text-xl font-bold">
-                                        5
-                                      </p>
-                                      <p className="text-gray-600 sm:text-xs text-sm">
-                                        Projects
-                                      </p>
-                                    </div>
-                                    <div className="text-center">
-                                      <p className="sm:text-base text-xl font-bold">
-                                        12
-                                      </p>
-                                      <p className="text-gray-600 sm:text-xs text-sm">
-                                        Streaks
-                                      </p>
-                                    </div>
+                              <div className="flex w-full items-start justify-center">
+                                <div className="flex text-black items-center mt-1.5 gap-8">
+                                  <div className="text-center">
+                                    <p className="sm:text-base text-xl font-bold">
+                                      444
+                                    </p>
+                                    <p className="text-gray-600 sm:text-xs text-sm">
+                                      Endorsements
+                                    </p>
+                                  </div>
+                                  <div className="text-center">
+                                    <p className="sm:text-base text-xl font-bold">
+                                      5
+                                    </p>
+                                    <p className="text-gray-600 sm:text-xs text-sm">
+                                      Projects
+                                    </p>
+                                  </div>
+                                  <div className="text-center">
+                                    <p className="sm:text-base text-xl font-bold">
+                                      12
+                                    </p>
+                                    <p className="text-gray-600 sm:text-xs text-sm">
+                                      Streaks
+                                    </p>
                                   </div>
                                 </div>
+                              </div>
 
-                                <div className="lg:block hidden">
-                                  <AddHeatmapModal />
-                                </div>
+                              <div className="lg:block hidden">
+                                <AddHeatmapModal />
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
+                    </div>
 
-                      <div className="relative my-6">
-                        <button
-                          onClick={() => scroll("left")}
-                          className=" bg-white rounded-full flex items-center justify-center absolute left-0 top-1/2 -translate-y-1/2 z-10 p-1 group "
+                    <div className="relative my-6">
+                      <button
+                        onClick={() => scroll("left")}
+                        className=" bg-white rounded-full flex items-center justify-center absolute left-0 top-1/2 -translate-y-1/2 z-10 p-1 group "
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width={30}
+                          height={30}
+                          viewBox="0 0 24 24"
+                          className="text-gray-500 "
                         >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width={30}
-                            height={30}
-                            viewBox="0 0 24 24"
-                            className="text-gray-500 "
-                          >
-                            <path
-                              fill="none"
-                              stroke="currentColor"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={1.5}
-                              d="m14 7l-5 5l5 5"
-                            />
-                          </svg>
-                        </button>
+                          <path
+                            fill="none"
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={1.5}
+                            d="m14 7l-5 5l5 5"
+                          />
+                        </svg>
+                      </button>
 
-                        <button
-                          onClick={() => scroll("right")}
-                          className=" bg-white rounded-full flex items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 z-10 p-1 group "
+                      <button
+                        onClick={() => scroll("right")}
+                        className=" bg-white rounded-full flex items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 z-10 p-1 group "
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width={30}
+                          height={30}
+                          viewBox="0 0 24 24"
+                          className="text-gray-500 "
                         >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width={30}
-                            height={30}
-                            viewBox="0 0 24 24"
-                            className="text-gray-500 "
-                          >
-                            <path
-                              fill="none"
-                              stroke="currentColor"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={1.5}
-                              d="m10 17l5-5l-5-5"
-                            />
-                          </svg>
-                        </button>
+                          <path
+                            fill="none"
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={1.5}
+                            d="m10 17l5-5l-5-5"
+                          />
+                        </svg>
+                      </button>
 
-                        <div
-                          ref={scrollRef}
-                          className="
+                      <div
+                        ref={scrollRef}
+                        className="
                             relative flex items-center gap-4 
                             bg-white rounded-xl shadow-sm
                             px-4 sm:px-6 py-4
                             overflow-x-auto hide-scrollbar scroll-smooth
                             md:justify-center
                           "
-                        >
-                          {items.map((item, idx) => {
-                            const isActive = activeTab === item.label;
-                            return (
+                      >
+                        {items.map((item, idx) => {
+                          const isActive = activeTab === item.label;
+                          return (
+                            <div
+                              key={idx}
+                              onClick={() => setActiveTab(item.label)}
+                              className="relative cursor-pointer flex flex-col items-center w-[70px] sm:w-[80px]"
+                            >
                               <div
-                                key={idx}
-                                onClick={() => setActiveTab(item.label)}
-                                className="relative cursor-pointer flex flex-col items-center w-[70px] sm:w-[80px]"
+                                className={`${
+                                  isActive ? "bg-[#157BFF]" : "bg-[#157BFF]/10"
+                                } w-[55px] sm:w-[60px] h-[55px] sm:h-[60px] flex justify-center items-center rounded-xl transition-all duration-200`}
                               >
-                                <div
-                                  className={`${isActive
-                                    ? "bg-[#157BFF]"
-                                    : "bg-[#157BFF]/10"
-                                    } w-[55px] sm:w-[60px] h-[55px] sm:h-[60px] flex justify-center items-center rounded-xl transition-all duration-200`}
-                                >
-                                  <span className="transition-colors duration-200">
-                                    {typeof item.icon === "function"
-                                      ? item.icon(isActive)
-                                      : item.icon}
-                                  </span>
-                                </div>
-
-                                <p
-                                  className={`${isActive
-                                    ? "text-[#157BFF]"
-                                    : "text-gray-500"
-                                    } font-semibold whitespace-nowrap text-center mt-2 text-[10px] sm:text-xs transition-colors duration-200`}
-                                >
-                                  {item.label}
-                                </p>
+                                <span className="transition-colors duration-200">
+                                  {typeof item.icon === "function"
+                                    ? item.icon(isActive)
+                                    : item.icon}
+                                </span>
                               </div>
-                            );
-                          })}
-                        </div>
-                      </div>
 
-                      <div className="mt-6">
-                        {activeTab === "Feeds" && <ProfileFeeds />}
-                        {activeTab === "Account" && <ProfileAbout />}
-                        {activeTab === "Finance" && <ProfileFinance />}
-                        {activeTab === "Followed" && <FollowedTab />}
-                        {activeTab === "Link" && <ProfileLinks />}
-                        {activeTab === "Heatmap" && <HeatmapConnections />}
-                        {activeTab === "Top Contributors" && (
-                          <TopContributorsTab />
-                        )}
-                        {activeTab === "Spaces" && (
-                          <ProfileSpace Spaces={myProjects} />
-                        )}
-                        {activeTab === "Projects" && (
-                          <ProjectDashboard projects={myProjects} />
-                        )}
+                              <p
+                                className={`${
+                                  isActive ? "text-[#157BFF]" : "text-gray-500"
+                                } font-semibold whitespace-nowrap text-center mt-2 text-[10px] sm:text-xs transition-colors duration-200`}
+                              >
+                                {item.label}
+                              </p>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
-                  </div>
-                  <div className="w-full my-4 lg:!my-0 col-span-2 ">
-                    <div className="">
-                      <SimilarProfiles />
-                      <TrendingProjects />
-                      <TrendingSpaces />
-                      <ReferralSideTab />
+
+                    <div className="mt-6">
+                      {activeTab === "Feeds" && <ProfileFeeds />}
+                      {activeTab === "Account" && <ProfileAbout />}
+                      {activeTab === "Finance" && <ProfileFinance />}
+                      {activeTab === "Followed" && <FollowedTab />}
+                      {activeTab === "Link" && <ProfileLinks />}
+                      {activeTab === "Heatmap" && <HeatmapConnections />}
+                      {activeTab === "Dootime" && <DootimeTab />}
+                      {activeTab === "Top Contributors" && (
+                        <TopContributorsTab />
+                      )}
+                      {activeTab === "Spaces" && (
+                        <ProfileSpace Spaces={myProjects} />
+                      )}
+                      {activeTab === "Projects" && (
+                        <ProjectDashboard projects={myProjects} />
+                      )}
                     </div>
                   </div>
                 </div>
+                <div className="w-full my-4 lg:!my-0 col-span-2 ">
+                  <div className="">
+                    <SimilarProfiles />
+                    <TrendingProjects />
+                    <TrendingSpaces />
+                    <ReferralSideTab />
+                  </div>
+                </div>
               </div>
-            
+            </div>
           </div>
         </div>
       </main>

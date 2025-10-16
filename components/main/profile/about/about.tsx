@@ -320,7 +320,7 @@ const ProfileAbout = () => {
                           label: "Hobbies and Interests",
                           id: "hobbies-interests",
                         },
-                        { label: "Pay Account & KYC", id: "v-pills-family" },
+                        { label: "Payout Account & KYC", id: "v-pills-family" },
                         { label: "Work and Education", id: "v-pills-work-tab" },
                         {
                           label: "Places You've Lived",
