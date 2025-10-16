@@ -6,18 +6,34 @@ import Suggestions from "@/components/main/landing-page/sidebar/suggestions";
 import { useState } from "react";
 import ReactionModal from "@/components/main/modal/reacttionModal";
 import AddPostModal from "@/components/main/modal/addPostModal";
+import { FaHandsClapping } from "react-icons/fa6";
+import { HiOutlineLightBulb } from "react-icons/hi";
+import { CgSmileMouthOpen } from "react-icons/cg";
+import { IoHeartCircle } from "react-icons/io5";
+import { PiHandHeartFill } from "react-icons/pi";
 
 import { BiCommentDetail } from "react-icons/bi";
 import { BiRepost } from "react-icons/bi";
 import { LuSend } from "react-icons/lu";
 import { FaHeart, FaThumbsUp } from "react-icons/fa";
-import { FaHandsClapping } from "react-icons/fa6";
 import { TbDots } from "react-icons/tb";
 import StoriesLanding from "@/components/main/landing-page/index/stories";
 import SimilarProfiles from "@/components/main/profile/side-card/similarProfiles";
+import LinkedInPostFeed from "@/components/main/atom/feedMessage";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Home() {
+  const reactions = [
+    { icon: <FaThumbsUp className="w-5 h-5"/>, bg: "bg-blue-400" },
+    { icon: <FaHandsClapping className="w-5 h-5"/>, bg: "bg-green-400" },
+    { icon: <PiHandHeartFill className="w-5 h-5"/>, bg: "bg-purple-400" },
+    { icon: <IoHeartCircle className="w-5 h-5"/>, bg: "bg-red-400" },
+    { icon: <HiOutlineLightBulb className="w-5 h-5"/>, bg: "bg-yellow-400" },
+    { icon: <CgSmileMouthOpen className="w-5 h-5"/>, bg: "bg-green-400" },
+  ];
+
   const [openLikesModal, setOpenLikesModal] = useState(false);
+  const [likesHoverFn, setLikesHoverFn] = useState(false);
 
   return (
     <main className="main-content pb-20">
@@ -117,14 +133,48 @@ export default function Home() {
                               className="rounded-full w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 object-cover"
                             />
 
-                            <div className="flex items-center justify-between flex-1 max-w-[500px] sm:max-w-[600px] md:max-w-[700px] lg:max-w-none">
-                              <div className="flex flex-col items-center gap-1">
+                            <div className="flex relative items-center justify-between flex-1 max-w-[500px] sm:max-w-[600px] md:max-w-[700px] lg:max-w-none">
+                              <div
+                                onMouseEnter={() => setLikesHoverFn(true)}
+                                onMouseLeave={() => setLikesHoverFn(false)}
+                                className="flex flex-col cursor-pointer items-center gap-1"
+                              >
                                 <FaThumbsUp className="text-gray-600 text-lg sm:text-xl" />
                                 <p className="font-bold text-xs sm:text-sm md:text-base">
                                   Like
                                 </p>
                               </div>
-
+                              {likesHoverFn && (
+                                <AnimatePresence>
+                                  <motion.div
+                                    className="absolute flex items-center justify-between gap-2 -top-14 bg-white rounded-full p-2 shadow-md"
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: 20 }}
+                                  >
+                                    {reactions.map((reaction, index) => (
+                                      <motion.div
+                                        key={index}
+                                        className={`${reaction.bg} flex justify-center items-center text-white p-2 rounded-full cursor-pointer`}
+                                        initial={{ y: 20, scale: 0.5 }}
+                                        animate={{ y: 0, scale: 1 }}
+                                        transition={{
+                                          delay: index * 0.1,
+                                          type: "spring",
+                                          stiffness: 500,
+                                        }}
+                                        whileHover={{
+                                          scale: 1.5,
+                                          y: -10,
+                                          zIndex: 50,
+                                        }}
+                                      >
+                                        {reaction.icon}
+                                      </motion.div>
+                                    ))}
+                                  </motion.div>
+                                </AnimatePresence>
+                              )}
                               <div className="flex flex-col items-center gap-1">
                                 <BiCommentDetail className="text-gray-600 text-lg sm:text-xl" />
                                 <p className="font-bold text-xs sm:text-sm md:text-base">
@@ -149,7 +199,7 @@ export default function Home() {
                           </div>
                         </div>
                       ))}
-
+                      {/* <LinkedInPostFeed/> */}
                       <div className="rounded-lg p-5 w-full bg-white shadow-md mb-[40px]">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
