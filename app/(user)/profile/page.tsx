@@ -15,7 +15,7 @@ import ProfileAbout from "@/components/main/profile/about/about";
 import HeatmapConnections from "@/components/main/profile/heatMap";
 import AddHeatmapModal from "@/components/main/profile/addHeatMapModal";
 import ProfileSpace from "@/components/main/space/profileSpace";
-import ProfileLinks from "@/components/main/profile/links";
+import ProfileLinks from "@/components/main/profile/link/links";
 import ProjectDashboard from "@/components/main/profile/project/projects";
 import SimilarProfiles from "@/components/main/profile/side-card/similarProfiles";
 import TrendingProjects from "@/components/main/profile/side-card/tredingProjects";
@@ -334,7 +334,7 @@ const UserProfile = () => {
           </g>
         </svg>
       ),
-      label: "Links",
+      label: "Link",
     },
     {
       icon: (isActive: boolean) => (
@@ -607,7 +607,7 @@ const UserProfile = () => {
                         {activeTab === "Account" && <ProfileAbout />}
                         {activeTab === "Finance" && <ProfileFinance />}
                         {activeTab === "Followed" && <FollowedTab />}
-                        {activeTab === "Links" && <ProfileLinks />}
+                        {activeTab === "Link" && <ProfileLinks />}
                         {activeTab === "Heatmap" && <HeatmapConnections />}
                         {activeTab === "Top Creators" && <TopContributorsTab />}
                         {activeTab === "Spaces" && (
