@@ -12,7 +12,7 @@ import ProfileFinance from "@/components/main/profile/finance/finance";
 import ProfileFeeds from "@/components/main/profile/feeds";
 import FollowedTab from "@/components/main/profile/followed";
 import ProfileAbout from "@/components/main/profile/about/about";
-import HeatmapConnections from "@/components/main/profile/heatMap";
+import HeatmapConnections from "@/components/main/profile/heatmap/heatMap";
 import AddHeatmapModal from "@/components/main/profile/addHeatMapModal";
 import ProfileSpace from "@/components/main/space/profileSpace";
 import ProfileLinks from "@/components/main/profile/link/links";

@@ -21,7 +21,7 @@ import { LuSend } from "react-icons/lu";
 import { IoWalletOutline } from "react-icons/io5";
 
 import ProfileAbout from "@/components/main/profile/about/about";
-import HeatmapConnections from "@/components/main/profile/heatMap";
+import HeatmapConnections from "@/components/main/profile/heatmap/heatMap";
 import AddHeatmapModal from "@/components/main/profile/addHeatMapModal";
 import SpaceHeatMapModal from "@/components/main/space/spaceHeatMapModal";
 import ProfileIn from "@/components/main/profile/otherProfile";

@@ -1,7 +1,8 @@
 import React from "react";
 
 import Image from "next/image";
-import AddHeatmapModal from "./addHeatMapModal";
+import AddHeatmapModal from "../addHeatMapModal";
+import ConnectWorks from "./addPermission";
 
 const HeatmapConnections = () => {
   const connections = [
@@ -189,22 +190,7 @@ const HeatmapConnections = () => {
             </div>
 
             <div className="flex justify-center mt-8">
-              <button className="bg-[#157BFF] hover:bg-blue-600 text-white px-2 py-1 rounded-sm flex items-center gap-2 transition-colors text-[0.9rem]">
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 4v16m8-8H4"
-                  />
-                </svg>
-                Add Permission
-              </button>
+              <ConnectWorks />
             </div>
           </div>
         </div>
