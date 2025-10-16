@@ -15,13 +15,13 @@ const ReferralSideTab = () => {
           <h4 className="text-lg font-bold">Referrals</h4>
         </div>
         <span className="text-xs text-gray-500 cursor-pointer hover:underline">
-          View commissions
+          View Commissions
         </span>
       </div>
 
       <div className="p-4 flex flex-col space-y-2">
         <div className="rounded-md py-2 px-2 flex items-center justify-between gap-2 border border-dotted border-black">
-          <p className="text-xs truncate">{referralLink}</p>
+          <p className="text-sm truncate">{referralLink}</p>
 
           <button
             onClick={handleCopy}
@@ -47,7 +47,7 @@ const ReferralSideTab = () => {
           </button>
         </div>
 
-        <p className="text-[10px] -mt-2 text-right bg-[#FFBA00] inline-block rounded-sm text-black px-1 py-1 self-end">
+        <p className="text-xs -mt-2 bg-[#FFBA00] text-center rounded-sm text-black px-1 py-1 ">
           $1 per person who joins through your link
         </p>
       </div>

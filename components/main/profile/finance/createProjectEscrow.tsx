@@ -109,7 +109,7 @@ const CreateProjectEscrow = ({ setOpenModal }: any) => {
             );
           })}
           <div>
-            <p className="text-[#404040] flex items-center  gap-1 font-semibold">
+            <p className="text-[#404040] flex items-center mb-2  gap-1 font-semibold">
               Allocate Funds From Escrow Balance
             </p>
             <div className="border border-[#D8D8D8] rounded-md overflow-hidden w-full">
@@ -127,7 +127,7 @@ const CreateProjectEscrow = ({ setOpenModal }: any) => {
             </div>
           </div>
           <div>
-            <p className="text-[#404040] flex items-center  gap-1 font-semibold">
+            <p className="text-[#404040] mb-2 flex items-center  gap-1 font-semibold">
               Instant Release Amount
             </p>
             <div className="border border-[#D8D8D8] rounded-md overflow-hidden w-full">

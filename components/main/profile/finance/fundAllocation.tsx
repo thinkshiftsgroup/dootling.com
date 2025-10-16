@@ -8,17 +8,17 @@ import AuditTrialsTable from "./auditTrails";
 const FundAllocation = () => {
   const [openModal, setOpenModal] = useState(false);
   const [vault, setVault] = useState("");
-  const selectRef = useRef<HTMLSelectElement>(null);
+  // const selectRef = useRef<HTMLSelectElement>(null);
 
-  const handleCreateProject = () => {
-    const selectedValue = selectRef.current?.value;
-    if (selectedValue) {
-      setVault(selectedValue);
-      console.log("Vault created for:", selectedValue);
-    } else {
-      alert("Please select a project first!");
-    }
-  };
+  // const handleCreateProject = () => {
+  //   const selectedValue = selectRef.current?.value;
+  //   if (selectedValue) {
+  //     setVault(selectedValue);
+  //     console.log("Vault created for:", selectedValue);
+  //   } else {
+  //     alert("Please select a project first!");
+  //   }
+  // };
   return (
     <div className="rounded  bg-white p-4 shadow-md my-5">
       <h1 className="text-lg font-bold text-black">Fund Allocation</h1>
@@ -26,17 +26,16 @@ const FundAllocation = () => {
       <div className="flex sm:!flex-row !flex-col items-center my-4 !gap-2 sm:!gap-4">
         <select
           name=""
-          ref={selectRef}
           className=" border sm:!w-1/2 w-full text-sm text-black border-gray-300/70 rounded-sm p-1.5"
-          // onChange={(e) => setVault(e.target.value)}
-          // value={vault}
+          onChange={(e) => setVault(e.target.value)}
+          value={vault}
         >
           <option value="">Select Project</option>
           <option value="developer">Developing Investor Vaults</option>
           <option value="marketer">Marketing Vaults</option>
         </select>
 
-        <button
+        {/* <button
           onClick={handleCreateProject}
           className="bg-[#157BFF] sm:!text-base !text-sm hover:bg-blue-600 text-white px-2 flex items-center gap-2 py-1 rounded-sm text-[0.9rem]"
         >
@@ -57,7 +56,7 @@ const FundAllocation = () => {
             />
           </svg>
           Create Project Escrow
-        </button>
+        </button> */}
       </div>
 
       {vault && (
