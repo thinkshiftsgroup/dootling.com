@@ -440,9 +440,6 @@ const UserProfile = () => {
                                 </h1>
 
                                 <span className="flex whitespace-nowrap flex-wrap lg:flex-nowrap font-normal items-center gap-1">
-                                  {/* <p className=" text-xs text-[#FAAF40] mt-1">
-                                      {userHeadline}
-                                    </p> */}
                                   <span className="flex gap-2 items-center">
                                     <Image
                                       src="/images/icon/iwwa_map.svg"
