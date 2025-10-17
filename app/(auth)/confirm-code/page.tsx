@@ -19,9 +19,30 @@ import { toast } from "sonner";
 interface VerifyResponse {
   token: string;
   user: {
-    id: number;
+    id: string;
     email: string;
-    name: string;
+    username: string | null;
+    firstname: string | null;
+    lastname: string | null;
+    fullName: string;
+    profilePhotoUrl?: string;
+
+    biodata: {
+      dateOfBirth: Date;
+      country: string | null;
+      pronouns: string | null;
+      phone: string | null;
+      city: string | null;
+      role: string | null;
+      industry: string | null;
+      tags: string | null;
+      headline: string | null;
+
+      id: string;
+      createdAt: Date;
+      updatedAt: Date;
+      userId: string;
+    } | null;
   };
 }
 
@@ -144,14 +165,14 @@ export default function VerifyOTPPage() {
         //   name: response.data.user.name || "Dootling User",
         // });
 
-        // const { token, user } = response.data;
+        const { token, user } = response.data;
 
-        // loginUser(response.data.token, response.data.user);
-        // const rememberMeDays = 30;
-        // Cookies.set("dootling_auth_token", token, {
-        //   expires: rememberMeDays,
-        //   secure: process.env.NODE_ENV === "production",
-        // });
+        loginUser(response.data.token, response.data.user);
+        const rememberMeDays = 30;
+        Cookies.set("dootling_auth_token", token, {
+          expires: rememberMeDays,
+          secure: process.env.NODE_ENV === "production",
+        });
         toast.success("Email verified successfully! 🎉");
         clearUnverifiedEmail();
 
