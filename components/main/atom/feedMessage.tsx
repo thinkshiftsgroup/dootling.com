@@ -8,15 +8,12 @@ import SendModal from "@/components/main/modal/sendModal";
 import { FaHandsClapping } from "react-icons/fa6";
 import { FiSmile } from "react-icons/fi";
 import { AiFillPicture } from "react-icons/ai";
-
 import { BiCommentDetail } from "react-icons/bi";
 import { LuSend } from "react-icons/lu";
 import { FaHeart, FaThumbsUp } from "react-icons/fa";
 import { TbDots } from "react-icons/tb";
 import { FaSortDown } from "react-icons/fa";
-
 import Image from "next/image";
-
 import { IoMdTime } from "react-icons/io";
 import { MdRocketLaunch } from "react-icons/md";
 import { LuDot } from "react-icons/lu";
@@ -25,6 +22,7 @@ import { BiDotsHorizontalRounded } from "react-icons/bi";
 interface FeedMessageProps {
   content: string;
 }
+
 const FeedMessage = ({ content }: FeedMessageProps) => {
   const [openLikesModal, setOpenLikesModal] = useState(false);
   const [showReactions, setShowReactions] = useState(false);
@@ -135,279 +133,382 @@ const FeedMessage = ({ content }: FeedMessageProps) => {
     content.includes("youtube.com") || content.includes("youtu.be");
 
   const [openRelevent, setOpenRelevant] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  const images = [
+    { src: '/images/page-img/boy.jpg', alt: 'post-image' },
+    { src: '/images/page-img/bus.jpg', alt: 'post-image' },
+    { src: '/images/page-img/fd.jpg', alt: 'post-image' },
+    { src: '/images/page-img/mountain.jpg', alt: 'post-image' },
+    { src: '/images/page-img/pizza.jpg', alt: 'post-image' },
+  ];
+
+  // Check if there are multiple images and count how many extra images
+  const isMulti = images.length > 1;
+  const isSingle = images.length === 1;
+  const moreCount = Math.max(0, images.length - 5); // Count remaining images beyond the 5 displayed
 
   return (
-    <div className="rounded-lg p-5 w-full bg-white shadow-md mb-[40px]">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Image
-            width={100}
-            height={100}
-            alt="user"
-            src="/images/user/userImg.jpg"
-            className="rounded w-20 h-20 object-cover"
-          />
-          <div>
-            <h1 className="sm:text-xl text-lg flex items-center gap-1 font-bold text-black">
-              John Paul{" "}
-              <Image
-                src="/images/icon/verified.svg"
-                alt="icon"
-                width={14}
-                height={14}
-              />
-            </h1>
-            <p className="text-gray-500 text-xs">90 days ago</p>
-          </div>
-        </div>
-        <TbDots size={20} className="cursor-pointer" />
-      </div>
-      <h1 className="md:text-3xl text-xl sm:text-2xl  text-black my-4">
-        Completed milestone: "Prototype testing" in Mobile App Development
-      </h1>
-      <div className="w-full rounded-md overflow-hidden mt-2">
-        {isVideo ? (
-          <iframe
-            className="w-full h-64 sm:h-80 rounded-md"
-            src={content}
-            title="YouTube video"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-          ></iframe>
-        ) : (
-          <Image
-            width={800}
-            height={500}
-            alt="feed content"
-            className="w-full h-64 sm:h-80 object-cover rounded-md"
-            src={content}
-          />
-        )}
-      </div>
-      <div className="py-2.5 my-2.5 flex items-center  justify-between border-b-[#e5e5e5] border-b">
-        <div className="flex items-center gap-2">
-          <div
-            onClick={() => setOpenLikesModal(true)}
-            className="flex items-center"
-          >
-            <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-white border-2 border-white z-30">
-              <FaThumbsUp className="w-3 h-3" />
-            </div>
-            <div className="-ml-2 w-6 h-6 rounded-full bg-green-500 flex items-center justify-center text-white border-2 border-white z-20">
-              <FaHandsClapping className="w-3 h-3" />
-            </div>
-            <div className="-ml-2 w-6 h-6 rounded-full bg-rose-500 flex items-center justify-center text-white border-2 border-white z-10">
-              <FaHeart className="w-3 h-3" />
-            </div>
-          </div>
-
-          <span className="text-gray-700 font-medium text-sm">293</span>
-        </div>
-        <div className="text-xs cursor-pointer text-gray-500 flex items-center gap-1">
-          <p>23 comments</p>
-          <span className="inline-flex w-1 h-1 rounded-full bg-gray-500"></span>
-          <p>4 reposts</p>
-        </div>
-      </div>
-      <div className="flex items-center justify-between flex-wrap gap-4 sm:gap-6 md:gap-10 lg:gap-[4rem]">
-        <Image
-          width={100}
-          height={100}
-          alt="user"
-          src="/images/user/userImg.jpg"
-          className="rounded-full w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 object-cover"
-        />
-
-        <div className="flex relative items-center justify-between flex-1 max-w-[500px] sm:max-w-[600px] md:max-w-[700px] lg:max-w-none">
-          <div
-            className="relative flex flex-col items-center"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            <div className="flex flex-col cursor-pointer items-center gap-1">
-              <FaThumbsUp className="text-gray-600 text-lg sm:text-xl" />
-              <p className="font-bold text-xs sm:text-sm md:text-base">Like</p>
-            </div>
-            <ReactionPopup show={showReactions} />
-          </div>
-
-          <div
-            onClick={() => setOpenComment((prev) => !prev)}
-            className="flex flex-col items-center gap-1"
-          >
-            <BiCommentDetail className="text-gray-600 text-lg sm:text-xl" />
-            <p className="font-bold text-xs sm:text-sm md:text-base">Comment</p>
-          </div>
-
-          <div className="relative flex flex-col items-center gap-1">
-            <div
-              onClick={() => setOpenRepostModal((prev) => !prev)}
-              className="flex cursor-pointer flex-col items-center gap-1"
-            >
-              <BiRepost className="text-gray-600 text-lg sm:text-xl" />
-              <p className="font-bold text-xs sm:text-sm md:text-base">
-                Repost
-              </p>
-            </div>
-
-            {openRepostModal && (
-              <div
-                ref={dropdownRef}
-                className="absolute top-full mt-1 bg-white space-y-2 w-[300px] p-2 rounded-sm shadow-md z-50"
-              >
-                <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
-                  <FiEdit className="flex-none" size={22} />
-                  <div>
-                    <h3 className="font-medium text-sm">
-                      Repost with your thoughts
-                    </h3>
-                    <p className="font-normal text-xs">
-                      Create a new post with Salem's post attached
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
-                  <BiRepost className="flex-none" size={22} />
-                  <div>
-                    <h3 className="font-medium text-sm">Repost</h3>
-                    <p className="font-normal text-xs">
-                      Instantly bring Salem's post to others feed
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-
-          <div>
-            <div
-              className="flex flex-col items-center gap-1 cursor-pointer"
-              onClick={() => setOpenModal(true)}
-            >
-              <LuSend className="text-gray-600 text-lg sm:text-xl" />
-              <p className="font-bold text-xs sm:text-sm md:text-base">Send</p>
-            </div>
-
-            {openModal && (
-              <SendModal
-                users={users}
-                selectedUsers={selectedUsers}
-                toggleUser={toggleUser}
-                setOpenModal={setOpenModal}
-                setSelectedUsers={setSelectedUsers}
-              />
-            )}
-          </div>
-        </div>
-      </div>
-      {openComment && (
-        <div className="w-full mt-5 mb-3">
-          <div className="flex w-full items-center gap-2">
+    <>
+      <div className="rounded-lg p-5 w-full bg-white shadow-md mb-[40px]">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
             <Image
               width={100}
               height={100}
               alt="user"
               src="/images/user/userImg.jpg"
-              className="rounded-full w-12 h-12 object-cover"
+              className="rounded w-20 h-20 object-cover"
             />
-            <div className="relative w-full">
-              <input
-                type="text"
-                placeholder="Add a comment..."
-                className="rounded-full px-1 py-2 border w-full"
-              />
-              <div className="flex items-center gap-2 absolute top-3 right-3">
-                <FiSmile size={20} className="cursor-pointer" />
-                <AiFillPicture size={20} className="cursor-pointer" />
-              </div>
+            <div>
+              <h1 className="sm:text-xl text-lg flex items-center gap-1 font-bold text-black">
+                John Paul{" "}
+                <Image
+                  src="/images/icon/verified.svg"
+                  alt="icon"
+                  width={14}
+                  height={14}
+                />
+              </h1>
+              <p className="text-gray-500 text-xs">90 days ago</p>
             </div>
           </div>
-          <div className="relative w-auto">
-            <span
-              onClick={() => setOpenRelevant((prev) => !prev)}
-              className="p-1 flex gap-1 my-2 cursor-pointer"
+          <TbDots size={20} className="cursor-pointer" />
+        </div>
+        <h1 className="md:text-3xl text-xl sm:text-2xl  text-black my-4">
+          Completed milestone: "Prototype testing" in Mobile App Development
+        </h1>
+        <div className="w-full rounded-md overflow-hidden mt-2">
+          {isVideo ? (
+            <iframe
+              className="w-full h-64 sm:h-80 rounded-md"
+              src={content}
+              title="YouTube video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            ></iframe>
+          ) : isSingle ? (
+            <button
+              onClick={() => setSelectedImage(images[0].src)}
+              className="w-full rounded-lg overflow-hidden hover:opacity-80 transition-opacity"
             >
-              <p className="text-sm">Most relevant</p>
-              <FaSortDown size={16} />
-            </span>
-            {openRelevent && (
-              <div
-                ref={dropdownRef}
-                className="absolute top-full mt-1 bg-white space-y-2 w-[300px] p-2 rounded-sm shadow-md z-50"
-              >
-                <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
-                  <MdRocketLaunch className="flex-none" size={22} />
-                  <div>
-                    <h3 className="font-medium text-sm">Most relevant</h3>
-                    <p className="font-normal text-xs">
-                      See the most relevant comment
-                    </p>
+              <img
+                src={images[0].src}
+                alt={images[0].alt}
+                className="w-full h-64 sm:h-80 object-cover rounded-md"
+                loading="lazy"
+              />
+            </button>
+          ) : isMulti ? (
+            <>
+              <div className="user-post mt-4 p-4">
+                {/* First Row - 3 equal columns */}
+                <div className="grid grid-cols-3 gap-4 mb-4">
+                  {images.slice(0, 3).map((image, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setSelectedImage(image.src)}
+                      className="w-full rounded-lg overflow-hidden hover:opacity-80 transition-opacity"
+                    >
+                      <img
+                        src={image.src}
+                        alt={image.alt}
+                        className="w-full object-cover"
+                        loading="lazy"
+                      />
+                    </button>
+                  ))}
+                </div>
+
+                {/* Second Row - 2 columns (1 takes 1/2, 1 takes 1/2) */}
+                <div className="grid grid-cols-2 gap-4">
+                  <button
+                    onClick={() => setSelectedImage(images[3].src)}
+                    className="w-full rounded-lg overflow-hidden hover:opacity-80 transition-opacity"
+                  >
+                    <img
+                      src={images[3].src}
+                      alt={images[3].alt}
+                      className="w-full object-cover"
+                      loading="lazy"
+                    />
+                  </button>
+
+                  <div className="relative group cursor-pointer rounded-lg overflow-hidden">
+                    <img
+                      src={images[4].src}
+                      alt={images[4].alt}
+                      className="w-full object-cover"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-black/50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <button
+                        onClick={() => setSelectedImage(images[4].src)}
+                        className="text-white text-4xl font-bold"
+                      >
+                        +{moreCount}
+                      </button>
+                    </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
-                  <IoMdTime className="flex-none" size={22} />
-                  <div>
-                    <h3 className="font-medium text-sm">Most recent</h3>
-                    <p className="font-normal text-xs">
-                      See all comments, the most recent comments are first
-                    </p>
+
+                {/* Lightbox Modal */}
+                {selectedImage && (
+                  <div
+                    className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+                    onClick={() => setSelectedImage(null)}
+                  >
+                    <div className="relative max-w-4xl w-full max-h-screen">
+                      <img
+                        src={selectedImage}
+                        alt="Lightbox view"
+                        className="w-full h-auto object-contain rounded-lg"
+                      />
+                      <button
+                        onClick={() => setSelectedImage(null)}
+                        className="absolute top-2 right-2 bg-white/80 hover:bg-white text-black w-8 h-8 rounded-full flex items-center justify-center transition-colors"
+                      >
+                        ✕
+                      </button>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
-            )}
-          </div>
-          <div className="">
-            <div className="flex items-center justify-between gap-2">
-              <div className="flex items-center gap-2">
-                <Image
-                  width={100}
-                  height={100}
-                  alt="user"
-                  src="/images/user/userImg.jpg"
-                  className="rounded-full w-8 h-8 object-cover"
-                />
-                <div>
-                  <h3 className="text-sm font-medium text-black">
-                    Racheal James <span className="text-gray-400">3rd+</span>{" "}
-                  </h3>
-                  <p className="text-xs py-1">Product Designer | Tailor</p>
-                </div>
+            </>
+          ) : (
+            <img
+              src={content}
+              alt="feed content"
+              className="w-full h-64 sm:h-80 object-cover rounded-md"
+              loading="lazy"
+            />
+          )}
+        </div>
+        <div className="py-2.5 my-2.5 flex items-center  justify-between border-b-[#e5e5e5] border-b">
+          <div className="flex items-center gap-2">
+            <div
+              onClick={() => setOpenLikesModal(true)}
+              className="flex items-center"
+            >
+              <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-white border-2 border-white z-30">
+                <FaThumbsUp className="w-3 h-3" />
               </div>
-              <div className="flex items-center gap-2 text-gray-500">
-                <p className="text-xs">3w</p>
-                <BiDotsHorizontalRounded size={10} className="cursor-pointer" />
+              <div className="-ml-2 w-6 h-6 rounded-full bg-green-500 flex items-center justify-center text-white border-2 border-white z-20">
+                <FaHandsClapping className="w-3 h-3" />
+              </div>
+              <div className="-ml-2 w-6 h-6 rounded-full bg-rose-500 flex items-center justify-center text-white border-2 border-white z-10">
+                <FaHeart className="w-3 h-3" />
               </div>
             </div>
 
-            <div className="ml-9 my-1">
-              <p className="text-sm py-1  leading-relaxed">
-                Love how you’re blending gaming and work into one creative
-                space! Excited to see how the wall upgrades complete the vibe ,
-                setups that evolve with your journey always feel the most
-                authentic.
-              </p>
-              <div className="flex mt-1 items-center gap-0.5 text-xs">
-                <p>Like</p>
-                <div className="flex items-center gap-1">
-                  <LuDot size={10} />
-                  <div className="w-5 h-5 rounded-full bg-blue-500 flex items-center justify-center text-white border-2 border-white z-30">
-                    <FaThumbsUp className="w-2 h-2" />
+            <span className="text-gray-700 font-medium text-sm">293</span>
+          </div>
+          <div className="text-xs cursor-pointer text-gray-500 flex items-center gap-1">
+            <p>23 comments</p>
+            <span className="inline-flex w-1 h-1 rounded-full bg-gray-500"></span>
+            <p>4 reposts</p>
+          </div>
+        </div>
+        <div className="flex items-center justify-between flex-wrap gap-4 sm:gap-6 md:gap-10 lg:gap-[4rem]">
+          <Image
+            width={100}
+            height={100}
+            alt="user"
+            src="/images/user/userImg.jpg"
+            className="rounded-full w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 object-cover"
+          />
+
+          <div className="flex relative items-center justify-between flex-1 max-w-[500px] sm:max-w-[600px] md:max-w-[700px] lg:max-w-none">
+            <div
+              className="relative flex flex-col items-center"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
+              <div className="flex flex-col cursor-pointer items-center gap-1">
+                <FaThumbsUp className="text-gray-600 text-lg sm:text-xl" />
+                <p className="font-bold text-xs sm:text-sm md:text-base">Like</p>
+              </div>
+              <ReactionPopup show={showReactions} />
+            </div>
+
+            <div
+              onClick={() => setOpenComment((prev) => !prev)}
+              className="flex flex-col items-center gap-1"
+            >
+              <BiCommentDetail className="text-gray-600 text-lg sm:text-xl" />
+              <p className="font-bold text-xs sm:text-sm md:text-base">Comment</p>
+            </div>
+
+            <div className="relative flex flex-col items-center gap-1">
+              <div
+                onClick={() => setOpenRepostModal((prev) => !prev)}
+                className="flex cursor-pointer flex-col items-center gap-1"
+              >
+                <BiRepost className="text-gray-600 text-lg sm:text-xl" />
+                <p className="font-bold text-xs sm:text-sm md:text-base">
+                  Repost
+                </p>
+              </div>
+
+              {openRepostModal && (
+                <div
+                  ref={dropdownRef}
+                  className="absolute top-full mt-1 bg-white space-y-2 w-[300px] p-2 rounded-sm shadow-md z-50"
+                >
+                  <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
+                    <FiEdit className="flex-none" size={22} />
+                    <div>
+                      <h3 className="font-medium text-sm">
+                        Repost with your thoughts
+                      </h3>
+                      <p className="font-normal text-xs">
+                        Create a new post with Salem's post attached
+                      </p>
+                    </div>
                   </div>
-                  1 <LuDot size={10} />
+                  <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
+                    <BiRepost className="flex-none" size={22} />
+                    <div>
+                      <h3 className="font-medium text-sm">Repost</h3>
+                      <p className="font-normal text-xs">
+                        Instantly bring Salem's post to others feed
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <p>Reply</p>
-                <div className="flex items-center gap-1">
-                  <LuDot size={10} />1 reply
+              )}
+            </div>
+
+            <div>
+              <div
+                className="flex flex-col items-center gap-1 cursor-pointer"
+                onClick={() => setOpenModal(true)}
+              >
+                <LuSend className="text-gray-600 text-lg sm:text-xl" />
+                <p className="font-bold text-xs sm:text-sm md:text-base">Send</p>
+              </div>
+
+              {openModal && (
+                <SendModal
+                  users={users}
+                  selectedUsers={selectedUsers}
+                  toggleUser={toggleUser}
+                  setOpenModal={setOpenModal}
+                  setSelectedUsers={setSelectedUsers}
+                />
+              )}
+            </div>
+          </div>
+        </div>
+        {openComment && (
+          <div className="w-full mt-5 mb-3">
+            <div className="flex w-full items-center gap-2">
+              <Image
+                width={100}
+                height={100}
+                alt="user"
+                src="/images/user/userImg.jpg"
+                className="rounded-full w-12 h-12 object-cover"
+              />
+              <div className="relative w-full">
+                <input
+                  type="text"
+                  placeholder="Add a comment..."
+                  className="rounded-full px-1 py-2 border w-full"
+                />
+                <div className="flex items-center gap-2 absolute top-3 right-3">
+                  <FiSmile size={20} className="cursor-pointer" />
+                  <AiFillPicture size={20} className="cursor-pointer" />
+                </div>
+              </div>
+            </div>
+            <div className="relative w-auto">
+              <span
+                onClick={() => setOpenRelevant((prev) => !prev)}
+                className="p-1 flex gap-1 my-2 cursor-pointer"
+              >
+                <p className="text-sm">Most relevant</p>
+                <FaSortDown size={16} />
+              </span>
+              {openRelevent && (
+                <div
+                  ref={dropdownRef}
+                  className="absolute top-full mt-1 bg-white space-y-2 w-[300px] p-2 rounded-sm shadow-md z-50"
+                >
+                  <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
+                    <MdRocketLaunch className="flex-none" size={22} />
+                    <div>
+                      <h3 className="font-medium text-sm">Most relevant</h3>
+                      <p className="font-normal text-xs">
+                        See the most relevant comment
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
+                    <IoMdTime className="flex-none" size={22} />
+                    <div>
+                      <h3 className="font-medium text-sm">Most recent</h3>
+                      <p className="font-normal text-xs">
+                        See all comments, the most recent comments are first
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <Image
+                    width={100}
+                    height={100}
+                    alt="user"
+                    src="/images/user/userImg.jpg"
+                    className="rounded-full w-8 h-8 object-cover"
+                  />
+                  <div>
+                    <h3 className="text-sm font-medium text-black">
+                      Racheal James <span className="text-gray-400">3rd+</span>{" "}
+                    </h3>
+                    <p className="text-xs py-1">Product Designer | Tailor</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 text-gray-500">
+                  <p className="text-xs">3w</p>
+                  <BiDotsHorizontalRounded size={10} className="cursor-pointer" />
+                </div>
+              </div>
+
+              <div className="ml-9 my-1">
+                <p className="text-sm py-1  leading-relaxed">
+                  Love how you're blending gaming and work into one creative
+                  space! Excited to see how the wall upgrades complete the vibe ,
+                  setups that evolve with your journey always feel the most
+                  authentic.
+                </p>
+                <div className="flex mt-1 items-center gap-0.5 text-xs">
+                  <p>Like</p>
+                  <div className="flex items-center gap-1">
+                    <LuDot size={10} />
+                    <div className="w-5 h-5 rounded-full bg-blue-500 flex items-center justify-center text-white border-2 border-white z-30">
+                      <FaThumbsUp className="w-2 h-2" />
+                    </div>
+                    1 <LuDot size={10} />
+                  </div>
+                  <p>Reply</p>
+                  <div className="flex items-center gap-1">
+                    <LuDot size={10} />1 reply
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
-      {openLikesModal && (
-        <ReactionModal setOpenLikesModal={setOpenLikesModal} />
-      )}
-    </div>
+        )}
+        {openLikesModal && (
+          <ReactionModal setOpenLikesModal={setOpenLikesModal} />
+        )}
+      </div>
+    </>
   );
 };
 
