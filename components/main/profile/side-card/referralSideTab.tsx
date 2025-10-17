@@ -19,7 +19,7 @@ const ReferralSideTab = () => {
         </span>
       </div>
 
-      <div className="p-4 flex flex-col space-y-2">
+      <div className="p-4 flex flex-col">
         <div className="rounded-md py-2 px-2 flex items-center justify-between gap-2 border border-dotted border-black">
           <p className="text-sm truncate">{referralLink}</p>
 
@@ -47,7 +47,7 @@ const ReferralSideTab = () => {
           </button>
         </div>
 
-        <p className="text-xs -mt-2 bg-[#FFBA00] text-center rounded-sm text-black px-1 py-1 ">
+        <p className="text-xs mt-0.5 bg-[#FFBA00] text-center rounded-sm text-black px-1 py-1 ">
           $1 per person who joins through your link
         </p>
       </div>
