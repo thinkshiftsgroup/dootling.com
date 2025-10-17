@@ -6,17 +6,21 @@ import { FiEdit } from "react-icons/fi";
 import ReactionPopup from "@/components/main/landing-page/reactionHover";
 import SendModal from "@/components/main/modal/sendModal";
 import { FaHandsClapping } from "react-icons/fa6";
-import { HiOutlineLightBulb } from "react-icons/hi";
-import { CgSmileMouthOpen } from "react-icons/cg";
-import { IoClose, IoHeartCircle } from "react-icons/io5";
-import { PiHandHeartFill } from "react-icons/pi";
+import { FiSmile } from "react-icons/fi";
+import { AiFillPicture } from "react-icons/ai";
 
 import { BiCommentDetail } from "react-icons/bi";
 import { LuSend } from "react-icons/lu";
 import { FaHeart, FaThumbsUp } from "react-icons/fa";
 import { TbDots } from "react-icons/tb";
+import { FaSortDown } from "react-icons/fa";
 
 import Image from "next/image";
+
+import { IoMdTime } from "react-icons/io";
+import { MdRocketLaunch } from "react-icons/md";
+import { LuDot } from "react-icons/lu";
+import { BiDotsHorizontalRounded } from "react-icons/bi";
 
 interface FeedMessageProps {
   content: string;
@@ -25,7 +29,7 @@ const FeedMessage = ({ content }: FeedMessageProps) => {
   const [openLikesModal, setOpenLikesModal] = useState(false);
   const [showReactions, setShowReactions] = useState(false);
   const hideTimeout = useRef<NodeJS.Timeout | null>(null);
-  const [openComment, setOpenComment] = useState(false)
+  const [openComment, setOpenComment] = useState(false);
 
   const handleMouseEnter = () => {
     if (hideTimeout.current) {
@@ -130,6 +134,8 @@ const FeedMessage = ({ content }: FeedMessageProps) => {
   const isVideo =
     content.includes("youtube.com") || content.includes("youtu.be");
 
+  const [openRelevent, setOpenRelevant] = useState(false);
+
   return (
     <div className="rounded-lg p-5 w-full bg-white shadow-md mb-[40px]">
       <div className="flex items-center justify-between">
@@ -138,7 +144,7 @@ const FeedMessage = ({ content }: FeedMessageProps) => {
             width={100}
             height={100}
             alt="user"
-            src="/images/user/userImg.png"
+            src="/images/user/userImg.jpg"
             className="rounded w-20 h-20 object-cover"
           />
           <div>
@@ -197,7 +203,7 @@ const FeedMessage = ({ content }: FeedMessageProps) => {
 
           <span className="text-gray-700 font-medium text-sm">293</span>
         </div>
-        <div className="text-xs text-gray-500 flex items-center gap-1">
+        <div className="text-xs cursor-pointer text-gray-500 flex items-center gap-1">
           <p>23 comments</p>
           <span className="inline-flex w-1 h-1 rounded-full bg-gray-500"></span>
           <p>4 reposts</p>
@@ -208,7 +214,7 @@ const FeedMessage = ({ content }: FeedMessageProps) => {
           width={100}
           height={100}
           alt="user"
-          src="/images/user/userImg.png"
+          src="/images/user/userImg.jpg"
           className="rounded-full w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 object-cover"
         />
 
@@ -225,7 +231,10 @@ const FeedMessage = ({ content }: FeedMessageProps) => {
             <ReactionPopup show={showReactions} />
           </div>
 
-          <div className="flex flex-col items-center gap-1">
+          <div
+            onClick={() => setOpenComment((prev) => !prev)}
+            className="flex flex-col items-center gap-1"
+          >
             <BiCommentDetail className="text-gray-600 text-lg sm:text-xl" />
             <p className="font-bold text-xs sm:text-sm md:text-base">Comment</p>
           </div>
@@ -291,6 +300,110 @@ const FeedMessage = ({ content }: FeedMessageProps) => {
           </div>
         </div>
       </div>
+      {openComment && (
+        <div className="w-full mt-5 mb-3">
+          <div className="flex w-full items-center gap-2">
+            <Image
+              width={100}
+              height={100}
+              alt="user"
+              src="/images/user/userImg.jpg"
+              className="rounded-full w-12 h-12 object-cover"
+            />
+            <div className="relative w-full">
+              <input
+                type="text"
+                placeholder="Add a comment..."
+                className="rounded-full px-1 py-2 border w-full"
+              />
+              <div className="flex items-center gap-2 absolute top-3 right-3">
+                <FiSmile size={20} className="cursor-pointer" />
+                <AiFillPicture size={20} className="cursor-pointer" />
+              </div>
+            </div>
+          </div>
+          <div className="relative w-auto">
+            <span
+              onClick={() => setOpenRelevant((prev) => !prev)}
+              className="p-1 flex gap-1 my-2 cursor-pointer"
+            >
+              <p className="text-sm">Most relevant</p>
+              <FaSortDown size={16} />
+            </span>
+            {openRelevent && (
+              <div
+                ref={dropdownRef}
+                className="absolute top-full mt-1 bg-white space-y-2 w-[300px] p-2 rounded-sm shadow-md z-50"
+              >
+                <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
+                  <MdRocketLaunch className="flex-none" size={22} />
+                  <div>
+                    <h3 className="font-medium text-sm">Most relevant</h3>
+                    <p className="font-normal text-xs">
+                      See the most relevant comment
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
+                  <IoMdTime className="flex-none" size={22} />
+                  <div>
+                    <h3 className="font-medium text-sm">Most recent</h3>
+                    <p className="font-normal text-xs">
+                      See all comments, the most recent comments are first
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+          <div className="">
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center gap-2">
+                <Image
+                  width={100}
+                  height={100}
+                  alt="user"
+                  src="/images/user/userImg.jpg"
+                  className="rounded-full w-8 h-8 object-cover"
+                />
+                <div>
+                  <h3 className="text-sm font-medium text-black">
+                    Racheal James <span className="text-gray-400">3rd+</span>{" "}
+                  </h3>
+                  <p className="text-xs py-1">Product Designer | Tailor</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 text-gray-500">
+                <p className="text-xs">3w</p>
+                <BiDotsHorizontalRounded size={10} className="cursor-pointer" />
+              </div>
+            </div>
+
+            <div className="ml-9 my-1">
+              <p className="text-sm py-1  leading-relaxed">
+                Love how you’re blending gaming and work into one creative
+                space! Excited to see how the wall upgrades complete the vibe ,
+                setups that evolve with your journey always feel the most
+                authentic.
+              </p>
+              <div className="flex mt-1 items-center gap-0.5 text-xs">
+                <p>Like</p>
+                <div className="flex items-center gap-1">
+                  <LuDot size={10} />
+                  <div className="w-5 h-5 rounded-full bg-blue-500 flex items-center justify-center text-white border-2 border-white z-30">
+                    <FaThumbsUp className="w-2 h-2" />
+                  </div>
+                  1 <LuDot size={10} />
+                </div>
+                <p>Reply</p>
+                <div className="flex items-center gap-1">
+                  <LuDot size={10} />1 reply
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       {openLikesModal && (
         <ReactionModal setOpenLikesModal={setOpenLikesModal} />
       )}

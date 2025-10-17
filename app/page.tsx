@@ -42,7 +42,7 @@ export default function Home() {
                               width={100}
                               height={100}
                               alt="user"
-                              src="/images/user/userImg.png"
+                              src="/images/user/userImg.jpg"
                               className="rounded w-20 h-20 object-cover"
                             />
                             <div>
@@ -113,7 +113,7 @@ export default function Home() {
                             width={100}
                             height={100}
                             alt="user"
-                            src="/images/user/userImg.png"
+                            src="/images/user/userImg.jpg"
                             className="rounded w-10 h-10 object-cover"
                           />
                           <div className="flex items-center justify-between w-7/9">
