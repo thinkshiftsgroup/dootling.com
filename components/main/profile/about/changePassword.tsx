@@ -1,10 +1,10 @@
 import React from "react";
 
-const ChangePassword = ({ activeTab }: any) => {
+const ChangePassword = ({ activeTab, tabRefs }: any) => {
   return (
     <div
       id="change-password"
-      role="tabpanel"
+      ref={tabRefs["change-password"]}
       className={`w-full space-y-8 ${
         activeTab === "change-password" ? "block" : "hidden"
       }`}

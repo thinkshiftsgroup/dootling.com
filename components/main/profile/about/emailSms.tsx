@@ -1,11 +1,11 @@
 import { Switch } from "@radix-ui/react-switch";
 import React from "react";
 
-const EmailSms = ({ activeTab }: any) => {
+const EmailSms = ({ activeTab, tabRefs }: any) => {
   return (
     <div
       id="email-sms"
-      role="tabpanel"
+       ref={tabRefs["email-sms"]}
       className={`w-full space-y-8 ${
         activeTab === "email-sms" ? "block" : "hidden"
       }`}

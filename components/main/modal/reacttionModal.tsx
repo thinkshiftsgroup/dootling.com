@@ -43,6 +43,86 @@ const users = [
     reaction: "insight",
     image: "/images/user/userImg.jpg",
   },
+  {
+    id: 2,
+    name: "Abid Omar",
+    connection: "2nd",
+    description: "I build AI apps on WhatsApp | Founder, Chatveda",
+    reaction: "love",
+    image: "/images/user/userImg.jpg",
+  },
+  {
+    id: 3,
+    name: "Tony Z Nath",
+    connection: "2nd",
+    description: "Helping businesses grow with AI automation.",
+    reaction: "insight",
+    image: "/images/user/userImg.jpg",
+  },
+  {
+    id: 2,
+    name: "Abid Omar",
+    connection: "2nd",
+    description: "I build AI apps on WhatsApp | Founder, Chatveda",
+    reaction: "love",
+    image: "/images/user/userImg.jpg",
+  },
+  {
+    id: 3,
+    name: "Tony Z Nath",
+    connection: "2nd",
+    description: "Helping businesses grow with AI automation.",
+    reaction: "insight",
+    image: "/images/user/userImg.jpg",
+  },
+  {
+    id: 2,
+    name: "Abid Omar",
+    connection: "2nd",
+    description: "I build AI apps on WhatsApp | Founder, Chatveda",
+    reaction: "love",
+    image: "/images/user/userImg.jpg",
+  },
+  {
+    id: 3,
+    name: "Tony Z Nath",
+    connection: "2nd",
+    description: "Helping businesses grow with AI automation.",
+    reaction: "insight",
+    image: "/images/user/userImg.jpg",
+  },
+  {
+    id: 2,
+    name: "Abid Omar",
+    connection: "2nd",
+    description: "I build AI apps on WhatsApp | Founder, Chatveda",
+    reaction: "love",
+    image: "/images/user/userImg.jpg",
+  },
+  {
+    id: 3,
+    name: "Tony Z Nath",
+    connection: "2nd",
+    description: "Helping businesses grow with AI automation.",
+    reaction: "insight",
+    image: "/images/user/userImg.jpg",
+  },
+  {
+    id: 2,
+    name: "Abid Omar",
+    connection: "2nd",
+    description: "I build AI apps on WhatsApp | Founder, Chatveda",
+    reaction: "love",
+    image: "/images/user/userImg.jpg",
+  },
+  {
+    id: 3,
+    name: "Tony Z Nath",
+    connection: "2nd",
+    description: "Helping businesses grow with AI automation.",
+    reaction: "insight",
+    image: "/images/user/userImg.jpg",
+  },
 ];
 
 const ReactionModal = ({ setOpenLikesModal }: ReactionModalProps) => {
@@ -96,7 +176,7 @@ const ReactionModal = ({ setOpenLikesModal }: ReactionModalProps) => {
     >
       <div
         ref={modalRef}
-        className="w-[90vw] md:w-[480px] h-[80vh] bg-white rounded-lg shadow-lg flex flex-col"
+        className="w-[90vw] md:!w-[480px] h-[80vh] lg:!h-[60vh] bg-white rounded-lg shadow-lg flex flex-col"
       >
         <div className="flex justify-between items-center px-5 pt-4">
           <h2 className="text-lg font-semibold text-gray-800">Endorsements</h2>
@@ -130,7 +210,7 @@ const ReactionModal = ({ setOpenLikesModal }: ReactionModalProps) => {
           })}
         </div>
 
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-scroll">
           {filteredUsers.map((user) => (
             <div
               key={user.id}

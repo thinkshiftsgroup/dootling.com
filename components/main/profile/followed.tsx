@@ -33,7 +33,7 @@ const FollowedTab: React.FC = () => {
 
   return (
     <div className="bg-white rounded-sm  p-2 w-full overflow-scroll">
-      <div className="bg-white flex flex-col lg:flex-row gap-2 items-center px-2 justify-between">
+      <div className="bg-white flex flex-col md:!flex-row gap-2 items-center px-2 justify-between">
         <ul className="flex flex-wrap gap-2 items-center">
           {tabs.map((tab: any) => (
             <li key={tab.key}>

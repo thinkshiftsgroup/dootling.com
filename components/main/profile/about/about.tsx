@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import {
   User,
@@ -88,6 +88,21 @@ interface FormData {
   dateOfBirth: string;
   pronouns: string;
 }
+
+type TabId =
+  | "personal-info"
+  | "hobbies-interests"
+  | "v-pills-family"
+  | "v-pills-work-tab"
+  | "v-pills-lived-tab"
+  | "v-pills-visibility-tab"
+  | "v-pills-privacy-tab"
+  | "v-pills-block-tab"
+  | "manage-contact"
+  | "change-password"
+  | "email-sms"
+  | "v-pills-export-tab";
+
 const ProfileAbout = () => {
   const [open, setOpen] = useState<string | null>("profile");
   const [activeTab, setActiveTab] = useState<string>("personal-info");
@@ -123,12 +138,49 @@ const ProfileAbout = () => {
       });
     }
   }, [profile]);
+
   const toggleAccordion = (section: string) => {
     setOpen(open === section ? null : section);
   };
 
-  const handleTabClick = (id: string) => {
+  const tabRefs: Record<TabId, React.RefObject<HTMLDivElement | null>> = {
+    "personal-info": useRef<HTMLDivElement>(null),
+    "hobbies-interests": useRef<HTMLDivElement>(null),
+    "v-pills-family": useRef<HTMLDivElement>(null),
+    "v-pills-work-tab": useRef<HTMLDivElement>(null),
+    "v-pills-lived-tab": useRef<HTMLDivElement>(null),
+    "v-pills-visibility-tab": useRef<HTMLDivElement>(null),
+    "v-pills-privacy-tab": useRef<HTMLDivElement>(null),
+    "v-pills-block-tab": useRef<HTMLDivElement>(null),
+    "manage-contact": useRef<HTMLDivElement>(null),
+    "change-password": useRef<HTMLDivElement>(null),
+    "email-sms": useRef<HTMLDivElement>(null),
+    "v-pills-export-tab": useRef<HTMLDivElement>(null),
+  };
+
+  const handleTabClick = (id: TabId) => {
+    if (
+      [
+        "personal-info",
+        "hobbies-interests",
+        "v-pills-family",
+        "v-pills-work-tab",
+        "v-pills-lived-tab",
+      ].includes(id)
+    ) {
+      setOpen("profile");
+    } else {
+      setOpen("account");
+    }
+
     setActiveTab(id);
+
+    setTimeout(() => {
+      const element = tabRefs[id].current;
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 300);
   };
 
   const familyMembers = [
@@ -246,7 +298,7 @@ const ProfileAbout = () => {
                   >
                     <span className="flex items-center gap-2 font-semibold text-white">
                       <User size={20} className="" />
-                      Profile Setting
+                      Account Setups
                     </span>
                     <CaretDown
                       size={18}
@@ -268,10 +320,7 @@ const ProfileAbout = () => {
                           label: "Hobbies and Interests",
                           id: "hobbies-interests",
                         },
-                        {
-                          label: "Social Networks",
-                          id: "v-pills-family",
-                        },
+                        { label: "Payout Account & KYC", id: "v-pills-family" },
                         { label: "Work and Education", id: "v-pills-work-tab" },
                         {
                           label: "Places You've Lived",
@@ -280,7 +329,7 @@ const ProfileAbout = () => {
                       ].map((item, idx) => (
                         <button
                           key={idx}
-                          onClick={() => handleTabClick(item.id)}
+                          onClick={() => handleTabClick(item.id as TabId)}
                           className={`text-left font-medium text-sm py-2 px-2 rounded-sm hover:bg-[#1578ff]/10 transition ${
                             activeTab === item.id
                               ? " bg-[#1578ff]/10 text-[#1578ff]"
@@ -334,7 +383,7 @@ const ProfileAbout = () => {
                       ].map((item, idx) => (
                         <button
                           key={idx}
-                          onClick={() => handleTabClick(item.id)}
+                          onClick={() => handleTabClick(item.id as TabId)}
                           className={`text-left font-medium text-sm py-2 px-2 rounded-sm hover:bg-[#1578ff]/10 transition ${
                             activeTab === item.id
                               ? " bg-[#1578ff]/10 text-[#1578ff]"
@@ -353,13 +402,14 @@ const ProfileAbout = () => {
         </div>
         <div className="col-span-8">
           <div className="card">
-            <div className="card-body my-2 sm:my-0">
+            <div className="card-body my-2 sm:!my-0">
               <div id="profileTabContent" className="tab-content active show">
                 {isLoading && !isLoaded && activeTab === "personal-info" ? (
                   <PersonalInformationSkeleton />
                 ) : (
                   <div
                     id="personal-info"
+                    ref={tabRefs["personal-info"]}
                     className={`w-full bg-white my-2 rounded-sm transition-all ${
                       activeTab === "personal-info" ? "block" : "hidden"
                     }`}
@@ -623,7 +673,7 @@ const ProfileAbout = () => {
                 )}
                 <div
                   id="hobbies-interests"
-                  role="tabpanel"
+                  ref={tabRefs["hobbies-interests"]}
                   className={`w-full bg-white rounded-sm transition-all ${
                     activeTab === "hobbies-interests" ? "block" : "hidden"
                   }`}
@@ -632,96 +682,86 @@ const ProfileAbout = () => {
                     <h4 className="text-lg font-semibold text-[#2b2d42]">
                       Hobbies and Interests
                     </h4>
-                    <button
-                      className="flex items-center justify-center w-9 h-9 bg-[#1578ff] text-white rounded-sm hover:bg-[#1578ff]/90 transition"
-                      aria-label="Edit hobbies and interests"
-                    >
-                      <PencilSimple size={18} />
-                    </button>
                   </div>
 
                   <hr className="border-gray-200 mb-6" />
 
-                  <div className="space-y-4 text-[#7e8b9a]">
+                  <div className=" text-[#7e8b9a]">
                     <div>
                       <h5 className="font-semibold text-[#2b2d42] mb-1">
                         Hobbies:
                       </h5>
-                      <p className="text-sm leading-relaxed text-[#7e8b9a]">
-                        Hi, I’m Bni, I’m 26 and I work as a Web Designer for the
-                        iqonicdesign. I like to ride the bike to work, swimming,
-                        and working out. I also like reading design magazines,
-                        go to museums, and binge watching a good TV show while
-                        it’s raining outside.
-                      </p>
+                      <textarea
+                        placeholder="Input hobbies"
+                        className="w-full border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
                     </div>
 
                     <div>
                       <h5 className="font-semibold text-[#2b2d42] mb-1">
                         Favourite TV Shows:
                       </h5>
-                      <p className="text-sm leading-relaxed text-[#7e8b9a]">
-                        Breaking Good, RedDevil, People of Interest, The Running
-                        Dead, Found, American Guy.
-                      </p>
+                      <textarea
+                        placeholder="Input Favourite TV Shows"
+                        className="w-full border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
                     </div>
 
                     <div>
                       <h5 className="font-semibold text-[#2b2d42] mb-1">
                         Favourite Movies:
                       </h5>
-                      <p className="text-sm leading-relaxed text-[#7e8b9a]">
-                        Idiocratic, The Scarred Wizard and the Fire Crown, Crime
-                        Squad, Ferrum Man.
-                      </p>
+                      <textarea
+                        placeholder="Input Favourite Movies"
+                        className="w-full border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
                     </div>
 
                     <div>
                       <h5 className="font-semibold text-[#2b2d42] mb-1">
                         Favourite Games:
                       </h5>
-                      <p className="text-sm leading-relaxed text-[#7e8b9a]">
-                        The First of Us, Assassin’s Squad, Dark Assylum, NMAK16,
-                        Last Cause 4, Grand Snatch Auto.
-                      </p>
+                      <textarea
+                        placeholder="Input Favourite Games"
+                        className="w-full border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
                     </div>
 
                     <div>
                       <h5 className="font-semibold text-[#2b2d42] mb-1">
                         Favourite Music Bands / Artists:
                       </h5>
-                      <p className="text-sm leading-relaxed text-[#7e8b9a]">
-                        Iron Maid, DC/AC, Megablow, The Ill, Kung Fighters,
-                        System of a Revenge.
-                      </p>
+                      <textarea
+                        placeholder="Input Favourite Music Bands / Artists"
+                        className="w-full border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
                     </div>
 
                     <div>
                       <h5 className="font-semibold text-[#2b2d42] mb-1">
                         Favourite Books:
                       </h5>
-                      <p className="text-sm leading-relaxed text-[#7e8b9a]">
-                        The Crime of the Century, Egyptian Mythology 101, The
-                        Scarred Wizard, Lord of the Wings, Amongst Gods, The
-                        Oracle, A Tale of Air and Water.
-                      </p>
+                      <textarea
+                        placeholder="Input Favourite Books"
+                        className="w-full border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
                     </div>
 
                     <div>
                       <h5 className="font-semibold text-[#2b2d42] mb-1">
                         Favourite Writers:
                       </h5>
-                      <p className="text-sm leading-relaxed text-[#7e8b9a]">
-                        Martin T. Georgeston, Jhonathan R. Token, Ivana Rowle,
-                        Alexandria Platt, Marcus Roth.
-                      </p>
+                      <textarea
+                        placeholder="Input Favourite Writers"
+                        className="w-full border border-[#f1f1f1] rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
                     </div>
                   </div>
                 </div>
 
                 <div
                   id="v-pills-family"
-                  role="tabpanel"
+                  ref={tabRefs["v-pills-family"]}
                   className={`${
                     activeTab === "v-pills-family" ? "block" : "hidden"
                   } tab-pane fade space-y-4`}
@@ -809,7 +849,7 @@ const ProfileAbout = () => {
 
                 <div
                   id="v-pills-work-tab"
-                  role="tabpanel"
+                  ref={tabRefs["v-pills-work-tab"]}
                   className={`${
                     activeTab === "v-pills-work-tab" ? "block" : "hidden"
                   } space-y-6`}
@@ -962,7 +1002,7 @@ const ProfileAbout = () => {
 
                 <div
                   id="v-pills-lived-tab"
-                  role="tabpanel"
+                  ref={tabRefs["v-pills-lived-tab"]}
                   className={`${
                     activeTab === "v-pills-lived-tab" ? "block" : "hidden"
                   } space-y-6`}
@@ -1043,11 +1083,11 @@ const ProfileAbout = () => {
                   </div>
                 </div>
 
-                <ProfileVisibility activeTab={activeTab} />
+                <ProfileVisibility activeTab={activeTab} tabRefs={tabRefs} />
 
                 <div
                   id="v-pills-privacy-tab"
-                  role="tabpanel"
+                  ref={tabRefs["v-pills-privacy-tab"]}
                   aria-labelledby="v-pills-privacy-tab"
                   className={`${
                     activeTab === "v-pills-privacy-tab" ? "block" : "hidden"
@@ -1083,7 +1123,7 @@ const ProfileAbout = () => {
 
                 <div
                   id="v-pills-block-tab"
-                  role="tabpanel"
+                  ref={tabRefs["v-pills-block-tab"]}
                   aria-labelledby="v-pills-block-tab"
                   className={`${
                     activeTab === "v-pills-block-tab" ? "block" : "hidden"
@@ -1142,7 +1182,7 @@ const ProfileAbout = () => {
 
                 <div
                   id="v-pills-export-tab"
-                  role="tabpanel"
+                  ref={tabRefs["v-pills-export-tab"]}
                   aria-labelledby="v-pills-export-tab"
                   className={`${
                     activeTab === "v-pills-export-tab" ? "block" : "hidden"
@@ -1170,9 +1210,9 @@ const ProfileAbout = () => {
                   </div>
                 </div>
 
-                <ChangePassword activeTab={activeTab} />
-                <EmailSms activeTab={activeTab} />
-                <ManageContact activeTab={activeTab} />
+                <ChangePassword tabRefs={tabRefs} activeTab={activeTab} />
+                <EmailSms tabRefs={tabRefs} activeTab={activeTab} />
+                <ManageContact tabRefs={tabRefs} activeTab={activeTab} />
               </div>
             </div>
           </div>
