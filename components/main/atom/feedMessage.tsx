@@ -279,14 +279,14 @@ const FeedMessage = ({ content }: FeedMessageProps) => {
             )}
           </div>
 
-          <div>
-            <div
-              className="flex flex-col items-center gap-1 cursor-pointer"
-              onClick={() => setOpenModal(true)}
-            >
-              <LuSend className="text-gray-600 text-lg sm:text-xl" />
-              <p className="font-bold text-xs sm:text-sm md:text-base">Send</p>
-            </div>
+            <div>
+              <div
+                className="flex flex-col items-center gap-1 cursor-pointer"
+                onClick={() => setOpenModal(true)}
+              >
+                <LuSend className="text-gray-600 text-lg sm:text-xl" />
+                <p className="font-bold text-xs sm:text-sm md:text-base">Send</p>
+              </div>
 
               {openModal && (
                 <SendModal
