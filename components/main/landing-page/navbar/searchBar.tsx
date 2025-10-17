@@ -40,7 +40,7 @@ export default function SearchBar() {
         <HiMagnifyingGlass className="text-2xl text-gray-500" />
         <input
           type="text"
-          placeholder="Search for people or groups..."
+          placeholder="Search"
           onFocus={() => setShowResults(true)}
           className="w-full border-none bg-gray-100 text-xs outline-none placeholder:text-[#7E8B9A]"
         />

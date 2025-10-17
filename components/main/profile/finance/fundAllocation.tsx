@@ -8,37 +8,36 @@ import AuditTrialsTable from "./auditTrails";
 const FundAllocation = () => {
   const [openModal, setOpenModal] = useState(false);
   const [vault, setVault] = useState("");
-  const selectRef = useRef<HTMLSelectElement>(null);
+  // const selectRef = useRef<HTMLSelectElement>(null);
 
-  const handleCreateProject = () => {
-    const selectedValue = selectRef.current?.value;
-    if (selectedValue) {
-      setVault(selectedValue);
-      console.log("Vault created for:", selectedValue);
-    } else {
-      alert("Please select a project first!");
-    }
-  };
+  // const handleCreateProject = () => {
+  //   const selectedValue = selectRef.current?.value;
+  //   if (selectedValue) {
+  //     setVault(selectedValue);
+  //     console.log("Vault created for:", selectedValue);
+  //   } else {
+  //     alert("Please select a project first!");
+  //   }
+  // };
   return (
     <div className="rounded  bg-white p-4 shadow-md my-5">
       <h1 className="text-lg font-bold text-black">Fund Allocation</h1>
 
-      <div className="flex items-center my-4 gap-4">
+      <div className="flex sm:!flex-row !flex-col items-center my-4 !gap-2 sm:!gap-4">
         <select
           name=""
-          ref={selectRef}
-          className=" border w-1/2 text-sm text-black border-gray-300/70 rounded-sm p-1.5"
-          // onChange={(e) => setVault(e.target.value)}
-          // value={vault}
+          className=" border sm:!w-1/2 w-full text-sm text-black border-gray-300/70 rounded-sm p-1.5"
+          onChange={(e) => setVault(e.target.value)}
+          value={vault}
         >
           <option value="">Select Project</option>
           <option value="developer">Developing Investor Vaults</option>
           <option value="marketer">Marketing Vaults</option>
         </select>
 
-        <button
+        {/* <button
           onClick={handleCreateProject}
-          className="bg-[#157BFF] hover:bg-blue-600 text-white px-2 flex items-center gap-2 py-1 rounded-sm text-[0.9rem]"
+          className="bg-[#157BFF] sm:!text-base !text-sm hover:bg-blue-600 text-white px-2 flex items-center gap-2 py-1 rounded-sm text-[0.9rem]"
         >
           <svg
             width="24"
@@ -57,7 +56,7 @@ const FundAllocation = () => {
             />
           </svg>
           Create Project Escrow
-        </button>
+        </button> */}
       </div>
 
       {vault && (
@@ -83,14 +82,17 @@ const FundAllocation = () => {
                 amount: "$200",
               },
             ].map((person, i) => (
-              <div key={i} className="flex items-center gap-4 w-full">
-                <div className="w-30">
-                  <p className="font-semibold whitespace-nowrap text-lg text-black">
+              <div
+                key={i}
+                className="flex !flex-col sm:!flex-row items-center sm:items-center gap-3 sm:gap-4 w-full"
+              >
+                <div className="w-full sm:!w-1/4 text-center sm:!text-left">
+                  <p className="font-semibold whitespace-nowrap !text-base sm:!text-lg text-black">
                     {person.name}
                   </p>
                 </div>
 
-                <div className="flex-1 h-[12px] bg-gray-100 rounded relative overflow-hidden">
+                <div className="w-full sm:!flex-1 h-3 bg-gray-100 rounded relative overflow-hidden !mt-1 sm:!mt-0">
                   <div
                     className="absolute top-0 left-0 h-full rounded transition-all duration-300"
                     style={{
@@ -100,11 +102,11 @@ const FundAllocation = () => {
                   ></div>
                 </div>
 
-                <div className="flex items-center gap-2 w-28 justify-end">
-                  <p className="font-bold text-lg text-black">
+                <div className="flex items-center justify-between sm:!justify-end gap-2 w-full sm:!w-28 mt-1 sm:!mt-0">
+                  <p className="font-bold !text-base sm:!text-lg text-black">
                     {person.percent}%
                   </p>
-                  <p className="font-bold text-lg text-[#157BFF]">
+                  <p className="font-bold !text-base sm:!text-lg text-[#157BFF]">
                     {person.amount}
                   </p>
                 </div>
@@ -113,35 +115,43 @@ const FundAllocation = () => {
           </div>
 
           <div>
-            <div className="mt-5 max-w-xl">
-              {/* <h1 className="font-bold text-black">Fund Allocation</h1> */}
-              {[
-                {
-                  name: "Amelia Shaw",
-                  email: "ameliashaw@example.com",
-                  percent: "50%",
-                },
-                {
-                  name: "Ronald Nunez",
-                  email: "ronaldnunez@example.com",
-                  percent: "30%",
-                },
-                {
-                  name: "Carolyn Ortiz",
-                  email: "carolynortiz@example.com",
-                  percent: "20%",
-                },
-              ].map((person, index) => (
-                <div
-                  key={index}
-                  className="py-2.5 flex items-center justify-between text-gray-800 text-sm border-t border-gray-300/50"
-                >
-                  <p>{person.name}</p>
-                  <p>{person.email}</p>
-                  <p>{person.percent}</p>
-                </div>
-              ))}
+            <div className="mt-5 w-full overflow-x-auto">
+              <div className="min-w-[400px] max-w-xl w-full">
+                {[
+                  {
+                    name: "Amelia Shaw",
+                    email: "ameliashaw@example.com",
+                    percent: "50%",
+                  },
+                  {
+                    name: "Ronald Nunez",
+                    email: "ronaldnunez@example.com",
+                    percent: "30%",
+                  },
+                  {
+                    name: "Carolyn Ortiz",
+                    email: "carolynortiz@example.com",
+                    percent: "20%",
+                  },
+                ].map((person, index) => (
+                  <div
+                    key={index}
+                    className="py-2.5 flex !flex-row items-center justify-between text-gray-800 text-sm sm:text-base border-t border-gray-300/50 !whitespace-nowrap"
+                  >
+                    <p className="!w-1/3 !font-semibold text-left">
+                      {person.name}
+                    </p>
+                    <p className="!w-1/3 text-left sm:text-center truncate">
+                      {person.email}
+                    </p>
+                    <p className="!w-1/3 !font-bold text-right">
+                      {person.percent}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
+
             <div className="my-3">
               <ReusableButton
                 icon={
@@ -200,14 +210,14 @@ const FundAllocation = () => {
 
           {openModal && <CreateProjectEscrow setOpenModal={setOpenModal} />}
 
-          <div className="rounded bg-white p-4 shadow-md my-5">
+          <div className="rounded bg-white my-5">
             <div className="">
-              <h1 className="text-lg whitespace-nowrap font-normal mb-2 text-black">
+              <h1 className="sm:!text-lg text-base font-normal mb-2 text-black">
                 Developer Project Dev Team{" "}
                 <span className="font-bold">Audit Trials</span>
               </h1>
-              <div className="text-black w-full border bg-[#F9F9FB] text-xs font-medium justify-around border-[#D5D5D5] flex items-center rounded-md">
-                <span className="flex gap-2 pl-1 w-1/3 cursor-pointer">
+              <div className="!text-black !p-2 sm:!p-0 !whitespace-nowrap !border !bg-[#F9F9FB] !text-xs !font-medium !justify-around !border-[#D5D5D5] sm:!hidden !flex sm:!flex-row !flex-col !items-center !rounded-md">
+                <span className="flex gap-2 pl-0 sm:!pl-1 w-full sm:!w-1/3 cursor-pointer">
                   <svg
                     width="16"
                     height="16"
@@ -226,9 +236,9 @@ const FundAllocation = () => {
 
                 <div className="self-stretch w-px bg-[#D5D5D5]" />
 
-                <span className="flex items-center py-3 ">
+                <span className="flex items-center sm:!w-auto w-full py-3 ">
                   <select
-                    className="bg-transparent outline-none cursor-pointer w-full text-[#041827] appearance-none"
+                    className="bg-transparent outline-none cursor-pointer w-full text-[#041827] "
                     defaultValue=""
                   >
                     <option value="" disabled>
@@ -242,9 +252,9 @@ const FundAllocation = () => {
 
                 <div className="self-stretch w-px bg-[#D5D5D5]" />
 
-                <span className="flex items-center py-3 w-[180px]">
+                <span className="flex items-center py-3 w-full sm:!w-[180px]">
                   <select
-                    className="bg-transparent outline-none cursor-pointer w-full text-[#041827] appearance-none"
+                    className="bg-transparent outline-none cursor-pointer w-full text-[#041827] "
                     defaultValue=""
                   >
                     <option value="" disabled>
