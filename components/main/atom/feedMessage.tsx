@@ -239,16 +239,16 @@ const FeedMessage = ({ content }: FeedMessageProps) => {
             <p className="font-bold text-xs sm:text-sm md:text-base">Comment</p>
           </div>
 
-          <div className="relative flex flex-col items-center gap-1">
-            <div
-              onClick={() => setOpenRepostModal((prev) => !prev)}
-              className="flex cursor-pointer flex-col items-center gap-1"
-            >
-              <BiRepost className="text-gray-600 text-lg sm:text-xl" />
-              <p className="font-bold text-xs sm:text-sm md:text-base">
-                Repost
-              </p>
-            </div>
+            <div className="relative flex flex-col items-center gap-1">
+              <div
+                onClick={() => setOpenRepostModal((prev) => !prev)}
+                className="flex cursor-pointer flex-col items-center gap-1"
+              >
+                <BiRepost className="text-gray-600 text-lg sm:text-xl" />
+                <p className="font-bold text-xs sm:text-sm md:text-base">
+                  Repost
+                </p>
+              </div>
 
               {openRepostModal && (
                 <div
