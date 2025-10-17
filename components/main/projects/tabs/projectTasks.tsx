@@ -294,7 +294,7 @@ const ProjectTasks = () => {
                 </div>
               </td>
             </tr>
-          
+
           </tbody>
         </table>
       </div>
@@ -322,7 +322,7 @@ const ProjectTasks = () => {
             3
           </button>
           <button className="px-3 py-1 text-[#157bff] text-xs ">
-            <FaAngleRight/>
+            <FaAngleRight />
           </button>
         </div>
       </div>
@@ -334,8 +334,8 @@ const ProjectTasks = () => {
       )}
       {manageTasksModal && (
         <ManageTasks
-          open={addTaskModal}
-          onClose={() => setAddTaskModal(false)}
+          open={manageTasksModal}
+          onClose={() => setManageTasksMmodal(false)}
         />
       )}
     </div>
