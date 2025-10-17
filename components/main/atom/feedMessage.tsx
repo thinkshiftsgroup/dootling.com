@@ -231,13 +231,13 @@ const FeedMessage = ({ content }: FeedMessageProps) => {
               <ReactionPopup show={showReactions} />
             </div>
 
-          <div
-            onClick={() => setOpenComment((prev) => !prev)}
-            className="flex flex-col items-center gap-1"
-          >
-            <BiCommentDetail className="text-gray-600 text-lg sm:text-xl" />
-            <p className="font-bold text-xs sm:text-sm md:text-base">Comment</p>
-          </div>
+            <div
+              onClick={() => setOpenComment((prev) => !prev)}
+              className="flex flex-col items-center gap-1"
+            >
+              <BiCommentDetail className="text-gray-600 text-lg sm:text-xl" />
+              <p className="font-bold text-xs sm:text-sm md:text-base">Comment</p>
+            </div>
 
             <div className="relative flex flex-col items-center gap-1">
               <div
