@@ -8,15 +8,12 @@ import SendModal from "@/components/main/modal/sendModal";
 import { FaHandsClapping } from "react-icons/fa6";
 import { FiSmile } from "react-icons/fi";
 import { AiFillPicture } from "react-icons/ai";
-
 import { BiCommentDetail } from "react-icons/bi";
 import { LuSend } from "react-icons/lu";
 import { FaHeart, FaThumbsUp } from "react-icons/fa";
 import { TbDots } from "react-icons/tb";
 import { FaSortDown } from "react-icons/fa";
-
 import Image from "next/image";
-
 import { IoMdTime } from "react-icons/io";
 import { MdRocketLaunch } from "react-icons/md";
 import { LuDot } from "react-icons/lu";
@@ -25,6 +22,7 @@ import { BiDotsHorizontalRounded } from "react-icons/bi";
 interface FeedMessageProps {
   content: string;
 }
+
 const FeedMessage = ({ content }: FeedMessageProps) => {
   const [openLikesModal, setOpenLikesModal] = useState(false);
   const [showReactions, setShowReactions] = useState(false);
@@ -135,6 +133,20 @@ const FeedMessage = ({ content }: FeedMessageProps) => {
     content.includes("youtube.com") || content.includes("youtu.be");
 
   const [openRelevent, setOpenRelevant] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  const images = [
+    { src: '/images/page-img/boy.jpg', alt: 'post-image' },
+    { src: '/images/page-img/bus.jpg', alt: 'post-image' },
+    { src: '/images/page-img/fd.jpg', alt: 'post-image' },
+    { src: '/images/page-img/mountain.jpg', alt: 'post-image' },
+    { src: '/images/page-img/pizza.jpg', alt: 'post-image' },
+  ];
+
+  // Check if there are multiple images and count how many extra images
+  const isMulti = images.length > 1;
+  const isSingle = images.length === 1;
+  const moreCount = Math.max(0, images.length - 5); // Count remaining images beyond the 5 displayed
 
   return (
     <>
