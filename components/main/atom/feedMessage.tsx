@@ -288,96 +288,96 @@ const FeedMessage = ({ content }: FeedMessageProps) => {
               <p className="font-bold text-xs sm:text-sm md:text-base">Send</p>
             </div>
 
-            {openModal && (
-              <SendModal
-                users={users}
-                selectedUsers={selectedUsers}
-                toggleUser={toggleUser}
-                setOpenModal={setOpenModal}
-                setSelectedUsers={setSelectedUsers}
-              />
-            )}
+              {openModal && (
+                <SendModal
+                  users={users}
+                  selectedUsers={selectedUsers}
+                  toggleUser={toggleUser}
+                  setOpenModal={setOpenModal}
+                  setSelectedUsers={setSelectedUsers}
+                />
+              )}
+            </div>
           </div>
         </div>
-      </div>
-      {openComment && (
-        <div className="w-full mt-5 mb-3">
-          <div className="flex w-full items-center gap-2">
-            <Image
-              width={100}
-              height={100}
-              alt="user"
-              src="/images/user/userImg.jpg"
-              className="rounded-full w-12 h-12 object-cover"
-            />
-            <div className="relative w-full">
-              <input
-                type="text"
-                placeholder="Add a comment..."
-                className="rounded-full px-1 py-2 border w-full"
+        {openComment && (
+          <div className="w-full mt-5 mb-3">
+            <div className="flex w-full items-center gap-2">
+              <Image
+                width={100}
+                height={100}
+                alt="user"
+                src="/images/user/userImg.jpg"
+                className="rounded-full w-12 h-12 object-cover"
               />
-              <div className="flex items-center gap-2 absolute top-3 right-3">
-                <FiSmile size={20} className="cursor-pointer" />
-                <AiFillPicture size={20} className="cursor-pointer" />
-              </div>
-            </div>
-          </div>
-          <div className="relative w-auto">
-            <span
-              onClick={() => setOpenRelevant((prev) => !prev)}
-              className="p-1 flex gap-1 my-2 cursor-pointer"
-            >
-              <p className="text-sm">Most relevant</p>
-              <FaSortDown size={16} />
-            </span>
-            {openRelevent && (
-              <div
-                ref={dropdownRef}
-                className="absolute top-full mt-1 bg-white space-y-2 w-[300px] p-2 rounded-sm shadow-md z-50"
-              >
-                <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
-                  <MdRocketLaunch className="flex-none" size={22} />
-                  <div>
-                    <h3 className="font-medium text-sm">Most relevant</h3>
-                    <p className="font-normal text-xs">
-                      See the most relevant comment
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
-                  <IoMdTime className="flex-none" size={22} />
-                  <div>
-                    <h3 className="font-medium text-sm">Most recent</h3>
-                    <p className="font-normal text-xs">
-                      See all comments, the most recent comments are first
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-          <div className="">
-            <div className="flex items-center justify-between gap-2">
-              <div className="flex items-center gap-2">
-                <Image
-                  width={100}
-                  height={100}
-                  alt="user"
-                  src="/images/user/userImg.jpg"
-                  className="rounded-full w-8 h-8 object-cover"
+              <div className="relative w-full">
+                <input
+                  type="text"
+                  placeholder="Add a comment..."
+                  className="rounded-full px-1 py-2 border w-full"
                 />
-                <div>
-                  <h3 className="text-sm font-medium text-black">
-                    Racheal James <span className="text-gray-400">3rd+</span>{" "}
-                  </h3>
-                  <p className="text-xs py-1">Product Designer | Tailor</p>
+                <div className="flex items-center gap-2 absolute top-3 right-3">
+                  <FiSmile size={20} className="cursor-pointer" />
+                  <AiFillPicture size={20} className="cursor-pointer" />
                 </div>
               </div>
-              <div className="flex items-center gap-2 text-gray-500">
-                <p className="text-xs">3w</p>
-                <BiDotsHorizontalRounded size={10} className="cursor-pointer" />
-              </div>
             </div>
+            <div className="relative w-auto">
+              <span
+                onClick={() => setOpenRelevant((prev) => !prev)}
+                className="p-1 flex gap-1 my-2 cursor-pointer"
+              >
+                <p className="text-sm">Most relevant</p>
+                <FaSortDown size={16} />
+              </span>
+              {openRelevent && (
+                <div
+                  ref={dropdownRef}
+                  className="absolute top-full mt-1 bg-white space-y-2 w-[300px] p-2 rounded-sm shadow-md z-50"
+                >
+                  <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
+                    <MdRocketLaunch className="flex-none" size={22} />
+                    <div>
+                      <h3 className="font-medium text-sm">Most relevant</h3>
+                      <p className="font-normal text-xs">
+                        See the most relevant comment
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
+                    <IoMdTime className="flex-none" size={22} />
+                    <div>
+                      <h3 className="font-medium text-sm">Most recent</h3>
+                      <p className="font-normal text-xs">
+                        See all comments, the most recent comments are first
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <Image
+                    width={100}
+                    height={100}
+                    alt="user"
+                    src="/images/user/userImg.jpg"
+                    className="rounded-full w-8 h-8 object-cover"
+                  />
+                  <div>
+                    <h3 className="text-sm font-medium text-black">
+                      Racheal James <span className="text-gray-400">3rd+</span>{" "}
+                    </h3>
+                    <p className="text-xs py-1">Product Designer | Tailor</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 text-gray-500">
+                  <p className="text-xs">3w</p>
+                  <BiDotsHorizontalRounded size={10} className="cursor-pointer" />
+                </div>
+              </div>
 
               <div className="ml-9 my-1">
                 <p className="text-sm py-1  leading-relaxed">
