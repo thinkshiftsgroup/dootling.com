@@ -195,7 +195,7 @@ export default function Home() {
                               height={100}
                               alt="feed image"
                               className="w-full h-32 object-cover"
-                              src="/images/page-img/pizza.jpg"
+                              src="/images/bs-image.png"
                             />
                           </div>
 

@@ -21,7 +21,7 @@ const ProfileFeeds = () => {
             width={100}
             height={100}
             alt="user"
-            src="/images/user/userImg.png"
+            src="/images/user/.png"
             className="rounded w-20 h-20 object-cover"
           />
           <div>
