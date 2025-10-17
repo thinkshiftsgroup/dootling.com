@@ -250,34 +250,34 @@ const FeedMessage = ({ content }: FeedMessageProps) => {
               </p>
             </div>
 
-            {openRepostModal && (
-              <div
-                ref={dropdownRef}
-                className="absolute top-full mt-1 bg-white space-y-2 w-[300px] p-2 rounded-sm shadow-md z-50"
-              >
-                <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
-                  <FiEdit className="flex-none" size={22} />
-                  <div>
-                    <h3 className="font-medium text-sm">
-                      Repost with your thoughts
-                    </h3>
-                    <p className="font-normal text-xs">
-                      Create a new post with Salem's post attached
-                    </p>
+              {openRepostModal && (
+                <div
+                  ref={dropdownRef}
+                  className="absolute top-full mt-1 bg-white space-y-2 w-[300px] p-2 rounded-sm shadow-md z-50"
+                >
+                  <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
+                    <FiEdit className="flex-none" size={22} />
+                    <div>
+                      <h3 className="font-medium text-sm">
+                        Repost with your thoughts
+                      </h3>
+                      <p className="font-normal text-xs">
+                        Create a new post with Salem's post attached
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
+                    <BiRepost className="flex-none" size={22} />
+                    <div>
+                      <h3 className="font-medium text-sm">Repost</h3>
+                      <p className="font-normal text-xs">
+                        Instantly bring Salem's post to others feed
+                      </p>
+                    </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
-                  <BiRepost className="flex-none" size={22} />
-                  <div>
-                    <h3 className="font-medium text-sm">Repost</h3>
-                    <p className="font-normal text-xs">
-                      Instantly bring Salem's post to others feed
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
+              )}
+            </div>
 
             <div>
               <div
