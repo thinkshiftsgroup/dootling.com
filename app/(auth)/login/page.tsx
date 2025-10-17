@@ -17,9 +17,30 @@ import { IoEyeOff } from "react-icons/io5";
 interface LoginResponse {
   token: string;
   user: {
-    id: number;
+    id: string;
     email: string;
-    name: string;
+    username: string | null;
+    firstname: string | null;
+    lastname: string | null;
+    fullName: string;
+    profilePhotoUrl?: string;
+
+    biodata: {
+      dateOfBirth: Date;
+      country: string | null;
+      pronouns: string | null;
+      phone: string | null;
+      city: string | null;
+      role: string | null;
+      industry: string | null;
+      tags: string | null;
+      headline: string | null;
+
+      id: string;
+      createdAt: Date;
+      updatedAt: Date;
+      userId: string;
+    } | null;
   };
 }
 
@@ -242,7 +263,10 @@ export default function LoginPage() {
                     onChange={handleInputChange}
                     className="w-5 h-5 cursor-pointer accent-blue-600"
                   />
-                  <label htmlFor="rememberMe" className="sm:text-sm text-xs text-gray-900">
+                  <label
+                    htmlFor="rememberMe"
+                    className="sm:text-sm text-xs text-gray-900"
+                  >
                     Remember Me
                   </label>
                 </div>

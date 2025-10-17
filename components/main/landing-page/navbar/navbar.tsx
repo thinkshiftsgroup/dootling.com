@@ -77,6 +77,9 @@ const Navbar = () => {
 
   const router = useRouter();
 
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+  const initializeAuth = useAuthStore((state) => state.initializeAuth);
+
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (ref.current && !ref.current.contains(e.target as Node)) {
@@ -87,15 +90,16 @@ const Navbar = () => {
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    initializeAuth();
+  }, [initializeAuth]);
+
   const results = [
     "Emma Watson",
     "Chris Evans",
     "Frontend Developers Group",
     "Next.js Enthusiasts",
   ].filter((r) => r.toLowerCase().includes(query.toLowerCase()));
-
-  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
-
   return (
     <nav className="nav w-full iq-navbar shadow-sm bg-white text-gray-800 xl:flex xl:flex-row md:px-0 px-2 sm:py-0 py-2">
       <div className="container mx-auto flex items-center justify-between">
