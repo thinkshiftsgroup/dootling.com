@@ -137,69 +137,157 @@ const FeedMessage = ({ content }: FeedMessageProps) => {
   const [openRelevent, setOpenRelevant] = useState(false);
 
   return (
-    <div className="rounded-lg p-5 w-full bg-white shadow-md mb-[40px]">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Image
-            width={100}
-            height={100}
-            alt="user"
-            src="/images/user/userImg.jpg"
-            className="rounded w-20 h-20 object-cover"
-          />
-          <div>
-            <h1 className="sm:text-xl text-lg flex items-center gap-1 font-bold text-black">
-              John Paul{" "}
-              <Image
-                src="/images/icon/verified.svg"
-                alt="icon"
-                width={14}
-                height={14}
-              />
-            </h1>
-            <p className="text-gray-500 text-xs">90 days ago</p>
+    <>
+      <div className="rounded-lg p-5 w-full bg-white shadow-md mb-[40px]">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Image
+              width={100}
+              height={100}
+              alt="user"
+              src="/images/user/userImg.jpg"
+              className="rounded w-20 h-20 object-cover"
+            />
+            <div>
+              <h1 className="sm:text-xl text-lg flex items-center gap-1 font-bold text-black">
+                John Paul{" "}
+                <Image
+                  src="/images/icon/verified.svg"
+                  alt="icon"
+                  width={14}
+                  height={14}
+                />
+              </h1>
+              <p className="text-gray-500 text-xs">90 days ago</p>
+            </div>
           </div>
+          <TbDots size={20} className="cursor-pointer" />
         </div>
-        <TbDots size={20} className="cursor-pointer" />
-      </div>
-      <h1 className="md:text-3xl text-xl sm:text-2xl  text-black my-4">
-        Completed milestone: "Prototype testing" in Mobile App Development
-      </h1>
-      <div className="w-full rounded-md overflow-hidden mt-2">
-        {isVideo ? (
-          <iframe
-            className="w-full h-64 sm:h-80 rounded-md"
-            src={content}
-            title="YouTube video"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-          ></iframe>
-        ) : (
-          <Image
-            width={800}
-            height={500}
-            alt="feed content"
-            className="w-full h-64 sm:h-80 object-cover rounded-md"
-            src={content}
-          />
-        )}
-      </div>
-      <div className="py-2.5 my-2.5 flex items-center  justify-between border-b-[#e5e5e5] border-b">
-        <div className="flex items-center gap-2">
-          <div
-            onClick={() => setOpenLikesModal(true)}
-            className="flex items-center"
-          >
-            <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-white border-2 border-white z-30">
-              <FaThumbsUp className="w-3 h-3" />
+        <h1 className="md:text-3xl text-xl sm:text-2xl  text-black my-4">
+          Completed milestone: "Prototype testing" in Mobile App Development
+        </h1>
+        <div className="w-full rounded-md overflow-hidden mt-2">
+          {isVideo ? (
+            <iframe
+              className="w-full h-64 sm:h-80 rounded-md"
+              src={content}
+              title="YouTube video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            ></iframe>
+          ) : isSingle ? (
+            <button
+              onClick={() => setSelectedImage(images[0].src)}
+              className="w-full rounded-lg overflow-hidden hover:opacity-80 transition-opacity"
+            >
+              <img
+                src={images[0].src}
+                alt={images[0].alt}
+                className="w-full h-64 sm:h-80 object-cover rounded-md"
+                loading="lazy"
+              />
+            </button>
+          ) : isMulti ? (
+            <>
+              <div className="user-post mt-4 p-4">
+                {/* First Row - 3 equal columns */}
+                <div className="grid grid-cols-3 gap-4 mb-4">
+                  {images.slice(0, 3).map((image, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setSelectedImage(image.src)}
+                      className="w-full rounded-lg overflow-hidden hover:opacity-80 transition-opacity"
+                    >
+                      <img
+                        src={image.src}
+                        alt={image.alt}
+                        className="w-full object-cover"
+                        loading="lazy"
+                      />
+                    </button>
+                  ))}
+                </div>
+
+                {/* Second Row - 2 columns (1 takes 1/2, 1 takes 1/2) */}
+                <div className="grid grid-cols-2 gap-4">
+                  <button
+                    onClick={() => setSelectedImage(images[3].src)}
+                    className="w-full rounded-lg overflow-hidden hover:opacity-80 transition-opacity"
+                  >
+                    <img
+                      src={images[3].src}
+                      alt={images[3].alt}
+                      className="w-full object-cover"
+                      loading="lazy"
+                    />
+                  </button>
+
+                  <div className="relative group cursor-pointer rounded-lg overflow-hidden">
+                    <img
+                      src={images[4].src}
+                      alt={images[4].alt}
+                      className="w-full object-cover"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-black/50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <button
+                        onClick={() => setSelectedImage(images[4].src)}
+                        className="text-white text-4xl font-bold"
+                      >
+                        +{moreCount}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Lightbox Modal */}
+                {selectedImage && (
+                  <div
+                    className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+                    onClick={() => setSelectedImage(null)}
+                  >
+                    <div className="relative max-w-4xl w-full max-h-screen">
+                      <img
+                        src={selectedImage}
+                        alt="Lightbox view"
+                        className="w-full h-auto object-contain rounded-lg"
+                      />
+                      <button
+                        onClick={() => setSelectedImage(null)}
+                        className="absolute top-2 right-2 bg-white/80 hover:bg-white text-black w-8 h-8 rounded-full flex items-center justify-center transition-colors"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </>
+          ) : (
+            <img
+              src={content}
+              alt="feed content"
+              className="w-full h-64 sm:h-80 object-cover rounded-md"
+              loading="lazy"
+            />
+          )}
+        </div>
+        <div className="py-2.5 my-2.5 flex items-center  justify-between border-b-[#e5e5e5] border-b">
+          <div className="flex items-center gap-2">
+            <div
+              onClick={() => setOpenLikesModal(true)}
+              className="flex items-center"
+            >
+              <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-white border-2 border-white z-30">
+                <FaThumbsUp className="w-3 h-3" />
+              </div>
+              <div className="-ml-2 w-6 h-6 rounded-full bg-green-500 flex items-center justify-center text-white border-2 border-white z-20">
+                <FaHandsClapping className="w-3 h-3" />
+              </div>
+              <div className="-ml-2 w-6 h-6 rounded-full bg-rose-500 flex items-center justify-center text-white border-2 border-white z-10">
+                <FaHeart className="w-3 h-3" />
+              </div>
             </div>
-            <div className="-ml-2 w-6 h-6 rounded-full bg-green-500 flex items-center justify-center text-white border-2 border-white z-20">
-              <FaHandsClapping className="w-3 h-3" />
-            </div>
-            <div className="-ml-2 w-6 h-6 rounded-full bg-rose-500 flex items-center justify-center text-white border-2 border-white z-10">
-              <FaHeart className="w-3 h-3" />
-            </div>
-          </div>
 
             <span className="text-gray-700 font-medium text-sm">293</span>
           </div>
