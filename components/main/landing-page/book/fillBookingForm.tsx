@@ -5,7 +5,7 @@ const FillBookingForm = ({ setPage }: any) => {
   return (
     <div className="p-6">
       <ArrowLeftCircleIcon
-        size={16}
+        size={20}
         className="text-[#157bff]"
         onClick={() => setPage(1)}
       />
