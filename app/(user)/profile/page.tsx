@@ -16,7 +16,7 @@ import HeatmapConnections from "@/components/main/profile/heatmap/heatMap";
 import AddHeatmapModal from "@/components/main/profile/addHeatMapModal";
 import ProfileSpace from "@/components/main/space/profileSpace";
 import ProfileLinks from "@/components/main/profile/link/links";
-import ProjectDashboard from "@/components/main/profile/project/projects";
+import ProjectDashboard from "@/components/main/profile/project/draft";
 import SimilarProfiles from "@/components/main/profile/side-card/similarProfiles";
 import TrendingProjects from "@/components/main/profile/side-card/tredingProjects";
 import TrendingSpaces from "@/components/main/profile/side-card/trendingSpaces";
