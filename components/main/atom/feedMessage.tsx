@@ -218,18 +218,18 @@ const FeedMessage = ({ content }: FeedMessageProps) => {
           className="rounded-full w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 object-cover"
         />
 
-        <div className="flex relative items-center justify-between flex-1 max-w-[500px] sm:max-w-[600px] md:max-w-[700px] lg:max-w-none">
-          <div
-            className="relative flex flex-col items-center"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            <div className="flex flex-col cursor-pointer items-center gap-1">
-              <FaThumbsUp className="text-gray-600 text-lg sm:text-xl" />
-              <p className="font-bold text-xs sm:text-sm md:text-base">Like</p>
+          <div className="flex relative items-center justify-between flex-1 max-w-[500px] sm:max-w-[600px] md:max-w-[700px] lg:max-w-none">
+            <div
+              className="relative flex flex-col items-center"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
+              <div className="flex flex-col cursor-pointer items-center gap-1">
+                <FaThumbsUp className="text-gray-600 text-lg sm:text-xl" />
+                <p className="font-bold text-xs sm:text-sm md:text-base">Like</p>
+              </div>
+              <ReactionPopup show={showReactions} />
             </div>
-            <ReactionPopup show={showReactions} />
-          </div>
 
           <div
             onClick={() => setOpenComment((prev) => !prev)}
