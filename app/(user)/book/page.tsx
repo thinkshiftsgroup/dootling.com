@@ -6,12 +6,12 @@ import SelectTimeDate from "@/components/main/landing-page/book/selectTimeandDat
 import FillBookingForm from "@/components/main/landing-page/book/fillBookingForm";
 
 const BookingPage = () => {
-  const [page, setPage] = useState(2);
+  const [page, setPage] = useState(1);
   return (
     <div>
-      <Navbar />
-      <div className="container mx-auto h-screen md:!px-0 px-2 my-[1rem] bg-white shadow-sm rounded-sm grid grid-cols-10">
-        <div className="col-span-4 border-r p-6 relative h-screen ">
+      <Navbar fixed={true} />
+      <div className="container mx-auto h-[85vh] md:!px-0 px-2 mt-[5rem] mb-[1rem] bg-white shadow-sm rounded-sm grid grid-cols-10">
+        <div className="col-span-4 border-r p-6 relative h-[85vh] ">
           <div className="flex mb-10 items-center gap-2">
             <Image
               src="/images/user/userImg.jpg"
