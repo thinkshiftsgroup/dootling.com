@@ -2,7 +2,7 @@
 import { X } from "phosphor-react";
 import React, { useEffect, useRef, useState } from "react";
 
-const ConvertProjectToEscrow = ({ setOpenModal }: any) => {
+const ConvertProjectToEscrow = ({ setOpenModal }: { setOpenModal: (open: boolean) => void }) => {
   const [userName, setUserName] = useState("");
   const [userList, setUserList] = useState<string[]>([]);
 
@@ -12,11 +12,15 @@ const ConvertProjectToEscrow = ({ setOpenModal }: any) => {
     setUserName("");
   };
 
+  const handleClose = () => {
+    setOpenModal(false);
+  };
+
   const [tabs, setTabs] = useState("Overview");
 
   return (
     <div
-      onClick={() => setOpenModal(false)}
+      onClick={handleClose}
       className="fixed top-0 left-0 w-screen h-screen bg-black/50 flex items-center justify-center z-50"
     >
       <div
@@ -36,7 +40,7 @@ const ConvertProjectToEscrow = ({ setOpenModal }: any) => {
           <X
             size={20}
             className="text-[#525256] cursor-pointer"
-            onClick={() => setOpenModal(false)}
+            onClick={handleClose}
           />
         </div>
 
@@ -44,49 +48,43 @@ const ConvertProjectToEscrow = ({ setOpenModal }: any) => {
           <ul className="flex w-full items-center gap-4 *:cursor-pointer font-medium text-gray-500">
             <li
               onClick={() => setTabs("Overview")}
-              className={`${
-                tabs === "Overview" ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]" : ""
-              }`}
+              className={`${tabs === "Overview" ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]" : ""
+                }`}
             >
               Overview
             </li>
             <li
               onClick={() => setTabs("Milsetones")}
-              className={`${
-                tabs === "Milsetones" ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]" : ""
-              }`}
+              className={`${tabs === "Milsetones" ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]" : ""
+                }`}
             >
               MileStones
             </li>
             <li
               onClick={() => setTabs("Funds")}
-              className={`${
-                tabs === "Funds" ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]" : ""
-              }`}
+              className={`${tabs === "Funds" ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]" : ""
+                }`}
             >
               Funds
             </li>
             <li
               onClick={() => setTabs("Team")}
-              className={`${
-                tabs === "Team" ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]" : ""
-              }`}
+              className={`${tabs === "Team" ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]" : ""
+                }`}
             >
               Team
             </li>
             <li
               onClick={() => setTabs("Audit Log")}
-              className={`${
-                tabs === "Audit Log" ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]" : ""
-              }`}
+              className={`${tabs === "Audit Log" ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]" : ""
+                }`}
             >
               Audit Log
             </li>
             <li
               onClick={() => setTabs("Settings")}
-              className={`${
-                tabs === "Settings" ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]" : ""
-              }`}
+              className={`${tabs === "Settings" ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]" : ""
+                }`}
             >
               Settings
             </li>
