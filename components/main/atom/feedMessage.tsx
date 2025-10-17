@@ -201,22 +201,22 @@ const FeedMessage = ({ content }: FeedMessageProps) => {
             </div>
           </div>
 
-          <span className="text-gray-700 font-medium text-sm">293</span>
+            <span className="text-gray-700 font-medium text-sm">293</span>
+          </div>
+          <div className="text-xs cursor-pointer text-gray-500 flex items-center gap-1">
+            <p>23 comments</p>
+            <span className="inline-flex w-1 h-1 rounded-full bg-gray-500"></span>
+            <p>4 reposts</p>
+          </div>
         </div>
-        <div className="text-xs cursor-pointer text-gray-500 flex items-center gap-1">
-          <p>23 comments</p>
-          <span className="inline-flex w-1 h-1 rounded-full bg-gray-500"></span>
-          <p>4 reposts</p>
-        </div>
-      </div>
-      <div className="flex items-center justify-between flex-wrap gap-4 sm:gap-6 md:gap-10 lg:gap-[4rem]">
-        <Image
-          width={100}
-          height={100}
-          alt="user"
-          src="/images/user/userImg.jpg"
-          className="rounded-full w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 object-cover"
-        />
+        <div className="flex items-center justify-between flex-wrap gap-4 sm:gap-6 md:gap-10 lg:gap-[4rem]">
+          <Image
+            width={100}
+            height={100}
+            alt="user"
+            src="/images/user/userImg.jpg"
+            className="rounded-full w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 object-cover"
+          />
 
           <div className="flex relative items-center justify-between flex-1 max-w-[500px] sm:max-w-[600px] md:max-w-[700px] lg:max-w-none">
             <div
