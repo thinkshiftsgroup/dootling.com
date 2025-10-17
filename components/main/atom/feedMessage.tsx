@@ -379,35 +379,36 @@ const FeedMessage = ({ content }: FeedMessageProps) => {
               </div>
             </div>
 
-            <div className="ml-9 my-1">
-              <p className="text-sm py-1  leading-relaxed">
-                Love how you’re blending gaming and work into one creative
-                space! Excited to see how the wall upgrades complete the vibe ,
-                setups that evolve with your journey always feel the most
-                authentic.
-              </p>
-              <div className="flex mt-1 items-center gap-0.5 text-xs">
-                <p>Like</p>
-                <div className="flex items-center gap-1">
-                  <LuDot size={10} />
-                  <div className="w-5 h-5 rounded-full bg-blue-500 flex items-center justify-center text-white border-2 border-white z-30">
-                    <FaThumbsUp className="w-2 h-2" />
+              <div className="ml-9 my-1">
+                <p className="text-sm py-1  leading-relaxed">
+                  Love how you're blending gaming and work into one creative
+                  space! Excited to see how the wall upgrades complete the vibe ,
+                  setups that evolve with your journey always feel the most
+                  authentic.
+                </p>
+                <div className="flex mt-1 items-center gap-0.5 text-xs">
+                  <p>Like</p>
+                  <div className="flex items-center gap-1">
+                    <LuDot size={10} />
+                    <div className="w-5 h-5 rounded-full bg-blue-500 flex items-center justify-center text-white border-2 border-white z-30">
+                      <FaThumbsUp className="w-2 h-2" />
+                    </div>
+                    1 <LuDot size={10} />
                   </div>
-                  1 <LuDot size={10} />
-                </div>
-                <p>Reply</p>
-                <div className="flex items-center gap-1">
-                  <LuDot size={10} />1 reply
+                  <p>Reply</p>
+                  <div className="flex items-center gap-1">
+                    <LuDot size={10} />1 reply
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
-      {openLikesModal && (
-        <ReactionModal setOpenLikesModal={setOpenLikesModal} />
-      )}
-    </div>
+        )}
+        {openLikesModal && (
+          <ReactionModal setOpenLikesModal={setOpenLikesModal} />
+        )}
+      </div>
+    </>
   );
 };
 
