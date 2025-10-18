@@ -9,13 +9,14 @@ import { FiLock } from "react-icons/fi";
 import { ImAttachment } from "react-icons/im";
 import { CiFaceSmile } from "react-icons/ci";
 import { IoMicOutline } from "react-icons/io5";
-import ProjectInnerTabs from "./tabs/chat";
-import ProjectTasks from "./tabs/projectTasks";
 import { IoAtOutline } from "react-icons/io5";
-import FilesTab from "./tabs/filesTab";
-import ProjectInfoTab from "./tabs/projectInfoTab";
+import ProjectInfoTab from "@/components/main/projects/tabs/projectInfoTab";
+import ProjectInnerTabs from "@/components/main/projects/tabs/chat";
+import ProjectTasks from "@/components/main/projects/tabs/projectTasks";
+import FilesTab from "@/components/main/projects/tabs/filesTab";
+import Navbar from "@/components/main/landing-page/navbar/navbar";
 
-const ProjectMessage = () => {
+const ReadProjectMessage = () => {
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -180,92 +181,96 @@ const ProjectMessage = () => {
 
   const [tabs, setTabs] = useState("chat");
   return (
-    <div className="md:!flex w-full overflow-x-scroll hidden col-span-6 shadow-sm h-[86vh] bg-[#F8FAFC] text-gray-800">
-      <div className="flex-1 flex flex-col">
-        <div className="sm:!p-3.5 p-2 whitespace-nowrap gap-2 md:!flex-row flex-col flex items-center justify-between border-b bg-white">
-          <div className="flex items-center gap-3">
-            <Image
-              src="/images/user/userImg.jpg"
-              alt="Profile"
-              width={40}
-              height={40}
-              className="rounded-full"
-            />
-            <div>
-              <h1 className="font-semibold flex items-center gap-0.5">
-                Paul Molive
-                <FiLock size={10} className="text-gray-400" />
-              </h1>
-              <p className="text-xs text-green-500">Online</p>
-            </div>
-          </div>
+    <div>
+      <Navbar fixed={true} />
 
-          <div className="flex items-center gap-2">
-            {tabItems.map((tab) => {
-              const active = tabs === tab.id;
-              return (
-                <div
-                  key={tab.id}
-                  onClick={() => setTabs(tab.id)}
-                  className={`cursor-pointer flex items-center gap-2 rounded-sm px-3 py-2 transition
+      <div className="flex lg:!pt-[5rem] pt-[6rem] px-2 md:!md-0 hide-scrollbar overflow-y-hidden w-full shadow-sm h-screen mb-2 bg-[#F8FAFC] text-gray-800">
+        <div className="flex-1 flex flex-col w-full">
+          <div className="sm:!p-3.5 p-2 whitespace-nowrap gap-2 md:!flex-row flex-col flex items-center justify-between border-b bg-white">
+            <div className="flex w-full items-center gap-3">
+              <Image
+                src="/images/user/userImg.jpg"
+                alt="Profile"
+                width={40}
+                height={40}
+                className="rounded-full"
+              />
+              <div>
+                <h1 className="font-semibold flex items-center gap-0.5">
+                  Paul Molive
+                  <FiLock size={10} className="text-gray-400" />
+                </h1>
+                <p className="text-xs text-green-500">Online</p>
+              </div>
+            </div>
+
+            <div className="flex overflow-x-scroll md:!justify-end  hide-scrollbar w-full items-center gap-2">
+              {tabItems.map((tab) => {
+                const active = tabs === tab.id;
+                return (
+                  <div
+                    key={tab.id}
+                    onClick={() => setTabs(tab.id)}
+                    className={`cursor-pointer flex items-center gap-2 rounded-sm px-3 py-2 transition
               ${
                 active
                   ? `shadow-[0_0_6px_rgba(0,0,0,0.15)] bg-[${tab.color}]/10 text-black scale-[1.02]`
                   : `bg-[${tab.color}]/10 text-black hover:bg-[${tab.color}]/20`
               }`}
-                >
-                  <span>{tab.icon}</span>
-                  <p
-                    className={`text-xs font-bold ${
-                      active ? "" : "text-black"
-                    }`}
                   >
-                    {tab.label}
-                  </p>
-                </div>
-              );
-            })}
-            <div className="bg-[#157BFF]/10 rounded-md p-2 hover:bg-[#157BFF]/20 transition">
-              <FiPhone className="text-[#157bff]" size={16} />
-            </div>
+                    <span>{tab.icon}</span>
+                    <p
+                      className={`text-xs font-bold ${
+                        active ? "" : "text-black"
+                      }`}
+                    >
+                      {tab.label}
+                    </p>
+                  </div>
+                );
+              })}
+              <div className="bg-[#157BFF]/10 rounded-md p-2 hover:bg-[#157BFF]/20 transition">
+                <FiPhone className="text-[#157bff]" size={16} />
+              </div>
 
-            <div className="bg-[#157BFF]/10 rounded-md p-2 hover:bg-[#157BFF]/20 transition">
-              <GoDeviceCameraVideo className="text-[#157bff]" size={16} />
+              <div className="bg-[#157BFF]/10 rounded-md p-2 hover:bg-[#157BFF]/20 transition">
+                <GoDeviceCameraVideo className="text-[#157bff]" size={16} />
+              </div>
             </div>
           </div>
+
+          {tabs === "chat" && <ProjectInnerTabs messages={messages} />}
+          {tabs === "tasks" && <ProjectTasks />}
+          {tabs === "files" && <FilesTab />}
+          {tabs === "info" && <ProjectInfoTab />}
+
+          {tabs === "chat" && (
+            <div className="sm:!p-4 p-2  border-t bg-white flex items-center gap-2">
+              <IoAtOutline className="w-5 h-5 " />
+              <ImAttachment className="w-4 h-4" />
+              <input
+                type="text"
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+                placeholder="Type your message..."
+                className="flex-1 px-2 sm:!px-4 py-2 text-xs sm:!text-sm "
+              />
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={handleSend}
+                  className="bg-[#157BFF] text-white rounded-sm p-2 hover:bg-blue-600 transition"
+                >
+                  <Send className="w-4 h-4" />
+                </button>
+                <CiFaceSmile className="w-4 h-4" />
+                <IoMicOutline className="w-4 h-4" />
+              </div>
+            </div>
+          )}
         </div>
-
-        {tabs === "chat" && <ProjectInnerTabs messages={messages} />}
-        {tabs === "tasks" && <ProjectTasks />}
-        {tabs === "files" && <FilesTab />}
-        {tabs === "info" && <ProjectInfoTab />}
-
-        {tabs === "chat" && (
-          <div className="sm:!p-4 p-2  border-t bg-white flex items-center gap-2">
-            <IoAtOutline className="w-5 h-5 " />
-            <ImAttachment className="w-4 h-4" />
-            <input
-              type="text"
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-              placeholder="Type your message..."
-              className="flex-1 px-2 sm:!px-4 py-2 text-xs sm:!text-sm "
-            />
-            <div className="flex items-center gap-2">
-              <button
-                onClick={handleSend}
-                className="bg-[#157BFF] text-white rounded-sm p-2 hover:bg-blue-600 transition"
-              >
-                <Send className="w-4 h-4" />
-              </button>
-              <CiFaceSmile className="w-4 h-4" />
-              <IoMicOutline className="w-4 h-4" />
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
 };
 
-export default ProjectMessage;
+export default ReadProjectMessage;

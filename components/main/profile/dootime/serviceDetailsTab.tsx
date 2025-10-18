@@ -3,10 +3,10 @@ import AvailabilityScheduler from "./availabilityScheduler";
 
 const ServiceDetailsTab = () => {
   return (
-    <div className="flex flex-col gap-2 h-[77vh] overflow-y-scroll hide-scrollbar">
+    <div className="lg:!h-[72vh] h-[67vh] overflow-y-scroll hide-scrollbar">
       <div>
         <label
-          className="font-semibold text-gray-600 text-lg "
+          className="font-semibold text-gray-600 sm:!text-lg  text-base"
           htmlFor="Amount"
         >
           Booking Page Title*
@@ -20,7 +20,7 @@ const ServiceDetailsTab = () => {
       </div>
       <div>
         <label
-          className="font-semibold text-gray-600 text-lg "
+          className="font-semibold text-gray-600 sm:!text-lg  text-base"
           htmlFor="Amount"
         >
           Booking Page Username
@@ -32,7 +32,7 @@ const ServiceDetailsTab = () => {
           />
           <div className="absolute border-l py-2 pl-2 right-2 top-0.5 rounded-sm">
             <div className="flex items-center gap-1">
-              <div className="flex-shrink-0 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+              <div className="flex-shrink-0 w-5 h-5 text-sm sm:!text-base bg-green-500 rounded-full flex items-center justify-center">
                 <svg
                   className="w-3 h-3 text-white"
                   fill="none"
@@ -54,7 +54,7 @@ const ServiceDetailsTab = () => {
       </div>
       <div>
         <label
-          className="font-semibold text-gray-600 text-lg "
+          className="font-semibold text-gray-600 sm:!text-lg  text-base"
           htmlFor="Amount"
         >
           Service and Payment Terms*
@@ -64,7 +64,7 @@ const ServiceDetailsTab = () => {
         </div>
       </div>
       <AvailabilityScheduler />
-      <button className="w-1/3 font-semibold mt-5 text-white bg-[#157bff] rounded-sm p-2 mx-auto">
+      <button className="sm:!w-1/3 w-full font-semibold mt-2 text-white bg-[#157bff] rounded-sm p-2 mx-auto">
         Update Details
       </button>
     </div>

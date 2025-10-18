@@ -495,7 +495,7 @@ const UserProfile = () => {
                                 </div>
                               </div>
 
-                              <div className="lg:block hidden">
+                              <div className="md:!block hidden">
                                 <AddHeatmapModal />
                               </div>
                             </div>

@@ -64,7 +64,7 @@ export default function FeeTier() {
   };
 
   return (
-    <div className="h-[77vh] overflow-y-scroll hide-scrollbar">
+    <div className="lg:!h-[72vh] h-[67vh] overflow-y-scroll hide-scrollbar">
             {/* <div>
         <div className="flex items-center border rounded-sm p-2 cursor-pointer gap-2 mb-2">
           <label className="font-semibold text-gray-700 text-base">
@@ -202,7 +202,7 @@ export default function FeeTier() {
         ))}
       </div>
       <div className="flex justify-center">
-        <button className="w-1/3 font-semibold mt-5 text-white bg-[#157bff] rounded-sm p-2 mx-auto">
+        <button className="sm:!w-1/3 w-full font-semibold mt-2 text-white bg-[#157bff] rounded-sm p-2 mx-auto">
           Update Details
         </button>
       </div>

@@ -124,7 +124,7 @@ const HeatmapConnections = () => {
           <div className="bg-white rounded-2xl shadow-sm !p-4 sm:!p-8">
             <div className="flex sm:!flex-row !flex-col justify-between items-start mb-3">
               <h1 className="text-4xl font-medium text-gray-900">Heatmap</h1>
-              <div className="flex items-center gap-2 justify-between">
+              <div className="flex sm:!flex-row flex-col sm:!w-auto w-full items-center gap-2 justify-between">
                 <div className="flex !my-2 md:!my-0 items-center gap-1 bg-[#F5F6FA] text-[#FAAF40] px-3 py-2 rounded-lg">
                   <Image
                     src="/images/dootling-icon1.svg"
@@ -135,12 +135,12 @@ const HeatmapConnections = () => {
                   <span className="font-medium">Browser Extension</span>
                 </div>
 
-                <div className="mx-auto lg:hidden block">
+                <div className="mx-auto sm:!hidden block">
                   <AddHeatmapModal />
                 </div>
               </div>
             </div>
-            <p className="text-gray-600 leading-relaxed max-w-3xl sm:mb-8 mb-4">
+            <p className="text-gray-600 leading-relaxed max-w-3xl sm:!mb-8 mb-4">
               Manage Connections To Your Work Apps For Automatic Contribution
               Tracking On Your Profile. We Only Track{" "}
               <span className="font-semibold text-gray-900">

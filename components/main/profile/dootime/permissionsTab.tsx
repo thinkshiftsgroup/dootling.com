@@ -3,7 +3,7 @@ import React from "react";
 const PermissionsTab = () => {
   return (
     <div>
-      <p className="text-sm font-medium">
+      <p className="sm:!text-sm text-xs font-medium">
         Grant Permissions To Initiate On Your Meeting Calendar{" "}
       </p>
       <div className="my-3">
@@ -105,7 +105,7 @@ const PermissionsTab = () => {
         </div>
       </div>
       <div className="flex justify-center">
-        <button className="w-1/3 font-semibold mt-5 text-white bg-[#157bff] rounded-sm p-2 mx-auto">
+        <button className="sm:!w-1/3 w-full font-semibold mt-2 text-white bg-[#157bff] rounded-sm p-2 mx-auto">
           Update Details
         </button>
       </div>

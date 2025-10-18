@@ -9,8 +9,8 @@ const ProjectTasks = () => {
   const [addTaskModal, setAddTaskModal] = useState(false);
   const [manageTasksModal, setManageTasksMmodal] = useState(false);
   return (
-    <div className="flex-1 w-full p-2 space-y-4">
-      <div className="flex items-center gap-5">
+    <div className="flex-1 w-full p-2 overflow-y-scroll hide-scrollbar space-y-4">
+      <div className="flex md:!flex-row flex-col items-center gap-5">
         <div className="flex items-center w-full gap-2">
           <button
             onClick={() => setAddTaskModal(true)}
@@ -21,6 +21,7 @@ const ProjectTasks = () => {
               height="16"
               viewBox="0 0 250 250"
               fill="none"
+              className="flex-none"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
@@ -28,9 +29,9 @@ const ProjectTasks = () => {
                 fill="#157BFF"
               />
             </svg>
-            <p className="text-sm font-semibold">Add Tasks</p>
+            <p className="text-sm whitespace-nowrap font-semibold">Add Tasks</p>
           </button>
-          <div className="relative w-1/2">
+          <div className="relative md:!w-1/2 w-full ">
             <svg
               width="16"
               height="16"
@@ -52,7 +53,7 @@ const ProjectTasks = () => {
             />
           </div>
         </div>
-        <div className="flex  w-full items-center gap-2">
+        <div className="flex flex-wrap w-full items-center gap-2">
           <div className="flex -space-x-2 items-center">
             <Image
               alt="user-img"
@@ -78,14 +79,14 @@ const ProjectTasks = () => {
               className="rounded-full w-7 h-7  object-cover object-top border-2 border-white"
             />
           </div>
-          <p className="flex items-center gap-1 text-black font-semibold">
+          <p className="flex whitespace-nowrap items-center gap-1 text-black font-semibold">
             Aliana Molex <span className="text-gray-500">And 208 Others</span>
           </p>
         </div>
       </div>
       <div className="overflow-x-auto">
         <table className="min-w-full border-collapse">
-          <thead className="bg-[#E7F1FF]/30 font-medium text-sm text-left">
+          <thead className="bg-[#E7F1FF]/30 font-medium text-xs sm:!text-sm text-left">
             <tr>
               <th className="py-3 px-2">Assigned</th>
               <th className="py-3 px-2">Title</th>
@@ -120,7 +121,7 @@ const ProjectTasks = () => {
                     />
                   </div>
 
-                  <p className="font-semibold text-sm text-black whitespace-nowrap">
+                  <p className="font-semibold text-xs sm:!text-sm text-black whitespace-nowrap">
                     John, Mike
                   </p>
                 </div>
@@ -131,13 +132,13 @@ const ProjectTasks = () => {
                   <p className="text-sm font-medium">
                     Project Point Design Print
                   </p>
-                  <p className="text-[#B0B0B0] text-xs">
+                  <p className="text-[#B0B0B0] text-[10px] sm:!text-xs">
                     Created 3rd November 2025
                   </p>
                 </div>
               </td>
 
-              <td className="py-3 px-2 text-xs text-center">
+              <td className="py-3 px-2 text-[10px] sm:!text-xs text-center">
                 <span className="bg-red-500 text-white px-3 py-1 rounded-sm">
                   Highest
                 </span>
@@ -149,7 +150,7 @@ const ProjectTasks = () => {
                 </span>
               </td>
 
-              <td className="py-3 px-2 text-xs font-medium text-center">
+              <td className="py-3 px-2 text-[10px] sm:!text-xs font-medium text-center">
                 <span className="bg-green-500 text-white px-3 py-1 rounded-sm">
                   Completed
                 </span>
@@ -157,14 +158,17 @@ const ProjectTasks = () => {
 
               <td className="py-3 px-2 text-gray-600 text-sm text-center">
                 23rd ...{" "}
-                <span className="text-[#157bff] cursor-pointer text-xs">
+                <span className="text-[#157bff] cursor-pointer text-[10px] sm:!text-xs">
                   show details
                 </span>
               </td>
 
               <td className="py-3 px-2">
                 <div className="flex items-center justify-center gap-2">
-                  <span onClick={() => setManageTasksMmodal(true)} className="cursor-pointer">
+                  <span
+                    onClick={() => setManageTasksMmodal(true)}
+                    className="cursor-pointer"
+                  >
                     <svg
                       width="20"
                       height="20"
@@ -218,7 +222,7 @@ const ProjectTasks = () => {
                     />
                   </div>
 
-                  <p className="font-semibold text-sm text-black whitespace-nowrap">
+                  <p className="font-semibold text-xs sm:!text-sm text-black whitespace-nowrap">
                     John, Mike
                   </p>
                 </div>
@@ -229,13 +233,13 @@ const ProjectTasks = () => {
                   <p className="text-sm font-medium">
                     Project Point Design Print
                   </p>
-                  <p className="text-[#B0B0B0] text-xs">
+                  <p className="text-[#B0B0B0] text-[10px] sm:!text-xs">
                     Created 3rd November 2025
                   </p>
                 </div>
               </td>
 
-              <td className="py-3 px-2 text-xs text-center">
+              <td className="py-3 px-2 text-[10px] sm:!text-xs text-center">
                 <span className="bg-red-500 text-white px-3 py-1 rounded-sm">
                   Highest
                 </span>
@@ -247,7 +251,7 @@ const ProjectTasks = () => {
                 </span>
               </td>
 
-              <td className="py-3 px-2 text-xs font-medium text-center">
+              <td className="py-3 px-2 text-[10px] sm:!text-xs font-medium text-center">
                 <span className="bg-green-500 text-white px-3 py-1 rounded-sm">
                   Completed
                 </span>
@@ -255,14 +259,17 @@ const ProjectTasks = () => {
 
               <td className="py-3 px-2 text-gray-600 text-sm text-center">
                 23rd ...{" "}
-                <span className="text-[#157bff] cursor-pointer text-xs">
+                <span className="text-[#157bff] cursor-pointer text-[10px] sm:!text-xs">
                   show details
                 </span>
               </td>
 
               <td className="py-3 px-2">
                 <div className="flex items-center justify-center gap-2">
-                  <span onClick={() => setManageTasksMmodal(true)} className="cursor-pointer">
+                  <span
+                    onClick={() => setManageTasksMmodal(true)}
+                    className="cursor-pointer"
+                  >
                     <svg
                       width="20"
                       height="20"
@@ -294,11 +301,10 @@ const ProjectTasks = () => {
                 </div>
               </td>
             </tr>
-
           </tbody>
         </table>
       </div>
-      <div className="flex items-center justify-between py-3 px-2">
+      <div className="flex sm:!flex-row flex-col gap-2 items-center justify-between py-3 px-2">
         <p className="text-xs text-gray-600">
           Showing <span className="font-medium">1</span> to{" "}
           <span className="font-medium">10</span> of{" "}
@@ -306,10 +312,7 @@ const ProjectTasks = () => {
         </p>
 
         <div className="flex items-center gap-2">
-          <button
-            className="px-3 py-1 text-xs disabled:opacity-50"
-            disabled
-          >
+          <button className="px-3 py-1 text-xs disabled:opacity-50" disabled>
             <FaAngleLeft />
           </button>
           <button className="px-3 py-1 border rounded-md text-xs hover:bg-gray-100 bg-blue-50 border-blue-400 text-blue-600">

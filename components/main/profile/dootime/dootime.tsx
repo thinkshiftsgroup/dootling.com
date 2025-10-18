@@ -9,8 +9,8 @@ const DootimeTab = () => {
   return (
     <div className="rounded-lg p-3 w-full bg-white shadow-md mb-[40px]">
       <div className="flex items-center mb-3">
-        <div className="flex w-full justify-between items-center">
-          <div className="flex items-center gap-5">
+        <div className="flex w-full sm:!flex-row flex-col justify-between gap-2 items-center">
+          <div className="flex sm:!flex-row flex-col items-center gap-2 sm:!gap-5">
             <div className="flex items-center gap-1 justify-center">
               <div className="flex -space-x-2">
                 <img
@@ -33,17 +33,17 @@ const DootimeTab = () => {
                 </div>
               </div>
 
-              <div className="flex items-center gap-1">
+              <div className="flex items-center whitespace-nowrap gap-1">
                 <span className="font-medium text-gray-900">Aliana Molex</span>
                 <span className="text-gray-500 font-medium">
                   And 208 Others
                 </span>
               </div>
             </div>
-            <span className="text-sm font-bold text-gray-900">$40,0050</span>
+            <span className="sm:!text-sm text-lg font-bold text-gray-900">$40,0050</span>
           </div>
 
-          <div className="flex items-center gap-16 flex-shrink-0">
+          <div className="flex items-center flex-shrink-0">
             <button
               onClick={() => setShowModal(true)}
               className="bg-[#157BFF] hover:bg-blue-600 text-white px-2 py-1 rounded-sm flex items-center gap-2 transition-colors whitespace-nowrap text-[0.9rem] cursor-pointer"

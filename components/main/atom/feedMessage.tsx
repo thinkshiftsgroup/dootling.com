@@ -150,7 +150,7 @@ const FeedMessage = ({ content }: FeedMessageProps) => {
 
   return (
     <>
-      <div className="rounded-lg p-5 w-full bg-white shadow-md mb-[40px]">
+      <div className="rounded-lg sm:!p-5 p-2 w-full bg-white shadow-md mb-[40px]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Image
@@ -353,7 +353,7 @@ const FeedMessage = ({ content }: FeedMessageProps) => {
               {openRepostModal && (
                 <div
                   ref={dropdownRef}
-                  className="absolute top-full mt-1 bg-white space-y-2 w-[300px] p-2 rounded-sm shadow-md z-50"
+                  className="absolute top-full mt-1 bg-white space-y-2 w-[250px] sm:!p-2 p-1 rounded-sm shadow-md z-50"
                 >
                   <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
                     <FiEdit className="flex-none" size={22} />

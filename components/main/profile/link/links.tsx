@@ -7,9 +7,9 @@ const ProfileLinks = () => {
   return (
     <div className="rounded-lg p-3 w-full bg-white shadow-md mb-[40px]">
       <div className="flex items-center justify-between mb-3">
-        <div className="flex w-full items-center justify-between max-w-7xl mx-auto">
+        <div className="flex md:!flex-row gap-1 flex-col w-full items-center justify-between max-w-7xl mx-auto">
           {/* Search Input */}
-          <div className="relative flex-shrink-0">
+          <div className="relative md:!w-55 w-full  flex-shrink-0">
             <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
               <svg
                 className="w-5 h-5 text-[#157BFF]"
@@ -28,7 +28,7 @@ const ProfileLinks = () => {
             <input
               type="text"
               placeholder="Search"
-              className="w-55 pl-12 pr-4 py-2 border border-[#157BFF] rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-600 text-gray-600"
+              className="pl-12 w-full sm:!text-base text-sm pr-4 py-2 border border-[#157BFF] rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-600 text-gray-600"
             />
           </div>
 
@@ -57,14 +57,14 @@ const ProfileLinks = () => {
             </div>
 
             {/* Text */}
-            <div className="flex items-center gap-1">
+            <div className="flex whitespace-nowrap items-center gap-1">
               <span className="font-medium text-gray-900">Aliana Molex</span>
               <span className="text-gray-500 font-medium">And 208 Others</span>
             </div>
           </div>
 
           {/* Price and Button */}
-          <div className="flex items-center gap-16 flex-shrink-0">
+          <div className="flex items-center gap-4 flex-shrink-0">
             <span className="text-sm font-medium text-gray-900">$40,0050</span>
             <button
               onClick={() => setShowModal(true)}

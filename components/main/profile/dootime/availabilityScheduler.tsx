@@ -61,7 +61,7 @@ const AvailabilityScheduler = () => {
   const timeZones = moment.tz.names();
 
   return (
-    <div className="space-y-4 border mt-2 rounded-md p-4 text-sm">
+    <div className="space-y-4 border mt-2 rounded-md sm:!p-4 p-2 text-sm">
       <div className="flex items-center gap-2">
         <label className="font-semibold text-gray-700 text-base">
           Set Availability*
@@ -77,7 +77,7 @@ const AvailabilityScheduler = () => {
       {isActive && (
         <div className="space-y-5 animate-fade-in">
           <div>
-            <label className="font-semibold text-gray-700">
+            <label className="font-semibold sm:!text-base text-sm text-gray-700">
               Select your Time Zone
             </label>
             <select
@@ -94,7 +94,7 @@ const AvailabilityScheduler = () => {
           </div>
 
           <div className="space-y-4">
-            <p className="text-gray-600 font-medium">
+            <p className="text-gray-600 sm:!text-base text-sm font-medium">
               Tick the days of the week you provide your services on:
             </p>
 
@@ -105,13 +105,13 @@ const AvailabilityScheduler = () => {
                     type="checkbox"
                     checked={!!availability[day]}
                     onChange={() => toggleDay(day)}
-                    className="accent-[#157bff] w-4 h-4 cursor-pointer"
+                    className="accent-[#157bff] w-4 h-4  cursor-pointer"
                   />
-                  {day}
+                  <span className="text-sm sm:!text-base">{day}</span>
                 </label>
 
                 {availability[day] && (
-                  <div className="ml-3 border-l-2 border-[#157bff] pl-3 space-y-2">
+                  <div className="ml-2 border-l-2 border-[#157bff] pl-3 space-y-2">
                     <p className="text-xs text-gray-500">
                       Set when you are typically available for meetings
                     </p>

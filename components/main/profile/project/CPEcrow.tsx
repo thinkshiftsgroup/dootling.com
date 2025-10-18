@@ -381,7 +381,7 @@ const ConvertProjectToEscrow = ({ setOpenModal }: { setOpenModal: (open: boolean
               </h2>
               <div>
                 <label
-                  className="font-semibold text-gray-600 text-lg "
+                  className="font-semibold text-gray-600 sm:!text-lg  text-base"
                   htmlFor="Amount"
                 >
                   Project Title *
@@ -396,7 +396,7 @@ const ConvertProjectToEscrow = ({ setOpenModal }: { setOpenModal: (open: boolean
 
               <div>
                 <label
-                  className="font-semibold text-gray-600 text-lg "
+                  className="font-semibold text-gray-600 sm:!text-lg  text-base"
                   htmlFor="Amount"
                 >
                   Project Summary Description *
@@ -411,7 +411,7 @@ const ConvertProjectToEscrow = ({ setOpenModal }: { setOpenModal: (open: boolean
 
               <div className="mb-10">
                 <label
-                  className="font-semibold text-gray-600 text-lg"
+                  className="font-semibold text-gray-600 sm:!text-lg text-base"
                   htmlFor="collaborators"
                 >
                   Add Collaborators *

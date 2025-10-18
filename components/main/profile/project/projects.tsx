@@ -57,7 +57,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   return (
-    <div className="bg-white h-40 flex rounded-md shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
+    <div className="bg-white h-40 flex rounded-md shadow-sm border border-gray-200 overflow-scroll hide-scrollbar hover:shadow-md transition-shadow">
       {/* Image */}
       <div className="w-2/5 h-full bg-gradient-to-br from-gray-100 to-gray-200">
         {imageSrc ? (
@@ -74,7 +74,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       </div>
 
       {/* Info */}
-      <div className="w-3/5 p-4 flex flex-col justify-between">
+      <div className="w-3/5 md:!p-4 p-2 flex flex-col justify-between">
         <div className="flex items-start justify-between">
           <h3 className="text-base font-semibold text-gray-900 truncate">
             {projectName}
@@ -102,7 +102,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             </>
           )}
         </div>
-        <div className="flex items-center gap-1.5 mt-2">
+        <div className="flex md:!flex-row flex-col whitespace-nowrap items-center gap-1.5 mt-2">
           <span
             onClick={onManageClick}
             className="flex gap-1 bg-[#F8F9FA] text-gray-800 hover:text-gray-950 hover:bg-[#d0d0d0] rounded-sm p-1 px-1 items-center cursor-pointer shadow-sm text-[10px]  transition-colors transistion-shadow"
@@ -336,7 +336,7 @@ const MyProjectsContent: React.FC<{
           />
         ))
       ) : (
-        <div className="py-8 text-center text-gray-500">
+        <div className="sm:!py-8 py-4 text-center text-gray-500">
           <p className="text-lg font-medium">No Projects</p>
           <p className="text-sm mt-1">
             Create your first project to get started
@@ -648,7 +648,7 @@ const ProjectDashboard: React.FC<ProjectDashboardProps> = ({
         return (
           <button
             onClick={() => setShowModal(true)}
-            className="bg-[#157BFF] whitespace-nowrap justify-center hover:bg-blue-700 text-white px-4 py-2 rounded-sm flex items-center gap-2 transition"
+            className="bg-[#157BFF] whitespace-nowrap justify-center hover:bg-blue-700 text-white sm:!px-4 px-2 py-2 rounded-sm flex items-center gap-2 transition"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -672,7 +672,7 @@ const ProjectDashboard: React.FC<ProjectDashboardProps> = ({
         return (
           <button
             onClick={() => setShowModal(true)}
-            className="bg-[#157BFF] whitespace-nowrap justify-center hover:bg-blue-700 text-white px-4 py-2 rounded-sm flex items-center gap-2 transition"
+            className="bg-[#157BFF] whitespace-nowrap justify-center hover:bg-blue-700 text-white px-2 sm:!px-4 py-2 rounded-sm flex items-center gap-2 transition"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -690,10 +690,10 @@ const ProjectDashboard: React.FC<ProjectDashboardProps> = ({
   };
 
   return (
-    <div className="w-full bg-gray-50 py-8">
+    <div className="w-full bg-gray-50 sm:!py-8 py-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="bg-white rounded-2xl shadow-sm p-6">
+        <div className="bg-white rounded-2xl shadow-sm p-3 sm:!p-6">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8">
             <div className="flex flex-wrap items-center gap-2">
               <TabButton

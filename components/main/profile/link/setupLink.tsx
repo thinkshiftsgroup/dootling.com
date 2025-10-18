@@ -79,7 +79,7 @@ const SetupLinkSideModal: React.FC<SetupLinkSideModalProps> = ({
             <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
               <div>
                 <label
-                  className="font-semibold text-gray-600 text-lg "
+                  className="font-semibold text-gray-600 sm:!text-lg text-base"
                   htmlFor="Amount"
                 >
                   Page Display Name *
@@ -94,7 +94,7 @@ const SetupLinkSideModal: React.FC<SetupLinkSideModalProps> = ({
 
               <div>
                 <label
-                  className="font-semibold text-gray-600 text-lg "
+                  className="font-semibold text-gray-600 sm:!text-lg  text-base"
                   htmlFor="Amount"
                 >
                   Page Username *
@@ -105,26 +105,32 @@ const SetupLinkSideModal: React.FC<SetupLinkSideModalProps> = ({
                     className="w-full border rounded-md text-sm p-2 border-[#f1f1f1] transition focus:border-[#157BFF]  focus:outline-none"
                   />
                 </div>
-                <div className="flex items-center gap-3 max-w-2xl">
-                  <div className="flex-shrink-0 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
-                    <svg
-                      className="w-3 h-3 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2.5}
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                  </div>
+                <div className="flex items-center flex-wrap gap-3 max-w-2xl">
+                  <div className="flex items-center gap-2">
+                    <div className="flex-shrink-0 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+                      <svg
+                        className="w-3 h-3 text-white"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2.5}
+                          d="M5 13l4 4L19 7"
+                        />
+                      </svg>
+                    </div>
 
-                  <div className="flex-1 flex items-center gap-2">
-                    <span className="text-gray-600 font-medium">page URL:</span>
-                    <span className="text-blue-600 font-medium">{pageUrl}</span>
+                    <div className="flex-1 whitespace-nowrap flex items-center gap-2">
+                      <span className="text-gray-600 font-medium">
+                        page URL:
+                      </span>
+                      <span className="text-blue-600 font-medium">
+                        {pageUrl}
+                      </span>
+                    </div>
                   </div>
 
                   <button
@@ -153,7 +159,7 @@ const SetupLinkSideModal: React.FC<SetupLinkSideModalProps> = ({
 
               <div>
                 <label
-                  className="font-semibold text-gray-600 text-lg "
+                  className="font-semibold text-gray-600 sm:!text-lg  text-base"
                   htmlFor="Amount"
                 >
                   Page Purpose *
@@ -168,7 +174,7 @@ const SetupLinkSideModal: React.FC<SetupLinkSideModalProps> = ({
 
               <div>
                 <label
-                  className="font-semibold text-gray-600 text-lg "
+                  className="font-semibold text-gray-600 sm:!text-lg text-base"
                   htmlFor="Amount"
                 >
                   Summary Of Your Service/Products *
@@ -183,7 +189,7 @@ const SetupLinkSideModal: React.FC<SetupLinkSideModalProps> = ({
 
               <button
                 onClick={handleCopy}
-                className="w-full mt-20 flex items-center justify-center gap-2 rounded-sm font-semibold text-lg text-black py-4 cursor-pointer bg-[#FDC70C1A]"
+                className="w-full mt-20 flex items-center justify-center gap-2 rounded-sm font-semibold text-sm sm:!text-lg text-black py-4 cursor-pointer bg-[#FDC70C1A]"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

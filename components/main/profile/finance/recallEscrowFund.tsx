@@ -139,7 +139,7 @@ const RecallEscrowWallet: React.FC<FundWalletSideModalProps> = ({
               </div>
               <div>
                 <label
-                  className="font-semibold text-gray-600 sm:!text-lg text-sm "
+                  className="font-semibold text-gray-600 sm:!text-lg text-sm"
                   htmlFor="Pasword"
                 >
                   Account Password *

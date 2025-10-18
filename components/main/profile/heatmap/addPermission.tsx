@@ -70,25 +70,22 @@ export default function ConnectWorks() {
             <div>
               <div className="fixed inset-0 bg-[#f5f6fa92] blur-lg flex items-center justify-center p-4 z-50 animate-fadeIn"></div>
               <div className="fixed inset-0 flex items-center justify-center p-4 z-50 animate-fadeIn">
-                <div className="p-10 pt-2 overflow-y-scroll hide-scrollbar shadow-md max-w-3xl w-full max-h-[92vh] rounded-sm m-auto animate-slideUp bg-white">
+                <div className="sm:!p-6 p-3 pt-2 overflow-y-scroll hide-scrollbar shadow-md max-w-3xl w-full max-h-[92vh] rounded-sm m-auto animate-slideUp bg-white">
                   <div className="flex justify-between items-start mb-2 pt-5 pb-2.5 ">
-                    <div className="flex items-center gap-3 mb-2">
+                    <div className="md:!flex block items-center gap-3 mb-2">
                       <div className="flex items-center gap-1 mb-2">
-                        {/* <div className="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center">
-                                            <span className="text-amber-600 font-bold">D</span>
-                                        </div> */}
                         <Image
                           src="/images/dootling-icon1.svg"
                           width={25}
                           height={25}
                           alt="icon"
                         />
-                        <h1 className="text-2xl font-bold text-gray-900">
+                        <h1 className="md:!text-2xl text-base sm:!text-xl whitespace-nowrap font-bold text-gray-900">
                           Connect Works
                         </h1>
                       </div>
 
-                      <p className="text-[#157BFF] text-sm">
+                      <p className="text-[#157BFF] text-xs sm:!text-sm">
                         ...you can turns work itself into the network
                       </p>
                     </div>
@@ -115,19 +112,21 @@ export default function ConnectWorks() {
                   <div className="space-y-8">
                     {/* Apps selection */}
                     <div>
-                      <h2 className="text-lg font-bold text-gray-900 mb-4">
+                      <h2 className="md:!text-lg text-base font-bold text-gray-900 mb-4">
                         Apps, Workspaces & Work Tools
                       </h2>
                       <select
                         name=""
-                        className="w-full accent-[#157bff] px-4 py-3 border border-[#f1f1f1] rounded-lg text-gray-700 focus:border-blue-500 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#157BFF]"
+                        className="w-full accent-[#157bff] sm:!px-4 px-2 sm:!py-3 py-2 sm:!text-base text-sm border border-[#f1f1f1] rounded-lg text-gray-700 focus:border-blue-500 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#157BFF]"
                         id=""
                       >
-                        <option value="a">Choose the app or tool you'd like to connect</option>
+                        <option value="a">
+                          Choose the app or tool you'd like to connect
+                        </option>
                         <option value="a">A</option>
                         <option value="b">B</option>
                       </select>
-                      <p className="text-sm text-gray-500 mt-3">
+                      <p className="sm:!text-sm text-xs text-gray-500 mt-3">
                         We'll only track activity metadata – never your private
                         content.
                       </p>
@@ -135,13 +134,13 @@ export default function ConnectWorks() {
 
                     {/* Permission Scope */}
                     <div>
-                      <h2 className="text-lg font-bold text-gray-900 mb-4">
+                      <h2 className="sm:!text-lg text-base font-bold text-gray-900 mb-4">
                         Permission Scope
                       </h2>
                       <div className="flex gap-3 flex-wrap">
                         <button
                           onClick={() => togglePermission("activity")}
-                          className={`px-4 py-2 rounded-lg font-semibold transition-colors flex items-center gap-2 ${
+                          className={`px-4 py-2 sm:!text-base text-sm rounded-lg font-semibold transition-colors flex items-center gap-2 ${
                             selectedPermissions.includes("activity")
                               ? "bg-[#157BFF] text-white"
                               : "bg-gray-100 text-gray-700 hover:bg-gray-200"
@@ -158,7 +157,7 @@ export default function ConnectWorks() {
                         </button>
                         <button
                           onClick={() => togglePermission("project")}
-                          className={`px-4 py-2 rounded-lg font-semibold transition-colors flex items-center gap-2 ${
+                          className={`px-4 sm:!text-base text-sm py-2 rounded-lg font-semibold transition-colors flex items-center gap-2 ${
                             selectedPermissions.includes("project")
                               ? "bg-[#157BFF] text-white"
                               : "bg-gray-100 text-gray-700 hover:bg-gray-200"
@@ -178,10 +177,10 @@ export default function ConnectWorks() {
 
                     {/* Connection Method */}
                     <div>
-                      <h2 className="text-lg font-bold text-gray-900 mb-4">
+                      <h2 className="sm:!text-lg text-base font-bold text-gray-900 mb-4">
                         Connection Method
                       </h2>
-                      <div className="space-y-3 flex items-center gap-6">
+                      <div className="space-y-3 text-sm sm:!text-base flex items-center gap-6">
                         <label className="flex items-center gap-1.5 cursor-pointer m-0">
                           <input
                             type="radio"
@@ -223,14 +222,14 @@ export default function ConnectWorks() {
                         onChange={(e) => setUnderstood(e.target.checked)}
                         className="w-4 h-4 mt-1 border border-blue-500 ring-blue-400"
                       />
-                      <span className="text-gray-700">
+                      <span className="text-gray-700 sm:!text-base text-sm">
                         I understand Dootling only tracks metadata, not my
                         private data or content.
                       </span>
                     </label>
 
                     {/* Buttons */}
-                    <div className="flex justify-end gap-3 pt-6">
+                    <div className="flex whitespace-nowrap flex-wrap justify-end gap-3 pt-6">
                       <button
                         onClick={() => setIsOpen(false)}
                         className="px-6 py-2 text-gray-600 font-medium hover:text-gray-900 transition-colors cursor "
