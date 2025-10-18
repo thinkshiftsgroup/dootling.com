@@ -398,9 +398,7 @@ const UserProfile = () => {
   ];
 
   if (!isInitialized || isLoading) {
-    return (
-      <LinkedInLoader/>
-    );
+    return <LinkedInLoader />;
   }
 
   return (

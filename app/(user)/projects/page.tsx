@@ -10,7 +10,6 @@ const Projects = () => {
     <div className="">
       <Navbar fixed={true} />
 
-
       <div className="pt-[5rem] h-[95vh] hide-scrollbar overflow-y-hidden">
         <div className="container mx-auto">
           <div className="w-full col-span-7 ">
