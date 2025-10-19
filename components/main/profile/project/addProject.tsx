@@ -201,7 +201,7 @@ const AddProjectsModal: React.FC<AddProjectsModalProps> = ({
                     className="h-4 w-4 accent-blue-500 cursor-pointer"
                   />
                   <span className="text-sm font-medium text-gray-600">
-                    Make Project Private{" "}
+                    Make Project Public{" "}
                     <span className="font-normal">(Anyone Can Join)</span>
                   </span>
                 </label>

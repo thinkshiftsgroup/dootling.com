@@ -1,8 +1,15 @@
 "use client";
 import { X } from "phosphor-react";
 import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import AuditTrialsTable from "../finance/auditTrails";
+import ContributionHeatmap from "../../landing-page/heatMap";
 
-const ConvertProjectToEscrow = ({ setOpenModal }: { setOpenModal: (open: boolean) => void }) => {
+const ConvertProjectToEscrow = ({
+  setOpenModal,
+}: {
+  setOpenModal: (open: boolean) => void;
+}) => {
   const [userName, setUserName] = useState("");
   const [userList, setUserList] = useState<string[]>([]);
 
@@ -37,7 +44,6 @@ const ConvertProjectToEscrow = ({ setOpenModal }: { setOpenModal: (open: boolean
     setCollaborators(updated);
   };
 
-
   const [tabs, setTabs] = useState("Overview");
 
   return (
@@ -52,7 +58,7 @@ const ConvertProjectToEscrow = ({ setOpenModal }: { setOpenModal: (open: boolean
         <div className="flex items-center justify-between mb-4">
           <div>
             <h1 className="sm:!text-xl !text-base text-[#525256] font-bold">
-              Create Smart Contract
+            Escrow Smart Contract
             </h1>
             <p className=" sm:!text-base text-xs  text-[#404040]">
               <span className="text-[#157BFF]">For:</span>Thinkemphaty Vault App
@@ -70,43 +76,62 @@ const ConvertProjectToEscrow = ({ setOpenModal }: { setOpenModal: (open: boolean
           <ul className="flex w-full items-center gap-4 *:cursor-pointer font-medium text-gray-500">
             <li
               onClick={() => setTabs("Overview")}
-              className={`${tabs === "Overview" ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]" : ""
-                }`}
+              className={`${
+                tabs === "Overview"
+                  ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]"
+                  : ""
+              }`}
             >
               Overview
             </li>
-            <li
-              onClick={() => setTabs("Milsetones")}
-              className={`${tabs === "Milsetones" ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]" : ""
-                }`}
-            >
-              MileStones
-            </li>
-            <li
+
+            {/* <li
               onClick={() => setTabs("Funds")}
-              className={`${tabs === "Funds" ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]" : ""
-                }`}
+              className={`${
+                tabs === "Funds"
+                  ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]"
+                  : ""
+              }`}
             >
               Funds
+            </li> */}
+            <li
+              onClick={() => setTabs("Contributors")}
+              className={`${
+                tabs === "Contributors"
+                  ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]"
+                  : ""
+              }`}
+            >
+              Contributors
             </li>
             <li
-              onClick={() => setTabs("Team")}
-              className={`${tabs === "Team" ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]" : ""
-                }`}
+              onClick={() => setTabs("Milsetones")}
+              className={`${
+                tabs === "Milsetones"
+                  ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]"
+                  : ""
+              }`}
             >
-              Team
+              Milestones
             </li>
             <li
               onClick={() => setTabs("Audit Log")}
-              className={`${tabs === "Audit Log" ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]" : ""
-                }`}
+              className={`${
+                tabs === "Audit Log"
+                  ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]"
+                  : ""
+              }`}
             >
               Audit Log
             </li>
             <li
               onClick={() => setTabs("Settings")}
-              className={`${tabs === "Settings" ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]" : ""
-                }`}
+              className={`${
+                tabs === "Settings"
+                  ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]"
+                  : ""
+              }`}
             >
               Settings
             </li>
@@ -115,73 +140,202 @@ const ConvertProjectToEscrow = ({ setOpenModal }: { setOpenModal: (open: boolean
 
         {tabs === "Overview" && (
           <div className="bg-[#fafafa] my-5 rounded-md p-2 space-y-2">
-            <div className="">
-              <p className="text-[#404040] flex items-center mb-2 gap-1 font-semibold">
-                Allocate Funds From Escrow Balance
-              </p>
-              <div className="border border-[#D8D8D8] rounded-md overflow-hidden w-full">
-                <div className="grid grid-cols-[50px_1fr_1fr_1fr] text-center text-[#000000]/80">
-                  <div className="bg-[#F2F2F2] py-3 px-2 font-medium border-r border-[#D8D8D8]">
-                    USD
-                  </div>
-                  <div className="py-3 px-2 border-r border-[#D8D8D8]">
-                    $20,000
-                  </div>
-                  <div className="py-3 px-2 border-r text-black border-[#D8D8D8]">
-                    Escrow Balance after $10
+            <div className="flex xl:flex-row flex-col items-start justify-between gap-2 my-5">
+              <div className="flex w-full h-[90px] overflow-y-scroll hide-scrollbar flex-col justify-between gap-3 p-2 bg-white shadow-md min-w-[250px] rounded">
+                <div className="flex items-center">
+                  <p
+                    className="text-white font-bold text-xl w-full px-3 py-2 rounded-sm leading-none"
+                    style={{ backgroundColor: "#202224" }}
+                  >
+                    $625.00
+                  </p>
+                </div>
+                <div className="flex whitespace-nowrap gap-1 white items-center justify-between mt-2">
+                  <p
+                    // onClick={() => setActiveTab("transactions")}
+                    className={`text-xs cursor-pointer transition-colors duration-200 `}
+                  >
+                    Total Budget
+                  </p>
+                    <button
+                    // onClick={() => setWithdrawFunds(true)}
+                    className="bg-black cursor-pointer text-white text-[10px] flex items-center gap-1 p-1 rounded"
+                  >
+                  Fund Project
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 56 56"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.46484 20.2267C5.46484 17.4995 6.56302 15.8294 8.83683 14.5627L18.2009 9.35204C23.1062 6.62483 25.5601 5.25781 28.2485 5.25781C30.937 5.25781 33.3908 6.62483 38.2961 9.35204L47.6602 14.5627C49.9318 15.8294 51.0322 17.4995 51.0322 20.2267C51.0322 20.9649 51.0322 21.3363 50.9525 21.6393C50.5287 23.2341 49.0819 23.487 47.6853 23.487H8.81177C7.41513 23.487 5.97064 23.2364 5.54459 21.6393C5.46484 21.334 5.46484 20.9649 5.46484 20.2267Z"
+                        stroke="white"
+                        stroke-width="3.41755"
+                      />
+                      <path
+                        d="M28.2383 16.6484H28.2588"
+                        stroke="white"
+                        stroke-width="4.55674"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M10.0216 23.4844V42.8505M19.1351 23.4844V42.8505M37.362 23.4844V42.8505M46.4755 23.4844V42.8505M44.1971 42.8505H12.2999C10.4872 42.8505 8.74863 43.5706 7.4668 44.8525C6.18497 46.1343 5.46484 47.8728 5.46484 49.6856C5.46484 49.9877 5.58486 50.2775 5.7985 50.4911C6.01214 50.7048 6.3019 50.8248 6.60403 50.8248H49.893C50.1952 50.8248 50.4849 50.7048 50.6986 50.4911C50.9122 50.2775 51.0322 49.9877 51.0322 49.6856C51.0322 47.8728 50.3121 46.1343 49.0303 44.8525C47.7484 43.5706 46.0099 42.8505 44.1971 42.8505Z"
+                        stroke="white"
+                        stroke-width="3.41755"
+                      />
+                    </svg>
+                  </button>
+                   <button
+                    // onClick={() => setWithdrawFunds(true)}
+                    className="bg-[#FAAF40] cursor-pointer text-white text-[10px] flex items-center gap-1 p-1 rounded"
+                  >
+                    Withdraw
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 56 56"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.46484 20.2267C5.46484 17.4995 6.56302 15.8294 8.83683 14.5627L18.2009 9.35204C23.1062 6.62483 25.5601 5.25781 28.2485 5.25781C30.937 5.25781 33.3908 6.62483 38.2961 9.35204L47.6602 14.5627C49.9318 15.8294 51.0322 17.4995 51.0322 20.2267C51.0322 20.9649 51.0322 21.3363 50.9525 21.6393C50.5287 23.2341 49.0819 23.487 47.6853 23.487H8.81177C7.41513 23.487 5.97064 23.2364 5.54459 21.6393C5.46484 21.334 5.46484 20.9649 5.46484 20.2267Z"
+                        stroke="white"
+                        stroke-width="3.41755"
+                      />
+                      <path
+                        d="M28.2383 16.6484H28.2588"
+                        stroke="white"
+                        stroke-width="4.55674"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M10.0216 23.4844V42.8505M19.1351 23.4844V42.8505M37.362 23.4844V42.8505M46.4755 23.4844V42.8505M44.1971 42.8505H12.2999C10.4872 42.8505 8.74863 43.5706 7.4668 44.8525C6.18497 46.1343 5.46484 47.8728 5.46484 49.6856C5.46484 49.9877 5.58486 50.2775 5.7985 50.4911C6.01214 50.7048 6.3019 50.8248 6.60403 50.8248H49.893C50.1952 50.8248 50.4849 50.7048 50.6986 50.4911C50.9122 50.2775 51.0322 49.9877 51.0322 49.6856C51.0322 47.8728 50.3121 46.1343 49.0303 44.8525C47.7484 43.5706 46.0099 42.8505 44.1971 42.8505Z"
+                        stroke="white"
+                        stroke-width="3.41755"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <div className="flex w-full h-[90px] overflow-y-scroll hide-scrollbar flex-col justify-between gap-3 p-2 bg-white shadow-md min-w-[250px] rounded">
+                <div className="flex items-center">
+                  <p
+                    className="text-white font-bold text-xl w-full px-3 py-2 rounded-sm leading-none"
+                    style={{ backgroundColor: "#A6A6A6" }}
+                  >
+                    $425.00
+                  </p>
+                </div>
+                <div className="mt-2">
+                  <div className="flex flex-row lg:flex-col gap-1">
+                    {/* <button
+                  onClick={() => setActiveTab("fund")}
+                  className="bg-black w-full text-white text-[9px] py-1 rounded flex items-center justify-center gap-1"
+                >
+                  Allocate Funds
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 56 56"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M36.2053 17.5884C37.8606 17.5874 39.4652 17.0169 40.7497 15.9727C42.0341 14.9284 42.9202 13.4741 43.2591 11.8538H49.5235C49.8088 11.8518 50.0873 11.7657 50.324 11.6064C50.5608 11.4471 50.7454 11.2216 50.8547 10.958C50.9641 10.6944 50.9934 10.4045 50.939 10.1244C50.8846 9.84424 50.7488 9.58635 50.5487 9.38289C50.2755 9.1131 49.9075 8.96099 49.5235 8.95911H43.2693C42.939 7.32827 42.0548 5.86185 40.7667 4.8085C39.4786 3.75515 37.8658 3.17969 36.2018 3.17969C34.5379 3.17969 32.9251 3.75515 31.637 4.8085C30.3489 5.86185 29.4647 7.32827 29.1343 8.95911H7.07062C6.69893 8.97718 6.34844 9.13756 6.09177 9.407C5.8351 9.67645 5.69193 10.0343 5.69193 10.4064C5.69193 10.7786 5.8351 11.1364 6.09177 11.4059C6.34844 11.6753 6.69893 11.8357 7.07062 11.8538H29.148C29.4872 13.4752 30.3742 14.9305 31.6601 15.9748C32.9459 17.0192 34.5521 17.589 36.2087 17.5884M36.2087 14.581C35.6567 14.581 35.11 14.4723 34.6 14.261C34.09 14.0498 33.6266 13.7401 33.2363 13.3498C32.8459 12.9594 32.5363 12.496 32.3251 11.986C32.1138 11.476 32.0051 10.9294 32.0051 10.3774C32.0051 9.82538 32.1138 9.27876 32.3251 8.76875C32.5363 8.25875 32.8459 7.79535 33.2363 7.40501C33.6266 7.01467 34.09 6.70504 34.6 6.49379C35.11 6.28254 35.6567 6.17381 36.2087 6.17381C37.3235 6.17381 38.3927 6.61669 39.1811 7.40501C39.9694 8.19334 40.4123 9.26254 40.4123 10.3774C40.4123 11.4923 39.9694 12.5615 39.1811 13.3498C38.3927 14.1381 37.3235 14.581 36.2087 14.581ZM21.1578 35.0077C22.8193 35.0085 24.4301 34.4355 25.7179 33.3856C27.0057 32.3357 27.8914 30.8733 28.2253 29.2457L49.5269 29.2218C49.8115 29.2191 50.0891 29.1329 50.3252 28.9737C50.5612 28.8146 50.7453 28.5896 50.8545 28.3267C50.9638 28.0638 50.9934 27.7746 50.9396 27.4951C50.8858 27.2155 50.7511 26.9579 50.5521 26.7543C50.2789 26.4845 49.9109 26.3324 49.5269 26.3305L28.2253 26.351C27.89 24.7257 27.0044 23.2657 25.7178 22.2174C24.4313 21.1691 22.8225 20.5967 21.1629 20.5967C19.5033 20.5967 17.8945 21.1691 16.608 22.2174C15.3214 23.2657 14.4358 24.7257 14.1005 26.351L7.07062 26.3305C6.68722 26.3305 6.31952 26.4828 6.04841 26.7539C5.77731 27.0251 5.625 27.3928 5.625 27.7762C5.625 28.1596 5.77731 28.5273 6.04841 28.7984C6.31952 29.0695 6.68722 29.2218 7.07062 29.2218L14.1005 29.2457C14.4342 30.8722 15.3189 32.3337 16.6052 33.3835C17.8916 34.4332 19.4974 35.0069 21.1578 35.0077ZM21.1612 32.0002C20.0463 32.0002 18.9771 31.5574 18.1888 30.769C17.4005 29.9807 16.9576 28.9115 16.9576 27.7967C16.9576 26.6818 17.4005 25.6126 18.1888 24.8243C18.9771 24.0359 20.0463 23.5931 21.1612 23.5931C22.2761 23.5931 23.3453 24.0359 24.1336 24.8243C24.9219 25.6126 25.3648 26.6818 25.3648 27.7967C25.3648 28.9115 24.9219 29.9807 24.1336 30.769C23.3453 31.5574 22.2761 32.0002 21.1612 32.0002ZM36.1916 52.2937C37.8569 52.2932 39.4708 51.7163 40.7591 50.661C42.0474 49.6057 42.9307 48.137 43.2591 46.5043L49.5235 46.5932C49.8088 46.5912 50.0873 46.5051 50.324 46.3458C50.5608 46.1865 50.7454 45.961 50.8547 45.6974C50.9641 45.4339 50.9934 45.1439 50.939 44.8638C50.8846 44.5837 50.7488 44.3258 50.5487 44.1223C50.2755 43.8525 49.9075 43.7004 49.5235 43.6985L43.2488 43.6063C42.9088 41.9863 42.0218 40.5326 40.7368 39.4893C39.4517 38.446 37.8468 37.8765 36.1916 37.8765C34.5363 37.8765 32.9315 38.446 31.6464 39.4893C30.3614 40.5326 29.4744 41.9863 29.1343 43.6063L7.06721 43.6985C6.69552 43.7166 6.34502 43.877 6.08835 44.1464C5.83168 44.4159 5.68852 44.7737 5.68852 45.1459C5.68852 45.518 5.83168 45.8759 6.08835 46.1453C6.34502 46.4148 6.69552 46.5751 7.06721 46.5932L29.1241 46.5043C29.4524 48.137 30.3358 49.6057 31.6241 50.661C32.9124 51.7163 34.5262 52.2932 36.1916 52.2937ZM36.1916 49.2862C35.0767 49.2862 34.0075 48.8433 33.2192 48.055C32.4309 47.2667 31.988 46.1975 31.988 45.0826C31.988 43.9678 32.4309 42.8986 33.2192 42.1102C34.0075 41.3219 35.0767 40.8791 36.1916 40.8791C37.3064 40.8791 38.3756 41.3219 39.164 42.1102C39.9523 42.8986 40.3952 43.9678 40.3952 45.0826C40.3952 46.1975 39.9523 47.2667 39.164 48.055C38.3756 48.8433 37.3064 49.2862 36.1916 49.2862Z"
+                      fill="white"
+                    />
+                  </svg>
+                </button> */}
+                    {/* <button
+                  onClick={() => setShowModal(true)}
+                  className=" bg-[#979797] w-full text-white text-[9px] py-1 rounded flex items-center justify-center gap-1"
+                >
+                 All Transaction
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 55 54"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M25.6627 4.48438L42.0286 9.5973C42.485 9.73979 42.884 10.0245 43.1672 10.4097C43.4504 10.795 43.603 11.2607 43.6028 11.7389V15.6969H48.0878C48.6826 15.6969 49.253 15.9332 49.6735 16.3537C50.0941 16.7743 50.3304 17.3447 50.3304 17.9394V35.8795C50.3304 36.4743 50.0941 37.0447 49.6735 37.4652C49.253 37.8858 48.6826 38.122 48.0878 38.122L40.867 38.1243C39.9991 39.268 38.9451 40.2771 37.7274 41.1068L25.6627 49.3346L13.598 41.1091C11.7873 39.8744 10.3055 38.2162 9.28151 36.2785C8.25756 34.3408 7.72243 32.1823 7.72266 29.9907V11.7389C7.72293 11.2611 7.87579 10.7959 8.15896 10.4111C8.44214 10.0262 8.84082 9.74192 9.2969 9.59954L25.6627 4.48438ZM25.6627 9.18019L12.2077 13.3871V29.9907C12.2074 31.3636 12.5222 32.7183 13.1279 33.9504C13.7337 35.1824 14.6141 36.259 15.7015 37.0972L16.1253 37.4022L25.6627 43.9055L34.1439 38.122H23.4202C22.8255 38.122 22.2551 37.8858 21.8345 37.4652C21.414 37.0447 21.1777 36.4743 21.1777 35.8795V17.9394C21.1777 17.3447 21.414 16.7743 21.8345 16.3537C22.2551 15.9332 22.8255 15.6969 23.4202 15.6969H39.1178V13.3871L25.6627 9.18019ZM25.6627 26.9095V33.637H45.8453V26.9095H25.6627ZM25.6627 22.4245H45.8453V20.1819H25.6627V22.4245Z"
+                      fill="white"
+                    />
+                  </svg>
+                </button> */}
+                    <p
+                      // onClick={() => setActiveTab("transactions")}
+                      className={`text-xs whitespace-nowrap cursor-pointer transition-colors duration-200 `}
+                    >
+                      Total Amount Released
+                    </p>
+                    {/* <button
+                  onClick={() => setRecallFunds(true)}
+                  className=" w-full bg-[#FAAF40] text-white text-[9px] py-1 rounded flex items-center justify-center gap-1"
+                >
+                  Contributors
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 57 56"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M7.875 29.8819V18.3906H49.2435V29.8819C49.2435 38.5486 49.2435 42.883 46.5499 45.5743C43.8564 48.2655 39.5242 48.2678 30.8575 48.2678H26.261C17.5943 48.2678 13.2598 48.2678 10.5685 45.5743C7.8773 42.8807 7.875 38.5486 7.875 29.8819Z"
+                      stroke="white"
+                      stroke-width="3.44737"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M7.875 18.3897L9.86298 13.9701C11.4074 10.5412 12.1773 8.82897 13.7401 7.8637C15.3029 6.89844 17.3093 6.89844 21.3197 6.89844H35.7987C39.8091 6.89844 41.8132 6.89844 43.3783 7.8637C44.9411 8.82897 45.711 10.5412 47.2555 13.9701L49.2435 18.3897M28.5592 18.3897V6.89844"
+                      stroke="white"
+                      stroke-width="3.44737"
+                      stroke-linecap="round"
+                    />
+                    <path
+                      d="M20.5163 31.0262H33.1567C34.3757 31.0262 35.5449 31.5105 36.4069 32.3725C37.2689 33.2345 37.7532 34.4036 37.7532 35.6227C37.7532 36.8417 37.2689 38.0109 36.4069 38.8729C35.5449 39.7349 34.3757 40.2192 33.1567 40.2192H30.8584M23.9637 26.4297L19.3672 31.0262L23.9637 35.6227"
+                      stroke="white"
+                      stroke-width="3.44737"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </button> */}
                   </div>
                 </div>
               </div>
-            </div>
-            <div>
-              <p className="text-[#404040] mb-2 flex items-center  gap-1 font-semibold">
-                Instant Release Amount
-              </p>
-              <div className="border border-[#D8D8D8] rounded-md overflow-hidden w-full">
-                <div className="grid grid-cols-[50px_1fr_1fr_1fr] text-center text-[#000000]/80">
-                  <div className="bg-[#F2F2F2] py-3 px-2 font-medium border-r border-[#D8D8D8]">
-                    USD
-                  </div>
-                  <div className="py-3 px-2 border-r border-[#D8D8D8]">
-                    $32,000
-                  </div>
-                  <div className="py-3 px-2 border-r border-[#D8D8D8]">
-                    dd/mm/yyyy
-                  </div>
-                  <div className="py-3 px-2 border-r text-black border-[#D8D8D8]">
-                    Project Balance after $2500
-                  </div>
+
+              <div className="flex w-full h-[90px] overflow-y-scroll hide-scrollbar flex-col justify-between gap-3 p-2 bg-white shadow-md min-w-[250px] rounded">
+                <div className="flex items-center">
+                  <p
+                    className="text-white font-bold text-xl w-full px-3 py-2 rounded-sm leading-none"
+                    style={{ backgroundColor: "#555454" }}
+                  >
+                    $200.00
+                  </p>
+                </div>
+                <div className="mt-2 flex items-center justify-between">
+                  <p
+                    // onClick={() => setActiveTab("escrow")}
+                    className={`text-xs pt-1 cursor-pointer transition-colors duration-200`}
+                  >
+                    Total Pending
+                  </p>
+                 
                 </div>
               </div>
             </div>
           </div>
         )}
 
-        {tabs === "Overview" && (
-          <div>
-            <label
-              className="text-[#404040] text-sm sm:!text-lg font-semibold"
-              htmlFor=""
-            >
-              Select Project Contributors{" "}
-            </label>
-            <div className="relative my-2">
-              <input
-                type="text"
-                value={userName}
-                className=" text-sm sm:!text-lg p-2 rounded-sm w-full border border-[#000000]/40 text-black"
-                placeholder="Joshua Israel"
-                onChange={(e) => setUserName(e.target.value)}
-              />
-              <button
-                onClick={handleAddUser}
-                className="bg-[#157BFF]  text-sm sm:!text-base absolute top-0 right-0 px-5 sm:!px-10 cursor-pointer py-[11px] text-white rounded-sm"
-              >
-                + Add
-              </button>
-            </div>
-          </div>
-        )}
         {tabs === "Overview" && (
           <div className="flex text-xs sm:!text-sm flex-col gap-2">
             {userList.map((user: any, idx) => {
@@ -231,18 +385,6 @@ const ConvertProjectToEscrow = ({ setOpenModal }: { setOpenModal: (open: boolean
                           className="w-full outline-none text-sm bg-transparent appearance-none [color-scheme:light]"
                         />
                       </div>
-
-                      {/* <div className="py-2 px-2 border-r border-[#D8D8D8]">
-  <input
-    type="date"
-    className="w-full outline-none text-sm bg-transparent appearance-none [color-scheme:light] 
-    [&::-webkit-calendar-picker-indicator]:hidden 
-    [&::-webkit-inner-spin-button]:hidden 
-    [&::-webkit-clear-button]:hidden"
-    placeholder="dd/mm/yyyy"
-  />
-</div> */}
-
                       <div className="py-3 px-2">Amount</div>
                     </div>
                   </div>
@@ -253,18 +395,112 @@ const ConvertProjectToEscrow = ({ setOpenModal }: { setOpenModal: (open: boolean
         )}
 
         {tabs === "Overview" && (
-          <div className="my-2">
-            <p className="text-[#404040] text-sm sm:!text-base flex items-center  gap-1 font-semibold">
-              Contract Clauses *
-            </p>
-
+          <div>
             <div>
-              <textarea
-                name=""
-                className="border border-[#D8D8D8] rounded-md w-full my-2 h-[200px]"
-                id=""
-              ></textarea>
+              <label
+                className="font-semibold text-gray-600 sm:!text-lg  text-base"
+                htmlFor="Amount"
+              >
+                Project Title *
+              </label>
+              <div className="flex my-2">
+                <input
+                  type="text"
+                  className="w-full border rounded-md text-sm  bg-white z-10 text-gray-600 p-2 border-gray-400/50"
+                />
+              </div>
             </div>
+            <div>
+              <label
+                className="font-semibold text-gray-600 sm:!text-lg  text-base"
+                htmlFor="Amount"
+              >
+                Project Summary Description *
+              </label>
+              <div className="flex my-2">
+                <textarea
+                  rows={4}
+                  className="w-full border border-[#f1f1f1] rounded-md text-sm p-2 focus:outline-none focus:border-[#157BFF] transition-colors resize-none"
+                />
+              </div>
+            </div>
+            <div className="space-y-6 mb-8">
+              {/* Option 1 */}
+              <label className="flex items-center space-x-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="privacy"
+                  value="invite"
+                  onChange={handleChange}
+                  checked={selected === "invite"}
+                  className="h-4 w-4 accent-blue-500 cursor-pointer"
+                />
+                <span className="text-sm font-medium text-gray-600">
+                  Make Project Private{" "}
+                  <span className="font-normal">(Invite Only)</span>
+                </span>
+              </label>
+
+              {/* Option 2 */}
+              <label className="flex items-center space-x-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="privacy"
+                  value="anyone"
+                  onChange={handleChange}
+                  checked={selected === "anyone"}
+                  className="h-4 w-4 accent-blue-500 cursor-pointer"
+                />
+                <span className="text-sm font-medium text-gray-600">
+                  Make Project Public{" "}
+                  <span className="font-normal">(Anyone Can Join)</span>
+                </span>
+              </label>
+            </div>{" "}
+            <div className="my-2">
+              <p className="text-[#404040] text-sm sm:!text-base flex items-center  gap-1 font-semibold">
+                Contract Clauses *
+              </p>
+
+              <div>
+                <textarea
+                  name=""
+                  className="border border-[#D8D8D8] rounded-md w-full my-2 h-[200px]"
+                  id=""
+                ></textarea>
+              </div>
+            </div>
+            <div className="flex w-full items-center gap-2">
+               <div className="w-full">
+              <label
+                className="font-semibold text-gray-600 sm:!text-lg  text-base"
+                htmlFor="Amount"
+              >
+                Project Start Date*
+              </label>
+              <div className="flex my-2">
+                <input
+                  type="text"
+                  className="w-full border rounded-md text-sm  bg-white z-10 text-gray-600 p-2 border-gray-400/50"
+                />
+              </div>
+            </div>
+               <div className="w-full">
+              <label
+                className="font-semibold text-gray-600 sm:!text-lg  text-base"
+                htmlFor="Amount"
+              >
+                Expected Delivery Date *
+              </label>
+              <div className="flex my-2">
+                <input
+                  type="text"
+                  className="w-full border rounded-md text-sm  bg-white z-10 text-gray-600 p-2 border-gray-400/50"
+                />
+              </div>
+            </div>
+            </div>
+            
           </div>
         )}
 
@@ -276,7 +512,7 @@ const ConvertProjectToEscrow = ({ setOpenModal }: { setOpenModal: (open: boolean
             </p>
 
             <button className="bg-blue-500 mt-3 hover:bg-blue-600 text-white px-2 flex items-center gap-2 py-1 rounded-sm text-[0.9rem]">
-              Initiate Contract
+              Save & Continue
               <svg
                 width="20"
                 height="20"
@@ -352,17 +588,265 @@ const ConvertProjectToEscrow = ({ setOpenModal }: { setOpenModal: (open: boolean
 
         {/* tab B */}
         {tabs === "Milsetones" && (
-          <div>
-            <p>Milsetones</p>
+          <div className="mt-5">
+            <ContributionHeatmap pageType={"profile"} />
+              <div className="mr-10 flex flex-col gap-1 w-full max-w-2xl">
+            {[
+              {
+                name: "Amelia Shaw",
+                color: "#0b50ab",
+                percent: 50,
+                amount: "Contribution",
+              },
+              {
+                name: "Ronald Nunez",
+                color: "gray",
+                percent: 30,
+                amount: "Contribution",
+              },
+              {
+                name: "Carolyn Ortiz",
+                color: "#9ca3af",
+                percent: 20,
+                amount: "Contribution",
+              },
+            ].map((person, i) => (
+              <div
+                key={i}
+                className="flex !flex-col sm:!flex-row items-center sm:items-center gap-3 sm:gap-4 w-full"
+              >
+                <div className="w-full sm:!w-1/4 text-center sm:!text-left">
+                  <p className="font-semibold whitespace-nowrap !text-base sm:!text-lg text-black">
+                    {person.name}
+                  </p>
+                </div>
+
+                <div className="w-full sm:!flex-1 h-3 bg-gray-100 rounded relative overflow-hidden !mt-1 sm:!mt-0">
+                  <div
+                    className="absolute top-0 left-0 h-full rounded transition-all duration-300"
+                    style={{
+                      width: `${person.percent}%`,
+                      backgroundColor: person.color,
+                    }}
+                  ></div>
+                </div>
+
+                <div className="flex ml-5 items-center justify-between sm:!justify-end gap-1 w-full sm:!w-28 mt-1 sm:!mt-0">
+                  <p className="font-bold !text-base sm:!text-lg text-black">
+                    {person.percent}%
+                  </p>
+                  <p className="font-bold !text-xs sm:!text-sm text-[#157BFF]">
+                    {person.amount}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
           </div>
         )}
 
         {/* tab C */}
-        {tabs === "Funds" && (
-          <div>
-            <p>Funds</p>
+        {tabs === "Contributors" && (
+          <div className="overflow-x-auto my-5">
+            <div className="flex justify-end w-full">
+              <button
+                // onClick={() => setAddTaskModal(true)}
+                className="text-[#157bff] mb-3 flex items-center gap-2 bg-[#157bff]/10 cursor-pointer rounded-sm py-2 px-4"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="square"
+                    stroke-width="2"
+                    d="M16 20v-1a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v1M12.5 7a4 4 0 1 1-8 0a4 4 0 0 1 8 0Zm3 4a4 4 0 0 0 0-8M23 20v-1a4 4 0 0 0-4-4"
+                  />
+                </svg>
+                <p className="text-sm whitespace-nowrap font-semibold">
+                  Add Contributors
+                </p>
+              </button>
+            </div>
+
+            <table className="min-w-full border-collapse">
+              <thead className="bg-[#E7F1FF]/30 font-medium text-xs sm:!text-sm text-left">
+                <tr>
+                  <th className="py-3 px-2">Contributor</th>
+                  <th className="py-3 px-2">Role</th>
+                  <th className="py-3 px-2">Released</th>
+                  <th className="py-3 px-2">Balance</th>
+                  <th className="py-3 px-2">Status</th>
+                  <th className="py-3 px-2">Manage</th>
+                </tr>
+              </thead>
+
+              <tbody className="[&>tr:nth-child(even)]:bg-[#E7F1FF]/30">
+                <tr className=" hover:bg-[#E7F1FF]/10">
+                  <td className="py-3">
+                    <div className="flex items-center gap-1">
+                      <Image
+                        alt="user-img"
+                        src="/images/user/taskUser.png"
+                        width={100}
+                        height={100}
+                        className="rounded-sm w-10 h-10 object-cover object-top border-2 border-white"
+                      />
+                      <div className="flex flex-col gap-0.5">
+                        <p className="font-semibold text-xs sm:!text-sm text-black whitespace-nowrap">
+                          John Israel
+                        </p>
+                        <p className="text-[10px] flex-none text-center text-black bg-gray-100 rounded-sm">
+                          invite sent
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+
+                  <td className="py-3">
+                    <div className="flex flex-col px-1">
+                      <p className="text-sm font-medium">Lead Developer</p>
+                    </div>
+                  </td>
+
+                  <td className="py-3 px-2  text-[10px] sm:!text-xs text-left">
+                    <div className="flex flex-col">
+                      <div>
+                        $300
+                        <span className="text-[10px] flex-none text-center text-black bg-gray-200 rounded-sm p-1">
+                          50%
+                        </span>
+                      </div>
+                      <p>23/11/2025-18:00</p>
+                    </div>
+                  </td>
+                  <td className="py-3 px-2  text-[10px] sm:!text-xs text-left">
+                    <div className="flex flex-col">
+                      <div>
+                        $300
+                        <span className="text-[10px] flex-none text-center text-black bg-gray-200 rounded-sm p-1">
+                          50%
+                        </span>
+                      </div>
+                      <p>23/11/2025-18:00</p>
+                    </div>
+                  </td>
+
+                 <td className="py-3 px-2  text-xs text-center">
+                    <p className="p-1 bg-[#FAAF40] text-white rounded-sm">
+                    In Progress
+                    </p>
+                  </td>
+
+                  <td className="py-3 px-2">
+                    <div className="flex items-center justify-center gap-2">
+                      <span
+                        // onClick={() => setManageTasksMmodal(true)}
+                        className="cursor-pointer"
+                      >
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 352 352"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M226.597 110.539C237.237 110.533 247.551 106.865 255.807 100.153C264.064 93.441 269.759 84.0927 271.938 73.6777H312.204C314.038 73.6647 315.828 73.1117 317.35 72.0877C318.872 71.0637 320.058 69.6141 320.761 67.9198C321.464 66.2256 321.653 64.3618 321.303 62.5612C320.953 60.7606 320.081 59.1029 318.794 57.7952C317.038 56.061 314.672 55.0833 312.204 55.0712H272.003C269.88 44.5883 264.197 35.1624 255.917 28.3916C247.637 21.6209 237.27 17.9219 226.575 17.9219C215.879 17.9219 205.512 21.6209 197.232 28.3916C188.953 35.1624 183.269 44.5883 181.146 55.0712H39.3235C36.9343 55.1873 34.6814 56.2182 33.0316 57.9501C31.3817 59.6821 30.4615 61.9824 30.4615 64.3744C30.4615 66.7664 31.3817 69.0667 33.0316 70.7987C34.6814 72.5307 36.9343 73.5615 39.3235 73.6777H181.234C183.414 84.1 189.116 93.4541 197.381 100.167C205.646 106.88 215.971 110.543 226.619 110.539M226.619 91.2078C223.07 91.2078 219.557 90.5089 216.278 89.151C213 87.7931 210.022 85.8028 207.513 83.2938C205.003 80.7847 203.013 77.8061 201.655 74.5278C200.297 71.2496 199.599 67.736 199.599 64.1877C199.599 60.6394 200.297 57.1258 201.655 53.8476C203.013 50.5694 205.003 47.5907 207.513 45.0816C210.022 42.5726 213 40.5823 216.278 39.2244C219.557 37.8665 223.07 37.1677 226.619 37.1677C233.785 37.1677 240.657 40.0144 245.725 45.0816C250.792 50.1489 253.639 57.0215 253.639 64.1877C253.639 71.3539 250.792 78.2265 245.725 83.2938C240.657 88.361 233.785 91.2078 226.619 91.2078ZM129.874 222.508C140.554 222.513 150.908 218.83 159.185 212.081C167.463 205.333 173.156 195.933 175.302 185.47L312.226 185.317C314.056 185.299 315.84 184.745 317.357 183.722C318.875 182.699 320.058 181.253 320.76 179.563C321.462 177.873 321.652 176.015 321.307 174.218C320.961 172.421 320.095 170.765 318.816 169.456C317.06 167.722 314.694 166.744 312.226 166.732L175.302 166.864C173.148 156.416 167.455 147.032 159.185 140.294C150.915 133.555 140.574 129.876 129.907 129.876C119.239 129.876 108.898 133.555 100.628 140.294C92.3582 147.032 86.6656 156.416 84.5107 166.864L39.3235 166.732C36.859 166.732 34.4955 167.711 32.7529 169.454C31.0103 171.196 30.0313 173.56 30.0312 176.024C30.0313 178.489 31.0103 180.852 32.7529 182.595C34.4955 184.338 36.859 185.317 39.3235 185.317L84.5107 185.47C86.6553 195.925 92.342 205.32 100.611 212.067C108.879 218.815 119.201 222.503 129.874 222.508ZM129.896 203.176C122.729 203.176 115.857 200.329 110.79 195.262C105.722 190.195 102.876 183.322 102.876 176.156C102.876 168.99 105.722 162.117 110.79 157.05C115.857 151.983 122.729 149.136 129.896 149.136C137.062 149.136 143.934 151.983 149.002 157.05C154.069 162.117 156.916 168.99 156.916 176.156C156.916 183.322 154.069 190.195 149.002 195.262C143.934 200.329 137.062 203.176 129.896 203.176ZM226.509 333.619C237.213 333.616 247.587 329.908 255.868 323.125C264.149 316.342 269.827 306.901 271.938 296.406L312.204 296.978C314.038 296.965 315.828 296.411 317.35 295.387C318.872 294.363 320.058 292.914 320.761 291.22C321.464 289.525 321.653 287.662 321.303 285.861C320.953 284.06 320.081 282.403 318.794 281.095C317.038 279.361 314.672 278.383 312.204 278.371L271.872 277.778C269.686 267.365 263.985 258.021 255.724 251.315C247.464 244.609 237.148 240.948 226.509 240.948C215.869 240.948 205.553 244.609 197.293 251.315C189.033 258.021 183.331 267.365 181.146 277.778L39.3015 278.371C36.9124 278.487 34.6594 279.518 33.0096 281.25C31.3598 282.982 30.4395 285.282 30.4395 287.674C30.4395 290.066 31.3598 292.367 33.0096 294.099C34.6594 295.831 36.9124 296.861 39.3015 296.978L181.08 296.406C183.19 306.901 188.868 316.342 197.149 323.125C205.43 329.908 215.804 333.616 226.509 333.619ZM226.509 314.288C219.343 314.288 212.47 311.441 207.403 306.374C202.335 301.307 199.489 294.434 199.489 287.268C199.489 280.102 202.335 273.229 207.403 268.162C212.47 263.095 219.343 260.248 226.509 260.248C233.675 260.248 240.548 263.095 245.615 268.162C250.682 273.229 253.529 280.102 253.529 287.268C253.529 294.434 250.682 301.307 245.615 306.374C240.548 311.441 233.675 314.288 226.509 314.288Z"
+                            fill="#157BFF"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+                <tr className=" hover:bg-[#E7F1FF]/10">
+                  <td className="py-3">
+                    <div className="flex items-center gap-1">
+                      <Image
+                        alt="user-img"
+                        src="/images/user/taskUser.png"
+                        width={100}
+                        height={100}
+                        className="rounded-sm w-10 h-10 object-cover object-top border-2 border-white"
+                      />
+                      <div className="flex flex-col gap-0.5">
+                        <p className="font-semibold text-xs sm:!text-sm text-black whitespace-nowrap">
+                          John Israel
+                        </p>
+                        {/* <p className="text-[10px] flex-none text-center text-black bg-gray-100 rounded-sm">
+                          invite sent
+                        </p> */}
+                      </div>
+                    </div>
+                  </td>
+
+                  <td className="py-3">
+                    <div className="flex flex-col px-1">
+                      <p className="text-sm font-medium">Lead Developer</p>
+                    </div>
+                  </td>
+
+                  <td className="py-3 px-2  text-[10px] sm:!text-xs text-left">
+                    <div className="flex flex-col">
+                      <div>
+                        $300
+                        <span className="text-[10px] flex-none text-center text-black bg-gray-200 rounded-sm p-1">
+                          50%
+                        </span>
+                      </div>
+                      <p>23/11/2025-18:00</p>
+                    </div>
+                  </td>
+                  <td className="py-3 px-2  text-[10px] sm:!text-xs text-left">
+                    <div className="flex flex-col">
+                      <div>
+                        $300
+                        <span className="text-[10px] flex-none text-center text-black bg-gray-200 rounded-sm p-1">
+                          50%
+                        </span>
+                      </div>
+                      <p>23/11/2025-18:00</p>
+                    </div>
+                  </td>
+
+                  <td className="py-3 px-2  text-xs text-center">
+                    <p className="p-1 bg-green-500 text-white rounded-sm">
+                    Completed
+                    </p>
+                  </td>
+
+                  <td className="py-3 px-2">
+                    <div className="flex items-center justify-center gap-2">
+                      <span
+                        // onClick={() => setManageTasksMmodal(true)}
+                        className="cursor-pointer"
+                      >
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 352 352"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M226.597 110.539C237.237 110.533 247.551 106.865 255.807 100.153C264.064 93.441 269.759 84.0927 271.938 73.6777H312.204C314.038 73.6647 315.828 73.1117 317.35 72.0877C318.872 71.0637 320.058 69.6141 320.761 67.9198C321.464 66.2256 321.653 64.3618 321.303 62.5612C320.953 60.7606 320.081 59.1029 318.794 57.7952C317.038 56.061 314.672 55.0833 312.204 55.0712H272.003C269.88 44.5883 264.197 35.1624 255.917 28.3916C247.637 21.6209 237.27 17.9219 226.575 17.9219C215.879 17.9219 205.512 21.6209 197.232 28.3916C188.953 35.1624 183.269 44.5883 181.146 55.0712H39.3235C36.9343 55.1873 34.6814 56.2182 33.0316 57.9501C31.3817 59.6821 30.4615 61.9824 30.4615 64.3744C30.4615 66.7664 31.3817 69.0667 33.0316 70.7987C34.6814 72.5307 36.9343 73.5615 39.3235 73.6777H181.234C183.414 84.1 189.116 93.4541 197.381 100.167C205.646 106.88 215.971 110.543 226.619 110.539M226.619 91.2078C223.07 91.2078 219.557 90.5089 216.278 89.151C213 87.7931 210.022 85.8028 207.513 83.2938C205.003 80.7847 203.013 77.8061 201.655 74.5278C200.297 71.2496 199.599 67.736 199.599 64.1877C199.599 60.6394 200.297 57.1258 201.655 53.8476C203.013 50.5694 205.003 47.5907 207.513 45.0816C210.022 42.5726 213 40.5823 216.278 39.2244C219.557 37.8665 223.07 37.1677 226.619 37.1677C233.785 37.1677 240.657 40.0144 245.725 45.0816C250.792 50.1489 253.639 57.0215 253.639 64.1877C253.639 71.3539 250.792 78.2265 245.725 83.2938C240.657 88.361 233.785 91.2078 226.619 91.2078ZM129.874 222.508C140.554 222.513 150.908 218.83 159.185 212.081C167.463 205.333 173.156 195.933 175.302 185.47L312.226 185.317C314.056 185.299 315.84 184.745 317.357 183.722C318.875 182.699 320.058 181.253 320.76 179.563C321.462 177.873 321.652 176.015 321.307 174.218C320.961 172.421 320.095 170.765 318.816 169.456C317.06 167.722 314.694 166.744 312.226 166.732L175.302 166.864C173.148 156.416 167.455 147.032 159.185 140.294C150.915 133.555 140.574 129.876 129.907 129.876C119.239 129.876 108.898 133.555 100.628 140.294C92.3582 147.032 86.6656 156.416 84.5107 166.864L39.3235 166.732C36.859 166.732 34.4955 167.711 32.7529 169.454C31.0103 171.196 30.0313 173.56 30.0312 176.024C30.0313 178.489 31.0103 180.852 32.7529 182.595C34.4955 184.338 36.859 185.317 39.3235 185.317L84.5107 185.47C86.6553 195.925 92.342 205.32 100.611 212.067C108.879 218.815 119.201 222.503 129.874 222.508ZM129.896 203.176C122.729 203.176 115.857 200.329 110.79 195.262C105.722 190.195 102.876 183.322 102.876 176.156C102.876 168.99 105.722 162.117 110.79 157.05C115.857 151.983 122.729 149.136 129.896 149.136C137.062 149.136 143.934 151.983 149.002 157.05C154.069 162.117 156.916 168.99 156.916 176.156C156.916 183.322 154.069 190.195 149.002 195.262C143.934 200.329 137.062 203.176 129.896 203.176ZM226.509 333.619C237.213 333.616 247.587 329.908 255.868 323.125C264.149 316.342 269.827 306.901 271.938 296.406L312.204 296.978C314.038 296.965 315.828 296.411 317.35 295.387C318.872 294.363 320.058 292.914 320.761 291.22C321.464 289.525 321.653 287.662 321.303 285.861C320.953 284.06 320.081 282.403 318.794 281.095C317.038 279.361 314.672 278.383 312.204 278.371L271.872 277.778C269.686 267.365 263.985 258.021 255.724 251.315C247.464 244.609 237.148 240.948 226.509 240.948C215.869 240.948 205.553 244.609 197.293 251.315C189.033 258.021 183.331 267.365 181.146 277.778L39.3015 278.371C36.9124 278.487 34.6594 279.518 33.0096 281.25C31.3598 282.982 30.4395 285.282 30.4395 287.674C30.4395 290.066 31.3598 292.367 33.0096 294.099C34.6594 295.831 36.9124 296.861 39.3015 296.978L181.08 296.406C183.19 306.901 188.868 316.342 197.149 323.125C205.43 329.908 215.804 333.616 226.509 333.619ZM226.509 314.288C219.343 314.288 212.47 311.441 207.403 306.374C202.335 301.307 199.489 294.434 199.489 287.268C199.489 280.102 202.335 273.229 207.403 268.162C212.47 263.095 219.343 260.248 226.509 260.248C233.675 260.248 240.548 263.095 245.615 268.162C250.682 273.229 253.529 280.102 253.529 287.268C253.529 294.434 250.682 301.307 245.615 306.374C240.548 311.441 233.675 314.288 226.509 314.288Z"
+                            fill="#157BFF"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         )}
+
         {tabs === "Team" && (
           <div>
             <p>Team</p>
@@ -370,7 +854,7 @@ const ConvertProjectToEscrow = ({ setOpenModal }: { setOpenModal: (open: boolean
         )}
         {tabs === "Audit Log" && (
           <div>
-            <p>Audit Log</p>
+             <AuditTrialsTable />
           </div>
         )}
         {tabs === "Settings" && (
@@ -518,8 +1002,7 @@ const ConvertProjectToEscrow = ({ setOpenModal }: { setOpenModal: (open: boolean
                 </label>
               </div>
               <div className="flex sm:!flex-row flex-col my-2 items-center justify-end">
-                <button className="text-white flex items-center justify-center gap-2 rounded-sm font-semibold text-lg py-1 px-4 cursor-pointer bg-[#1571E8] hover:bg-blue-600 text-[0.9rem]"
-                >
+                <button className="text-white flex items-center justify-center gap-2 rounded-sm font-semibold text-lg py-1 px-4 cursor-pointer bg-[#1571E8] hover:bg-blue-600 text-[0.9rem]">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width={30}
@@ -531,7 +1014,7 @@ const ConvertProjectToEscrow = ({ setOpenModal }: { setOpenModal: (open: boolean
                       d="M7.504 12.35q.465-.93 1.013-1.792q.549-.862 1.21-1.685L8.192 8.56q-.154-.039-.298.01t-.26.163L5.208 11.16q-.058.057-.039.134t.096.116zm11.454-7.471q-2.308.165-4.065 1.015t-3.305 2.398Q10.482 9.4 9.657 10.6t-1.36 2.385l2.831 2.825q1.185-.535 2.394-1.36t2.318-1.933q1.548-1.548 2.398-3.292t1.015-4.052q0-.061-.009-.113t-.064-.108t-.108-.064t-.113-.01m-5.346 5.636q-.44-.441-.44-1.057t.44-1.057t1.06-.44t1.059.44t.44 1.057t-.44 1.056t-1.06.44t-1.06-.44m-1.85 6.108l.941 2.245q.039.076.115.086t.135-.048l2.427-2.408q.115-.115.163-.26q.049-.144.01-.297l-.313-1.535q-.823.662-1.685 1.207t-1.792 1.01M20.21 4.733q-.012 2.5-.948 4.612t-2.793 3.968q-.096.096-.183.173t-.182.173l.423 2.072q.08.404-.04.783q-.121.378-.414.67l-2.785 2.785q-.298.298-.727.22q-.428-.077-.59-.481l-1.198-2.825l-3.544-3.564l-2.825-1.198q-.404-.161-.475-.59t.227-.727L6.94 8.019q.292-.292.674-.403q.381-.112.785-.031l2.071.423q.096-.096.164-.173q.067-.077.163-.173q1.856-1.856 3.968-2.802t4.613-.958q.161.006.313.064t.283.19t.18.273t.054.304M5.117 16.167q.587-.586 1.426-.58t1.426.594t.584 1.426q-.003.84-.59 1.426q-.834.834-1.962 1.05q-1.128.215-2.278.325q.11-1.17.335-2.288t1.06-1.953m.713.727q-.445.445-.617 1.045t-.253 1.244q.645-.081 1.245-.26T7.25 18.3q.3-.3.306-.715q.005-.416-.295-.716t-.715-.287q-.415.012-.715.312"
                     ></path>
                   </svg>{" "}
-                  Create Project
+                  Declaration
                 </button>
               </div>
             </div>
