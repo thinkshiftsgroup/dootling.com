@@ -27,7 +27,7 @@ export default function PaymentPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 py-16 lg:py-16 px-10 lg:px-10">
-      <div className="max-w-[90rem] mx-auto">
+      <div className="max-w-[90rem]  mx-auto">
         <div className="grid grid-cols-12 lg:grid-cols-12 gap-6">
           {/* Left Column */}
           <div className="col-span-4">

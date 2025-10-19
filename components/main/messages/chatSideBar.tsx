@@ -5,6 +5,7 @@ import { TiPencil } from "react-icons/ti";
 import { TbMessages } from "react-icons/tb";
 import { LiaUserFriendsSolid } from "react-icons/lia";
 import { GrGroup } from "react-icons/gr";
+import { useRouter } from "next/navigation";
 
 const chatList = [
   {
@@ -47,23 +48,22 @@ const chatList = [
 ];
 
 const ChatSidebar = () => {
+  const router = useRouter();
   return (
-    <div className="w-full col-span-3 md:w-[320px] bg-white border-r shadow-sm flex flex-col h-[86vh]">
-      <div className="p-4 border-b flex items-center gap-2">
-        <div className="flex items-center bg-white rounded-sm w-full px-3 py-2">
+    <div className="w-full md:!col-span-3 md:!w-[320px] bg-white border-r shadow-sm flex flex-col h-[86vh]">
+      <div className="md:!p-4 p-2 border-b flex items-center gap-2">
+        <div className="flex items-center bg-white rounded-sm w-full px-1 sm:!px-3 py-2">
           <FiSearch className="text-[#157bff]" size={18} />
           <input
             type="text"
             placeholder="Search for messages or users..."
-            className="bg-transparent outline-none w-full px-2 text-sm text-gray-700 placeholder-gray-400"
+            className="bg-transparent outline-none w-full px-2 text-xs sm:!text-sm text-gray-700 placeholder-gray-400"
           />
         </div>
-        <div className="rounded-sm p-2 bg-white ">
-          <TiPencil className="w-5 h-5 text-[#157bff]" />
-        </div>
+        <TiPencil className="w-5 h-5 text-[#157bff]" />
       </div>
 
-      <div className="flex items-center justify-between text-sm font-medium px-4 py-2">
+      <div className="flex items-center gap-0.5 justify-between text-xs overflow-x-scroll hide-scrollbar lg:text-sm font-medium px-2 md:!px-1 py-2">
         <span className=" flex items-center gap-1 text-white bg-[#157bff] rounded-tl-sm rounded-tr-sm p-2 cursor-pointer">
           <svg
             width="16"
@@ -77,7 +77,7 @@ const ChatSidebar = () => {
               fill="white"
             />
           </svg>{" "}
-          Messages
+          <span className="">Messages</span>
         </span>
         <span className="text-[#157BFF] flex items-center gap-1 cursor-pointer">
           <svg
@@ -91,7 +91,7 @@ const ChatSidebar = () => {
               <path d="M16.455 9.695q-.545-.436-1.042-.777C14.297 8.155 13.23 7.689 12 7.689s-2.297.466-3.413 1.229c-1.081.738-2.306 1.828-3.843 3.193l-.052.047l-2.356 2.094a1 1 0 1 0 1.328 1.495l2.357-2.094c1.6-1.423 2.731-2.426 3.694-3.084c.94-.642 1.613-.88 2.285-.88s1.345.238 2.285.88q.304.21.636.464c.446-.377.949-.82 1.534-1.338m3.804 3.308l-.068.061q-.753.672-1.442 1.273l1.587 1.41a1 1 0 0 0 1.328-1.495z" />
             </g>
           </svg>
-          Following
+          <span className="">Following</span>
         </span>
         <span className="text-[#157BFF] flex items-center gap-1 cursor-pointer">
           <svg
@@ -113,7 +113,7 @@ const ChatSidebar = () => {
               d="M98.08 431.87a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m0-80a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m0-80a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m0-80a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m0-80a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m80 240a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m0-80a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m0-80a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m0-80a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m80 320a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m0-80a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79m0-80a16 16 0 1 1 13.79-13.79a16 16 0 0 1-13.79 13.79"
             ></path>
           </svg>
-          Spaces
+          <span className="">Spaces</span>
         </span>
       </div>
 
@@ -121,13 +121,18 @@ const ChatSidebar = () => {
         <div className="overflow-y-scroll h-[64vh]">
           {chatList.map((chat, i) => (
             <div
+              onClick={() => {
+                if (window.innerWidth < 768) {
+                  router.push("/messages/read-message");
+                }
+              }}
               key={i}
-              className={`flex items-center bg-white rounded-sm my-2 justify-between px-4 py-3 cursor-pointer border-b border-gray-100 hover:bg-gray-50 ${
+              className={`flex md:!flex-row flex-col w-full md:!items-center bg-white rounded-sm my-2 justify-between md:!px-4 px-1 md:!py-3 py-1 cursor-pointer border-b border-gray-100 hover:bg-gray-50 ${
                 chat.active ? "bg-[#E8F0FE]" : ""
               }`}
             >
               <div className="flex items-center gap-3">
-                <div className="relative">
+                <div className="relative flex-none">
                   <Image
                     src={chat.img}
                     alt={chat.name}
@@ -140,7 +145,7 @@ const ChatSidebar = () => {
                   )}
                 </div>
                 <div className="flex flex-col">
-                  <p className="text-sm font-medium text-gray-800">
+                  <p className="sm:text-sm text-xs font-medium text-gray-800">
                     {chat.name}
                   </p>
                   <p className="text-xs text-gray-500 truncate w-[150px]">

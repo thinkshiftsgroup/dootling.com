@@ -96,7 +96,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             </>
           )}
         </div>
-        <div className="flex items-center gap-1.5 mt-2">
+        <div className="flex md:!flex-row flex-col whitespace-nowrap items-center gap-1.5 mt-2">
           <span
             onClick={onManageClick}
             className="flex gap-1 bg-[#F8F9FA] text-gray-800 hover:text-gray-950 hover:bg-[#d0d0d0] rounded-sm p-1 px-1 items-center cursor-pointer shadow-sm text-[10px]  transition-colors transistion-shadow"

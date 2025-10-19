@@ -398,9 +398,7 @@ const UserProfile = () => {
   ];
 
   if (!isInitialized || isLoading) {
-    return (
-      <LinkedInLoader/>
-    );
+    return <LinkedInLoader />;
   }
 
   return (
@@ -497,7 +495,7 @@ const UserProfile = () => {
                                 </div>
                               </div>
 
-                              <div className="lg:block hidden">
+                              <div className="md:!block hidden">
                                 <AddHeatmapModal />
                               </div>
                             </div>

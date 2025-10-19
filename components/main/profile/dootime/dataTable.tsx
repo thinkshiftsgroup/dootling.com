@@ -65,11 +65,13 @@ export default function DataTable() {
   const [showAPT, setShowAPT] = useState(false);
   return (
     <div className=" ">
-      <Filter
-        className="block sm:!hidden"
-        onClick={() => setShowAPT((prev) => !prev)}
-        size={20}
-      />
+      <div className="flex sm:!hidden justify-end">
+        <Filter
+          className="flex justify-end sm:!hidden w-6 h-6 my-2"
+          onClick={() => setShowAPT((prev) => !prev)}
+          size={20}
+        />
+      </div>
       <div className="!text-black my-2 !p-2 sm:!p-0 !whitespace-nowrap !border !bg-[#F9F9FB] !text-xs !font-medium !justify-around !border-[#D5D5D5] hidden sm:!flex sm:!flex-row !flex-col !items-center !rounded-md">
         <span className="flex gap-2 pl-1 w-1/3 cursor-pointer">
           <svg
@@ -140,7 +142,7 @@ export default function DataTable() {
       </div>
 
       {showAPT && (
-        <div className="!text-black !p-2 sm:!p-0 !whitespace-nowrap !border !bg-[#F9F9FB] !text-xs !font-medium !justify-around !border-[#D5D5D5] sm:!hidden !flex sm:!flex-row !flex-col !items-center !rounded-md">
+        <div className="!text-black my-2 !p-2 sm:!p-0 !whitespace-nowrap !border !bg-[#F9F9FB] !text-xs !font-medium !justify-around !border-[#D5D5D5] sm:!hidden !flex sm:!flex-row !flex-col !items-center !rounded-md">
           <span className="flex gap-2 pl-0 sm:!pl-1 w-full sm:!w-1/3 cursor-pointer">
             <svg
               width="16"

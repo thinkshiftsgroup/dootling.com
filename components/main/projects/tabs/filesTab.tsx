@@ -16,8 +16,8 @@ const FilesTab = () => {
   // };
 
   return (
-    <div className="flex-1 w-full  p-2">
-      <div className="overflow-y-scroll h-[60vh] grid grid-cols-4 gap-2">
+    <div className="flex-1 w-full overflow-y-scroll hide-scrollbar p-2">
+      <div className="overflow-y-scroll h-[60vh] grid grid-cols-1 sm:!grid-cols-2 md:!grid-cols-4 gap-2">
         {Array.from({ length: 16 }).map((_, i) => {
           const src = "/images/user/fileTest.png";
           return (
@@ -185,7 +185,7 @@ const FilesTab = () => {
           );
         })}
       </div>
-      <div className="flex items-center justify-between py-3 px-2">
+      <div className="flex sm:!flex-row flex-col gap-2 items-center justify-between py-3 px-2">
         <p className="text-xs text-gray-600">
           Showing <span className="font-medium">1</span> to{" "}
           <span className="font-medium">10</span> of{" "}

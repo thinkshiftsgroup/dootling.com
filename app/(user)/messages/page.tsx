@@ -9,18 +9,18 @@ const Messages = () => {
     <div>
       <Navbar fixed={true} />
 
-      <div className="pt-[5rem]  hide-scrollbar overflow-y-hidden">
+      <div className="lg:!pt-[5rem] pt-[6rem] px-2 md:!md-0 hide-scrollbar overflow-y-hidden">
         <div className="container mx-auto">
           <div className="lg:grid block grid-cols-10 gap-4">
             <div className="w-full col-span-7 ">
               <div className="w-full mx-auto">
-                <div className="grid grid-cols-8">
+                <div className="grid gap-2 md:!gap-0 grid-cols-1 md:!grid-cols-8">
                   <ChatSidebar />
                   <ChatPage />
                 </div>
               </div>
             </div>
-            <div className="w-full col-span-3 ">
+            <div className="w-full mt-2 lg:!mt-0 col-span-3 ">
               <div className="rounded-lg shadow bg-white mb-4">
                 <div className="flex justify-between px-2 py-5 border-b border-[#f1f1f1]">
                   <div className="header-title">

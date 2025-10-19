@@ -37,7 +37,7 @@ const SendModal = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30">
       <div
         ref={modalRef}
-        className="bg-white rounded-lg w-1/2 max-h-[70vh] p-4 flex flex-col"
+        className="bg-white rounded-lg md:!w-1/2 max-h-[70vh] p-4 flex flex-col"
       >
         <div className="flex justify-between items-center mb-4">
           <h2 className="font-bold text-black text-lg">Send John's Post</h2>

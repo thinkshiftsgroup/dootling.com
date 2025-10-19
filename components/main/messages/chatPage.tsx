@@ -59,9 +59,9 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="flex col-span-5 shadow-sm h-[86vh] bg-[#F8FAFC] text-gray-800">
+    <div className="md:!flex hidden col-span-5 shadow-sm h-[86vh] bg-[#F8FAFC] text-gray-800">
       <div className="flex-1 flex flex-col">
-        <div className="p-3.5 flex items-center justify-between border-b bg-white">
+        <div className="sm:!p-3.5 p-2 w-full flex items-center justify-between border-b bg-white">
           <div className="flex items-center gap-3">
             <Image
               src="/images/user/userImg.jpg"
@@ -91,7 +91,7 @@ export default function ChatPage() {
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-scroll p-6 space-y-4">
+        <div className="flex-1 overflow-y-scroll sm:!p-6 p-3 space-y-4">
           {messages.map((msg, idx) => (
             <div
               key={idx}
@@ -110,13 +110,13 @@ export default function ChatPage() {
               )}
 
               <div
-                className={`max-w-[70%] p-3 rounded-2xl ${
+                className={`sm:!max-w-[70%] max-w-full p-3 rounded-2xl ${
                   msg.isMe
                     ? "bg-[#157BFF] text-white rounded-tr-none"
                     : "bg-gray-100 text-gray-800 rounded-tl-none"
                 }`}
               >
-                <p className="text-sm leading-relaxed">{msg.text}</p>
+                <p className="sm:!text-sm text-xs leading-relaxed">{msg.text}</p>
                 <p
                   className={`text-[10px] mt-1 text-right ${
                     msg.isMe ? "text-blue-100" : "text-gray-400"
@@ -139,16 +139,16 @@ export default function ChatPage() {
           ))}
         </div>
 
-        <div className="p-4 border-t bg-white flex items-center gap-2">
+        <div className="sm:!p-4 p-2 border-t bg-white flex items-center gap-1 sm:!gap-2">
           <ImAttachment className="w-4 h-4" />
           <input
             type="text"
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             placeholder="Type your message..."
-            className="flex-1 px-4 py-2 text-sm "
+            className="flex-1 px-2 sm:!px-4 py-2 text-xs sm:!text-sm "
           />
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 sm:!gap-2">
             <button
               onClick={handleSend}
               className="bg-[#157BFF] text-white rounded-sm p-2 hover:bg-blue-600 transition"

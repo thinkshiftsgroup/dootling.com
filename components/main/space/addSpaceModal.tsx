@@ -71,7 +71,7 @@ const AddSpaceModal: React.FC<AddSpaceModalProps> = ({ open, onClose }) => {
             <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
               <div>
                 <label
-                  className="font-semibold text-gray-600 text-lg "
+                  className="font-semibold text-gray-600 sm:!text-lg  text-base"
                   htmlFor="Amount"
                 >
                   Space Title *
@@ -86,7 +86,7 @@ const AddSpaceModal: React.FC<AddSpaceModalProps> = ({ open, onClose }) => {
 
               <div>
                 <label
-                  className="font-semibold text-gray-600 text-lg "
+                  className="font-semibold text-gray-600 sm:!text-lg  text-base"
                   htmlFor="Amount"
                 >
                   Space Summary Description *
@@ -102,7 +102,7 @@ const AddSpaceModal: React.FC<AddSpaceModalProps> = ({ open, onClose }) => {
 
               <div className="mb-10">
                 <label
-                  className="font-semibold text-gray-600 text-lg"
+                  className="font-semibold text-gray-600 sm:!text-lg text-base"
                   htmlFor="collaborators"
                 >
                   Add Collaborators *
@@ -116,15 +116,15 @@ const AddSpaceModal: React.FC<AddSpaceModalProps> = ({ open, onClose }) => {
                       value={inputValue}
                       onChange={(e) => setInputValue(e.target.value)}
                       placeholder="John Ball (Director in Design - United Kingdom)"
-                      className="flex-1 px-3 py-2 text-gray-700 focus:outline-none"
+                      className="flex-1 px-3 sm:!text-base text-sm py-2 text-gray-700 focus:outline-none"
                     />
                     <button
                       type="button"
                       onClick={handleAdd}
-                      className="px-3 w-1/4 flex items-center gap-2 justify-center text-white bg-[#157BFF] font-medium hover:bg-blue-600 transition-colors rounded-sm"
+                      className="px-3 w-1/4 flex items-center sm:!gap-2 gap-0.5 justify-center text-white bg-[#157BFF] font-medium hover:bg-blue-600 transition-colors rounded-sm"
                     >
                       <svg
-                        className="w-4 h-4"
+                        className="w-4 h-4 flex-none"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -147,7 +147,7 @@ const AddSpaceModal: React.FC<AddSpaceModalProps> = ({ open, onClose }) => {
                       key={index}
                       className="flex items-center gap-2 text-gray-800"
                     >
-                      <p className="text-base">
+                      <p className="sm:!text-base text-sm">
                         <span className="font-semibold">
                           {name.split(" (")[0] || name}
                         </span>{" "}
@@ -185,7 +185,7 @@ const AddSpaceModal: React.FC<AddSpaceModalProps> = ({ open, onClose }) => {
                     checked={selected === "invite"}
                     className="h-4 w-4 accent-blue-500 cursor-pointer"
                   />
-                  <span className="text-sm font-medium text-gray-600">
+                  <span className="sm:!text-sm text-xs font-medium text-gray-600">
                     Make Space Private{" "}
                     <span className="font-normal">(Invite Only)</span>
                   </span>
@@ -201,14 +201,14 @@ const AddSpaceModal: React.FC<AddSpaceModalProps> = ({ open, onClose }) => {
                     checked={selected === "anyone"}
                     className="h-4 w-4 accent-blue-500 cursor-pointer"
                   />
-                  <span className="text-sm font-medium text-gray-600">
+                  <span className="sm:!text-sm text-xs font-medium text-gray-600">
                     Make Space Private{" "}
                     <span className="font-normal">(Anyone Can Join)</span>
                   </span>
                 </label>
               </div>
 
-              <button className="text-white w-5/11 flex items-center justify-center gap-2 rounded-sm font-semibold text-lg py-4 cursor-pointer bg-[#1571E8]">
+              <button className="text-white md:!w-5/11 w-full flex items-center justify-center gap-2 rounded-sm font-semibold sm:!text-lg text-base py-4 cursor-pointer bg-[#1571E8]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width={30}

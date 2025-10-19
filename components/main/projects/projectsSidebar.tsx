@@ -5,6 +5,7 @@ import { FaChevronDown } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
 import { TiPencil } from "react-icons/ti";
 import { TbMessages } from "react-icons/tb";
+import { useRouter } from "next/navigation";
 
 const ProjectChatSidebar = () => {
   const chatList = [
@@ -47,32 +48,38 @@ const ProjectChatSidebar = () => {
     },
   ];
 
+  const router = useRouter();
+
   return (
-    <div className="w-full col-span-2 md:w-[320px] bg-white border-r shadow-sm flex flex-col h-[80vh]">
-      <div className="p-4 border-b flex items-center gap-2">
-        <div className="flex items-center bg-white rounded-sm w-full px-3 py-2">
+    <div className="w-full md:!col-span-2 bg-white border-r shadow-sm flex flex-col h-[86vh]">
+      <div className="md:!p-4 p-2 border-b flex items-center gap-2">
+        <div className="flex items-center bg-white rounded-sm w-full px-1 sm:!px-3 py-2">
           <FiSearch className="text-[#157bff]" size={18} />
           <input
             type="text"
             placeholder="Search for projects"
-            className="bg-transparent outline-none w-full px-2 text-sm text-gray-700 placeholder-gray-400"
+            className="bg-transparent outline-none w-full px-2 text-xs sm:!text-sm text-gray-700 placeholder-gray-400"
           />
         </div>
-        <div className="rounded-sm p-2 bg-white ">
-          <TiPencil className="w-5 h-5 text-[#157bff]" />
-        </div>
+        <TiPencil className="w-5 h-5 text-[#157bff]" />
       </div>
+
       <div className="mx-1 flex-1">
         <div className="overflow-y-scroll h-[68vh]">
           {chatList.map((chat, i) => (
             <div
+              onClick={() => {
+                if (window.innerWidth < 768) {
+                  router.push("/projects/read-projects");
+                }
+              }}
               key={i}
-              className={`flex relative items-center bg-white rounded-sm my-2 justify-between px-1 py-3 cursor-pointer border-b border-gray-100 hover:bg-gray-50 ${
+              className={`flex relative items-center bg-white rounded-sm my-2 justify-between px-1 md:!py-3 py-1 cursor-pointer border-b border-gray-100 hover:bg-gray-50 ${
                 chat.active ? "bg-[#E8F0FE]" : ""
               }`}
             >
-              <div className="flex items-center gap-3">
-                <div className="relative">
+              <div className="flex items-center gap-1 sm:!gap-3">
+                <div className="relative flex-none">
                   <Image
                     src={chat.img}
                     alt={chat.name}
@@ -85,7 +92,7 @@ const ProjectChatSidebar = () => {
                   )}
                 </div>
                 <div className="flex flex-col">
-                  <p className="text-sm font-medium text-gray-800">
+                  <p className="sm:text-sm text-xs font-medium text-gray-800">
                     {chat.name}
                   </p>
                   {chat.private && (

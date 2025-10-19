@@ -71,7 +71,7 @@ const ManageProject: React.FC<ManageProjectProps> = ({ open, onClose }) => {
             <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
               <div>
                 <label
-                  className="font-semibold text-gray-600 text-lg "
+                  className="font-semibold text-gray-600 sm:!text-lg  text-base"
                   htmlFor="Amount"
                 >
                   Project Title *
@@ -86,7 +86,7 @@ const ManageProject: React.FC<ManageProjectProps> = ({ open, onClose }) => {
 
               <div>
                 <label
-                  className="font-semibold text-gray-600 text-lg "
+                  className="font-semibold text-gray-600 sm:!text-lg  text-base"
                   htmlFor="Amount"
                 >
                   Project Summary Description *
@@ -105,7 +105,7 @@ const ManageProject: React.FC<ManageProjectProps> = ({ open, onClose }) => {
 
               {/* <div className="mb-14">
                                 <label
-                                    className="font-semibold text-gray-600 text-lg "
+                                    className="font-semibold text-gray-600 sm:!text-lg  text-base"
                                     htmlFor="Amount"
                                 >
                                     Add Collaborators *
@@ -141,7 +141,7 @@ const ManageProject: React.FC<ManageProjectProps> = ({ open, onClose }) => {
 
               <div className="mb-10">
                 <label
-                  className="font-semibold text-gray-600 text-lg"
+                  className="font-semibold text-gray-600 sm:!text-lg text-base"
                   htmlFor="collaborators"
                 >
                   Add Collaborators *
