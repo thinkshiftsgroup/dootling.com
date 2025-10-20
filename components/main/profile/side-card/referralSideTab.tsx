@@ -1,5 +1,6 @@
 "use client";
 import { Check } from "lucide-react";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const ReferralSideTab = () => {
@@ -13,13 +14,15 @@ const ReferralSideTab = () => {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const router = useRouter()
+
   return (
     <div className="rounded-lg shadow bg-white max-w-sm w-full">
       <div className="flex justify-between items-center p-4 py-3 border-b border-[#f1f1f1]">
         <div className="header-title">
           <h4 className="text-lg font-bold">Referrals</h4>
         </div>
-        <span className="text-xs text-gray-500 cursor-pointer hover:underline">
+        <span onClick={()=>router.push("/referrals")} className="text-xs text-gray-500 cursor-pointer hover:underline">
           View Commissions
         </span>
       </div>
@@ -56,7 +59,7 @@ const ReferralSideTab = () => {
           </button>
         </div>
 
-        <p className="text-xs mt-0.5 bg-[#FFBA00] text-center rounded-sm text-black px-1 py-1 ">
+        <p className="text-xs mt-2 bg-[#FFBA00] text-center rounded-sm text-black px-1 py-1 ">
           $1 per person who joins through your link
         </p>
       </div>

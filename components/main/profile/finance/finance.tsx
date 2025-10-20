@@ -32,7 +32,7 @@ const ProfileFinance = () => {
 
   return (
     <div className="rounded-sm bg-white px-4 py-2">
-      <div className="flex xl:flex-row flex-col items-start justify-between gap-2 my-5">
+      <div className="flex items-center justify-between gap-2 my-5">
         <div className="flex w-full h-[160px] overflow-y-scroll hide-scrollbar flex-col justify-between gap-3 p-2 bg-white shadow-md min-w-[250px] rounded">
           <h1 className="font-bold text-base border-b-2 border-gray-100 pb-1 text-black leading-tight w-fit">
             Available Wallet Balance
@@ -90,7 +90,7 @@ const ProfileFinance = () => {
 
         <div className="flex w-full h-[160px] overflow-y-scroll hide-scrollbar flex-col justify-between gap-3 p-2 bg-white shadow-md min-w-[250px] rounded">
           <h1 className="font-bold text-base border-b-2 border-gray-100 pb-1 text-black leading-tight w-fit">
-            In Escrow Wallet
+            Next payout
           </h1>
           <div className="flex items-center">
             <p
@@ -101,8 +101,8 @@ const ProfileFinance = () => {
             </p>
           </div>
           <div className="mt-2">
-            <div className="flex flex-row lg:flex-col gap-1">
-              <button
+            {/* <div className="flex flex-row lg:flex-col gap-1"> */}{" "}
+            {/* <button
                 onClick={() => setActiveTab("fund")}
                 className="bg-black w-full text-white text-[9px] py-1 rounded flex items-center justify-center gap-1"
               >
@@ -119,8 +119,8 @@ const ProfileFinance = () => {
                     fill="white"
                   />
                 </svg>
-              </button>
-              <button
+              </button> */}
+            {/* <button
                 onClick={() => setShowModal(true)}
                 className=" bg-[#979797] w-full text-white text-[9px] py-1 rounded flex items-center justify-center gap-1"
               >
@@ -171,8 +171,16 @@ const ProfileFinance = () => {
                     stroke-linejoin="round"
                   />
                 </svg>
-              </button>
-            </div>
+              </button> */}
+            {/* </div> */}
+            <p
+              // onClick={() => setActiveTab("escrow")}
+              className={`text-xs pt-1 cursor-pointer transition-colors duration-200 ${
+                activeTab === "escrow" ? "text-black" : "text-gray-300"
+              }`}
+            >
+              Total Payout
+            </p>
           </div>
         </div>
 
