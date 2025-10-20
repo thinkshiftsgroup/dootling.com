@@ -78,7 +78,7 @@ const ContributorsTab = () => {
               <div className="flex flex-col">
                 <div>
                   $300
-                  <span className="text-[10px] flex-none text-center text-black bg-gray-200 rounded-sm p-1">
+                  <span className="text-[10px] ml-1.5 flex-none text-center text-black bg-gray-200 rounded-sm p-1">
                     50%
                   </span>
                 </div>
@@ -164,7 +164,7 @@ const ContributorsTab = () => {
               <div className="flex flex-col">
                 <div>
                   $300
-                  <span className="text-[10px] flex-none text-center text-black bg-gray-200 rounded-sm p-1">
+                  <span className="text-[10px] ml-1.5 flex-none text-center text-black bg-gray-200 rounded-sm p-1">
                     50%
                   </span>
                 </div>

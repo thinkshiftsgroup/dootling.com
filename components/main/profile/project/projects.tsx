@@ -705,11 +705,17 @@ const ProjectDashboard: React.FC<ProjectDashboardProps> = ({
         {/* Header */}
         <div className="bg-white rounded-2xl shadow-sm p-3 sm:!p-6">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8">
-            <div className="flex flex-wrap items-center gap-2">
-              <TabButton
-                active={activeTab === "my-projects"}
-                onClick={() => setActiveTab("my-projects")}
-                icon={
+
+            <div className="mb-2">
+              <ul className="flex w-full items-center gap-4 *:cursor-pointer font-medium text-gray-500">
+                <li
+                  onClick={() => setActiveTab("my-projects")}
+                  className={` flex items-center gap-1 ${
+                    activeTab === "my-projects"
+                      ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]"
+                      : ""
+                  }`}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width={20}
@@ -728,15 +734,16 @@ const ProjectDashboard: React.FC<ProjectDashboardProps> = ({
                       <path d="M14 14h6v5a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1zM4 4h6v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"></path>
                     </g>
                   </svg>
-                }
-              >
-                Projects
-              </TabButton>
-
-              <TabButton
-                active={activeTab === "escrow-projects"}
-                onClick={() => setActiveTab("escrow-projects")}
-                icon={
+                  Projects
+                </li>
+                <li
+                  onClick={() => setActiveTab("escrow-projects")}
+                  className={` flex items-center gap-1 ${
+                    activeTab === "escrow-projects"
+                      ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]"
+                      : ""
+                  }`}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width={20}
@@ -752,16 +759,17 @@ const ProjectDashboard: React.FC<ProjectDashboardProps> = ({
                       d="m13.5 13.5l-1.778-1.778M3.903 5.816q-.35.027-.708.028c-.474 0-.939-.043-1.392-.094A1.326 1.326 0 0 1 .638 4.582C.59 4.132.55 3.67.55 3.198c0-.47.041-.933.09-1.383c.064-.61.555-1.1 1.164-1.168c.453-.05.918-.094 1.392-.094s.939.043 1.391.094c.61.068 1.1.558 1.165 1.168c.049.45.09.912.09 1.383q-.001.336-.025.666M3.195 8.155c-.474 0-.939.044-1.392.094c-.61.068-1.1.559-1.165 1.168c-.048.45-.089.913-.089 1.384s.041.933.09 1.384c.064.61.555 1.1 1.164 1.168c.453.05.918.094 1.392.094s.939-.044 1.391-.094M7.931 3.198c0-.471.04-.933.089-1.383c.065-.61.556-1.1 1.165-1.168c.453-.05.918-.094 1.392-.094s.938.043 1.391.094c.61.068 1.1.558 1.165 1.168c.048.45.09.912.09 1.383c0 .472-.042.934-.09 1.384a1.3 1.3 0 0 1-.11.4m-4.199 7.711c2.479 0 3.873-1.394 3.873-3.873s-1.394-3.873-3.873-3.873S4.951 6.34 4.951 8.82s1.394 3.873 3.873 3.873"
                     ></path>
                   </svg>
-                }
-              >
-                Escrow Projects
-              </TabButton>
-
-              <TabButton
-                active={activeTab === "invited"}
-                onClick={() => setActiveTab("invited")}
-                icon={
-                  <svg
+                  Escrow Projects
+                </li>
+                <li
+                  onClick={() => setActiveTab("invited")}
+                  className={` flex items-center gap-1 ${
+                    activeTab === "Audit Log"
+                      ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]"
+                      : ""
+                  }`}
+                >
+                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width={20}
                     height={20}
@@ -776,16 +784,17 @@ const ProjectDashboard: React.FC<ProjectDashboardProps> = ({
                       d="M4 4h6v6H4zm10 0h6v6h-6zM4 14h6v6H4zm10 3h6m-3-3v6"
                     ></path>
                   </svg>
-                }
-              >
-                Invited Projects
-              </TabButton>
-
-              <TabButton
-                active={activeTab === "peer-confirmation"}
-                onClick={() => setActiveTab("peer-confirmation")}
-                icon={
-                  <svg
+                  Invited Projects
+                </li>
+                <li
+                  onClick={() => setActiveTab("peer-confirmation")}
+                  className={` flex items-center gap-1 ${
+                    activeTab === "peer-confirmation"
+                      ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]"
+                      : ""
+                  }`}
+                >
+                    <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width={20}
                     height={20}
@@ -800,10 +809,9 @@ const ProjectDashboard: React.FC<ProjectDashboardProps> = ({
                       d="m13.5 13.5l-1.778-1.778M3.903 5.816q-.35.027-.708.028c-.474 0-.939-.043-1.392-.094A1.326 1.326 0 0 1 .638 4.582C.59 4.132.55 3.67.55 3.198c0-.47.041-.933.09-1.383c.064-.61.555-1.1 1.164-1.168c.453-.05.918-.094 1.392-.094s.939.043 1.391.094c.61.068 1.1.558 1.165 1.168c.049.45.09.912.09 1.383q-.001.336-.025.666M3.195 8.155c-.474 0-.939.044-1.392.094c-.61.068-1.1.559-1.165 1.168c-.048.45-.089.913-.089 1.384s.041.933.09 1.384c.064.61.555 1.1 1.164 1.168c.453.05.918.094 1.392.094s.939-.044 1.391-.094M7.931 3.198c0-.471.04-.933.089-1.383c.065-.61.556-1.1 1.165-1.168c.453-.05.918-.094 1.392-.094s.938.043 1.391.094c.61.068 1.1.558 1.165 1.168c.048.45.09.912.09 1.383c0 .472-.042.934-.09 1.384a1.3 1.3 0 0 1-.11.4m-4.199 7.711c2.479 0 3.873-1.394 3.873-3.873s-1.394-3.873-3.873-3.873S4.951 6.34 4.951 8.82s1.394 3.873 3.873 3.873"
                     ></path>
                   </svg>
-                }
-              >
-                Peer Confirmation
-              </TabButton>
+                  Peer Confirmation
+                </li>
+              </ul>
             </div>
 
             {renderCreateProject()}
@@ -822,7 +830,7 @@ const ProjectDashboard: React.FC<ProjectDashboardProps> = ({
         onClose={() => setManageProject(false)}
       />
 
-      <AddProjectsModal open={showModal} onClose={()=>setShowModal(false)} />
+      <AddProjectsModal open={showModal} onClose={() => setShowModal(false)} />
     </div>
   );
 };
