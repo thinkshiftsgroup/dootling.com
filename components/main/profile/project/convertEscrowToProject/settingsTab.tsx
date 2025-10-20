@@ -47,7 +47,7 @@ const SettingsTab = () => {
 
         <div className="flex sm:!flex-row flex-col my-2 items-center gap-2 justify-end">
           <button className="text-white flex items-center justify-center gap-2 rounded-sm font-semibold text-sm sm:!text-base p-2 cursor-pointer bg-[#1571E8] hover:bg-blue-600 text-[0.9rem]">
-            Executed Contract
+            Execute Contract
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
