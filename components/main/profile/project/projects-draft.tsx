@@ -333,7 +333,7 @@ const ProjectDashboard: React.FC<ProjectDashboardProps> = ({
           </div>
         </div>
       </div>
-      {CPEcrow && <ConvertProjectToEscrow setOpenModal={setCPEcrow} />}
+      {CPEcrow && <ConvertProjectToEscrow setCPEcrow={setCPEcrow} />}
       <ManageProject
         open={manageProject}
         onClose={() => setManageProject(false)}
