@@ -3,7 +3,8 @@ import React from "react";
 const transactions = [
   {
     project: "Web3 Dev System",
-    collaborator: "Sarah Johnson",
+    Contributor: "Sarah Johnson",
+    Transactions: "",
     note: "Smart contract deployment",
     date: "10.08.2024 11:25 AM",
     transactionId: "TXN-2398ABCD12",
@@ -11,7 +12,8 @@ const transactions = [
   },
   {
     project: "AI Research Portal",
-    collaborator: "Michael Chen",
+    Contributor: "Michael Chen",
+    Transactions: "",
     note: "API integration testing",
     date: "15.08.2024 09:10 AM",
     transactionId: "TXN-5834QWER45",
@@ -19,7 +21,8 @@ const transactions = [
   },
   {
     project: "Finance Tracker App",
-    collaborator: "Aisha Bello",
+    Contributor: "Aisha Bello",
+    Transactions: "",
     note: "Design updates",
     date: "22.08.2024 01:40 PM",
     transactionId: "TXN-7812LKJH98",
@@ -29,7 +32,8 @@ const transactions = [
 
 const columns = [
   { label: "Project", key: "project" },
-  { label: "Collaborator", key: "collaborator" },
+  { label: "Contributor", key: "Contributor" },
+  { label: "Transactions", key: "Transactions" },
   { label: "Note", key: "note" },
   { label: "Date", key: "date" },
   { label: "Transaction ID", key: "transactionId" },
