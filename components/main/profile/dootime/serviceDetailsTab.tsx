@@ -6,7 +6,7 @@ const ServiceDetailsTab = () => {
     <div className="lg:!h-[72vh] h-[67vh] overflow-y-scroll hide-scrollbar">
       <div>
         <label
-          className="font-semibold text-gray-600 sm:!text-lg  text-base"
+          className="font-semibold text-gray-600 sm:!text-base  text-sm"
           htmlFor="Amount"
         >
           Booking Page Title*
@@ -20,7 +20,7 @@ const ServiceDetailsTab = () => {
       </div>
       <div>
         <label
-          className="font-semibold text-gray-600 sm:!text-lg  text-base"
+          className="font-semibold text-gray-600 sm:!text-base  text-sm"
           htmlFor="Amount"
         >
           Booking Page Username
@@ -54,7 +54,7 @@ const ServiceDetailsTab = () => {
       </div>
       <div>
         <label
-          className="font-semibold text-gray-600 sm:!text-lg  text-base"
+          className="font-semibold text-gray-600 sm:!text-base  text-sm"
           htmlFor="Amount"
         >
           Service and Payment Terms*

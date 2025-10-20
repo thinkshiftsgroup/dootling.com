@@ -73,7 +73,7 @@ const ManageEscrowFunds: React.FC<FundWalletSideModalProps> = ({
             <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
               <div>
                 <label
-                  className="font-semibold text-gray-600 sm:!text-lg  text-base"
+                  className="font-semibold text-gray-600 sm:!text-base  text-sm"
                   htmlFor="Amount"
                 >
                   Move Money to Available Wallet Balance *
@@ -103,7 +103,7 @@ const ManageEscrowFunds: React.FC<FundWalletSideModalProps> = ({
 
               <div>
                 <label
-                  className="font-semibold text-gray-600 sm:!text-lg  text-base"
+                  className="font-semibold text-gray-600 sm:!text-base  text-sm"
                   htmlFor="Purpose"
                 >
                   Purpose *

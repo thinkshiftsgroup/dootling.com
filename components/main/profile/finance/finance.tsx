@@ -32,7 +32,7 @@ const ProfileFinance = () => {
 
   return (
     <div className="rounded-sm bg-white px-4 py-2">
-      <div className="flex items-center justify-between gap-2 my-5">
+      <div className="flex lg:flex-row flex-col items-center justify-between gap-2 my-5">
         <div className="flex w-full h-[160px] overflow-y-scroll hide-scrollbar flex-col justify-between gap-3 p-2 bg-white shadow-md min-w-[250px] rounded">
           <h1 className="font-bold text-base border-b-2 border-gray-100 pb-1 text-black leading-tight w-fit">
             Available Wallet Balance

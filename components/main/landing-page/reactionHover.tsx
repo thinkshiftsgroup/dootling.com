@@ -27,7 +27,7 @@ export default function ReactionPopup({
     <AnimatePresence>
       {show && (
         <motion.div
-          className="absolute z-[999] flex items-center justify-between gap-2 -top-14 bg-white rounded-full p-1.5 shadow-md"
+          className="absolute left-4 z-[999] flex items-center justify-between gap-2 -top-14 bg-white rounded-full p-1.5 shadow-md"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}

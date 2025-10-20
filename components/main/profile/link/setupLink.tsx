@@ -79,7 +79,7 @@ const SetupLinkSideModal: React.FC<SetupLinkSideModalProps> = ({
             <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
               <div>
                 <label
-                  className="font-semibold text-gray-600 sm:!text-lg text-base"
+                  className="font-semibold text-gray-600 sm:!text-base text-sm"
                   htmlFor="Amount"
                 >
                   Page Display Name *
@@ -94,7 +94,7 @@ const SetupLinkSideModal: React.FC<SetupLinkSideModalProps> = ({
 
               <div>
                 <label
-                  className="font-semibold text-gray-600 sm:!text-lg  text-base"
+                  className="font-semibold text-gray-600 sm:!text-base  text-sm"
                   htmlFor="Amount"
                 >
                   Page Username *
@@ -159,7 +159,7 @@ const SetupLinkSideModal: React.FC<SetupLinkSideModalProps> = ({
 
               <div>
                 <label
-                  className="font-semibold text-gray-600 sm:!text-lg  text-base"
+                  className="font-semibold text-gray-600 sm:!text-base  text-sm"
                   htmlFor="Amount"
                 >
                   Page Purpose *
@@ -174,7 +174,7 @@ const SetupLinkSideModal: React.FC<SetupLinkSideModalProps> = ({
 
               <div>
                 <label
-                  className="font-semibold text-gray-600 sm:!text-lg text-base"
+                  className="font-semibold text-gray-600 sm:!text-base text-sm"
                   htmlFor="Amount"
                 >
                   Summary Of Your Service/Products *
