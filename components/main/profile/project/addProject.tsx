@@ -103,7 +103,7 @@ const AddProjectsModal: React.FC<AddProjectsModalProps> = ({
                   className="font-semibold text-gray-600 sm:!text-lg text-base"
                   htmlFor="collaborators"
                 >
-                  Add Collaborators *
+                  Add Contributors *
                 </label>
 
                 <div className="flex my-2">
@@ -207,7 +207,7 @@ const AddProjectsModal: React.FC<AddProjectsModalProps> = ({
                 </label>
               </div>
 
-              <button className="text-white w-5/11 flex items-center justify-center gap-2 rounded-sm font-semibold text-lg py-4 cursor-pointer bg-[#1571E8]">
+              <button className="text-white w-5/11 flex items-center justify-center gap-2 rounded-sm font-semibold text-base py-2 cursor-pointer bg-[#1571E8]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width={30}

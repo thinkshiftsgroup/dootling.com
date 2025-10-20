@@ -2,10 +2,14 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { FaAngleLeft } from "react-icons/fa6";
 import { FaAngleRight } from "react-icons/fa6";
-import AddTaskModal from "./addTaskModal";
-import ManageTasks from "./manageTasks";
+import AddTaskModal from "./tabs/addTaskModal";
+import ManageTasks from "./tabs/manageTasks";
+import ContributionHeatmap from "../landing-page/heatMap";
+import MileStoneHeatMap from "./mileStoneHeatMap";
+import AddMileStone from "./addMileModal";
+import EditMileStone from "./editMilestone";
 
-const ProjectTasks = () => {
+const ProjectMilestone = () => {
   const [addTaskModal, setAddTaskModal] = useState(false);
   const [manageTasksModal, setManageTasksMmodal] = useState(false);
   return (
@@ -29,7 +33,9 @@ const ProjectTasks = () => {
                 fill="#157BFF"
               />
             </svg>
-            <p className="text-sm whitespace-nowrap font-semibold">Add Tasks</p>
+            <p className="text-sm whitespace-nowrap font-semibold">
+              Add Milestone
+            </p>
           </button>
           <div className="relative md:!w-1/2 w-full ">
             <svg
@@ -53,6 +59,7 @@ const ProjectTasks = () => {
             />
           </div>
         </div>
+       
         <div className="flex flex-wrap w-full items-center gap-2">
           <div className="flex -space-x-2 items-center">
             <Image
@@ -83,18 +90,75 @@ const ProjectTasks = () => {
             Aliana Molex <span className="text-gray-500">And 208 Others</span>
           </p>
         </div>
-      </div>
+      </div> <div className="mt-3 flex items-center justify-between gap-2">
+        <div className="w-[500px]">
+          <MileStoneHeatMap pageType={"profile"} />
+
+        </div>
+          <div className="mr-10 flex flex-col gap-1 w-full max-w-2xl">
+            {[
+              {
+                name: "Amelia Shaw",
+                color: "#0b50ab",
+                percent: 50,
+                amount: "Contribution",
+              },
+              {
+                name: "Ronald Nunez",
+                color: "gray",
+                percent: 30,
+                amount: "Contribution",
+              },
+              {
+                name: "Carolyn Ortiz",
+                color: "#9ca3af",
+                percent: 20,
+                amount: "Contribution",
+              },
+            ].map((person, i) => (
+              <div
+                key={i}
+                className="flex !flex-col sm:!flex-row items-center sm:items-center gap-3 sm:gap-4 w-full"
+              >
+                <div className="w-full mr-5 sm:!w-1/4 text-center sm:!text-left">
+                  <p className="font-semibold whitespace-nowrap !text-xs sm:!text-sm text-black">
+                    {person.name}
+                  </p>
+                </div>
+
+                <div className="w-full sm:!flex-1 h-2.5 bg-gray-100 rounded relative overflow-hidden !mt-1 sm:!mt-0">
+                  <div
+                    className="absolute top-0 left-0 h-full rounded transition-all duration-300"
+                    style={{
+                      width: `${person.percent}%`,
+                      backgroundColor: person.color,
+                    }}
+                  ></div>
+                </div>
+
+                <div className="flex  items-center justify-between sm:!justify-end gap-1 w-full sm:!w-28 mt-1 sm:!mt-0">
+                  <p className=" !text-xs sm:!text-sm text-black">
+                    {person.percent}%
+                  </p>
+                  <p className=" !text-xs sm:!text-sm text-[#157BFF]">
+                    {person.amount}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       <div className="overflow-x-auto">
         <table className="min-w-full border-collapse">
           <thead className="bg-[#E7F1FF]/30 font-medium text-xs sm:!text-sm text-left">
             <tr>
               <th className="py-3 px-2">Assigned</th>
               <th className="py-3 px-2">Title</th>
-              <th className="py-3 px-2">Priority</th>
-              <th className="py-3 px-2">Due Date</th>
+              <th className="py-3 px-2">Release</th>
+              <th className="py-3 px-2">Release Date</th>
               <th className="py-3 px-2">Status</th>
-              <th className="py-3 px-2">Description</th>
-              <th className="py-3 px-2">Payment</th>
+              <th className="py-3 px-2">Rule</th>
+              {/* <th className="py-3 px-2">Payment</th> */}
               <th className="py-3 px-2">Manage</th>
             </tr>
           </thead>
@@ -130,9 +194,7 @@ const ProjectTasks = () => {
 
               <td className="py-3">
                 <div className="flex flex-col px-1">
-                  <p className="text-sm font-medium">
-                    Project Point Design Print
-                  </p>
+                  <p className="text-sm font-medium">Frontend Development</p>
                   <p className="text-[#B0B0B0] text-[10px] sm:!text-xs">
                     Created 3rd November 2025
                   </p>
@@ -141,14 +203,12 @@ const ProjectTasks = () => {
 
               <td className="py-3 px-2 text-[10px] sm:!text-xs text-center">
                 <span className="bg-red-500 text-white px-3 py-1 rounded-sm">
-                  Highest
+                  40%
                 </span>
               </td>
 
               <td className="py-3 text-sm px-2 text-center">
-                <span className="bg-[#F8FBFF] font-medium text-black px-3 py-1 rounded-sm">
-                  23rd November 2025
-                </span>
+                23rd November 2025
               </td>
 
               <td className="py-3 px-2 text-[10px] sm:!text-xs font-medium text-center">
@@ -164,7 +224,7 @@ const ProjectTasks = () => {
                 </span>
               </td>
 
-              <td className="py-3 px-2  text-[10px] sm:!text-xs text-left">
+              {/* <td className="py-3 px-2  text-[10px] sm:!text-xs text-left">
                 <div className="flex flex-col">
                   <div className="font-semibold">
                     NM
@@ -172,9 +232,9 @@ const ProjectTasks = () => {
                       50%
                     </span>
                   </div>
-                  {/* <p>23/11/2025-18:00</p> */}
+                  
                 </div>
-              </td>
+              </td> */}
 
               <td className="py-3 px-2">
                 <div className="flex items-center justify-center gap-2">
@@ -195,21 +255,6 @@ const ProjectTasks = () => {
                       />
                     </svg>
                   </span>
-
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 352 352"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M175.739 29.2891C171.855 29.2891 168.13 30.832 165.383 33.5785C162.637 36.325 161.094 40.05 161.094 43.9341V73.2241H73.2236C65.4554 73.2241 58.0054 76.31 52.5124 81.803C47.0195 87.2959 43.9336 94.7459 43.9336 102.514V292.899C43.9336 300.668 47.0195 308.118 52.5124 313.61C58.0054 319.103 65.4554 322.189 73.2236 322.189H278.254C286.022 322.189 293.472 319.103 298.965 313.61C304.458 308.118 307.544 300.668 307.544 292.899V102.514C307.544 94.7459 304.458 87.2959 298.965 81.803C293.472 76.31 286.022 73.2241 278.254 73.2241H190.384V43.9341C190.384 40.05 188.841 36.325 186.094 33.5785C183.348 30.832 179.623 29.2891 175.739 29.2891ZM190.384 73.2241V202.51L217.155 175.739C219.901 172.991 223.626 171.447 227.511 171.445C231.396 171.444 235.122 172.986 237.87 175.732C240.618 178.478 242.163 182.203 242.164 186.088C242.165 189.973 240.624 193.699 237.877 196.447L188.67 245.64C185.238 249.07 180.584 250.996 175.731 250.996C170.879 250.996 166.225 249.07 162.793 245.64L113.6 196.447C112.24 195.087 111.162 193.471 110.426 191.694C109.691 189.917 109.313 188.012 109.313 186.088C109.314 184.164 109.694 182.26 110.43 180.483C111.167 178.706 112.247 177.092 113.607 175.732C114.968 174.372 116.583 173.294 118.361 172.558C120.138 171.823 122.043 171.445 123.966 171.445C125.89 171.446 127.795 171.825 129.572 172.562C131.349 173.299 132.963 174.379 134.323 175.739L161.094 202.51V73.2241H190.384Z"
-                      fill="#157BFF"
-                    />
-                  </svg>
                 </div>
               </td>
             </tr>
@@ -243,9 +288,7 @@ const ProjectTasks = () => {
 
               <td className="py-3">
                 <div className="flex flex-col px-1">
-                  <p className="text-sm font-medium">
-                    Project Point Design Print
-                  </p>
+                  <p className="text-sm font-medium">Backend Development</p>
                   <p className="text-[#B0B0B0] text-[10px] sm:!text-xs">
                     Created 3rd November 2025
                   </p>
@@ -254,14 +297,12 @@ const ProjectTasks = () => {
 
               <td className="py-3 px-2 text-[10px] sm:!text-xs text-center">
                 <span className="bg-red-500 text-white px-3 py-1 rounded-sm">
-                  Highest
+                  40%
                 </span>
               </td>
 
               <td className="py-3 text-sm px-2 text-center">
-                <span className="bg-[#F8FBFF] font-medium text-black px-3 py-1 rounded-sm">
-                  23rd November 2025
-                </span>
+                23rd November 2025
               </td>
 
               <td className="py-3 px-2 text-[10px] sm:!text-xs font-medium text-center">
@@ -277,7 +318,7 @@ const ProjectTasks = () => {
                 </span>
               </td>
 
-              <td className="py-3 px-2  text-[10px] sm:!text-xs text-left">
+              {/* <td className="py-3 px-2  text-[10px] sm:!text-xs text-left">
                 <div className="flex flex-col">
                   <div className="font-semibold">
                     NM
@@ -285,9 +326,9 @@ const ProjectTasks = () => {
                       50%
                     </span>
                   </div>
-                  {/* <p>23/11/2025-18:00</p> */}
+                  
                 </div>
-              </td>
+              </td> */}
 
               <td className="py-3 px-2">
                 <div className="flex items-center justify-center gap-2">
@@ -308,21 +349,6 @@ const ProjectTasks = () => {
                       />
                     </svg>
                   </span>
-
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 352 352"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M175.739 29.2891C171.855 29.2891 168.13 30.832 165.383 33.5785C162.637 36.325 161.094 40.05 161.094 43.9341V73.2241H73.2236C65.4554 73.2241 58.0054 76.31 52.5124 81.803C47.0195 87.2959 43.9336 94.7459 43.9336 102.514V292.899C43.9336 300.668 47.0195 308.118 52.5124 313.61C58.0054 319.103 65.4554 322.189 73.2236 322.189H278.254C286.022 322.189 293.472 319.103 298.965 313.61C304.458 308.118 307.544 300.668 307.544 292.899V102.514C307.544 94.7459 304.458 87.2959 298.965 81.803C293.472 76.31 286.022 73.2241 278.254 73.2241H190.384V43.9341C190.384 40.05 188.841 36.325 186.094 33.5785C183.348 30.832 179.623 29.2891 175.739 29.2891ZM190.384 73.2241V202.51L217.155 175.739C219.901 172.991 223.626 171.447 227.511 171.445C231.396 171.444 235.122 172.986 237.87 175.732C240.618 178.478 242.163 182.203 242.164 186.088C242.165 189.973 240.624 193.699 237.877 196.447L188.67 245.64C185.238 249.07 180.584 250.996 175.731 250.996C170.879 250.996 166.225 249.07 162.793 245.64L113.6 196.447C112.24 195.087 111.162 193.471 110.426 191.694C109.691 189.917 109.313 188.012 109.313 186.088C109.314 184.164 109.694 182.26 110.43 180.483C111.167 178.706 112.247 177.092 113.607 175.732C114.968 174.372 116.583 173.294 118.361 172.558C120.138 171.823 122.043 171.445 123.966 171.445C125.89 171.446 127.795 171.825 129.572 172.562C131.349 173.299 132.963 174.379 134.323 175.739L161.094 202.51V73.2241H190.384Z"
-                      fill="#157BFF"
-                    />
-                  </svg>
                 </div>
               </td>
             </tr>
@@ -355,13 +381,13 @@ const ProjectTasks = () => {
         </div>
       </div>
       {addTaskModal && (
-        <AddTaskModal
+        <AddMileStone
           open={addTaskModal}
           onClose={() => setAddTaskModal(false)}
         />
       )}
       {manageTasksModal && (
-        <ManageTasks
+        <EditMileStone
           open={manageTasksModal}
           onClose={() => setManageTasksMmodal(false)}
         />
@@ -370,4 +396,4 @@ const ProjectTasks = () => {
   );
 };
 
-export default ProjectTasks;
+export default ProjectMilestone;

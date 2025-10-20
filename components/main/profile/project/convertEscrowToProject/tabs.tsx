@@ -24,7 +24,7 @@ const Tabs = ({tabs, setTabs}:any) => {
         >
           Contributors
         </li>
-        <li
+        {/* <li
           onClick={() => setTabs("Milsetones")}
           className={`${
             tabs === "Milsetones"
@@ -33,7 +33,7 @@ const Tabs = ({tabs, setTabs}:any) => {
           }`}
         >
           Milestones
-        </li>
+        </li> */}
         <li
           onClick={() => setTabs("Audit Log")}
           className={`${

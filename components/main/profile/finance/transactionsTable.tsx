@@ -11,7 +11,7 @@ const transactions = [
     type: "credit",
     date: "12.09.2019 12:53 PM",
     transactionId: "1638hvdjshskdhtU",
-    status: "Manage Escrow",
+    status: "Credited",
   },
   {
     project: "Apple Watch iOS Create",
