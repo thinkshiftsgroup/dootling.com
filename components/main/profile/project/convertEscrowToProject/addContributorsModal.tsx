@@ -57,7 +57,7 @@ const AddContributorsModal: React.FC<AddContProp> = ({ onClose, open }) => {
                   className="text-[#404040] text-sm sm:!text-base font-semibold"
                   htmlFor=""
                 >
-                  Select Project Members{" "}
+                  Select Contributors
                 </label>
                 <div className="relative my-2">
                   <select
@@ -65,7 +65,7 @@ const AddContributorsModal: React.FC<AddContProp> = ({ onClose, open }) => {
                     className=" text-sm sm:!text-base p-2 rounded-sm w-full border border-[#000000]/40 text-black"
                     id=""
                   >
-                    <option value=""></option>
+                    <option value="">Select</option>
                     <option value="">Joshua Israel</option>
                     <option value="">Joshua John</option>
                   </select>
@@ -123,7 +123,7 @@ const AddContributorsModal: React.FC<AddContProp> = ({ onClose, open }) => {
                   className="text-[#404040] text-sm sm:!text-bsse font-semibold"
                   htmlFor=""
                 >
-                  Add Member Role{" "}
+                  Add Contributors
                 </label>
                 <input
                   type="text"
@@ -171,7 +171,7 @@ const AddContributorsModal: React.FC<AddContProp> = ({ onClose, open }) => {
                   className="text-[#404040] text-sm sm:!text-bsse font-semibold"
                   htmlFor=""
                 >
-                  Release Date
+               Funds Release Date
                 </label>
                 <input
                   type="date"
