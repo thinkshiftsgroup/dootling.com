@@ -145,49 +145,29 @@ const ManageTasks: React.FC<ManageTasksProp> = ({ open, onClose }) => {
               </div>
               <div className="w-full">
                 <label htmlFor="" className="text-black font-medium">
-                  Collaborator*
+                  Contributors*
                 </label>
-                <div className="relative my-2">
-                  <input
-                    type="text"
-                    value={userName}
-                    className=" text-sm sm:!text-sm p-1.5 rounded-sm w-full border border-[#D1D1D1]"
-                    placeholder="Joshua Israel"
-                    onChange={(e) => setUserName(e.target.value)}
-                  />
-                  <button
-                    onClick={handleAddUser}
-                    className="bg-[#157BFF] text-sm sm:!text-sm absolute top-0 right-0 px-5 sm:!px-5 cursor-pointer py-2  text-white rounded-sm"
-                  >
-                    + Add
-                  </button>
-                </div>
-                {userList.map((user, idx) => {
-                  return (
-                    <p
-                      key={idx}
-                      className="text-xs text-black my-1 flex items-center gap-1"
-                    >
-                      {user}
-                      <svg
-                        onClick={() => handleRemoveUser(user)}
-                        width="12"
-                        height="12"
-                        viewBox="0 0 197 197"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M126.124 70.8776L70.8737 126.128M126.124 126.128L70.8737 70.8776M98.4987 185.982C139.734 185.982 160.36 185.982 173.169 173.173C185.978 160.364 185.978 139.747 185.978 98.5026C185.978 57.2677 185.978 36.641 173.169 23.8322C160.36 11.0234 139.743 11.0234 98.4987 11.0234C57.2638 11.0234 36.6371 11.0234 23.8283 23.8322C11.0195 36.641 11.0195 57.2585 11.0195 98.5026C11.0195 139.738 11.0195 160.364 23.8283 173.173C36.6371 185.982 57.2546 185.982 98.4987 185.982Z"
-                          stroke="#EA0234"
-                          stroke-width="21.9675"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                      </svg>
-                    </p>
-                  );
-                })}
+                <select
+                  name=""
+                  id=""
+                  className=" text-sm sm:!text-sm p-1.5 rounded-sm w-full border border-[#D1D1D1]"
+                >
+                  <option value=""></option>
+                  <option value="">John Israel</option>
+                </select>
+              </div>
+              <div className="w-full">
+                <label htmlFor="" className="text-black font-medium">
+                  Add Milestones*
+                </label>
+                <select
+                  name=""
+                  id=""
+                  className=" text-sm sm:!text-sm p-1.5 rounded-sm w-full border border-[#D1D1D1]"
+                >
+                  <option value=""></option>
+                  <option value="">Milestone A</option>
+                </select>
               </div>
               <div className="w-full">
                 <label htmlFor="imageUpload" className="text-black font-medium">

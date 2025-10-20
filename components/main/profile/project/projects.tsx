@@ -821,6 +821,8 @@ const ProjectDashboard: React.FC<ProjectDashboardProps> = ({
         open={manageProject}
         onClose={() => setManageProject(false)}
       />
+
+      <AddProjectsModal open={showModal} onClose={()=>setShowModal(false)} />
     </div>
   );
 };

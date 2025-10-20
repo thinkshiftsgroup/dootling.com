@@ -86,7 +86,7 @@ const ConvertProjectToEscrow = ({
             setShowModal={setShowModal}
           />
         )}
-        {tabs === "Milsetones" && <MilestonesTab />}
+        {/* {tabs === "Milsetones" && <MilestonesTab />} */}
         {tabs === "Contributors" && <ContributorsTab />}
 
         {tabs === "Audit Log" && (

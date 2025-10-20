@@ -114,6 +114,7 @@ const ReadProjectMessage = () => {
         </svg>
       ),
     },
+   
     {
       id: "files",
       label: "Files",
@@ -197,7 +198,7 @@ const ReadProjectMessage = () => {
               />
               <div>
                 <h1 className="font-semibold flex items-center gap-0.5">
-                  Paul Molive
+                  Paul Moliver
                   <FiLock size={10} className="text-gray-400" />
                 </h1>
                 <p className="text-xs text-green-500">Online</p>

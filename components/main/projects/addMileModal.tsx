@@ -6,12 +6,12 @@ import { Button } from "@/components/ui/button";
 
 import { FaFile } from "react-icons/fa6";
 
-interface addTaskModalProp {
+interface AddMileStoneProp {
   open: boolean;
   onClose: () => void;
 }
 
-const AddTaskModal: React.FC<addTaskModalProp> = ({ open, onClose }) => {
+const AddMileStone: React.FC<AddMileStoneProp> = ({ open, onClose }) => {
   const [userName, setUserName] = useState("");
   const [userList, setUserList] = useState<string[]>([]);
 
@@ -75,7 +75,7 @@ const AddTaskModal: React.FC<addTaskModalProp> = ({ open, onClose }) => {
           >
             <div className="flex items-center justify-between px-4 pt-4 ">
               <h2 className="sm:!text-lg text-sm font-bold text-[#157BFF]">
-                Add Task
+                Add Milestone
               </h2>
               <Button
                 variant="ghost"
@@ -86,6 +86,7 @@ const AddTaskModal: React.FC<addTaskModalProp> = ({ open, onClose }) => {
                 <X size={20} />
               </Button>
             </div>
+            <p className="text-xs mb-3 px-4">Total Project Budget</p>
 
             <div className="px-4 overflow-y-scroll hide-scrollbar mb-3 space-y-3">
               <div>
@@ -100,9 +101,9 @@ const AddTaskModal: React.FC<addTaskModalProp> = ({ open, onClose }) => {
               <div className="flex items-center gap-2">
                 <div className="w-full">
                   <label htmlFor="" className="text-black font-medium">
-                    Priority*
+                    Release Percentage*
                   </label>
-                  <select
+                  {/* <select
                     name=""
                     className="w-full rounded-sm p-1.5 border border-[#D1D1D1]"
                     id=""
@@ -111,7 +112,13 @@ const AddTaskModal: React.FC<addTaskModalProp> = ({ open, onClose }) => {
                     <option value="Highest">Highest</option>
                     <option value="Mid">Mid</option>
                     <option value="Lowest">Lowest</option>
-                  </select>
+                  </select> */}
+                  <input
+                    id="dueDate"
+                    type="text"
+                    placeholder="50%"
+                    className="w-full rounded-sm p-1.5 border border-[#D1D1D1] text-gray-700 focus:outline-none focus:ring-1 focus:ring-[#157bff]"
+                  />
                 </div>
                 <div className="w-full">
                   <label htmlFor="dueDate" className="text-black font-medium">
@@ -126,7 +133,7 @@ const AddTaskModal: React.FC<addTaskModalProp> = ({ open, onClose }) => {
               </div>
               <div className="w-full">
                 <label htmlFor="" className="text-black font-medium">
-                  Description*
+                  Rule*
                 </label>
                 <textarea className="w-full h-[200px] rounded-sm p-1.5 border border-[#D1D1D1]" />
               </div>
@@ -142,19 +149,47 @@ const AddTaskModal: React.FC<addTaskModalProp> = ({ open, onClose }) => {
                   <option value=""></option>
                   <option value="">John Israel</option>
                 </select>
-              </div>
-              <div className="w-full">
-                <label htmlFor="" className="text-black font-medium">
-                  Add Milestones*
-                </label>
-                <select
-                  name=""
-                  id=""
-                  className=" text-sm sm:!text-sm p-1.5 rounded-sm w-full border border-[#D1D1D1]"
-                >
-                  <option value=""></option>
-                  <option value="">Milestone A</option>
-                </select>
+                {/* <div className="relative my-2">
+                  <input
+                    type="text"
+                    value={userName}
+                    className=" text-sm sm:!text-sm p-1.5 rounded-sm w-full border border-[#D1D1D1]"
+                    placeholder="Joshua Israel"
+                    onChange={(e) => setUserName(e.target.value)}
+                  />
+                  <button
+                    onClick={handleAddUser}
+                    className="bg-[#157BFF] text-sm sm:!text-sm absolute top-0 right-0 px-5 sm:!px-5 cursor-pointer py-2  text-white rounded-sm"
+                  >
+                    + Add
+                  </button>
+                </div> */}
+                {/* {userList.map((user, idx) => {
+                  return (
+                    <p
+                      key={idx}
+                      className="text-xs text-black my-1 flex items-center gap-1"
+                    >
+                      {user}
+                      <svg
+                        onClick={() => handleRemoveUser(user)}
+                        width="12"
+                        height="12"
+                        viewBox="0 0 197 197"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M126.124 70.8776L70.8737 126.128M126.124 126.128L70.8737 70.8776M98.4987 185.982C139.734 185.982 160.36 185.982 173.169 173.173C185.978 160.364 185.978 139.747 185.978 98.5026C185.978 57.2677 185.978 36.641 173.169 23.8322C160.36 11.0234 139.743 11.0234 98.4987 11.0234C57.2638 11.0234 36.6371 11.0234 23.8283 23.8322C11.0195 36.641 11.0195 57.2585 11.0195 98.5026C11.0195 139.738 11.0195 160.364 23.8283 173.173C36.6371 185.982 57.2546 185.982 98.4987 185.982Z"
+                          stroke="#EA0234"
+                          stroke-width="21.9675"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </p>
+                  );
+                })} */}
               </div>
               <div className="w-full">
                 <label
@@ -172,7 +207,7 @@ const AddTaskModal: React.FC<addTaskModalProp> = ({ open, onClose }) => {
                 />
                 <div className="relative my-2"></div>
               </div>{" "}
-              <div className="w-full">
+              {/* <div className="w-full">
                 <label
                   className="text-[#404040] text-sm sm:!text-bsse font-semibold"
                   htmlFor=""
@@ -187,7 +222,7 @@ const AddTaskModal: React.FC<addTaskModalProp> = ({ open, onClose }) => {
                   // onChange={(e) => setUserName(e.target.value)}
                 />
                 <div className="relative my-2"></div>
-              </div>
+              </div> */}
               <div className="w-full">
                 <label
                   className="text-[#404040] text-sm sm:!text-bsse font-semibold"
@@ -323,7 +358,7 @@ const AddTaskModal: React.FC<addTaskModalProp> = ({ open, onClose }) => {
                 />
               </div>
               <button className="rounded-sm text-base mt-3  font-bold text-white bg-[#FAAF40] p-2">
-                Create Task
+                Create Milestone
               </button>
             </div>
           </motion.div>
@@ -333,4 +368,4 @@ const AddTaskModal: React.FC<addTaskModalProp> = ({ open, onClose }) => {
   );
 };
 
-export default AddTaskModal;
+export default AddMileStone;

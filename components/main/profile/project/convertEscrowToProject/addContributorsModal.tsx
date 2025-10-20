@@ -118,7 +118,6 @@ const AddContributorsModal: React.FC<AddContProp> = ({ onClose, open }) => {
                   );
                 })}
               </div>
-
               <div>
                 <label
                   className="text-[#404040] text-sm sm:!text-bsse font-semibold"
@@ -135,39 +134,53 @@ const AddContributorsModal: React.FC<AddContProp> = ({ onClose, open }) => {
                 />
                 <div className="relative my-2"></div>
               </div>
-              <div className="w-full flex items-center gap-2">
-                <div className="w-full">
-                  <label
-                    className="text-[#404040] text-sm sm:!text-bsse font-semibold"
-                    htmlFor=""
-                  >
-                    Released Percentage(%)
-                  </label>
-                  <input
-                    type="text"
-                    value={userName}
-                    className=" text-sm sm:!text-base p-2 rounded-sm w-full border border-[#000000]/40 text-black"
-                    placeholder="50%"
-                    onChange={(e) => setUserName(e.target.value)}
-                  />
-                  <div className="relative my-2"></div>
-                </div>
-                <div className="w-full">
-                  <label
-                    className="text-[#404040] text-sm sm:!text-bsse font-semibold"
-                    htmlFor=""
-                  >
-                    Balance Percentage(%)
-                  </label>
-                  <input
-                    type="text"
-                    value={userName}
-                    className=" text-sm sm:!text-base p-2 rounded-sm w-full border border-[#000000]/40 text-black"
-                    placeholder="50%"
-                    onChange={(e) => setUserName(e.target.value)}
-                  />
-                  <div className="relative my-2"></div>
-                </div>
+              <div className="w-full">
+                <label
+                  className="text-[#404040] text-sm sm:!text-bsse font-semibold"
+                  htmlFor=""
+                >
+                  Percentage of Total Budget(%)
+                </label>
+                <input
+                  type="text"
+                  value={userName}
+                  className=" text-sm sm:!text-base p-2 rounded-sm w-full border border-[#000000]/40 text-black"
+                  placeholder="50%"
+                  onChange={(e) => setUserName(e.target.value)}
+                />
+                <div className="relative my-2"></div>
+              </div>{" "}
+              <div className="w-full">
+                <label
+                  className="text-[#404040] text-sm sm:!text-bsse font-semibold"
+                  htmlFor=""
+                >
+                  Percentage to Release(%)
+                </label>
+                <input
+                  type="text"
+                  value={userName}
+                  className=" text-sm sm:!text-base p-2 rounded-sm w-full border border-[#000000]/40 text-black"
+                  placeholder="50%"
+                  onChange={(e) => setUserName(e.target.value)}
+                />
+                <div className="relative my-2"></div>
+              </div>
+              <div className="w-full">
+                <label
+                  className="text-[#404040] text-sm sm:!text-bsse font-semibold"
+                  htmlFor=""
+                >
+                  Release Date
+                </label>
+                <input
+                  type="date"
+                  value={userName}
+                  className=" text-sm sm:!text-base p-2 rounded-sm w-full border border-[#000000]/40 text-black"
+                  placeholder="50%"
+                  onChange={(e) => setUserName(e.target.value)}
+                />
+                <div className="relative my-2"></div>
               </div>
               <button className="text-white w-full rounded-md font-semibold text-base py-2 cursor-pointer bg-[#1571E8]">
                 Add Contributor
