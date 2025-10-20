@@ -71,7 +71,7 @@ const ManageProject: React.FC<ManageProjectProps> = ({ open, onClose }) => {
             <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
               <div>
                 <label
-                  className="font-semibold text-gray-600 sm:!text-lg  text-base"
+                  className="font-semibold text-gray-600 sm:!text-base  text-sm"
                   htmlFor="Amount"
                 >
                   Project Title *
@@ -79,14 +79,14 @@ const ManageProject: React.FC<ManageProjectProps> = ({ open, onClose }) => {
                 <div className="flex my-2">
                   <input
                     type="text"
-                    className="w-full border rounded-md text-sm  bg-white z-10 text-gray-600 p-2 border-gray-400/50"
+                    className="w-full border rounded-sm sm:!text-sm text-xs bg-white z-10 text-gray-600 p-2 border-gray-400/50"
                   />
                 </div>
               </div>
 
               <div>
                 <label
-                  className="font-semibold text-gray-600 sm:!text-lg  text-base"
+                  className="font-semibold text-gray-600 sm:!text-base  text-sm"
                   htmlFor="Amount"
                 >
                   Project Summary Description *
@@ -105,7 +105,7 @@ const ManageProject: React.FC<ManageProjectProps> = ({ open, onClose }) => {
 
               {/* <div className="mb-14">
                                 <label
-                                    className="font-semibold text-gray-600 sm:!text-lg  text-base"
+                                    className="font-semibold text-gray-600 sm:!text-base  text-sm"
                                     htmlFor="Amount"
                                 >
                                     Add Collaborators *
@@ -141,7 +141,7 @@ const ManageProject: React.FC<ManageProjectProps> = ({ open, onClose }) => {
 
               <div className="mb-10">
                 <label
-                  className="font-semibold text-gray-600 sm:!text-lg text-base"
+                  className="font-semibold text-gray-600 sm:!text-base text-sm"
                   htmlFor="collaborators"
                 >
                   Add Collaborators *
@@ -248,7 +248,7 @@ const ManageProject: React.FC<ManageProjectProps> = ({ open, onClose }) => {
                 </label>
               </div>
 
-              <button className="text-white w-5/11 flex items-center justify-center gap-2 rounded-sm font-semibold text-lg py-4 cursor-pointer bg-[#1571E8]">
+                <button className="text-white w-5/11 flex items-center justify-center gap-2 rounded-sm font-semibold text-base py-2 cursor-pointer bg-[#1571E8]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width={30}

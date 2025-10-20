@@ -128,7 +128,7 @@ const OverviewTab = ({
           <div className="flex my-2">
             <input
               type="text"
-              className="w-full border rounded-md text-sm  bg-white z-10 text-gray-600 p-2 border-gray-400/50"
+              className="w-full border rounded-sm sm:!text-sm text-xs bg-white z-10 text-gray-600 p-2 border-gray-400/50"
             />
           </div>
         </div>
@@ -201,7 +201,7 @@ const OverviewTab = ({
             <div className="flex my-2">
               <input
                 type="date"
-                className="w-full border rounded-md text-sm  bg-white z-10 text-gray-600 p-2 border-gray-400/50"
+                className="w-full border rounded-sm sm:!text-sm text-xs bg-white z-10 text-gray-600 p-2 border-gray-400/50"
               />
             </div>
           </div>
@@ -215,7 +215,7 @@ const OverviewTab = ({
             <div className="flex my-2">
               <input
                 type="date"
-                className="w-full border rounded-md text-sm  bg-white z-10 text-gray-600 p-2 border-gray-400/50"
+                className="w-full border rounded-sm sm:!text-sm text-xs bg-white z-10 text-gray-600 p-2 border-gray-400/50"
               />
             </div>
           </div>

@@ -124,7 +124,7 @@ const EscrowManager: React.FC<FundWalletSideModalProps> = ({
 
               <div>
                 <label
-                  className="font-semibold text-gray-600 sm:!text-lg text-sm "
+                  className="font-semibold text-gray-600 sm:!text-base text-sm "
                   htmlFor="Purpose"
                 >
                   Notes *
