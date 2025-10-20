@@ -9,7 +9,7 @@ const OverviewTab = ({
   return (
     <div>
       <div className="bg-[#fafafa] my-5 rounded-md p-2 space-y-2">
-        <div className="flex gap-2 items-center justify-between my-2">
+        <div className="flex lg:flex-row flex-col gap-2 items-center justify-between my-2">
           <div className="flex w-full h-[99px] overflow-y-scroll hide-scrollbar flex-col justify-between gap-2 p-2 bg-white shadow-md min-w-[250px] rounded">
             <div className="flex items-center">
               <p

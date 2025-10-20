@@ -59,7 +59,7 @@ const ProjectMilestone = () => {
             />
           </div>
         </div>
-       
+
         <div className="flex flex-wrap w-full items-center gap-2">
           <div className="flex -space-x-2 items-center">
             <Image
@@ -90,64 +90,64 @@ const ProjectMilestone = () => {
             Aliana Molex <span className="text-gray-500">And 208 Others</span>
           </p>
         </div>
-      </div> <div className="mt-3 flex items-center justify-between gap-2">
-        <div className="w-[500px]">
+      </div>{" "}
+      <div className="mt-3 md:flex-row flex-col flex items-center justify-between gap-2">
+        <div className="w-[50vw]">
           <MileStoneHeatMap pageType={"profile"} />
-
         </div>
-          <div className="mr-10 flex flex-col gap-1 w-full max-w-2xl">
-            {[
-              {
-                name: "Amelia Shaw",
-                color: "#0b50ab",
-                percent: 50,
-                amount: "Contribution",
-              },
-              {
-                name: "Ronald Nunez",
-                color: "gray",
-                percent: 30,
-                amount: "Contribution",
-              },
-              {
-                name: "Carolyn Ortiz",
-                color: "#9ca3af",
-                percent: 20,
-                amount: "Contribution",
-              },
-            ].map((person, i) => (
-              <div
-                key={i}
-                className="flex !flex-col sm:!flex-row items-center sm:items-center gap-3 sm:gap-4 w-full"
-              >
-                <div className="w-full mr-5 sm:!w-1/4 text-center sm:!text-left">
-                  <p className="font-semibold whitespace-nowrap !text-xs sm:!text-sm text-black">
-                    {person.name}
-                  </p>
-                </div>
-
-                <div className="w-full sm:!flex-1 h-2.5 bg-gray-100 rounded relative overflow-hidden !mt-1 sm:!mt-0">
-                  <div
-                    className="absolute top-0 left-0 h-full rounded transition-all duration-300"
-                    style={{
-                      width: `${person.percent}%`,
-                      backgroundColor: person.color,
-                    }}
-                  ></div>
-                </div>
-
-                <div className="flex  items-center justify-between sm:!justify-end gap-1 w-full sm:!w-28 mt-1 sm:!mt-0">
-                  <p className=" !text-xs sm:!text-sm text-black">
-                    {person.percent}%
-                  </p>
-                  <p className=" !text-xs sm:!text-sm text-[#157BFF]">
-                    {person.amount}
-                  </p>
-                </div>
+        <div className=" flex flex-col gap-1 w-full">
+          {[
+            {
+              name: "Amelia Shaw",
+              color: "#0b50ab",
+              percent: 50,
+              amount: "Contribution",
+            },
+            {
+              name: "Ronald Nunez",
+              color: "gray",
+              percent: 30,
+              amount: "Contribution",
+            },
+            {
+              name: "Carolyn Ortiz",
+              color: "#9ca3af",
+              percent: 20,
+              amount: "Contribution",
+            },
+          ].map((person, i) => (
+            <div
+              key={i}
+              className="flex !flex-col sm:!flex-row items-center sm:items-center gap-3 sm:gap-4 w-full"
+            >
+              <div className="w-full sm:!w-1/4 text-center sm:!text-left">
+                <p className="font-semibold whitespace-nowrap !text-xs sm:!text-sm text-black">
+                  {person.name}
+                </p>
               </div>
-            ))}
-          </div>
+
+              <div className="w-full sm:!flex-1 h-2.5 bg-gray-100 rounded relative overflow-hidden !mt-1 sm:!mt-0">
+                <div
+                  className="absolute top-0 left-0 h-full rounded transition-all duration-300"
+                  style={{
+                    width: `${person.percent}%`,
+                    backgroundColor: person.color,
+                  }}
+                ></div>
+              </div>
+
+              <div className="flex  items-center justify-between sm:!justify-end gap-1 w-full sm:!w-28 mt-1 sm:!mt-0">
+                <p className=" !text-xs sm:!text-sm text-black">
+                  {person.percent}%
+                </p>
+                <p className=" !text-xs sm:!text-sm text-[#157BFF]">
+                  {person.amount}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
+      </div>
       <div className="overflow-x-auto">
         <table className="min-w-full border-collapse">
           <thead className="bg-[#E7F1FF]/30 font-medium text-xs sm:!text-sm text-left">
