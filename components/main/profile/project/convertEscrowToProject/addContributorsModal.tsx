@@ -60,13 +60,22 @@ const AddContributorsModal: React.FC<AddContProp> = ({ onClose, open }) => {
                   Select Project Members{" "}
                 </label>
                 <div className="relative my-2">
-                  <input
+                  <select
+                    name=""
+                    className=" text-sm sm:!text-base p-2 rounded-sm w-full border border-[#000000]/40 text-black"
+                    id=""
+                  >
+                    <option value=""></option>
+                    <option value="">Joshua Israel</option>
+                    <option value="">Joshua John</option>
+                  </select>
+                  {/* <input
                     type="text"
                     value={userName}
                     className=" text-sm sm:!text-base p-2 rounded-sm w-full border border-[#000000]/40 text-black"
                     placeholder="Joshua Israel"
                     onChange={(e) => setUserName(e.target.value)}
-                  />
+                  /> */}
                   {/* <button
                     onClick={handleAddUser}
                     className="bg-[#157BFF] text-xs sm:!text-sm absolute top-0 right-0 px-5 cursor-pointer py-2.5 text-white rounded-sm"
