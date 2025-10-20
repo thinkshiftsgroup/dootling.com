@@ -365,7 +365,7 @@ const EscrowProjectsContent: React.FC<{
   return (
     <>
       <div className="space-y-2">
-        <div className="flex xl:flex-row flex-col items-start justify-between gap-2 my-5">
+        <div className="flex lg:!flex-row flex-col items-center justify-between gap-2 my-5">
           <div className="flex w-full h-[110px] overflow-y-scroll hide-scrollbar flex-col justify-between gap-3 p-2 bg-white shadow-md min-w-[250px] rounded">
             <div className="flex items-center">
               <p
@@ -813,7 +813,7 @@ const ProjectDashboard: React.FC<ProjectDashboardProps> = ({
           {renderTabContent()}
         </div>
       </div>
-      {CPEcrow && <ConvertProjectToEscrow setOpenModal={setCPEcrow} />}
+      {CPEcrow && <ConvertProjectToEscrow setCPEcrow={setCPEcrow} />}
       {ConfirmCPEscrow && (
         <ConfirmConvertProjectToEscrow setOpenModal={setConfirmCPEscrow} />
       )}

@@ -47,7 +47,10 @@ const FundWalletSideModal: React.FC<FundWalletSideModalProps> = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={onClose}
+            onClick={(e) => {
+              e.stopPropagation();
+              onClose();
+            }}
           />
 
           <motion.div
@@ -70,7 +73,10 @@ const FundWalletSideModal: React.FC<FundWalletSideModalProps> = ({
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={onClose}
+                onClick={(e) => {
+                  e.stopPropagation(); 
+                  onClose(); 
+                }}
                 className="hover:bg-gray-100 text-black rounded-full"
               >
                 <X size={14} />
@@ -110,7 +116,7 @@ const FundWalletSideModal: React.FC<FundWalletSideModalProps> = ({
 
               <div>
                 <label
-                 className="font-semibold text-gray-600 sm:!text-lg text-sm "
+                  className="font-semibold text-gray-600 sm:!text-lg text-sm "
                   htmlFor="Purpose"
                 >
                   Purpose *
