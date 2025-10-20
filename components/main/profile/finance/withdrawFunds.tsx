@@ -47,13 +47,17 @@ const WithdrawFunds: React.FC<FundWalletSideModalProps> = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={onClose}
+            onClick={(e) => {
+              e.stopPropagation(); 
+              onClose();
+            }}
           />
 
           <motion.div
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
+            onClick={(e) => e.stopPropagation()}
             transition={{ type: "spring", stiffness: 80, damping: 15 }}
             className="fixed top-0 right-0 h-screen w-full max-w-[500px] bg-white z-50 shadow-xl border-l border-gray-200 rounded-none sm:!rounded-tl-2xl  sm:!rounded-bl-2xl flex flex-col"
           >
