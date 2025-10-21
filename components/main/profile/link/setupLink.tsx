@@ -33,7 +33,7 @@ const SetupLinkSideModal: React.FC<SetupLinkSideModalProps> = ({
   };
 
   const [copied, setCopied] = useState(false);
-  const pageUrl = "https://dootling.com/ray";
+  const pageUrl = "https://dootling.com/paymentlink";
 
   const handleCopy = () => {
     navigator.clipboard.writeText(pageUrl);
