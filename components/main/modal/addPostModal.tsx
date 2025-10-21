@@ -448,6 +448,35 @@ export default function AddPostModal() {
                       </div>
                     </div>
                   </div>
+                </Dropdown> */}
+                <Dropdown
+                  trigger={
+                    <span className="text-xs sm:text-lg text-gray-400 font-medium">
+                      {selected} can reply and quote
+                    </span>
+                  }
+                  align="left"
+                  position="top"
+                >
+                  <div className="bg-white m-0 shadow-md rounded-lg w-72 sm:w-80">
+                    <div className="max-h-60 overflow-y-auto p-3">
+                      {listItems.map((option, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => handleSelect(option)}
+                          className="w-full text-left mb-4 last:mb-0 hover:bg-gray-50 p-2 rounded transition-colors"
+                        >
+                          <div className="flex items-start gap-3">
+                            <div>
+                              <h6 className="text-gray-900 text-sm font-medium">
+                                {option}
+                              </h6>
+                            </div>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 </Dropdown>
                 <button
                   onClick={handlePost}
