@@ -264,19 +264,19 @@ const ContributionHeatmap: React.FC<ContributionHeatmapProps> = ({
                       <span className="text-gray-700 text-lg">{hoveredCell.count} emails sent</span>
                     </div>
 
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0">
-                      <svg className="w-7 h-7" viewBox="0 0 48 48">
-                        <path fill="#00832d" d="M35,28c0,0.552-0.448,1-1,1h-6c-0.552,0-1-0.448-1-1v-8c0-0.552,0.448-1,1-1h6c0.552,0,1,0.448,1,1V28z" />
-                        <path fill="#0066da" d="M22,28c0,0.552-0.448,1-1,1h-6c-0.552,0-1-0.448-1-1v-8c0-0.552,0.448-1,1-1h6c0.552,0,1,0.448,1,1V28z" />
-                        <path fill="#e94235" d="M35,20v8l8-6z" />
-                        <path fill="#2684fc" d="M22,20v8l-8-6z" />
-                        <path fill="#00ac47" d="M43,24c0,0.82-0.216,1.584-0.584,2.256L35,20l7.416-6.256C42.784,14.416,43,15.18,43,16V24z" />
-                        <path fill="#00ac47" d="M6,24c0-0.82,0.216-1.584,0.584-2.256L14,28l-7.416,6.256C6.216,33.584,6,32.82,6,32V24z" />
-                      </svg>
+                    <div className="flex items-center gap-2">
+                      <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0">
+                        <svg className="w-7 h-7" viewBox="0 0 48 48">
+                          <path fill="#00832d" d="M35,28c0,0.552-0.448,1-1,1h-6c-0.552,0-1-0.448-1-1v-8c0-0.552,0.448-1,1-1h6c0.552,0,1,0.448,1,1V28z" />
+                          <path fill="#0066da" d="M22,28c0,0.552-0.448,1-1,1h-6c-0.552,0-1-0.448-1-1v-8c0-0.552,0.448-1,1-1h6c0.552,0,1,0.448,1,1V28z" />
+                          <path fill="#e94235" d="M35,20v8l8-6z" />
+                          <path fill="#2684fc" d="M22,20v8l-8-6z" />
+                          <path fill="#00ac47" d="M43,24c0,0.82-0.216,1.584-0.584,2.256L35,20l7.416-6.256C42.784,14.416,43,15.18,43,16V24z" />
+                          <path fill="#00ac47" d="M6,24c0-0.82,0.216-1.584,0.584-2.256L14,28l-7.416,6.256C6.216,33.584,6,32.82,6,32V24z" />
+                        </svg>
+                      </div>
+                      <span className="text-gray-700 text-lg">{hoveredCell.count} meetings</span>
                     </div>
-                    <span className="text-gray-700 text-lg">{hoveredCell.count} meetings</span>
-                  </div>
 
                   <div className="flex items-center gap-4">
                     <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
