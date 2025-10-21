@@ -14,6 +14,14 @@ import { Dropdown } from "./dropDown";
 import { Bell, Gear } from "phosphor-react";
 
 export default function AddPostModal() {
+  const [selected, setSelected] = useState('Anyone');
+  const allOptions = ['Anyone', 'Your Followers', 'Profiles You Follow', 'Mentioned Only'];
+  const listItems = [selected, ...allOptions.filter(opt => opt !== selected)];
+
+  const handleSelect = (option) => {
+    setSelected(option);
+  };
+
   const [isOpen, setIsOpen] = useState(false);
   const [content, setContent] = useState("");
   const [topic, setTopic] = useState("");
