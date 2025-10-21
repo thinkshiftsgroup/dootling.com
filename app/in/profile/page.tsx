@@ -16,6 +16,16 @@ import { BiRepost } from "react-icons/bi";
 import { LuSend } from "react-icons/lu";
 import ProfileIn from "@/components/main/profile/otherProfile";
 import InReactionModal from "@/components/main/landing-page/in/inReactionModal";
+import ProfileFeeds from "@/components/main/profile/feeds";
+import SimilarProfiles from "@/components/main/profile/side-card/similarProfiles";
+import TrendingProjects from "@/components/main/profile/side-card/tredingProjects";
+import TrendingSpaces from "@/components/main/profile/side-card/trendingSpaces";
+import ReferralSideTab from "@/components/main/profile/side-card/referralSideTab";
+import ProjectDashboard from "@/components/main/profile/project/projects";
+import ProfileSpace from "@/components/main/space/profileSpace";
+import FollowedTab from "@/components/main/profile/followed";
+import ProfileAbout from "@/components/main/profile/about/about";
+import TopContributorsTab from "@/components/main/profile/topContributors/topContributors";
 
 const InProfile = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
