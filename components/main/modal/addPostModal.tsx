@@ -484,7 +484,7 @@ export default function AddPostModal() {
                   className={`px-6 py-1.5 rounded-sm font-semibold transition-colors ${content.trim()
                       ? "bg-black text-white hover:bg-gray-800"
                       : "border-gray-200 border-2 text-gray-400 cursor-not-allowed"
-                  }`}
+                    }`}
                 >
                   Post
                 </button>
