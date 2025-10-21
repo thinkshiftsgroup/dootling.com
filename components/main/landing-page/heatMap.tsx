@@ -229,18 +229,18 @@ const ContributionHeatmap: React.FC<ContributionHeatmapProps> = ({
                     {hoveredCell.date.toLocaleDateString('en-US', { weekday: 'long' })}
                   </h2>
 
-                <div className="space-y-4">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
-                      <svg className="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-                        <circle cx="5" cy="5" r="2" />
-                        <circle cx="5" cy="10" r="2" />
-                        <circle cx="5" cy="15" r="2" />
-                      </svg>
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-2">
+                      <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <svg className="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                          <circle cx="5" cy="5" r="2" />
+                          <circle cx="5" cy="10" r="2" />
+                          <circle cx="5" cy="15" r="2" />
+                        </svg>
+                      </div>
+                      <span className="text-gray-700 text-lg">{hoveredCell.count} tasks
+                      </span>
                     </div>
-                    <span className="text-gray-700 text-lg">{hoveredCell.count} tasks
-                    </span>
-                  </div>
 
                   <div className="flex items-center gap-4">
                     <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
