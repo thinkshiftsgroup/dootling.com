@@ -102,11 +102,10 @@ export default function AddPostModal() {
           <div className="fixed inset-0 z-50 flex items-center justify-center  bg-opacity-50 p-4">
             <div
               className={`w-full max-w-2xl mt-8 bg-white rounded-2xl shadow-2xl overflow-hidden 
-            ${
-              isOpen
-                ? "animate-in fade-in slide-in-from-top-4"
-                : "animate-out fade-out slide-out-to-top"
-            }
+            ${isOpen
+                  ? "animate-in fade-in slide-in-from-top-4"
+                  : "animate-out fade-out slide-out-to-top"
+                }
             duration-200`}
             >
               {/* Modal Header */}
