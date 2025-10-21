@@ -224,9 +224,10 @@ const ContributionHeatmap: React.FC<ContributionHeatmapProps> = ({
               <div className="bg-white rounded-2xl shadow-2xl w-50 h-60 relative">
                 <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white rotate-45"></div>
 
-                <h2 className="text-3xl font-bold text-gray-800 mb-6">
-                  {hoveredCell.date.toLocaleDateString('en-US', { weekday: 'long' })}
-                </h2>
+                <div className="relative overflow-y-auto overflow-x-hidden h-55 p-4 py-6 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 hover:animate-scroll">
+                  <h2 className="text-2xl font-bold text-gray-800 mb-4">
+                    {hoveredCell.date.toLocaleDateString('en-US', { weekday: 'long' })}
+                  </h2>
 
                 <div className="space-y-4">
                   <div className="flex items-center gap-4">
