@@ -14,7 +14,7 @@ const OverviewTab = ({
             <div className="flex items-center">
               <p
                 className="text-white font-bold text-xl w-full px-3 py-2 rounded-sm leading-none"
-                style={{ backgroundColor: "#202224" }}
+                style={{ backgroundColor: "#A6A6A6" }}
               >
                 $625.00
               </p>
@@ -101,7 +101,7 @@ const OverviewTab = ({
             <div className="flex items-center">
               <p
                 className="text-white font-bold text-xl w-full px-3 py-2 rounded-sm leading-none"
-                style={{ backgroundColor: "#555454" }}
+                style={{ backgroundColor: "#A6A6A6" }}
               >
                 $200.00
               </p>

@@ -86,7 +86,7 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({ open, onClose }) => {
                 <X size={20} />
               </Button>
             </div>
-            <p className="text-xs mb-3 px-4">Total Project Budget</p>
+            <p className="text-xs mb-3 px-4">Total Project Budget <span className="font-bold" >$4500</span></p>
 
             <div className="px-4 overflow-y-scroll hide-scrollbar mb-3 space-y-3">
               <div>

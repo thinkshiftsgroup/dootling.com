@@ -7,6 +7,9 @@ import AddPostModal from "@/components/main/modal/addPostModal";
 import StoriesLanding from "@/components/main/landing-page/index/stories";
 import SimilarProfiles from "@/components/main/profile/side-card/similarProfiles";
 import FeedMessage from "@/components/main/atom/feedMessage";
+import TrendingProjects from "@/components/main/profile/side-card/tredingProjects";
+import TrendingSpaces from "@/components/main/profile/side-card/trendingSpaces";
+import ReferralSideTab from "@/components/main/profile/side-card/referralSideTab";
 
 export default function Home() {
   const feedContent = [
@@ -39,9 +42,10 @@ export default function Home() {
                 </div>
 
                 <div className="w-full hidden lg:block lg:w-1/3 ps-5">
-                  {/* <ActiveUsers /> */}
                   <SimilarProfiles />
-                  <Suggestions />
+                  <TrendingProjects />
+                  <TrendingSpaces />
+                  <ReferralSideTab />
                 </div>
               </div>
             </div>

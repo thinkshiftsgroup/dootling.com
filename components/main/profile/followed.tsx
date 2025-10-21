@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import ContributionHeatmap from "../landing-page/heatMap";
+import ConfirmUnlinkAction from "./followed/confirmUnlinkAction";
+import { useRouter } from "next/navigation";
 
 type TabKey = "all" | "recent" | "close" | "hometown" | "following";
 
@@ -140,6 +142,9 @@ const FollowedTab: React.FC = () => {
 export default FollowedTab;
 
 const FriendCard = ({ name, img }: { name: string; img: string }) => {
+  const [openUnlinkModal, setOpenUnlinkModal] = useState(false);
+  const router  = useRouter();
+  
   return (
     <div className="flex flex-wrap md:flex-nowrap items-start justify-between p-2 sm:p-3 bg-gray-50 rounded-md   gap-3">
       <div className="flex items-center gap-3">
@@ -213,7 +218,10 @@ const FriendCard = ({ name, img }: { name: string; img: string }) => {
         <div className="mt-1">
           <ContributionHeatmap size="mini" />
         </div>
-        <button className="bg-[#157BFF] cursor-pointer hover:bg-blue-600 text-white px-2 mt-3 flex items-center gap-2 py-1 rounded-sm text-[0.9rem]">
+        <button
+          onClick={() => setOpenUnlinkModal(true)}
+          className="bg-[#157BFF] cursor-pointer hover:bg-blue-600 text-white px-2 mt-3 flex items-center gap-2 py-1 rounded-sm text-[0.9rem]"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -228,7 +236,7 @@ const FriendCard = ({ name, img }: { name: string; img: string }) => {
           Unlink
         </button>
 
-        <button className="bg-[#157BFF] cursor-pointer hover:bg-blue-600 text-white px-2 mt-3 flex items-center gap-2 py-1 rounded-sm text-[0.9rem]">
+        <button onClick={()=>router.push("/messages")} className="bg-[#157BFF] cursor-pointer hover:bg-blue-600 text-white px-2 mt-3 flex items-center gap-2 py-1 rounded-sm text-[0.9rem]">
           <svg
             width="24"
             height="24"
@@ -252,6 +260,10 @@ const FriendCard = ({ name, img }: { name: string; img: string }) => {
           </svg>
         </button>
       </div>
+
+      {openUnlinkModal && (
+        <ConfirmUnlinkAction setOpenModal={setOpenUnlinkModal} />
+      )}
     </div>
   );
 };

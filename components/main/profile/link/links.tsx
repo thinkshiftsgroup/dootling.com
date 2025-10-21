@@ -65,34 +65,27 @@ const ProfileLinks = () => {
 
           {/* Price and Button */}
           <div className="flex items-center gap-4 flex-shrink-0">
-            <span className="text-sm font-medium text-gray-900">$40,0050</span>
+            <span className="text-sm font-bold text-gray-900">$40,0050</span>
             <button
               onClick={() => setShowModal(true)}
               className="bg-[#157BFF] hover:bg-blue-600 text-white px-2 py-1 rounded-sm flex items-center gap-2 transition-colors whitespace-nowrap text-[0.9rem] cursor-pointer"
             >
               <svg
-                className="w-5 h-5"
+            
                 xmlns="http://www.w3.org/2000/svg"
-                width={15}
-                height={15}
-                viewBox="0 0 512 512"
+                width={13}
+                height={13}
+                viewBox="0 0 24 24"
               >
-                <g fill="none">
-                  <g clipPath="url(#SVG3Z7Ltc7M)">
-                    <path
-                      fill="currentColor"
-                      fillRule="evenodd"
-                      d="m258.588 352.758l-23.921 23.922c-33.272 33.271-87.408 33.271-120.68 0c-33.271-33.272-33.271-87.408 0-120.68l23.922-23.921l-30.17-30.17l-23.922 23.921c-49.987 49.987-49.987 131.032 0 181.02s131.033 49.987 181.02 0l23.921-23.922zm82.745-246.091h-42.666v42.666h42.666c47.054 0 85.334 38.28 85.334 85.334c0 47.053-38.28 85.333-85.334 85.333h-42.666v42.667h42.666c70.693 0 128-57.308 128-128s-57.307-128-128-128m-128 63.999V63.999h42.666v106.667zm-41.056 37.239l-75.424-75.424l30.17-30.17l75.424 75.424zm21.085 46.28L153.6 307.2l34.133 25.6l50.037-66.716zm64.31 1.815h83.661v-42.666h-72.228z"
-                      clipRule="evenodd"
-                      strokeWidth={13}
-                      stroke="currentColor"
-                    ></path>
-                  </g>
-                  <defs>
-                    <clipPath id="SVG3Z7Ltc7M">
-                      <path fill="#fff" d="M0 0h512v512H0z"></path>
-                    </clipPath>
-                  </defs>
+                <g
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                >
+                  <path d="M14 21h-2c-4.714 0-7.071 0-8.536-1.465C2 18.072 2 15.715 2 11V7.944c0-1.816 0-2.724.38-3.406A3 3 0 0 1 3.538 3.38C4.22 3 5.128 3 6.944 3C8.108 3 8.69 3 9.2 3.191c1.163.436 1.643 1.493 2.168 2.542L12 7M8 7h8.75c2.107 0 3.16 0 3.917.506a3 3 0 0 1 .827.827C22 9.09 22 10.143 22 12.25q.001.957-.005 1.75"></path>
+                  <path d="M17.686 20.432a1.941 1.941 0 0 0 2.746-2.746l-1.716-1.716a1.94 1.94 0 0 0-2.639-.098m.237-2.303a1.941 1.941 0 0 0-2.745 2.745l1.715 1.715a1.94 1.94 0 0 0 2.64.1"></path>
                 </g>
               </svg>
               Setup Link

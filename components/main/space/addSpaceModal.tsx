@@ -102,7 +102,7 @@ const AddSpaceModal: React.FC<AddSpaceModalProps> = ({ open, onClose }) => {
 
               <div className="mb-10">
                 <label
-                  className="font-semibold text-gray-600 sm:!text-base text-sm"
+                  className="font-semibold text-gray-600 sm:!text-lg text-base"
                   htmlFor="collaborators"
                 >
                   Add Collaborators *
@@ -202,13 +202,13 @@ const AddSpaceModal: React.FC<AddSpaceModalProps> = ({ open, onClose }) => {
                     className="h-4 w-4 accent-blue-500 cursor-pointer"
                   />
                   <span className="sm:!text-sm text-xs font-medium text-gray-600">
-                    Make Space Private{" "}
+                    Make Space Public{" "}
                     <span className="font-normal">(Anyone Can Join)</span>
                   </span>
                 </label>
               </div>
 
-              <button className="text-white md:!w-5/11 w-full flex items-center justify-center gap-2 rounded-sm font-semibold sm:!text-lg text-base py-4 cursor-pointer bg-[#1571E8]">
+              <button className="text-white md:!w-5/11 w-full flex items-center justify-center gap-2 rounded-sm font-semibold sm:!text-base text-sm p-2 cursor-pointer bg-[#1571E8]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width={30}
