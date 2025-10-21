@@ -392,75 +392,15 @@ const InProfile = () => {
                         {activeTab === "Top Contributors" && (
                           <TopContributorsTab />
                         )}
-
-                        {activeTab === "About" && <ProfileIn />}
                       </div>
                     </div>
                   </div>
-                  <div className="w-full col-span-2 ">
+                  <div className="w-full my-4 lg:!my-0 col-span-2 ">
                     <div className="">
-                      <div className="rounded-lg shadow bg-white">
-                        <div className="flex justify-between p-4 border-b border-[#f1f1f1]">
-                          <div className="header-title">
-                            <h4 className="text-xl font-semibold">
-                              More Similar Profiles
-                            </h4>
-                          </div>
-                        </div>
-
-                        <div className="p-4 pt-0">
-                          <ul className="m-0 p-0 list-none">
-                            {[
-                              {
-                                name: "Annette Black",
-                                info: "33 Projects 6 Streaks",
-                                image: "/images/user/13.jpg",
-                              },
-                              {
-                                name: "Christopher Plessis",
-                                info: "33 Projects 6 Streaks",
-                                image: "/images/user/17.jpg",
-                              },
-                              {
-                                name: "Ellyse Perry",
-                                info: "33 Projects 6 Streaks",
-                                image: "/images/user/16.jpg",
-                              },
-                            ].map((user, index) => (
-                              <li key={index} className="mb-3 last:mb-0">
-                                <div className="flex items-center gap-2">
-                                  <Image
-                                    src={user.image}
-                                    alt={user.name}
-                                    width={60}
-                                    height={60}
-                                    className="avatar-60 avatar-borderd object-cover rounded-sm w-full h-auto inline-block"
-                                  />
-                                  <div className="flex-1">
-                                    <div className="flex items-center justify-between gap-2">
-                                      <div>
-                                        <h5>{user.name}</h5>
-                                        <small className="capitalize flex items-center gap-2">
-                                          <div className="w-2 h-2 flex-none rounded-full bg-black" />
-                                          {user.info}
-                                        </small>
-                                      </div>
-                                      <div className="flex items-center flex-shrink-0 gap-2">
-                                        <button className="px-2 py-1 cursor-pointer bg-blue-100 text-blue-600 rounded hover:bg-blue-200 leading-none">
-                                          <i className="ph ph-plus text-sm"></i>
-                                        </button>
-                                        <button className="px-2 py-1 cursor-pointer bg-red-100 text-red-600 rounded hover:bg-red-200 leading-none">
-                                          <i className="ph ph-x text-sm"></i>
-                                        </button>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
+                      <SimilarProfiles />
+                      <TrendingProjects />
+                      <TrendingSpaces />
+                      <ReferralSideTab />
                     </div>
                   </div>
                 </div>
