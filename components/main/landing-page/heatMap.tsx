@@ -221,7 +221,7 @@ const ContributionHeatmap: React.FC<ContributionHeatmapProps> = ({
                 transform: 'translate(-50%, calc(4% + 10px))',
               }}
             >
-              <div className="bg-white rounded-2xl shadow-2xl p-6 w-80 relative">
+              <div className="bg-white rounded-2xl shadow-2xl w-50 h-60 relative">
                 <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white rotate-45"></div>
 
                 <h2 className="text-3xl font-bold text-gray-800 mb-6">
