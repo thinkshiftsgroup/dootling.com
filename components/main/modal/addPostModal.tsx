@@ -18,7 +18,7 @@ export default function AddPostModal() {
   const allOptions = ['Anyone', 'Your Followers', 'Profiles You Follow', 'Mentioned Only'];
   const listItems = [selected, ...allOptions.filter(opt => opt !== selected)];
 
-  const handleSelect = (option) => {
+  const handleSelect = (option: string) => {
     setSelected(option);
   };
 
