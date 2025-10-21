@@ -64,7 +64,7 @@ const SetupLinkSideModal: React.FC<SetupLinkSideModalProps> = ({
           >
             <div className="flex items-center justify-between px-6 pt-4 ">
               <h2 className="sm:!text-lg text-sm font-bold text-gray-800">
-                Update Payment Link
+                Manage Payment Link
               </h2>
               <Button
                 variant="ghost"

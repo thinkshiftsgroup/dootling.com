@@ -370,7 +370,7 @@ const EscrowProjectsContent: React.FC<{
             <div className="flex items-center">
               <p
                 className="text-white font-bold text-xl w-full px-3 py-2 rounded-sm leading-none"
-                style={{ backgroundColor: "#202224" }}
+                style={{ backgroundColor: "#A6A6A6" }}
               >
                 $625.00
               </p>
@@ -416,7 +416,7 @@ const EscrowProjectsContent: React.FC<{
             <div className="flex items-center">
               <p
                 className="text-white font-bold text-xl w-full px-3 py-2 rounded-sm leading-none"
-                style={{ backgroundColor: "#555454" }}
+                style={{ backgroundColor: "#A6A6A6" }}
               >
                 $200.00
               </p>
@@ -635,7 +635,6 @@ const ProjectDashboard: React.FC<ProjectDashboardProps> = ({
         {/* Header */}
         <div className="bg-white rounded-2xl shadow-sm p-3 sm:!p-6">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8">
-
             <div className="mb-2">
               <ul className="flex whitespace-nowrap flex-wrap w-full items-center gap-4 *:cursor-pointer font-medium text-gray-500">
                 <li
@@ -648,8 +647,8 @@ const ProjectDashboard: React.FC<ProjectDashboardProps> = ({
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width={20}
-                    height={20}
+                    width={16}
+                    height={16}
                     viewBox="0 0 24 24"
                   >
                     <g
@@ -676,18 +675,16 @@ const ProjectDashboard: React.FC<ProjectDashboardProps> = ({
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width={20}
-                    height={20}
-                    viewBox="0 0 14 14"
+                    width="15"
+                    height="15"
+                    viewBox="0 0 512 512"
                   >
                     <path
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1}
-                      d="m13.5 13.5l-1.778-1.778M3.903 5.816q-.35.027-.708.028c-.474 0-.939-.043-1.392-.094A1.326 1.326 0 0 1 .638 4.582C.59 4.132.55 3.67.55 3.198c0-.47.041-.933.09-1.383c.064-.61.555-1.1 1.164-1.168c.453-.05.918-.094 1.392-.094s.939.043 1.391.094c.61.068 1.1.558 1.165 1.168c.049.45.09.912.09 1.383q-.001.336-.025.666M3.195 8.155c-.474 0-.939.044-1.392.094c-.61.068-1.1.559-1.165 1.168c-.048.45-.089.913-.089 1.384s.041.933.09 1.384c.064.61.555 1.1 1.164 1.168c.453.05.918.094 1.392.094s.939-.044 1.391-.094M7.931 3.198c0-.471.04-.933.089-1.383c.065-.61.556-1.1 1.165-1.168c.453-.05.918-.094 1.392-.094s.938.043 1.391.094c.61.068 1.1.558 1.165 1.168c.048.45.09.912.09 1.383c0 .472-.042.934-.09 1.384a1.3 1.3 0 0 1-.11.4m-4.199 7.711c2.479 0 3.873-1.394 3.873-3.873s-1.394-3.873-3.873-3.873S4.951 6.34 4.951 8.82s1.394 3.873 3.873 3.873"
-                    ></path>
+                      fill="currentColor"
+                      fill-rule="evenodd"
+                      d="m243.07 65.728l34.263 14.684v46.42l-41.306-17.703l-107.695 61.54l116.919 66.811L256 243.623v146.285l106.667-60.952v-94.288h42.666v119.048l-10.749 6.143l-149.333 85.333l-10.584 6.048l-10.585-6.048l-149.333-85.333L64 353.716V158.289l10.749-6.142l149.333-85.333l9.224-5.271zm-29.737 324.18V268.383l-106.666-60.952v121.525zm106.666-283.24h55.163l-91.581 91.582l30.17 30.17l91.581-91.582v55.163h42.667v-128h-128z"
+                      clip-rule="evenodd"
+                    />
                   </svg>
                   Escrow Projects
                 </li>
@@ -699,10 +696,10 @@ const ProjectDashboard: React.FC<ProjectDashboardProps> = ({
                       : ""
                   }`}
                 >
-                   <svg
+                  <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width={20}
-                    height={20}
+                    width={15}
+                    height={15}
                     viewBox="0 0 24 24"
                   >
                     <path
@@ -724,10 +721,10 @@ const ProjectDashboard: React.FC<ProjectDashboardProps> = ({
                       : ""
                   }`}
                 >
-                    <svg
+                  <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width={20}
-                    height={20}
+                    width={15}
+                    height={15}
                     viewBox="0 0 14 14"
                   >
                     <path
