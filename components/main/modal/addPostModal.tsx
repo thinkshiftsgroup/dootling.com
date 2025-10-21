@@ -404,7 +404,7 @@ export default function AddPostModal() {
 
               {/* Modal Footer */}
               <div className="flex justify-between items-center px-3 sm:px-6 py-4">
-                <Dropdown
+                {/* <Dropdown
                   trigger={
                     <span className="text-xs sm:text-lg text-gray-400 font-medium">
                       Anyone can reply and quote
