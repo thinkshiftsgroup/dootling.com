@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Lock, Globe, MoreHorizontal } from "lucide-react";
+import { Lock, Globe, MoreHorizontal, Loader2 } from "lucide-react";
 import AddProjectsModal from "./addProject";
 import ManageProject from "./manageProject";
 import ConvertProjectToEscrow from "./CPEcrow";
@@ -9,10 +9,8 @@ import WithdrawFunds from "../finance/withdrawFunds";
 import FundWalletSideModal from "../finance/fundEscrowWallet.tsx";
 import ManageEscrowFunds from "../finance/manageEscrow";
 import RecallEscrowWallet from "../finance/recallEscrowFund";
+import { useProject } from "@/hooks/useProjects";
 
-// ======================
-// Type Definitions
-// ======================
 interface ProjectCardProps extends Project {
   onManageClick?: () => void;
   onCPEClick?: () => void;
@@ -20,12 +18,12 @@ interface ProjectCardProps extends Project {
 }
 
 interface Project {
-  id: number;
+  id: string;
   imageSrc: string | null;
-  isPrivate: boolean;
-  projectName: string;
+  isPublic: boolean;
+  title: string;
   collaborators: number;
-  createdDate: string;
+  createdAt: string;
 }
 
 interface TabButtonProps {
@@ -41,15 +39,35 @@ interface ProjectDashboardProps {
   peerConfirmation?: Project[];
 }
 
-// ======================
-// ProjectCard Component
-// ======================
+//projects type
+export interface ProjectI {
+  id: string;
+  ownerId: string;
+  title: string;
+  description: string;
+  isPublic: boolean;
+  status: "PENDING" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED" | string;
+  totalBudget: number;
+  startDate: string;
+  deliveryDate: string;
+  contractClauses: string | null;
+  receiveEmailNotifications: boolean;
+  fundsRule: boolean;
+  isDeleted: boolean;
+  isEscrowed: boolean;
+  amountReleased: number;
+  amountPending: number;
+  completionPercentage: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
 const ProjectCard: React.FC<ProjectCardProps> = ({
   imageSrc,
-  isPrivate,
-  projectName,
+  isPublic,
+  title,
   collaborators,
-  createdDate,
+  createdAt,
   onManageClick,
   onCPEClick,
   onConfirmCPEClick,
@@ -58,26 +76,24 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   const router = useRouter();
   return (
     <div className="bg-white h-40 flex rounded-md shadow-sm border border-gray-200 overflow-scroll hide-scrollbar hover:shadow-md transition-shadow">
-      {/* Image */}
       <div className="w-2/5 h-full bg-gradient-to-br from-gray-100 to-gray-200">
         {imageSrc ? (
           <img
             src={imageSrc}
-            alt={projectName}
+            alt={title}
             className="w-full h-full object-cover"
           />
         ) : (
           <div className="flex items-center justify-center w-full h-full text-gray-400 text-sm">
-            Project Image
+            {title}
           </div>
         )}
       </div>
 
-      {/* Info */}
       <div className="w-3/5 md:!p-4 p-2 flex flex-col justify-between">
         <div className="flex items-start justify-between">
           <h3 className="text-base font-semibold text-gray-900 truncate">
-            {projectName}
+            {title}
           </h3>
           <button className="text-gray-400 hover:text-gray-600 transition">
             <MoreHorizontal className="w-5 h-5" />
@@ -85,20 +101,24 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         </div>
 
         <div>
-          <p className="text-sm text-gray-600">{collaborators} Contributors</p>
-          <p className="text-xs text-gray-400 mt-1">Created {createdDate}</p>
+          <p className="text-sm text-gray-600">
+            {collaborators || 0} Contributors
+          </p>
+          <p className="text-xs text-gray-400 mt-1">
+            Created {new Date(createdAt).toLocaleDateString("en-US")}
+          </p>
         </div>
 
         <div className="flex items-center gap-2 mt-2">
-          {isPrivate ? (
-            <>
-              <Lock className="w-4 h-4 text-gray-500" />
-              <span className="text-gray-600 text-sm">Private</span>
-            </>
-          ) : (
+          {isPublic ? (
             <>
               <Globe className="w-4 h-4 text-gray-500" />
               <span className="text-gray-600 text-sm">Public</span>
+            </>
+          ) : (
+            <>
+              <Lock className="w-4 h-4 text-gray-500" />
+              <span className="text-gray-600 text-sm">Private</span>
             </>
           )}
         </div>
@@ -177,15 +197,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   );
 };
 
-// ======================
-// EscrowProjectCard Component
-// ======================
 const EscrowProjectCard: React.FC<ProjectCardProps> = ({
   imageSrc,
-  isPrivate,
-  projectName,
+  isPublic,
+  title,
   collaborators,
-  createdDate,
+  createdAt,
   onManageClick,
   onCPEClick,
   onConfirmCPEClick,
@@ -198,12 +215,12 @@ const EscrowProjectCard: React.FC<ProjectCardProps> = ({
         {imageSrc ? (
           <img
             src={imageSrc}
-            alt={projectName}
+            alt={title}
             className="w-full h-full object-cover"
           />
         ) : (
           <div className="flex items-center justify-center w-full h-full text-gray-400 text-sm">
-            Project Image
+            {title}
           </div>
         )}
       </div>
@@ -212,7 +229,7 @@ const EscrowProjectCard: React.FC<ProjectCardProps> = ({
       <div className="w-3/5 p-4 flex flex-col justify-between">
         <div className="flex items-start justify-between">
           <h3 className="text-base font-semibold text-gray-900 truncate">
-            {projectName}
+            {title}
           </h3>
           <button className="text-gray-400 hover:text-gray-600 transition">
             <MoreHorizontal className="w-5 h-5" />
@@ -220,20 +237,24 @@ const EscrowProjectCard: React.FC<ProjectCardProps> = ({
         </div>
 
         <div>
-          <p className="text-sm text-gray-600">{collaborators} Contributors</p>
-          <p className="text-xs text-gray-400 mt-1">Created {createdDate}</p>
+          <p className="text-sm text-gray-600">
+            {collaborators || 0} Contributors
+          </p>
+          <p className="text-xs text-gray-400 mt-1">
+            Created {new Date(createdAt).toLocaleDateString("en-US")}
+          </p>
         </div>
 
         <div className="flex items-center gap-2 mt-2">
-          {isPrivate ? (
-            <>
-              <Lock className="w-4 h-4 text-gray-500" />
-              <span className="text-gray-600 text-sm">Private</span>
-            </>
-          ) : (
+          {isPublic ? (
             <>
               <Globe className="w-4 h-4 text-gray-500" />
               <span className="text-gray-600 text-sm">Public</span>
+            </>
+          ) : (
+            <>
+              <Lock className="w-4 h-4 text-gray-500" />
+              <span className="text-gray-600 text-sm">Private</span>
             </>
           )}
         </div>
@@ -289,44 +310,29 @@ const EscrowProjectCard: React.FC<ProjectCardProps> = ({
   );
 };
 
-// ======================
-// TabButton Component
-// ======================
-const TabButton: React.FC<TabButtonProps> = ({
-  active,
-  onClick,
-  icon,
-  children,
-}) => {
-  return (
-    <button
-      onClick={onClick}
-      className={`px-4 py-1 rounded-sm font-medium transition-colors flex items-center gap-2 ${
-        active
-          ? "bg-[#D8D8D8] text-[#202224]"
-          : "bg-[#F8F9FA] text-[#202224] hover:bg-gray-100"
-      }`}
-    >
-      <span className="text-lg">{icon}</span>
-      {children}
-    </button>
-  );
-};
-
-// ======================
-// Tab Content Components (Placeholder)
-// ======================
-
 const MyProjectsContent: React.FC<{
   projects: Project[];
-  onManageClick?: (id: number) => void;
-  onCPEClick?: (id: number) => void;
-  onConfirmCPEClick?: (id: number) => void;
+  onManageClick?: (id: string) => void;
+  onCPEClick?: (id: string) => void;
+  onConfirmCPEClick?: (id: string) => void;
 }> = ({ projects, onManageClick, onCPEClick, onConfirmCPEClick }) => {
+  const { getAllProject } = useProject();
+  const isLoading = getAllProject?.isLoading;
+  const data = getAllProject?.data?.data || [];
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center py-12 text-center text-gray-500">
+        <Loader2 size={20} className="animate-spin text-[#157bff]" />
+        <p className="text-sm font-medium">Loading projects...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-2">
-      {projects.length > 0 ? (
-        projects.map((project) => (
+      {data.length > 0 ? (
+        data.map((project: any) => (
           <ProjectCard
             onManageClick={() => onManageClick?.(project.id)}
             onCPEClick={() => onCPEClick?.(project.id)}
@@ -349,8 +355,8 @@ const MyProjectsContent: React.FC<{
 
 const EscrowProjectsContent: React.FC<{
   projects: Project[];
-  onManageClick?: (id: number) => void;
-  onCPEClick?: (id: number) => void;
+  onManageClick?: (id: string) => void;
+  onCPEClick?: (id: string) => void;
 }> = ({ projects, onManageClick, onCPEClick }) => {
   const [showManageFunds, setManageFunds] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -519,26 +525,23 @@ const PeerConfirmationContent: React.FC = () => {
   );
 };
 
-// ======================
-// Main Dashboard
-// ======================
 const ProjectDashboard: React.FC<ProjectDashboardProps> = ({
   projects = [
     {
-      id: 1,
+      id: "a",
       imageSrc: null,
-      isPrivate: true,
-      projectName: "Project Alpha",
+      isPublic: true,
+      title: "Project Alpha",
       collaborators: 5,
-      createdDate: "2 days ago",
+      createdAt: "2 days ago",
     },
     {
-      id: 2,
+      id: "b",
       imageSrc: null,
-      isPrivate: false,
-      projectName: "Project Beta",
+      isPublic: false,
+      title: "Project Beta",
       collaborators: 3,
-      createdDate: "1 week ago",
+      createdAt: "1 week ago",
     },
   ],
 }) => {
@@ -548,15 +551,27 @@ const ProjectDashboard: React.FC<ProjectDashboardProps> = ({
   const [CPEcrow, setCPEcrow] = useState(false);
   const [ConfirmCPEscrow, setConfirmCPEscrow] = useState(false);
 
+  const [selectedProjectId, setSelectedProjectId] = useState<string>("");
+  const [selectedProjectName, setSelectedProjectName] = useState<string>("");
+
   const renderTabContent = () => {
     switch (activeTab) {
       case "my-projects":
         return (
           <MyProjectsContent
             projects={projects}
-            onManageClick={(id) => setManageProject(true)}
-            onCPEClick={(id) => setCPEcrow(true)}
-            onConfirmCPEClick={(id) => setConfirmCPEscrow(true)}
+            onManageClick={(id) => {
+              setSelectedProjectId(id);
+              setManageProject(true);
+            }}
+            onConfirmCPEClick={(id) => {
+              setSelectedProjectId(id);
+              setConfirmCPEscrow(true);
+            }}
+            onCPEClick={(id) => {
+              setSelectedProjectId(id);
+              setCPEcrow(true);
+            }}
           />
         );
       case "escrow-projects":
@@ -749,13 +764,19 @@ const ProjectDashboard: React.FC<ProjectDashboardProps> = ({
         </div>
       </div>
       {CPEcrow && <ConvertProjectToEscrow setCPEcrow={setCPEcrow} />}
-      {ConfirmCPEscrow && (
-        <ConfirmConvertProjectToEscrow setOpenModal={setConfirmCPEscrow} />
-      )}
+
       <ManageProject
         open={manageProject}
         onClose={() => setManageProject(false)}
+        projectId={selectedProjectId}
       />
+
+      {ConfirmCPEscrow && (
+        <ConfirmConvertProjectToEscrow
+          projectId={selectedProjectId!}
+          setOpenModal={setConfirmCPEscrow}
+        />
+      )}
 
       <AddProjectsModal open={showModal} onClose={() => setShowModal(false)} />
     </div>

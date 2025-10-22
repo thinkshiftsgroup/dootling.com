@@ -14,6 +14,7 @@ import FundWalletSideModal from "../finance/fundEscrowWallet.tsx";
 
 const ConvertProjectToEscrow = ({
   setCPEcrow,
+  
 }: {
   setCPEcrow: (open: boolean) => void;
 }) => {

@@ -7,6 +7,8 @@ import FillBookingForm from "@/components/main/landing-page/book/fillBookingForm
 
 const BookingPage = () => {
   const [page, setPage] = useState(1);
+  const [openReadMore, setOpenReadMore] = useState(false);
+
   return (
     <div>
       <Navbar fixed={true} />
@@ -77,14 +79,33 @@ const BookingPage = () => {
             </div>
           </div>
 
-          <div className="mt-10">
-            <p className="text-sm leading-relaxed">
-              🚀Unlock Clarity. Unlock Growth. Unlock YOU. This is not another
+          <div className="mt-3 mb-5">
+            <p className="text-sm leading-relaxed text-gray-700">
+              🚀 Unlock Clarity. Unlock Growth. Unlock YOU. This is not another
               casual chat. It's a focused strategy session built to cut through
-              the fog, clear the noise, and give you a roadmap...
+              the fog, clear the noise, and give you a roadmap that actually
+              makes sense for where you are — and where you’re going...
             </p>
-            <p className="text-sm py-2 text-[#157bff] font-semibold cursor-pointer capitalize">
-              Read More
+
+            <div
+              className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                openReadMore ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+              }`}
+            >
+              <p className="text-sm leading-relaxed text-gray-700 mt-3">
+                💡 In this session, we’ll dig into your current strategy,
+                uncover the real blockers holding you back, and craft a
+                practical step-by-step plan to move forward with confidence. No
+                fluff, no vague advice — every insight is tailored to you and
+                your goals.
+              </p>
+            </div>
+
+            <p
+              onClick={() => setOpenReadMore((prev) => !prev)}
+              className="text-sm py-2 text-[#157bff] font-semibold cursor-pointer capitalize select-none"
+            >
+              {openReadMore ? "Less" : "Read More"}
             </p>
           </div>
 

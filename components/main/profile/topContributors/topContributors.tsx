@@ -3,27 +3,42 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import ContributionHeatmap from "../../landing-page/heatMap";
+import { useFollowing } from "@/hooks/useFollow";
+import { Loader2 } from "lucide-react";
 
 type TabKey = "all" | "recent" | "followed" | "hometown" | "following";
 
 const TopContributorsTab: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<TabKey>("all");
+  const {
+    similarProfiles,
+    getFollowers,
+    getAllContributors,
+    recentContributors,
+  } = useFollowing();
+  console.log(recentContributors, "followers");
+
+  const [activeTab, setActiveTab] = useState<TabKey>("recent");
   const [order, setOrder] = useState("Last Active");
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const tabs = [
-    { key: "all", label: "All Linked", count: 12 },
-    { key: "recent", label: "Recently Added", count: 2 },
-    { key: "hometown", label: "Collaborators" },
-    { key: "following", label: "Following" },
-    { key: "followed", label: "Followed" },
+    {
+      key: "recent",
+      label: "Recently Added",
+      count: recentContributors.data?.contributors.length || 0,
+    },
+    {
+      key: "following",
+      label: "Following",
+      count: similarProfiles.data?.list.length || 0,
+    },
+    {
+      key: "followed",
+      label: "Followed",
+      count: getFollowers.data?.list.length || 0,
+    },
+    { key: "hometown", label: "Collaborators", count: 0 },
   ] as const;
-
-  const members = [
-    { name: "Petey Cruiser", img: "/images/user/05.jpg" },
-    { name: "Anna Sthesia", img: "/images/user/06.jpg" },
-    { name: "Paul Molive", img: "/images/user/07.jpg" },
-  ];
 
   const recentlyAdded = [{ name: "Buck Kinnear", img: "/images/user/15.jpg" }];
 
@@ -32,7 +47,7 @@ const TopContributorsTab: React.FC = () => {
     "text-gray-600 border-transparent hover:text-yellow-600";
 
   return (
-    <div className="bg-white rounded-sm  p-2 w-full overflow-scroll">
+    <div className="bg-white rounded-sm hide-scrollbar p-2 w-full overflow-scroll">
       <div className="bg-white flex flex-col md:!flex-row gap-2 items-center px-2 justify-between">
         <ul className="flex flex-wrap gap-2 items-center">
           {tabs.map((tab: any) => (
@@ -44,11 +59,11 @@ const TopContributorsTab: React.FC = () => {
                 }`}
               >
                 {tab.label}
-                {tab.count && (
-                  <span className="bg-yellow-400 text-white text-xs rounded-full px-2 py-0.5">
-                    {tab.count}
-                  </span>
-                )}
+                <span className="bg-yellow-400 text-white text-xs rounded-full px-2 py-0.5">
+                  {tab.count}
+                </span>
+                {/* {tab.count && (
+                )} */}
               </button>
             </li>
           ))}
@@ -105,34 +120,108 @@ const TopContributorsTab: React.FC = () => {
       </div>
 
       <div className="p-2">
-        {activeTab === "all" && (
-          <div className="space-y-4">
-            {members.map((m, idx) => (
-              <FriendCard key={idx} name={m.name} img={m.img} />
-            ))}
-          </div>
-        )}
-
         {activeTab === "recent" && (
           <div className="space-y-4">
-            {recentlyAdded.map((m, idx) => (
-              <FriendCard key={idx} name={m.name} img={m.img} />
-            ))}
+            {recentContributors.isLoading ? (
+              <div className="flex justify-center py-6">
+                <Loader2 className="animate-spin" />
+              </div>
+            ) : recentContributors.isError ? (
+              <p className="text-center text-sm text-red-500">
+                Failed to load recent contributors.
+              </p>
+            ) : (recentContributors.data?.list ?? []).filter(
+                (user: any) => user.isFollowing
+              ).length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-6 text-center">
+                <p className="text-sm text-gray-500">No recent contributor.</p>
+              </div>
+            ) : (
+              recentContributors.data?.contributor?.user?.map((user: any) => (
+                <FriendCard
+                  key={user.id}
+                  name={user.fullName}
+                  img={user.profilePhotoUrl}
+                  lastActive={user.lastActive}
+                  country={user.country}
+                  role={user.role || "—"}
+                />
+              ))
+            )}
           </div>
         )}
-
-   
 
         {activeTab === "hometown" && (
           <FriendCard name="Paul Molive" img="/images/user/07.jpg" />
         )}
 
         {activeTab === "following" && (
-          <FriendCard name="Paul Molive" img="/images/user/07.jpg" />
+          <div className="space-y-4">
+            {similarProfiles.isLoading ? (
+              <div className="flex justify-center py-6">
+                <Loader2 className="animate-spin" />
+              </div>
+            ) : similarProfiles.isError ? (
+              <p className="text-center text-sm text-red-500">
+                Failed to load following.
+              </p>
+            ) : (similarProfiles.data?.list ?? []).filter(
+                (user: any) => user.isFollowing
+              ).length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-6 text-center">
+                <p className="text-sm text-gray-500">
+                  You’re not following anyone yet.
+                </p>
+              </div>
+            ) : (
+              similarProfiles.data?.list
+                ?.filter((user: any) => user.isFollowing)
+                .map((user: any) => (
+                  <FriendCard
+                    key={user.id}
+                    name={user.fullName}
+                    img={user.profilePhotoUrl}
+                    lastActive={user.lastActive}
+                    country={user.country}
+                    role={user.role || "—"}
+                  />
+                ))
+            )}
+          </div>
         )}
-
         {activeTab === "followed" && (
-          <FriendCard name="Paul Molive" img="/images/user/07.jpg" />
+          <div className="space-y-4">
+            {getFollowers.isLoading ? (
+              <div className="flex justify-center py-6">
+                <Loader2 className="animate-spin" />
+              </div>
+            ) : getFollowers.isError ? (
+              <p className="text-center text-sm text-red-500">
+                Failed to load followers.
+              </p>
+            ) : (getFollowers.data?.list ?? []).filter(
+                (user: any) => user.isFollowing
+              ).length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-6 text-center">
+                <p className="text-sm text-gray-500">
+                  You’re have no followers yet.
+                </p>
+              </div>
+            ) : (
+              similarProfiles.data?.list
+                ?.filter((user: any) => user.isFollowing)
+                .map((user: any) => (
+                  <FriendCard
+                    key={user.id}
+                    name={user.fullName}
+                    img={user.profilePhotoUrl}
+                    lastActive={user.lastActive}
+                    country={user.country}
+                    role={user.role || "—"}
+                  />
+                ))
+            )}
+          </div>
         )}
       </div>
     </div>
@@ -141,17 +230,49 @@ const TopContributorsTab: React.FC = () => {
 
 export default TopContributorsTab;
 
-const FriendCard = ({ name, img }: { name: string; img: string }) => {
+const FriendCard = ({
+  name,
+  img,
+  lastActive,
+  country,
+  role,
+}: {
+  name: string;
+  img?: string | null;
+  lastActive?: string | null;
+  role?: string | null;
+  country?: string | null;
+}) => {
   return (
     <div className="flex flex-wrap md:flex-nowrap items-start justify-between p-2 sm:p-3 bg-gray-50 rounded-md   gap-3">
       <div className="flex items-center gap-3">
-        <Image
-          alt={name}
-          src={img}
-          width={60}
-          height={60}
-          className="rounded-full object-cover"
-        />
+        {img !== null ? (
+          <Image
+            src={img!}
+            alt={name}
+            width={60}
+            height={60}
+            className="rounded-full object-cover"
+          />
+        ) : (
+          <div className="p-0.5 rounded-full bg-white border">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="50"
+              className="text-[#157bff]"
+              height="50"
+              viewBox="0 0 24 24"
+            >
+              <g fill="none" fill-rule="evenodd">
+                <path d="m12.594 23.258l-.012.002l-.071.035l-.02.004l-.014-.004l-.071-.036q-.016-.004-.024.006l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.016-.018m.264-.113l-.014.002l-.184.093l-.01.01l-.003.011l.018.43l.005.012l.008.008l.201.092q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.003-.011l.018-.43l-.003-.012l-.01-.01z" />
+                <path
+                  fill="currentColor"
+                  d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10s10-4.477 10-10S17.523 2 12 2M8.5 9.5a3.5 3.5 0 1 1 7 0a3.5 3.5 0 0 1-7 0m9.758 7.484A7.99 7.99 0 0 1 12 20a7.99 7.99 0 0 1-6.258-3.016C7.363 15.821 9.575 15 12 15s4.637.821 6.258 1.984"
+                />
+              </g>
+            </svg>
+          </div>
+        )}
         <div>
           <h6 className="flex items-center gap-1 text-gray-800 font-semibold">
             {name}
@@ -169,9 +290,7 @@ const FriendCard = ({ name, img }: { name: string; img: string }) => {
             </svg>
           </h6>
           <span className="flex whitespace-nowrap flex-wrap font-normal items-center gap-1 sm:gap-2">
-            <p className=" text-xs text-[#FAAF40] mt-1">
-              Director in Technology
-            </p>
+            <p className=" text-xs text-[#FAAF40] mt-1">{role || "-"}</p>
             <span className="flex items-center gap-2">
               <Image
                 src="/images/icon/iwwa_map.svg"
@@ -179,7 +298,7 @@ const FriendCard = ({ name, img }: { name: string; img: string }) => {
                 width={16}
                 height={16}
               />
-              <p className=" text-xs text-[#979797] mt-1">United Kingdom</p>
+              <p className=" text-xs text-[#979797] mt-1">{country || "-"}</p>
             </span>
             <span className="flex items-center gap-2">
               <svg
@@ -204,13 +323,14 @@ const FriendCard = ({ name, img }: { name: string; img: string }) => {
                 />
               </svg>
 
-              <p className=" text-xs text-[#979797] mt-1">35 Days Ago</p>
+              <p className=" text-xs text-[#979797] mt-1">
+                {lastActive || "Mobile"}
+              </p>
             </span>
           </span>
         </div>
       </div>
 
-      {/* Actions */}
       <div className="flex items-center gap-3">
         <div className="mt-1">
           <ContributionHeatmap size="mini" />
