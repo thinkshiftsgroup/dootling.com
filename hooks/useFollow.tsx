@@ -55,11 +55,31 @@ export const useFollowing = () => {
     },
     enabled: isInitialized && !!user && !!token,
   });
+ 
+  const getAllContributors = useQuery({
+    queryKey: ["get-all-contributors"],
+    queryFn: async () => {
+      const res = await apiInstance.get("/api/projects/contributors");
+      return res.data;
+    },
+    enabled: isInitialized && !!user && !!token,
+  });
+
+  const recentContributors = useQuery({
+    queryKey: ["get-recent-contributors"],
+    queryFn: async () => {
+      const res = await apiInstance.get("/api/projects/contributors/recent");
+      return res.data;
+    },
+    enabled: isInitialized && !!user && !!token,
+  });
 
   return {
     followUser,
     unFollowUser,
     similarProfiles,
-    getFollowers
+    getFollowers,
+    getAllContributors,
+    recentContributors
   };
 };

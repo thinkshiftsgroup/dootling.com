@@ -9,16 +9,24 @@ import { Loader2 } from "lucide-react";
 type TabKey = "all" | "recent" | "followed" | "hometown" | "following";
 
 const TopContributorsTab: React.FC = () => {
-  const {similarProfiles, getFollowers } =
-    useFollowing();
-  console.log(getFollowers, "followers");
+  const {
+    similarProfiles,
+    getFollowers,
+    getAllContributors,
+    recentContributors,
+  } = useFollowing();
+  console.log(recentContributors, "followers");
 
   const [activeTab, setActiveTab] = useState<TabKey>("recent");
   const [order, setOrder] = useState("Last Active");
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const tabs = [
-    { key: "recent", label: "Recently Added", count: 2 },
+    {
+      key: "recent",
+      label: "Recently Added",
+      count: recentContributors.data?.contributors.length || 0,
+    },
     {
       key: "following",
       label: "Following",
@@ -114,9 +122,32 @@ const TopContributorsTab: React.FC = () => {
       <div className="p-2">
         {activeTab === "recent" && (
           <div className="space-y-4">
-            {recentlyAdded.map((m, idx) => (
-              <FriendCard key={idx} name={m.name} img={m.img} />
-            ))}
+            {recentContributors.isLoading ? (
+              <div className="flex justify-center py-6">
+                <Loader2 className="animate-spin" />
+              </div>
+            ) : recentContributors.isError ? (
+              <p className="text-center text-sm text-red-500">
+                Failed to load recent contributors.
+              </p>
+            ) : (recentContributors.data?.list ?? []).filter(
+                (user: any) => user.isFollowing
+              ).length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-6 text-center">
+                <p className="text-sm text-gray-500">No recent contributor.</p>
+              </div>
+            ) : (
+              recentContributors.data?.contributor?.user?.map((user: any) => (
+                <FriendCard
+                  key={user.id}
+                  name={user.fullName}
+                  img={user.profilePhotoUrl}
+                  lastActive={user.lastActive}
+                  country={user.country}
+                  role={user.role || "—"}
+                />
+              ))
+            )}
           </div>
         )}
 
@@ -192,10 +223,6 @@ const TopContributorsTab: React.FC = () => {
             )}
           </div>
         )}
-
-        {/* {activeTab === "followed" && (
-          <FriendCard name="Paul Molive" img="/images/user/07.jpg" />
-        )} */}
       </div>
     </div>
   );

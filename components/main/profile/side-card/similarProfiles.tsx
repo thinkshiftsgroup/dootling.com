@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import MiniLoader from "../../atom/miniloader";
 import { useFollowing } from "@/hooks/useFollow";
 import { Loader2 } from "lucide-react";
+import ConfirmationModal from "../../modal/confirmationModal";
 
 interface userI {
   fullName: string;
@@ -23,6 +24,49 @@ export default function SimilarProfiles() {
   const queryClient = useQueryClient();
 
   const [loadingUserId, setLoadingUserId] = useState<string | null>(null);
+
+  const [showModal, setShowModal] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<{
+    id: string;
+    name: string;
+    image: string | null;
+  } | null>(null);
+  const [isConfirming, setIsConfirming] = useState(false);
+
+  const handleUnfollowClick = (
+    userId: string,
+    userName: string,
+    userImage: string | null
+  ) => {
+    setSelectedUser({ id: userId, name: userName, image: userImage });
+    setShowModal(true);
+  };
+
+  const confirmUnfollow = async () => {
+    if (!selectedUser) return;
+    setIsConfirming(true);
+
+    unFollowUser.mutate(
+      { userId: selectedUser.id },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ["similar-users"] });
+          setShowModal(false);
+        },
+        onSettled: () => {
+          setIsConfirming(false);
+          setSelectedUser(null);
+        },
+      }
+    );
+  };
+
+  const cancelUnfollow = () => {
+    if (isConfirming) return;
+    setShowModal(false);
+    setSelectedUser(null);
+  };
+
   const handleFollow = (userId: string) => {
     setLoadingUserId(userId);
     followUser.mutate(
@@ -37,22 +81,6 @@ export default function SimilarProfiles() {
       }
     );
   };
-
-  const handleUnfollow = (userId: string) => {
-    setLoadingUserId(userId);
-    unFollowUser.mutate(
-      { userId },
-      {
-        onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: ["similar-users"] });
-        },
-        onSettled: () => {
-          setLoadingUserId(null);
-        },
-      }
-    );
-  };
-
   return (
     <div className="rounded-lg shadow bg-white mb-4">
       <div className="flex justify-between px-2 py-3 border-b border-[#f1f1f1]">
@@ -102,7 +130,9 @@ export default function SimilarProfiles() {
                       <div>
                         <h5 className="text-xs ">{user.fullName}</h5>
                         <small className="capitalize text-gray-600 text-[10px] flex items-center gap-1">
-                          <span className="text-black">{user.totalProjects}</span>
+                          <span className="text-black">
+                            {user.totalProjects}
+                          </span>
                           Projects
                         </small>
 
@@ -115,8 +145,14 @@ export default function SimilarProfiles() {
                         {isLoggedIn &&
                           (user.isFollowing ? (
                             <button
-                              onClick={() => handleUnfollow(user.id)}
-                              className="px-2 py-1 hover:bg-red-200 text-xs bg-red-100 text-red-600 rounded leading-none cursor-default"
+                              onClick={() =>
+                                handleUnfollowClick(
+                                  user.id,
+                                  user.fullName,
+                                  user.profilePhotoUrl
+                                )
+                              }
+                              className="px-2 py-1 hover:bg-red-200 text-xs bg-red-100 text-red-600 rounded"
                             >
                               {loadingUserId === user.id &&
                               unFollowUser.isPending ? (
@@ -131,7 +167,7 @@ export default function SimilarProfiles() {
                           ) : (
                             <button
                               onClick={() => handleFollow(user.id)}
-                              className="px-2 py-1 text-xs cursor-pointer bg-blue-100 text-blue-600 rounded hover:bg-blue-200 leading-none"
+                              className="px-2 py-1 text-xs bg-blue-100 text-blue-600 rounded hover:bg-blue-200"
                             >
                               {loadingUserId === user.id &&
                               followUser.isPending ? (
@@ -157,6 +193,22 @@ export default function SimilarProfiles() {
           })
         )}
       </div>
+
+      {showModal && selectedUser && (
+        <ConfirmationModal
+          title="Unfollow User"
+          message={`Are you sure you want to unfollow ${selectedUser.name}?`}
+          confirmText="Yes, Unfollow"
+          cancelText="Cancel"
+          onConfirm={confirmUnfollow}
+          onCancel={cancelUnfollow}
+          isLoading={isConfirming}
+          user={{
+            name: selectedUser.name,
+            image: selectedUser.image,
+          }}
+        />
+      )}
     </div>
   );
 }
