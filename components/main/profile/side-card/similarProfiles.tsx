@@ -64,7 +64,7 @@ export default function SimilarProfiles() {
         {similarProfiles.isLoading ? (
           <MiniLoader />
         ) : (
-          similarProfiles.data.list.map((user: userI) => {
+          similarProfiles?.data?.list.map((user: userI) => {
             return (
               <div key={user.id} className="mb-3 last:mb-0">
                 <div className="flex items-center gap-2">

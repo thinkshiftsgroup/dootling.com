@@ -10,6 +10,7 @@ import FeedMessage from "@/components/main/atom/feedMessage";
 import TrendingProjects from "@/components/main/profile/side-card/tredingProjects";
 import TrendingSpaces from "@/components/main/profile/side-card/trendingSpaces";
 import ReferralSideTab from "@/components/main/profile/side-card/referralSideTab";
+import { useAuthStore } from "@/stores/useAuthStore";
 
 export default function Home() {
   const feedContent = [
@@ -17,6 +18,9 @@ export default function Home() {
     "/images/page-img/pizza.jpg",
     "https://www.youtube.com/embed/IEHKekzTzPg",
   ];
+
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+
   return (
     <main className="main-content pb-20">
       <div className="relative">
@@ -42,7 +46,7 @@ export default function Home() {
                 </div>
 
                 <div className="w-full hidden lg:block lg:w-1/3 ps-5">
-                  <SimilarProfiles />
+                  {isLoggedIn && <SimilarProfiles />}
                   <TrendingProjects />
                   <TrendingSpaces />
                   <ReferralSideTab />
