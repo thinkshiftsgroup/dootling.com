@@ -11,6 +11,7 @@ import TrendingProjects from "@/components/main/profile/side-card/tredingProject
 import TrendingSpaces from "@/components/main/profile/side-card/trendingSpaces";
 import ReferralSideTab from "@/components/main/profile/side-card/referralSideTab";
 import { useAuthStore } from "@/stores/useAuthStore";
+import { useEffect } from "react";
 
 export default function Home() {
   const feedContent = [
@@ -20,6 +21,15 @@ export default function Home() {
   ];
 
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+  // const { user, setUser, isInitialized, token, initializeAuth } =
+  //   useAuthStore();
+
+  // useEffect(() => {
+  //   if (!isInitialized) {
+  //     console.log("-> Initializing Auth Store...");
+  //     initializeAuth();
+  //   }
+  // }, [isInitialized, initializeAuth]);
 
   return (
     <main className="main-content pb-20">

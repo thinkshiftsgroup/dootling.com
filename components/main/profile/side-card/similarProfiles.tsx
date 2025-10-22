@@ -14,6 +14,7 @@ interface userI {
   isFollowing: boolean;
   profilePhotoUrl: string | null;
   username: string;
+  totalProjects: number;
 }
 export default function SimilarProfiles() {
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
@@ -100,10 +101,10 @@ export default function SimilarProfiles() {
                     <div className="flex items-center justify-between gap-2">
                       <div>
                         <h5 className="text-xs ">{user.fullName}</h5>
-                        {/* <small className="capitalize text-gray-600  text-[11px] flex items-center gap-2">
-                          <span className="text-black">{user.projects}</span>
+                        <small className="capitalize text-gray-600 text-[10px] flex items-center gap-1">
+                          <span className="text-black">{user.totalProjects}</span>
                           Projects
-                        </small> */}
+                        </small>
 
                         {/* <small className="capitalize text-gray-600 text-[11px] flex items-center gap-2">
                           <span className="text-black">{user.strikes}</span>{" "}
