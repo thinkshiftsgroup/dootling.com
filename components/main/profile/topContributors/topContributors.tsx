@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import ContributionHeatmap from "../../landing-page/heatMap";
 
-type TabKey = "all" | "recent" | "close" | "hometown" | "following";
+type TabKey = "all" | "recent" | "followed" | "hometown" | "following";
 
 const TopContributorsTab: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabKey>("all");
@@ -14,9 +14,9 @@ const TopContributorsTab: React.FC = () => {
   const tabs = [
     { key: "all", label: "All Linked", count: 12 },
     { key: "recent", label: "Recently Added", count: 2 },
-    { key: "close", label: "Circle" },
     { key: "hometown", label: "Collaborators" },
     { key: "following", label: "Following" },
+    { key: "followed", label: "Followed" },
   ] as const;
 
   const members = [
@@ -121,15 +121,17 @@ const TopContributorsTab: React.FC = () => {
           </div>
         )}
 
-        {activeTab === "close" && (
-          <FriendCard name="Paul Molive" img="/images/user/07.jpg" />
-        )}
+   
 
         {activeTab === "hometown" && (
           <FriendCard name="Paul Molive" img="/images/user/07.jpg" />
         )}
 
         {activeTab === "following" && (
+          <FriendCard name="Paul Molive" img="/images/user/07.jpg" />
+        )}
+
+        {activeTab === "followed" && (
           <FriendCard name="Paul Molive" img="/images/user/07.jpg" />
         )}
       </div>
