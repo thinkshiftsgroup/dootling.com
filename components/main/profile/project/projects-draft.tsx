@@ -1,28 +1,30 @@
 import React, { useState } from "react";
-import { Lock, Globe, MoreHorizontal } from "lucide-react";
+import { Lock, Globe, MoreHorizontal, Loader2 } from "lucide-react";
 import AddProjectsModal from "./addProject";
-import { useRouter } from "next/navigation";
 import ManageProject from "./manageProject";
 import ConvertProjectToEscrow from "./CPEcrow";
+import { useRouter } from "next/navigation";
+import ConfirmConvertProjectToEscrow from "./confirmCPEscrow";
+import WithdrawFunds from "../finance/withdrawFunds";
+import FundWalletSideModal from "../finance/fundEscrowWallet.tsx";
+import ManageEscrowFunds from "../finance/manageEscrow";
+import RecallEscrowWallet from "../finance/recallEscrowFund";
+import { useProject } from "@/hooks/useProjects";
 
-// ======================
-// Type Definitions
-// ======================
 interface ProjectCardProps extends Project {
   onManageClick?: () => void;
   onCPEClick?: () => void;
+  onConfirmCPEClick?: () => void;
 }
 
 interface Project {
-  id: number;
+  id: string;
   imageSrc: string | null;
-  isPrivate: boolean;
-  projectName: string;
+  isPublic: boolean;
+  title: string;
   collaborators: number;
-  createdDate: string;
+  createdAt: string;
 }
-
-interface ProjectCardProps extends Project {}
 
 interface TabButtonProps {
   active: boolean;
@@ -37,41 +39,61 @@ interface ProjectDashboardProps {
   peerConfirmation?: Project[];
 }
 
-// ======================
-// ProjectCard Component
-// ======================
+//projects type
+export interface ProjectI {
+  id: string;
+  ownerId: string;
+  title: string;
+  description: string;
+  isPublic: boolean;
+  status: "PENDING" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED" | string;
+  totalBudget: number;
+  startDate: string;
+  deliveryDate: string;
+  contractClauses: string | null;
+  receiveEmailNotifications: boolean;
+  fundsRule: boolean;
+  isDeleted: boolean;
+  isEscrowed: boolean;
+  amountReleased: number;
+  amountPending: number;
+  completionPercentage: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
 const ProjectCard: React.FC<ProjectCardProps> = ({
   imageSrc,
-  isPrivate,
-  projectName,
+  isPublic,
+  title,
   collaborators,
-  createdDate,
+  createdAt,
   onManageClick,
-  onCPEClick
+  onCPEClick,
+  onConfirmCPEClick,
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   return (
-    <div className="bg-white h-40 flex rounded-md shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
-      {/* Image */}
+    <div className="bg-white h-40 flex rounded-md shadow-sm border border-gray-200 overflow-scroll hide-scrollbar hover:shadow-md transition-shadow">
       <div className="w-2/5 h-full bg-gradient-to-br from-gray-100 to-gray-200">
         {imageSrc ? (
           <img
             src={imageSrc}
-            alt={projectName}
+            alt={title}
             className="w-full h-full object-cover"
           />
         ) : (
           <div className="flex items-center justify-center w-full h-full text-gray-400 text-sm">
-            Project Image
+            {title}
           </div>
         )}
       </div>
 
-      {/* Info */}
-      <div className="w-3/5 p-4 flex flex-col justify-between">
+      <div className="w-3/5 md:!p-4 p-2 flex flex-col justify-between">
         <div className="flex items-start justify-between">
           <h3 className="text-base font-semibold text-gray-900 truncate">
-            {projectName}
+            {title}
           </h3>
           <button className="text-gray-400 hover:text-gray-600 transition">
             <MoreHorizontal className="w-5 h-5" />
@@ -79,20 +101,24 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         </div>
 
         <div>
-          <p className="text-sm text-gray-600">{collaborators} Contributors</p>
-          <p className="text-xs text-gray-400 mt-1">Created {createdDate}</p>
+          <p className="text-sm text-gray-600">
+            {collaborators || 0} Contributors
+          </p>
+          <p className="text-xs text-gray-400 mt-1">
+            Created {new Date(createdAt).toLocaleDateString("en-US")}
+          </p>
         </div>
 
         <div className="flex items-center gap-2 mt-2">
-          {isPrivate ? (
-            <>
-              <Lock className="w-4 h-4 text-gray-500" />
-              <span className="text-gray-600 text-sm">Private</span>
-            </>
-          ) : (
+          {isPublic ? (
             <>
               <Globe className="w-4 h-4 text-gray-500" />
               <span className="text-gray-600 text-sm">Public</span>
+            </>
+          ) : (
+            <>
+              <Lock className="w-4 h-4 text-gray-500" />
+              <span className="text-gray-600 text-sm">Private</span>
             </>
           )}
         </div>
@@ -121,7 +147,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             Manage Project
           </span>
           <span
-            onClick={onCPEClick}
+            onClick={() => onConfirmCPEClick?.()}
             className="flex gap-1 bg-[#F8F9FA] text-gray-800 hover:text-gray-950 hover:bg-[#d0d0d0] rounded-sm p-1 px-1 items-center cursor-pointer shadow-sm text-[10px]  transition-colors transistion-shadow"
           >
             <svg
@@ -171,56 +197,473 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   );
 };
 
-// ======================
-// TabButton Component
-// ======================
-const TabButton: React.FC<TabButtonProps> = ({
-  active,
-  onClick,
-  icon,
-  children,
+const EscrowProjectCard: React.FC<ProjectCardProps> = ({
+  imageSrc,
+  isPublic,
+  title,
+  collaborators,
+  createdAt,
+  onManageClick,
+  onCPEClick,
+  onConfirmCPEClick,
 }) => {
+  const router = useRouter();
   return (
-    <button
-      onClick={onClick}
-      className={`px-4 py-1 rounded-sm font-medium transition-colors flex items-center gap-2 ${
-        active
-          ? "bg-[#D8D8D8] text-[#202224]"
-          : "bg-[#F8F9FA] text-[#202224] hover:bg-gray-100"
-      }`}
-    >
-      <span className="text-lg">{icon}</span>
-      {children}
-    </button>
+    <div className="bg-white h-40 flex rounded-md shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
+      {/* Image */}
+      <div className="w-2/5 h-full bg-gradient-to-br from-gray-100 to-gray-200">
+        {imageSrc ? (
+          <img
+            src={imageSrc}
+            alt={title}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <div className="flex items-center justify-center w-full h-full text-gray-400 text-sm">
+            {title}
+          </div>
+        )}
+      </div>
+
+      {/* Info */}
+      <div className="w-3/5 p-4 flex flex-col justify-between">
+        <div className="flex items-start justify-between">
+          <h3 className="text-base font-semibold text-gray-900 truncate">
+            {title}
+          </h3>
+          <button className="text-gray-400 hover:text-gray-600 transition">
+            <MoreHorizontal className="w-5 h-5" />
+          </button>
+        </div>
+
+        <div>
+          <p className="text-sm text-gray-600">
+            {collaborators || 0} Contributors
+          </p>
+          <p className="text-xs text-gray-400 mt-1">
+            Created {new Date(createdAt).toLocaleDateString("en-US")}
+          </p>
+        </div>
+
+        <div className="flex items-center gap-2 mt-2">
+          {isPublic ? (
+            <>
+              <Globe className="w-4 h-4 text-gray-500" />
+              <span className="text-gray-600 text-sm">Public</span>
+            </>
+          ) : (
+            <>
+              <Lock className="w-4 h-4 text-gray-500" />
+              <span className="text-gray-600 text-sm">Private</span>
+            </>
+          )}
+        </div>
+        <div className="flex items-center gap-1.5 mt-2">
+          <span
+            onClick={() => onCPEClick?.()}
+            className="flex gap-1 bg-[#F8F9FA] text-gray-800 hover:text-gray-950 hover:bg-[#d0d0d0] rounded-sm p-1 px-1 items-center cursor-pointer shadow-sm text-[10px]  transition-colors transistion-shadow"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width={15}
+              height={15}
+              viewBox="0 0 24 24"
+            >
+              <g
+                fill="currentColor"
+                fillRule="evenodd"
+                clipRule="evenodd"
+                strokeWidth={0.5}
+                stroke="currentColor"
+              >
+                <path d="M11.32 6.176H5c-1.105 0-2 .949-2 2.118v10.588C3 20.052 3.895 21 5 21h11c1.105 0 2-.948 2-2.118v-7.75l-3.914 4.144A2.46 2.46 0 0 1 12.81 16l-2.681.568c-1.75.37-3.292-1.263-2.942-3.115l.536-2.839c.097-.512.335-.983.684-1.352z"></path>
+                <path d="M19.846 4.318a2.2 2.2 0 0 0-.437-.692a2 2 0 0 0-.654-.463a1.92 1.92 0 0 0-1.544 0a2 2 0 0 0-.654.463l-.546.578l2.852 3.02l.546-.579a2.1 2.1 0 0 0 .437-.692a2.24 2.24 0 0 0 0-1.635M17.45 8.721L14.597 5.7L9.82 10.76a.54.54 0 0 0-.137.27l-.536 2.84c-.07.37.239.696.588.622l2.682-.567a.5.5 0 0 0 .255-.145l4.778-5.06Z"></path>
+              </g>
+            </svg>{" "}
+            Manage Escrow Project
+          </span>
+
+          <span
+            onClick={() => router.push("/projects")}
+            className="flex gap-1 bg-[#F8F9FA] text-gray-800 hover:text-gray-950 hover:bg-[#d0d0d0] rounded-sm p-1 px-1 items-center cursor-pointer shadow-sm text-[10px]  transition-colors transistion-shadow"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width={15}
+              height={15}
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                fillRule="evenodd"
+                d="M3.464 3.464C2 4.93 2 7.286 2 12s0 7.071 1.464 8.535C4.93 22 7.286 22 12 22s7.071 0 8.535-1.465C22 19.072 22 16.714 22 12s0-7.071-1.465-8.536C19.072 2 16.714 2 12 2S4.929 2 3.464 3.464M17 12.667C17 16.933 13.444 18 11.667 18C10.11 18 7 16.933 7 12.667C7 10.81 8.063 9.633 8.956 9.04c.408-.271.916-.098.942.391c.058 1.071.883 1.931 1.523 1.07c.584-.788.873-1.858.873-2.501c0-.947.958-1.548 1.707-.968C15.459 8.162 17 10.056 17 12.667"
+                clipRule="evenodd"
+                strokeWidth={0.5}
+                stroke="currentColor"
+              ></path>
+            </svg>{" "}
+            Heatup Project
+          </span>
+        </div>
+      </div>
+    </div>
   );
 };
 
-// ======================
-// Main Dashboard
-// ======================
+const MyProjectsContent: React.FC<{
+  projects: Project[];
+  onManageClick?: (id: string) => void;
+  onCPEClick?: (id: string) => void;
+  onConfirmCPEClick?: (id: string) => void;
+}> = ({ projects, onManageClick, onCPEClick, onConfirmCPEClick }) => {
+  const { getAllProject } = useProject();
+  const isLoading = getAllProject?.isLoading;
+  const data = getAllProject?.data?.data || [];
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center py-12 text-center text-gray-500">
+        <Loader2 size={20} className="animate-spin text-[#157bff]" />
+        <p className="text-sm font-medium">Loading projects...</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-2">
+      {data.length > 0 ? (
+        data.map((project: any) => (
+          <ProjectCard
+            onManageClick={() => onManageClick?.(project.id)}
+            onCPEClick={() => onCPEClick?.(project.id)}
+            onConfirmCPEClick={() => onConfirmCPEClick?.(project.id)}
+            key={project.id}
+            {...project}
+          />
+        ))
+      ) : (
+        <div className="sm:!py-8 py-4 text-center text-gray-500">
+          <p className="text-lg font-medium">No Projects</p>
+          <p className="text-sm mt-1">
+            Create your first project to get started
+          </p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const EscrowProjectsContent: React.FC<{
+  projects: Project[];
+  onManageClick?: (id: string) => void;
+  onCPEClick?: (id: string) => void;
+}> = ({ projects, onManageClick, onCPEClick }) => {
+  const [showManageFunds, setManageFunds] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [showTransactionFilter, setShowTransactionFilter] = useState(false);
+  const [showAPT, setShowAPT] = useState(false);
+  const [activeTab, setActiveTab] = useState<
+    "transactions" | "escrow" | "fund"
+  >("transactions");
+  const [recallFunds, setRecallFunds] = useState(false);
+  const [withdrawFunds, setWithdrawFunds] = useState(false);
+
+  return (
+    <>
+      <div className="space-y-2">
+        <div className="flex overflow-x-scroll hide-scrollbar  lg:!flex-row flex-col items-center justify-between gap-2 my-5">
+          <div className="flex w-full h-[110px] overflow-y-scroll hide-scrollbar flex-col justify-between gap-3 p-2 bg-white shadow-md min-w-[250px] rounded">
+            <div className="flex items-center">
+              <p
+                className="text-white font-bold text-xl w-full px-3 py-2 rounded-sm leading-none"
+                style={{ backgroundColor: "#A6A6A6" }}
+              >
+                $625.00
+              </p>
+            </div>
+            <div className="flex items-center justify-between mt-2">
+              <p
+                onClick={() => setActiveTab("transactions")}
+                className={`text-xs cursor-pointer transition-colors duration-200 ${
+                  activeTab === "transactions" ? "text-black" : "text-gray-300"
+                }`}
+              >
+                In Escrow
+              </p>
+            </div>
+          </div>
+
+          <div className="flex w-full h-[110px] overflow-y-scroll hide-scrollbar flex-col justify-between gap-3 p-2 bg-white shadow-md min-w-[250px] rounded">
+            <div className="flex items-center">
+              <p
+                className="text-white font-bold text-xl w-full px-3 py-2 rounded-sm leading-none"
+                style={{ backgroundColor: "#A6A6A6" }}
+              >
+                $425.00
+              </p>
+            </div>
+            <div className="mt-2">
+              <div className="flex flex-row lg:flex-col gap-1">
+                <p
+                  onClick={() => setActiveTab("transactions")}
+                  className={`text-xs whitespace-nowrap cursor-pointer transition-colors duration-200 ${
+                    activeTab === "transactions"
+                      ? "text-black"
+                      : "text-gray-300"
+                  }`}
+                >
+                  Total Paid out
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex w-full h-[110px] overflow-y-scroll hide-scrollbar flex-col justify-between gap-3 p-2 bg-white shadow-md min-w-[250px] rounded">
+            <div className="flex items-center">
+              <p
+                className="text-white font-bold text-xl w-full px-3 py-2 rounded-sm leading-none"
+                style={{ backgroundColor: "#A6A6A6" }}
+              >
+                $200.00
+              </p>
+            </div>
+            <div className="mt-2 flex items-center justify-between">
+              <p
+                onClick={() => setActiveTab("escrow")}
+                className={`text-xs pt-1 cursor-pointer transition-colors duration-200 ${
+                  activeTab === "escrow" ? "text-black" : "text-gray-300"
+                }`}
+              >
+                Available Balance
+              </p>
+              <button
+                onClick={() => setWithdrawFunds(true)}
+                className="bg-[#FAAF40] cursor-pointer text-white text-[10px] flex items-center gap-1 p-1 rounded"
+              >
+                Withdraw Funds
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 56 56"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M5.46484 20.2267C5.46484 17.4995 6.56302 15.8294 8.83683 14.5627L18.2009 9.35204C23.1062 6.62483 25.5601 5.25781 28.2485 5.25781C30.937 5.25781 33.3908 6.62483 38.2961 9.35204L47.6602 14.5627C49.9318 15.8294 51.0322 17.4995 51.0322 20.2267C51.0322 20.9649 51.0322 21.3363 50.9525 21.6393C50.5287 23.2341 49.0819 23.487 47.6853 23.487H8.81177C7.41513 23.487 5.97064 23.2364 5.54459 21.6393C5.46484 21.334 5.46484 20.9649 5.46484 20.2267Z"
+                    stroke="white"
+                    stroke-width="3.41755"
+                  />
+                  <path
+                    d="M28.2383 16.6484H28.2588"
+                    stroke="white"
+                    stroke-width="4.55674"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M10.0216 23.4844V42.8505M19.1351 23.4844V42.8505M37.362 23.4844V42.8505M46.4755 23.4844V42.8505M44.1971 42.8505H12.2999C10.4872 42.8505 8.74863 43.5706 7.4668 44.8525C6.18497 46.1343 5.46484 47.8728 5.46484 49.6856C5.46484 49.9877 5.58486 50.2775 5.7985 50.4911C6.01214 50.7048 6.3019 50.8248 6.60403 50.8248H49.893C50.1952 50.8248 50.4849 50.7048 50.6986 50.4911C50.9122 50.2775 51.0322 49.9877 51.0322 49.6856C51.0322 47.8728 50.3121 46.1343 49.0303 44.8525C47.7484 43.5706 46.0099 42.8505 44.1971 42.8505Z"
+                    stroke="white"
+                    stroke-width="3.41755"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        {projects.length > 0 ? (
+          projects.map((project) => (
+            <EscrowProjectCard
+              onManageClick={() => onManageClick?.(project.id)}
+              onCPEClick={() => onCPEClick?.(project.id)}
+              key={project.id}
+              {...project}
+            />
+          ))
+        ) : (
+          <div className="py-8 text-center text-gray-500">
+            <p className="text-lg font-medium">No Projects</p>
+            <p className="text-sm mt-1">
+              Create your first project to get started
+            </p>
+          </div>
+        )}
+      </div>
+      <WithdrawFunds
+        open={withdrawFunds}
+        onClose={() => setWithdrawFunds(false)}
+      />
+      <FundWalletSideModal
+        open={showModal}
+        onClose={() => setShowModal(false)}
+      />
+      <ManageEscrowFunds
+        open={showManageFunds}
+        onClose={() => setManageFunds(false)}
+      />
+      <RecallEscrowWallet
+        open={recallFunds}
+        onClose={() => setRecallFunds(false)}
+      />
+    </>
+  );
+};
+const InvitedProjectsContent: React.FC = () => {
+  return (
+    <div className="py-8 text-center text-gray-500">
+      <p className="text-lg font-medium">Invited Projects</p>
+      <p className="text-sm mt-1">Add your invited projects content here</p>
+    </div>
+  );
+};
+
+const PeerConfirmationContent: React.FC = () => {
+  return (
+    <div className="py-8 text-center text-gray-500">
+      <p className="text-lg font-medium">Peer Confirmation</p>
+      <p className="text-sm mt-1">Add your peer confirmation content here</p>
+    </div>
+  );
+};
+
 const ProjectDashboard: React.FC<ProjectDashboardProps> = ({
-  projects = [],
+  projects = [
+    {
+      id: "a",
+      imageSrc: null,
+      isPublic: true,
+      title: "Project Alpha",
+      collaborators: 5,
+      createdAt: "2 days ago",
+    },
+    {
+      id: "b",
+      imageSrc: null,
+      isPublic: false,
+      title: "Project Beta",
+      collaborators: 3,
+      createdAt: "1 week ago",
+    },
+  ],
 }) => {
   const [activeTab, setActiveTab] = useState<string>("my-projects");
   const [showModal, setShowModal] = useState(false);
   const [manageProject, setManageProject] = useState(false);
   const [CPEcrow, setCPEcrow] = useState(false);
+  const [ConfirmCPEscrow, setConfirmCPEscrow] = useState(false);
+
+  const [selectedProjectId, setSelectedProjectId] = useState<string>("");
+  const [selectedProjectName, setSelectedProjectName] = useState<string>("");
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case "my-projects":
+        return (
+          <MyProjectsContent
+            projects={projects}
+            onManageClick={(id) => {
+              setSelectedProjectId(id);
+              setManageProject(true);
+            }}
+            onConfirmCPEClick={(id) => {
+              setSelectedProjectId(id);
+              setConfirmCPEscrow(true);
+            }}
+            onCPEClick={(id) => {
+              setSelectedProjectId(id);
+              setCPEcrow(true);
+            }}
+          />
+        );
+      case "escrow-projects":
+        return (
+          <EscrowProjectsContent
+            projects={projects}
+            onManageClick={(id) => setManageProject(true)}
+            onCPEClick={(id) => setCPEcrow(true)}
+          />
+        );
+      case "invited":
+        return <InvitedProjectsContent />;
+      case "peer-confirmation":
+        return <PeerConfirmationContent />;
+      default:
+        return (
+          <MyProjectsContent
+            projects={projects}
+            onManageClick={(id) => setManageProject(true)}
+            onCPEClick={(id) => setCPEcrow(true)}
+            onConfirmCPEClick={(id) => setConfirmCPEscrow(true)}
+          />
+        );
+    }
+  };
+  const renderCreateProject = () => {
+    switch (activeTab) {
+      case "my-projects":
+        return (
+          <button
+            onClick={() => setShowModal(true)}
+            className="bg-[#157BFF] whitespace-nowrap justify-center hover:bg-blue-700 text-white sm:!px-4 px-2 py-2 rounded-sm flex items-center gap-2 transition"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width={20}
+              height={20}
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path d="M18 12.998h-5v5a1 1 0 0 1-2 0v-5H6a1 1 0 0 1 0-2h5v-5a1 1 0 0 1 2 0v5h5a1 1 0 0 1 0 2"></path>
+            </svg>
+            Create Project
+          </button>
+        );
+      case "escrow-projects":
+        return;
+      case "invited":
+        return;
+      case "peer-confirmation":
+        return;
+      default:
+        return (
+          <button
+            onClick={() => setShowModal(true)}
+            className="bg-[#157BFF] whitespace-nowrap justify-center hover:bg-blue-700 text-white px-2 sm:!px-4 py-2 rounded-sm flex items-center gap-2 transition"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width={20}
+              height={20}
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path d="M18 12.998h-5v5a1 1 0 0 1-2 0v-5H6a1 1 0 0 1 0-2h5v-5a1 1 0 0 1 2 0v5h5a1 1 0 0 1 0 2"></path>
+            </svg>
+            Create Project
+          </button>
+        );
+    }
+  };
 
   return (
-    <div className="w-full bg-gray-50 py-8">
+    <div className="w-full bg-gray-50 sm:!py-8 py-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="bg-white rounded-2xl shadow-sm p-6">
+        <div className="bg-white rounded-2xl shadow-sm p-3 sm:!p-6">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8">
-            <div className="flex flex-wrap items-center gap-3">
-              <TabButton
-                active={activeTab === "my-projects"}
-                onClick={() => setActiveTab("my-projects")}
-                icon={
+            <div className="mb-2">
+              <ul className="flex whitespace-nowrap flex-wrap w-full items-center gap-4 *:cursor-pointer font-medium text-gray-500">
+                <li
+                  onClick={() => setActiveTab("my-projects")}
+                  className={` flex items-center gap-1 ${
+                    activeTab === "my-projects"
+                      ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]"
+                      : ""
+                  }`}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width={20}
-                    height={20}
+                    width={16}
+                    height={16}
                     viewBox="0 0 24 24"
                   >
                     <g
@@ -235,19 +678,43 @@ const ProjectDashboard: React.FC<ProjectDashboardProps> = ({
                       <path d="M14 14h6v5a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1zM4 4h6v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"></path>
                     </g>
                   </svg>
-                }
-              >
-                My Projects
-              </TabButton>
-
-              <TabButton
-                active={activeTab === "invited"}
-                onClick={() => setActiveTab("invited")}
-                icon={
+                  Projects
+                </li>
+                <li
+                  onClick={() => setActiveTab("escrow-projects")}
+                  className={` flex items-center gap-1 ${
+                    activeTab === "escrow-projects"
+                      ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]"
+                      : ""
+                  }`}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width={20}
-                    height={20}
+                    width="15"
+                    height="15"
+                    viewBox="0 0 512 512"
+                  >
+                    <path
+                      fill="currentColor"
+                      fill-rule="evenodd"
+                      d="m243.07 65.728l34.263 14.684v46.42l-41.306-17.703l-107.695 61.54l116.919 66.811L256 243.623v146.285l106.667-60.952v-94.288h42.666v119.048l-10.749 6.143l-149.333 85.333l-10.584 6.048l-10.585-6.048l-149.333-85.333L64 353.716V158.289l10.749-6.142l149.333-85.333l9.224-5.271zm-29.737 324.18V268.383l-106.666-60.952v121.525zm106.666-283.24h55.163l-91.581 91.582l30.17 30.17l91.581-91.582v55.163h42.667v-128h-128z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  Escrow Projects
+                </li>
+                <li
+                  onClick={() => setActiveTab("invited")}
+                  className={` flex items-center gap-1 ${
+                    activeTab === "invited"
+                      ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]"
+                      : ""
+                  }`}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width={15}
+                    height={15}
                     viewBox="0 0 24 24"
                   >
                     <path
@@ -259,19 +726,20 @@ const ProjectDashboard: React.FC<ProjectDashboardProps> = ({
                       d="M4 4h6v6H4zm10 0h6v6h-6zM4 14h6v6H4zm10 3h6m-3-3v6"
                     ></path>
                   </svg>
-                }
-              >
-                Invited Projects
-              </TabButton>
-
-              <TabButton
-                active={activeTab === "peer-confirmation"}
-                onClick={() => setActiveTab("peer-confirmation")}
-                icon={
+                  Invited Projects
+                </li>
+                <li
+                  onClick={() => setActiveTab("peer-confirmation")}
+                  className={` flex items-center gap-1 ${
+                    activeTab === "peer-confirmation"
+                      ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]"
+                      : ""
+                  }`}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width={20}
-                    height={20}
+                    width={15}
+                    height={15}
                     viewBox="0 0 14 14"
                   >
                     <path
@@ -283,61 +751,33 @@ const ProjectDashboard: React.FC<ProjectDashboardProps> = ({
                       d="m13.5 13.5l-1.778-1.778M3.903 5.816q-.35.027-.708.028c-.474 0-.939-.043-1.392-.094A1.326 1.326 0 0 1 .638 4.582C.59 4.132.55 3.67.55 3.198c0-.47.041-.933.09-1.383c.064-.61.555-1.1 1.164-1.168c.453-.05.918-.094 1.392-.094s.939.043 1.391.094c.61.068 1.1.558 1.165 1.168c.049.45.09.912.09 1.383q-.001.336-.025.666M3.195 8.155c-.474 0-.939.044-1.392.094c-.61.068-1.1.559-1.165 1.168c-.048.45-.089.913-.089 1.384s.041.933.09 1.384c.064.61.555 1.1 1.164 1.168c.453.05.918.094 1.392.094s.939-.044 1.391-.094M7.931 3.198c0-.471.04-.933.089-1.383c.065-.61.556-1.1 1.165-1.168c.453-.05.918-.094 1.392-.094s.938.043 1.391.094c.61.068 1.1.558 1.165 1.168c.048.45.09.912.09 1.383c0 .472-.042.934-.09 1.384a1.3 1.3 0 0 1-.11.4m-4.199 7.711c2.479 0 3.873-1.394 3.873-3.873s-1.394-3.873-3.873-3.873S4.951 6.34 4.951 8.82s1.394 3.873 3.873 3.873"
                     ></path>
                   </svg>
-                }
-              >
-                Peer Confirmation
-              </TabButton>
+                  Peer Confirmation
+                </li>
+              </ul>
             </div>
 
-            <button
-              onClick={() => setShowModal(true)}
-              className="bg-[#157BFF] whitespace-nowrap justify-center hover:bg-blue-700 text-white px-4 py-2 rounded-sm flex items-center gap-2 transition"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width={20}
-                height={20}
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path d="M18 12.998h-5v5a1 1 0 0 1-2 0v-5H6a1 1 0 0 1 0-2h5v-5a1 1 0 0 1 2 0v5h5a1 1 0 0 1 0 2"></path>
-              </svg>
-              Create Project
-            </button>
-            {/* <button
-              onClick={() => setManageProject(true)}
-              className="bg-[#157BFF] whitespace-nowrap justify-center hover:bg-blue-700 text-white px-4 py-2 rounded-sm flex items-center gap-2 transition"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width={20}
-                height={20}
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path d="M18 12.998h-5v5a1 1 0 0 1-2 0v-5H6a1 1 0 0 1 0-2h5v-5a1 1 0 0 1 2 0v5h5a1 1 0 0 1 0 2"></path>
-              </svg>
-              Convert 
-            </button> */}
+            {renderCreateProject()}
           </div>
 
-          <div className="space-y-2">
-            {projects.map((project) => (
-              <ProjectCard
-                onManageClick={() => setManageProject(true)}
-                onCPEClick={()=>setCPEcrow(true)}
-                key={project.id}
-                {...project}
-              />
-            ))}
-          </div>
+          {/* Tab Content */}
+          {renderTabContent()}
         </div>
       </div>
       {CPEcrow && <ConvertProjectToEscrow setCPEcrow={setCPEcrow} />}
+
       <ManageProject
         open={manageProject}
         onClose={() => setManageProject(false)}
+        projectId={selectedProjectId}
       />
+
+      {ConfirmCPEscrow && (
+        <ConfirmConvertProjectToEscrow
+          projectId={selectedProjectId!}
+          setOpenModal={setConfirmCPEscrow}
+        />
+      )}
+
       <AddProjectsModal open={showModal} onClose={() => setShowModal(false)} />
     </div>
   );

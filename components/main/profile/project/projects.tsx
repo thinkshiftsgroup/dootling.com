@@ -706,7 +706,7 @@ const ProjectDashboard: React.FC<ProjectDashboardProps> = ({
                 <li
                   onClick={() => setActiveTab("invited")}
                   className={` flex items-center gap-1 ${
-                    activeTab === "Audit Log"
+                    activeTab === "invited"
                       ? "border-b-2 text-[#157bff] px-2 border-b-[#157bff]"
                       : ""
                   }`}

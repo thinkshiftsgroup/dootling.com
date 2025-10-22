@@ -382,7 +382,7 @@ const InProfile = () => {
                       <div className="mt-6">
                         {activeTab === "Feeds" && <ProfileFeeds />}
                         {activeTab === "Projects" && (
-                          <ProjectDashboard projects={myProjects} />
+                          <ProjectDashboard />
                         )}
                         {activeTab === "Followed" && <FollowedTab />}
                         {activeTab === "Spaces" && (
