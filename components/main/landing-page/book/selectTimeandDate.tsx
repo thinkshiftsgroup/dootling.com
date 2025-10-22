@@ -30,8 +30,8 @@ const SelectTimeDate = ({ setPage }: any) => {
     <div className="p-6 h-[84vh] overflow-y-scroll hide-scrollbar">
       <p className="text-xl font-bold text-black mb-4">Select a Date & Time</p>
 
-      <div className="grid grid-cols-7 gap-6">
-        <div className="col-span-4 w-full">
+      <div className=" md:grid md:grid-cols-7 gap-6">
+        <div className="md:col-span-4 w-full lg:!py-0 py-4">
           <Calendar
             mode="single"
             selected={date}
@@ -72,7 +72,7 @@ const SelectTimeDate = ({ setPage }: any) => {
           </div>
         </div>
 
-        <div className="col-span-3 w-full">
+        <div className="md:col-span-3 w-full lg:!py-0 py-4">
           {date && (
             <div className="text-gray-800 text-sm">
               <p className="text-sm font-medium">
