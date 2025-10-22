@@ -7,9 +7,14 @@ import { Button } from "@/components/ui/button";
 interface ManageProjectProps {
   open: boolean;
   onClose: () => void;
+  projectId: string | number | null;
 }
 
-const ManageProject: React.FC<ManageProjectProps> = ({ open, onClose }) => {
+const ManageProject: React.FC<ManageProjectProps> = ({
+  open,
+  onClose,
+  projectId,
+}) => {
   const [purpose, setPurpose] = useState("");
   const [selected, setSelectedRadio] = useState("invite");
 
@@ -248,7 +253,7 @@ const ManageProject: React.FC<ManageProjectProps> = ({ open, onClose }) => {
                 </label>
               </div>
 
-                <button className="text-white w-5/11 flex items-center justify-center gap-2 rounded-sm font-semibold text-base py-2 cursor-pointer bg-[#1571E8]">
+              <button className="text-white w-5/11 flex items-center justify-center gap-2 rounded-sm font-semibold text-base py-2 cursor-pointer bg-[#1571E8]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width={30}

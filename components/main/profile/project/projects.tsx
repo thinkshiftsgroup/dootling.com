@@ -18,7 +18,7 @@ interface ProjectCardProps extends Project {
 }
 
 interface Project {
-  id: number;
+  id: string;
   imageSrc: string | null;
   isPublic: boolean;
   title: string;
@@ -90,7 +90,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         )}
       </div>
 
-      {/* Info */}
       <div className="w-3/5 md:!p-4 p-2 flex flex-col justify-between">
         <div className="flex items-start justify-between">
           <h3 className="text-base font-semibold text-gray-900 truncate">
@@ -102,7 +101,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         </div>
 
         <div>
-          <p className="text-sm text-gray-600">{collaborators || 0} Contributors</p>
+          <p className="text-sm text-gray-600">
+            {collaborators || 0} Contributors
+          </p>
           <p className="text-xs text-gray-400 mt-1">
             Created {new Date(createdAt).toLocaleDateString("en-US")}
           </p>
@@ -236,7 +237,9 @@ const EscrowProjectCard: React.FC<ProjectCardProps> = ({
         </div>
 
         <div>
-          <p className="text-sm text-gray-600">{collaborators || 0} Contributors</p>
+          <p className="text-sm text-gray-600">
+            {collaborators || 0} Contributors
+          </p>
           <p className="text-xs text-gray-400 mt-1">
             Created {new Date(createdAt).toLocaleDateString("en-US")}
           </p>
@@ -309,9 +312,9 @@ const EscrowProjectCard: React.FC<ProjectCardProps> = ({
 
 const MyProjectsContent: React.FC<{
   projects: Project[];
-  onManageClick?: (id: number) => void;
-  onCPEClick?: (id: number) => void;
-  onConfirmCPEClick?: (id: number) => void;
+  onManageClick?: (id: string) => void;
+  onCPEClick?: (id: string) => void;
+  onConfirmCPEClick?: (id: string) => void;
 }> = ({ projects, onManageClick, onCPEClick, onConfirmCPEClick }) => {
   const { getAllProject } = useProject();
   const isLoading = getAllProject?.isLoading;
@@ -352,8 +355,8 @@ const MyProjectsContent: React.FC<{
 
 const EscrowProjectsContent: React.FC<{
   projects: Project[];
-  onManageClick?: (id: number) => void;
-  onCPEClick?: (id: number) => void;
+  onManageClick?: (id: string) => void;
+  onCPEClick?: (id: string) => void;
 }> = ({ projects, onManageClick, onCPEClick }) => {
   const [showManageFunds, setManageFunds] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -525,7 +528,7 @@ const PeerConfirmationContent: React.FC = () => {
 const ProjectDashboard: React.FC<ProjectDashboardProps> = ({
   projects = [
     {
-      id: 1,
+      id: "a",
       imageSrc: null,
       isPublic: true,
       title: "Project Alpha",
@@ -533,7 +536,7 @@ const ProjectDashboard: React.FC<ProjectDashboardProps> = ({
       createdAt: "2 days ago",
     },
     {
-      id: 2,
+      id: "b",
       imageSrc: null,
       isPublic: false,
       title: "Project Beta",
@@ -548,15 +551,27 @@ const ProjectDashboard: React.FC<ProjectDashboardProps> = ({
   const [CPEcrow, setCPEcrow] = useState(false);
   const [ConfirmCPEscrow, setConfirmCPEscrow] = useState(false);
 
+  const [selectedProjectId, setSelectedProjectId] = useState<string>("");
+  const [selectedProjectName, setSelectedProjectName] = useState<string>("");
+
   const renderTabContent = () => {
     switch (activeTab) {
       case "my-projects":
         return (
           <MyProjectsContent
             projects={projects}
-            onManageClick={(id) => setManageProject(true)}
-            onCPEClick={(id) => setCPEcrow(true)}
-            onConfirmCPEClick={(id) => setConfirmCPEscrow(true)}
+            onManageClick={(id) => {
+              setSelectedProjectId(id);
+              setManageProject(true);
+            }}
+            onConfirmCPEClick={(id) => {
+              setSelectedProjectId(id);
+              setConfirmCPEscrow(true);
+            }}
+            onCPEClick={(id) => {
+              setSelectedProjectId(id);
+              setCPEcrow(true);
+            }}
           />
         );
       case "escrow-projects":
@@ -749,13 +764,19 @@ const ProjectDashboard: React.FC<ProjectDashboardProps> = ({
         </div>
       </div>
       {CPEcrow && <ConvertProjectToEscrow setCPEcrow={setCPEcrow} />}
-      {ConfirmCPEscrow && (
-        <ConfirmConvertProjectToEscrow setOpenModal={setConfirmCPEscrow} />
-      )}
+
       <ManageProject
         open={manageProject}
         onClose={() => setManageProject(false)}
+        projectId={selectedProjectId}
       />
+
+      {ConfirmCPEscrow && (
+        <ConfirmConvertProjectToEscrow
+          projectId={selectedProjectId!}
+          setOpenModal={setConfirmCPEscrow}
+        />
+      )}
 
       <AddProjectsModal open={showModal} onClose={() => setShowModal(false)} />
     </div>

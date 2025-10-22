@@ -2,6 +2,7 @@ import apiInstance from "@/api/apiInstance";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
+import { toast } from "sonner";
 
 export const useProject = () => {
   const { user, setUser, isInitialized, token, initializeAuth } =
@@ -46,8 +47,22 @@ export const useProject = () => {
     },
   });
 
+  const convertProjectToEscrowFn = useMutation({
+    mutationKey: ["convert-project-to-escrow"],
+    mutationFn: async ({ projectId }: { projectId: string }) => {
+      const res = await apiInstance.patch(
+        `api/projects/${projectId}/escrow-activate`
+      );
+      return res.data;
+    },onError:(err:any)=>{
+      toast.error(err.response.data.message || "Something went wrong!")
+    }
+  });
+
   return {
     getAllProject,
-    createProject
+    createProject,
+
+    convertProjectToEscrowFn
   };
 };
