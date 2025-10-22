@@ -10,8 +10,8 @@ const BookingPage = () => {
   return (
     <div>
       <Navbar fixed={true} />
-      <div className="container mx-auto h-[85vh] md:!px-0 px-2 mt-[5rem] mb-[1rem] bg-white shadow-sm rounded-sm grid grid-cols-10">
-        <div className="col-span-4 border-r p-6 relative h-[85vh] ">
+      <div className="container mx-auto md:h-[85vh] h-auto md:mt-[5rem] md:mb-[1rem] md:bg-white md:shadow-sm md:rounded-sm md:grid md:grid-cols-10 mt-[70px]">
+        <div className="md:col-span-4 md:border-r p-6 relative md:h-auto h-[85vh]">
           <div className="flex mb-10 items-center gap-2">
             <Image
               src="/images/user/userImg.jpg"
@@ -80,7 +80,7 @@ const BookingPage = () => {
           <div className="mt-10">
             <p className="text-sm leading-relaxed">
               🚀Unlock Clarity. Unlock Growth. Unlock YOU. This is not another
-              casual chat. It’s a focused strategy session built to cut through
+              casual chat. It's a focused strategy session built to cut through
               the fog, clear the noise, and give you a roadmap...
             </p>
             <p className="text-sm py-2 text-[#157bff] font-semibold cursor-pointer capitalize">
@@ -92,7 +92,7 @@ const BookingPage = () => {
             Privacy Policy
           </p>
         </div>
-        <div className="col-span-6">
+        <div className="md:col-span-6">
           {page === 1 && <SelectTimeDate setPage={setPage} />}
           {page === 2 && <FillBookingForm setPage={setPage} />}
         </div>
