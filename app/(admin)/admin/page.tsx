@@ -5,12 +5,26 @@
 
 import { AdminSidebar, TabContent } from "@/components/admin/adminSideBar";
 import { useState } from "react";
+import Dashboard from "./stat-cards";
 
 // Example usage component
 export default function AdminPageExample() {
-  const [activeTab, setActiveTab] = useState("all-users");
+  const [activeTab, setActiveTab] = useState("adashboard");
 
   const sidebarSections = [
+    {
+      title: "Dashboard",
+      icon: (
+        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" />
+        </svg>
+      ),
+      sectionKey: "dashboard",
+      id: "dashboard",
+      items: [
+        { label: "Dashboard", id: "dashboard" },
+      ],
+    },
     {
       title: "Accounts",
       icon: (
@@ -140,12 +154,21 @@ export default function AdminPageExample() {
         {/* Tab Content */}
         <div className="col-span-9">
           <div className="card bg-white rounded-sm p-6">
+            <TabContent activeTab={activeTab} tabId="dashboard">
+              {/* <h4 className="text-lg font-semibold text-gray-800 mb-4">
+                Dashboard
+              </h4> */}
+              <p className="text-gray-600">
+                <Dashboard />
+              </p>
+            </TabContent>
             <TabContent activeTab={activeTab} tabId="all-users">
               <h4 className="text-lg font-semibold text-gray-800 mb-4">
                 Personal Information
               </h4>
               <p className="text-gray-600">
                 Add your personal information form content here
+                {/* <Dashboard /> */}
               </p>
             </TabContent>
 
