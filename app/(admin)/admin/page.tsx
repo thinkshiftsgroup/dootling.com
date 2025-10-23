@@ -5,10 +5,11 @@
 
 import { AdminSidebar, TabContent } from "@/components/admin/adminSideBar";
 import { useState } from "react";
+import Dashboard from "./stat-cards";
 
 // Example usage component
 export default function AdminPageExample() {
-  const [activeTab, setActiveTab] = useState("all-users");
+  const [activeTab, setActiveTab] = useState("adashboard");
 
   const sidebarSections = [
     {
