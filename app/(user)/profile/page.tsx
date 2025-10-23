@@ -381,25 +381,6 @@ const UserProfile = () => {
     },
   ];
 
-  const myProjects = [
-    {
-      id: 1,
-      imageSrc: "/images/project.png",
-      isPrivate: true,
-      projectName: "E-commerce App",
-      collaborators: 12,
-      createdDate: "10/15/2025",
-    },
-    {
-      id: 2,
-      imageSrc: "/images/project.png",
-      isPrivate: false,
-      projectName: "Mobile App",
-      collaborators: 5,
-      createdDate: "09/20/2025",
-    },
-  ];
-
   if (!isInitialized || isLoading) {
     return <LinkedInLoader />;
   }
@@ -619,11 +600,28 @@ const UserProfile = () => {
                         <TopContributorsTab />
                       )}
                       {activeTab === "Spaces" && (
-                        <ProfileSpace Spaces={myProjects} />
+                        <ProfileSpace
+                          Spaces={[
+                            {
+                              id: 1,
+                              imageSrc: "/images/project.png",
+                              isPrivate: true,
+                              projectName: "E-commerce App",
+                              collaborators: 12,
+                              createdDate: "10/15/2025",
+                            },
+                            {
+                              id: 2,
+                              imageSrc: "/images/project.png",
+                              isPrivate: false,
+                              projectName: "Mobile App",
+                              collaborators: 5,
+                              createdDate: "09/20/2025",
+                            },
+                          ]}
+                        />
                       )}
-                      {activeTab === "Projects" && (
-                        <ProjectDashboard projects={myProjects} />
-                      )}
+                      {activeTab === "Projects" && <ProjectDashboard />}
                     </div>
                   </div>
                 </div>
