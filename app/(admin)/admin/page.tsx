@@ -153,12 +153,21 @@ export default function AdminPageExample() {
         {/* Tab Content */}
         <div className="col-span-9">
           <div className="card bg-white rounded-sm p-6">
+            <TabContent activeTab={activeTab} tabId="dashboard">
+              {/* <h4 className="text-lg font-semibold text-gray-800 mb-4">
+                Dashboard
+              </h4> */}
+              <p className="text-gray-600">
+                <Dashboard />
+              </p>
+            </TabContent>
             <TabContent activeTab={activeTab} tabId="all-users">
               <h4 className="text-lg font-semibold text-gray-800 mb-4">
                 Personal Information
               </h4>
               <p className="text-gray-600">
                 Add your personal information form content here
+                {/* <Dashboard /> */}
               </p>
             </TabContent>
 
