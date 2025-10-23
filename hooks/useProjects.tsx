@@ -54,15 +54,23 @@ export const useProject = () => {
         `api/projects/${projectId}/escrow-activate`
       );
       return res.data;
-    },onError:(err:any)=>{
-      toast.error(err.response.data.message || "Something went wrong!")
-    }
+    },
+    onError: (err: any) => {
+      // if (
+      //   err.response.data.detail ===
+      //   "Project is already marked as escrowed and cannot be updated again."
+      // ) {
+      //   toast.error("Project is already an escrow project");
+      // } else {
+        // }
+        toast.error(err.response.data.message || "Something went wrong!");
+    },
   });
 
   return {
     getAllProject,
     createProject,
 
-    convertProjectToEscrowFn
+    convertProjectToEscrowFn,
   };
 };

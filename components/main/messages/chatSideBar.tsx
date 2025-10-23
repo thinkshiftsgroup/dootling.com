@@ -65,7 +65,7 @@ const ChatSidebar = () => {
         <TiPencil className="w-5 h-5 text-[#157bff]" />
       </div>
 
-      <div className="flex items-center w-full justify-around text-xs lg:text-sm font-medium px-1 py-2 border-b border-gray-100">
+      <div className="flex items-center w-full justify-around text-xs lg:text-sm font-medium px-2.5 py-2 border-b border-gray-100">
         {["Messages", "Following", "Spaces"].map((tab) => {
           const isActive = activeTab === tab;
           return (

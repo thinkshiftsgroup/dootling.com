@@ -5,6 +5,7 @@ const OverviewTab = ({
   selected,
   setWithdrawFunds,
   setShowModal,
+  project,
 }: any) => {
   return (
     <div>
@@ -16,7 +17,7 @@ const OverviewTab = ({
                 className="text-white font-bold text-xl w-full px-3 py-2 rounded-sm leading-none"
                 style={{ backgroundColor: "#A6A6A6" }}
               >
-                $625.00
+                ${project.totalBudget.toFixed(2)}
               </p>
             </div>
             <div className="flex whitespace-nowrap gap-1 white items-center justify-between mt-2">
@@ -82,7 +83,7 @@ const OverviewTab = ({
                 className="text-white font-bold text-xl w-full px-3 py-2 rounded-sm leading-none"
                 style={{ backgroundColor: "#A6A6A6" }}
               >
-                $425.00
+                ${project.amountReleased.toFixed(2)}
               </p>
             </div>
             <div className="mt-2">
@@ -103,7 +104,7 @@ const OverviewTab = ({
                 className="text-white font-bold text-xl w-full px-3 py-2 rounded-sm leading-none"
                 style={{ backgroundColor: "#A6A6A6" }}
               >
-                $200.00
+                ${project.amountPending.toFixed(2)}
               </p>
             </div>
             <div className="mt-2 flex items-center justify-between">

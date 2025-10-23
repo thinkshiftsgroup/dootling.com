@@ -11,12 +11,16 @@ import ContributorsTab from "./convertEscrowToProject/contributorsTab";
 import SettingsTab from "./convertEscrowToProject/settingsTab";
 import WithdrawFunds from "../finance/withdrawFunds";
 import FundWalletSideModal from "../finance/fundEscrowWallet.tsx";
+import { ProjectI } from "@/types/project";
 
-const ConvertProjectToEscrow = ({
-  setCPEcrow,
-  
-}: {
+interface ConvertProjectToEscrowProps {
   setCPEcrow: (open: boolean) => void;
+  project: ProjectI;
+}
+
+const ConvertProjectToEscrow: React.FC<ConvertProjectToEscrowProps> = ({
+  setCPEcrow,
+  project,
 }) => {
   const [userName, setUserName] = useState("");
   const [userList, setUserList] = useState<string[]>([]);
@@ -81,6 +85,7 @@ const ConvertProjectToEscrow = ({
         <Tabs tabs={tabs} setTabs={setTabs} />
         {tabs === "Overview" && (
           <OverviewTab
+            project={project}
             handleChange={handleChange}
             selected={selected}
             setWithdrawFunds={setWithdrawFunds}
