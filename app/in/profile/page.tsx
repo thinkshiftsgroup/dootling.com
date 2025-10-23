@@ -6,15 +6,6 @@ import ContributionHeatmap from "@/components/main/landing-page/heatMap";
 import { FiUsers } from "react-icons/fi";
 import { HiOutlineNewspaper } from "react-icons/hi";
 import { LuArrowUpToLine } from "react-icons/lu";
-import { FaFire, FaSmile } from "react-icons/fa";
-import { TbDots } from "react-icons/tb";
-
-import { FaThumbsUp, FaHeart } from "react-icons/fa";
-import { FaHandsClapping } from "react-icons/fa6";
-import { BiCommentDetail } from "react-icons/bi";
-import { BiRepost } from "react-icons/bi";
-import { LuSend } from "react-icons/lu";
-import ProfileIn from "@/components/main/profile/otherProfile";
 import InReactionModal from "@/components/main/landing-page/in/inReactionModal";
 import ProfileFeeds from "@/components/main/profile/feeds";
 import SimilarProfiles from "@/components/main/profile/side-card/similarProfiles";

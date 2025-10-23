@@ -67,8 +67,8 @@ const Referrals = () => {
   return (
     <div>
       <Navbar />
-      <div className="container mx-auto md:!px-0 px-2 mt-[1rem]">
-        <div className="rounded-sm bg-[#157bff] w-full p-5  gap-1 h-[170px] flex md:!flex-row flex-col items-center justify-between  ">
+      <div className="container mx-auto px-2 mt-[1rem]">
+        <div className="rounded-sm bg-[#157bff] w-full p-5  gap-1 md:!h-[170px] h-auto flex md:!flex-row flex-col items-center justify-between  ">
           <div className="flex flex-col justify-center">
             <h1 className="text-white text-xl font-semibold">
               Community Passive Income
@@ -78,7 +78,7 @@ const Referrals = () => {
               workings, network, and earn globally.
             </p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex sm:!flex-row flex-col items-center gap-2">
             <div className="flex w-full overflow-y-scroll hide-scrollbar flex-col justify-between gap-3 p-2 bg-white shadow-md min-w-[250px] rounded">
               <h1 className="font-semibold sm:!text-xs text-sm border-b-2 border-gray-100 pb-1 text-black leading-tight w-fit">
                 Available Balance

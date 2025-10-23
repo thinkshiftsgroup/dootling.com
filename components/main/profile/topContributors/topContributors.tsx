@@ -30,12 +30,17 @@ const TopContributorsTab: React.FC = () => {
     {
       key: "following",
       label: "Following",
-      count: similarProfiles.data?.list.length || 0,
+      count:
+        (similarProfiles.data?.list ?? []).filter(
+          (user: any) => user.isFollowing
+        ).length || 0,
     },
     {
       key: "followed",
       label: "Followed",
-      count: getFollowers.data?.list.length || 0,
+      count:
+        (getFollowers.data?.list ?? []).filter((user: any) => user.isFollowed)
+          .length || 0,
     },
     { key: "hometown", label: "Collaborators", count: 0 },
   ] as const;
