@@ -81,6 +81,7 @@ export default function SimilarProfiles() {
       }
     );
   };
+
   return (
     <div className="rounded-lg shadow bg-white mb-4">
       <div className="flex justify-between px-2 py-3 border-b border-[#f1f1f1]">
@@ -161,7 +162,7 @@ export default function SimilarProfiles() {
                                   size={14}
                                 />
                               ) : (
-                                "Unfollow"
+                                "Unlink"
                               )}
                             </button>
                           ) : (
@@ -176,10 +177,11 @@ export default function SimilarProfiles() {
                                   size={14}
                                 />
                               ) : (
-                                "+ Follow"
+                                "+ Link"
                               )}
                             </button>
-                          ))}
+                          ))
+                          }
 
                         <button className="px-2 py-1 cursor-pointer bg-red-100 text-red-600 rounded hover:bg-red-200 leading-none">
                           <i className="ph ph-x text-xs"></i>
@@ -196,9 +198,9 @@ export default function SimilarProfiles() {
 
       {showModal && selectedUser && (
         <ConfirmationModal
-          title="Unfollow User"
-          message={`Are you sure you want to unfollow ${selectedUser.name}?`}
-          confirmText="Yes, Unfollow"
+          title="Unlink User"
+          message={`Are you sure you want to unlink ${selectedUser.name}?`}
+          confirmText="Yes, unlink"
           cancelText="Cancel"
           onConfirm={confirmUnfollow}
           onCancel={cancelUnfollow}
