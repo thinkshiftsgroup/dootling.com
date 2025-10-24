@@ -5,6 +5,8 @@ import Image from "next/image";
 import ContributionHeatmap from "../../landing-page/heatMap";
 import { useFollowing } from "@/hooks/useFollow";
 import { Loader2 } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
+import ConfirmationModal from "../../modal/confirmationModal";
 
 type TabKey = "all" | "recent" | "followed" | "hometown" | "following";
 
@@ -145,11 +147,13 @@ const TopContributorsTab: React.FC = () => {
               recentContributors.data?.contributor?.user?.map((user: any) => (
                 <FriendCard
                   key={user.id}
+                  id={user.id}
                   name={user.fullName}
                   img={user.profilePhotoUrl}
                   lastActive={user.lastActive}
                   country={user.country}
                   role={user.role || "—"}
+                  isFollowing={user.isFollowing}
                 />
               ))
             )}
@@ -157,7 +161,7 @@ const TopContributorsTab: React.FC = () => {
         )}
 
         {activeTab === "hometown" && (
-          <FriendCard name="Paul Molive" img="/images/user/07.jpg" />
+          <FriendCard name="Paul Molive" id={"A"} img="/images/user/07.jpg" />
         )}
 
         {activeTab === "following" && (
@@ -184,11 +188,13 @@ const TopContributorsTab: React.FC = () => {
                 .map((user: any) => (
                   <FriendCard
                     key={user.id}
+                    id={user.id}
                     name={user.fullName}
                     img={user.profilePhotoUrl}
                     lastActive={user.lastActive}
                     country={user.country}
                     role={user.role || "—"}
+                    isFollowing={user.isFollowing}
                   />
                 ))
             )}
@@ -213,18 +219,18 @@ const TopContributorsTab: React.FC = () => {
                 </p>
               </div>
             ) : (
-              similarProfiles.data?.list
-                ?.filter((user: any) => user.isFollowing)
-                .map((user: any) => (
-                  <FriendCard
-                    key={user.id}
-                    name={user.fullName}
-                    img={user.profilePhotoUrl}
-                    lastActive={user.lastActive}
-                    country={user.country}
-                    role={user.role || "—"}
-                  />
-                ))
+              getFollowers.data?.list.map((user: any) => (
+                <FriendCard
+                  key={user.id}
+                  id={user.id}
+                  name={user.fullName}
+                  img={user.profilePhotoUrl}
+                  lastActive={user.lastActive}
+                  country={user.country}
+                  role={user.role || "—"}
+                  // isFollowing={user.isFollowing}
+                />
+              ))
             )}
           </div>
         )}
@@ -241,13 +247,78 @@ const FriendCard = ({
   lastActive,
   country,
   role,
+  id,
+  isFollowing,
 }: {
+  id: string;
   name: string;
   img?: string | null;
   lastActive?: string | null;
   role?: string | null;
   country?: string | null;
+  isFollowing?: boolean;
 }) => {
+  const { followUser, unFollowUser, similarProfiles } = useFollowing();
+  const queryClient = useQueryClient();
+
+  const [selectedUser, setSelectedUser] = useState<{
+    id: string;
+    name: string;
+    image: string | null;
+  } | null>(null);
+  const [isConfirming, setIsConfirming] = useState(false);
+
+  const [showModal, setShowModal] = useState(false);
+  const [loadingUserId, setLoadingUserId] = useState<string | null>(null);
+  const handleUnfollowClick = (
+    userId: string,
+    userName: string,
+    userImage: string | null
+  ) => {
+    setSelectedUser({ id: userId, name: userName, image: userImage });
+    setShowModal(true);
+  };
+
+  const confirmUnfollow = async () => {
+    if (!selectedUser) return;
+    setIsConfirming(true);
+
+    unFollowUser.mutate(
+      { userId: selectedUser.id },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ["similar-users"] });
+          setShowModal(false);
+        },
+        onSettled: () => {
+          setIsConfirming(false);
+          setSelectedUser(null);
+        },
+      }
+    );
+  };
+
+  const cancelUnfollow = () => {
+    if (isConfirming) return;
+    setShowModal(false);
+    setSelectedUser(null);
+  };
+
+  const handleFollow = (userId: string) => {
+    setLoadingUserId(userId);
+    followUser.mutate(
+      { userId },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ["similar-users"] });
+        },
+        onSettled: () => {
+          setLoadingUserId(null);
+        },
+      }
+    );
+  };
+
   return (
     <div className="flex flex-wrap md:flex-nowrap items-start justify-between p-2 sm:p-3 bg-gray-50 rounded-md   gap-3">
       <div className="flex items-center gap-3">
@@ -340,21 +411,53 @@ const FriendCard = ({
         <div className="mt-1">
           <ContributionHeatmap size="mini" />
         </div>
-        <button className="bg-[#157BFF] cursor-pointer hover:bg-blue-600 text-white px-2 mt-3 flex items-center gap-2 py-1 rounded-sm text-[0.9rem]">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
+        {isFollowing ? (
+          <button
+            disabled={unFollowUser.isPending}
+            onClick={() => handleUnfollowClick(id, name, img!)}
+            className="bg-[#157BFF] cursor-pointer hover:bg-blue-600 text-white px-2 mt-3 flex items-center gap-2 py-1 rounded-sm text-[0.9rem]"
           >
-            <path
-              fill="currentColor"
-              d="M18.385 9.083V8.07q.717.15 1.45.328q.732.178 1.524.378q.324.08.5.351q.177.27.122.593l-1.466 7.962q-.106.59-.553.953T18.925 19H5.152q-.59 0-1.025-.373t-.54-.944L2.025 9.72q-.056-.323.118-.605q.174-.283.498-.364q.734-.2 1.428-.356t1.373-.287V9.12l-1.188.251q-.6.126-1.22.278L4.46 17.5q.038.212.22.356t.395.144h13.85q.212 0 .394-.144t.222-.356l1.425-7.85q-.658-.171-1.306-.307t-1.275-.26M16 9.065q0-.427-.125-.829t-.394-.728q-.39-.506-.63-1.098q-.24-.59-.24-1.226q0-.401.105-.782q.105-.38.309-.74l.152-.27q.09-.177.291-.233q.201-.055.378.035t.233.289t-.035.375l-.177.294q-.13.244-.202.52t-.073.551q0 .427.154.82q.154.391.423.718q.41.468.62 1.05q.211.581.211 1.197q0 .42-.095.811q-.096.39-.26.77l-.159.326q-.09.177-.288.233t-.375-.034t-.233-.289t.035-.375l.152-.313q.112-.264.167-.53T16 9.066m-3.892 0q0-.428-.125-.83t-.395-.728q-.39-.506-.63-1.098q-.239-.59-.239-1.226q0-.401.105-.782t.309-.74l.151-.27q.091-.176.292-.232t.378.034t.232.289t-.034.375l-.177.294q-.13.244-.203.51q-.072.267-.072.542q0 .427.154.829t.423.728q.41.468.62 1.05q.21.581.21 1.197q0 .42-.094.811q-.096.39-.261.77l-.158.326q-.09.177-.288.233t-.375-.034t-.233-.289t.035-.375l.152-.313q.111-.264.167-.53t.056-.541m-3.887-.02q0-.427-.128-.819q-.127-.392-.397-.72q-.41-.486-.64-1.077q-.229-.591-.229-1.226q0-.402.102-.792t.312-.75l.157-.27q.09-.176.292-.232q.2-.056.377.034t.233.289t-.034.375l-.177.294q-.131.239-.206.508t-.075.544q0 .427.154.829t.423.728q.41.468.62 1.05q.21.581.21 1.197q0 .42-.095.811q-.095.39-.26.77l-.152.326q-.09.177-.292.233q-.2.056-.377-.034q-.177-.091-.233-.289t.035-.375l.157-.313q.112-.264.168-.54q.055-.276.055-.55"
-            />
-          </svg>
-          Unlink
-        </button>
-
+            {loadingUserId === id && unFollowUser.isPending ? (
+              <Loader2 className="animate-spin inline-block" size={24} />
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="currentColor"
+                  d="M18.385 9.083V8.07q.717.15 1.45.328q.732.178 1.524.378q.324.08.5.351q.177.27.122.593l-1.466 7.962q-.106.59-.553.953T18.925 19H5.152q-.59 0-1.025-.373t-.54-.944L2.025 9.72q-.056-.323.118-.605q.174-.283.498-.364q.734-.2 1.428-.356t1.373-.287V9.12l-1.188.251q-.6.126-1.22.278L4.46 17.5q.038.212.22.356t.395.144h13.85q.212 0 .394-.144t.222-.356l1.425-7.85q-.658-.171-1.306-.307t-1.275-.26M16 9.065q0-.427-.125-.829t-.394-.728q-.39-.506-.63-1.098q-.24-.59-.24-1.226q0-.401.105-.782q.105-.38.309-.74l.152-.27q.09-.177.291-.233q.201-.055.378.035t.233.289t-.035.375l-.177.294q-.13.244-.202.52t-.073.551q0 .427.154.82q.154.391.423.718q.41.468.62 1.05q.211.581.211 1.197q0 .42-.095.811q-.096.39-.26.77l-.159.326q-.09.177-.288.233t-.375-.034t-.233-.289t.035-.375l.152-.313q.112-.264.167-.53T16 9.066m-3.892 0q0-.428-.125-.83t-.395-.728q-.39-.506-.63-1.098q-.239-.59-.239-1.226q0-.401.105-.782t.309-.74l.151-.27q.091-.176.292-.232t.378.034t.232.289t-.034.375l-.177.294q-.13.244-.203.51q-.072.267-.072.542q0 .427.154.829t.423.728q.41.468.62 1.05q.21.581.21 1.197q0 .42-.094.811q-.096.39-.261.77l-.158.326q-.09.177-.288.233t-.375-.034t-.233-.289t.035-.375l.152-.313q.111-.264.167-.53t.056-.541m-3.887-.02q0-.427-.128-.819q-.127-.392-.397-.72q-.41-.486-.64-1.077q-.229-.591-.229-1.226q0-.402.102-.792t.312-.75l.157-.27q.09-.176.292-.232q.2-.056.377.034t.233.289t-.034.375l-.177.294q-.131.239-.206.508t-.075.544q0 .427.154.829t.423.728q.41.468.62 1.05q.21.581.21 1.197q0 .42-.095.811q-.095.39-.26.77l-.152.326q-.09.177-.292.233q-.2.056-.377-.034q-.177-.091-.233-.289t.035-.375l.157-.313q.112-.264.168-.54q.055-.276.055-.55"
+                />
+              </svg>
+            )}
+            Unlink
+          </button>
+        ) : (
+          <button
+            disabled={followUser.isPending}
+            onClick={() => handleFollow(id)}
+            className="px-2 py-1 text-xs bg-blue-100 text-blue-600 rounded hover:bg-blue-200"
+          >
+            {loadingUserId === id && followUser.isPending ? (
+              <Loader2 className="animate-spin inline-block" size={24} />
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 28 28"
+              >
+                <path
+                  fill="currentColor"
+                  d="M9.5 14a4.5 4.5 0 1 0 0-9a4.5 4.5 0 0 0 0 9m14-3.5a3.5 3.5 0 1 1-7 0a3.5 3.5 0 0 1 7 0M2 18.25A2.25 2.25 0 0 1 4.25 16h10.084a4.74 4.74 0 0 0-1.834 3.75c0 1.327.544 2.527 1.422 3.389c-1.064.515-2.496.861-4.422.861C2 24 2 18.75 2 18.75zm15.25-.75a2.25 2.25 0 0 0 0 4.5h.5a.75.75 0 0 1 0 1.5h-.5a3.75 3.75 0 1 1 0-7.5h.5a.75.75 0 0 1 0 1.5zm-.75 2.25a.75.75 0 0 1 .75-.75h5.5a.75.75 0 0 1 0 1.5h-5.5a.75.75 0 0 1-.75-.75M22.75 22a2.25 2.25 0 0 0 0-4.5h-.5a.75.75 0 0 1 0-1.5h.5a3.75 3.75 0 1 1 0 7.5h-.5a.75.75 0 0 1 0-1.5z"
+                />
+              </svg>
+            )}
+            Link
+          </button>
+        )}
         <button className="bg-[#157BFF] cursor-pointer hover:bg-blue-600 text-white px-2 mt-3 flex items-center gap-2 py-1 rounded-sm text-[0.9rem]">
           <svg
             width="24"
@@ -379,6 +482,22 @@ const FriendCard = ({
           </svg>
         </button>
       </div>
+
+      {showModal && selectedUser && (
+        <ConfirmationModal
+          title="Unlink User"
+          message={`Are you sure you want to unlink ${selectedUser.name}?`}
+          confirmText="Yes, unlink"
+          cancelText="Cancel"
+          onConfirm={confirmUnfollow}
+          onCancel={cancelUnfollow}
+          isLoading={isConfirming}
+          user={{
+            name: selectedUser.name,
+            image: selectedUser.image,
+          }}
+        />
+      )}
     </div>
   );
 };
