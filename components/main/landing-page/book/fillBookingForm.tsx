@@ -24,7 +24,7 @@ const FillBookingForm = ({ setPage }: any) => {
 
           <input
             type="text"
-            className="w-full bg-white z-10 text-gray-600 rounded-sm border border-gray-400/50"
+            className="w-full indent-4 bg-white z-10 text-gray-600 rounded-sm border border-gray-400/50"
             inputMode="numeric"
           />
         </div>
