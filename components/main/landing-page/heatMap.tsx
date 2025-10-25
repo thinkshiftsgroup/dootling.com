@@ -249,13 +249,13 @@ const ContributionHeatmap: React.FC<ContributionHeatmapProps> = ({
                 }, 400);
               }}
             >
-              <div className="bg-white rounded-2xl shadow-2xl w-50 h-60 relative">
+              <div className="bg-white rounded-md shadow-2xl w-50 h-60 relative">
                 <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white rotate-45"></div>
 
                 <div
                   className="
     relative 
-    h-55 
+    h-60 
     p-4 py-6 
     overflow-y-auto overflow-x-hidden 
     scrollbar-thin 
