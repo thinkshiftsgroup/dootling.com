@@ -13,9 +13,9 @@ const AdminBody: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             <AdminSidebar />
           </div>
 
-          <div className="col-span-10 mt-[2rem]">
+          <div className="col-span-10 pt-[2rem] h-screen overflow-y-scroll hide-scrollbar">
             {/* <div className="col-span-10 pl-5 mt-[4rem]"> */}
-            <div className="card bg-white container w-full mx-auto rounded-sm p-3">
+            <div className=" container w-full mx-auto">
               {children}
             </div>
           </div>

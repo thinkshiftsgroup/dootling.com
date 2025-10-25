@@ -305,7 +305,7 @@ export function DataTableDemo() {
   });
 
   return (
-    <div className="w-full">
+    <div className="w-full p-3 rounded-sm bg-white ">
       <div className="flex items-center py-4 gap-3">
         <Input
           placeholder="Search email or ref..."

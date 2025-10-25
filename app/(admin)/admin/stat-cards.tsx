@@ -107,7 +107,7 @@ const AffiliateNetworkCard = () => {
 
 export default function Dashboard() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 p-8">
+    <div className="">
       <div className="w-full">
         <h1 className="text-4xl font-semibold text-gray-900 mb-8">Dashboard</h1>
 
