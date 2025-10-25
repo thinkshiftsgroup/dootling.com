@@ -14,7 +14,6 @@ const AdminBody: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           </div>
 
           <div className="col-span-10 pt-[2rem] h-screen overflow-y-scroll hide-scrollbar">
-            {/* <div className="col-span-10 pl-5 mt-[4rem]"> */}
             <div className=" container w-full mx-auto">
               {children}
             </div>
