@@ -49,7 +49,7 @@ const SidebarMenuItem: React.FC<SidebarMenuItemProps> = ({
     <div>
       <button
         onClick={handleClick}
-        className={`group flex items-center justify-between w-full px-4 py-2 rounded-sm transition-all ease-in-out duration-150 ${
+        className={`group flex items-center whitespace-nowrap justify-between w-full px-4 py-2 rounded-sm transition-all ease-in-out duration-150 ${
           isActive
             ? "bg-[#157bff] text-white"
             : "text-[#7e8b9a] hover:bg-[#157bff]/15 hover:text-[#157bff]"
@@ -58,7 +58,7 @@ const SidebarMenuItem: React.FC<SidebarMenuItemProps> = ({
         <div className="flex items-center gap-2">
           <Icon
             size={17}
-            className={`transition-colors duration-150 ${
+            className={`transition-colors flex-none duration-150 ${
               isActive
                 ? "text-white"
                 : "text-[#7e8b9a] group-hover:text-[#157bff]"
@@ -112,7 +112,7 @@ const SidebarSubItem = ({ title, path }: { title: string; path: string }) => {
         e.stopPropagation();
         router.push(path);
       }}
-      className={`px-2 py-2 list-disc list-inside w-full rounded-sm capitalize font-medium text-sm text-left transition-all ease-in-out duration-100 cursor-pointer ${
+      className={`px-2 py-2 list-disc whitespace-nowrap list-inside w-full rounded-sm capitalize font-medium text-sm text-left transition-all ease-in-out duration-100 cursor-pointer ${
         isActive
           ? "bg-[#157bff] text-white"
           : "text-[#7e8b9a] hover:text-[#157bff] hover:bg-[#157bff]/15"
