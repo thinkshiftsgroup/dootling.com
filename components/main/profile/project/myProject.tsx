@@ -42,15 +42,17 @@ const MyProjectsContent: React.FC<{
   return (
     <div className="space-y-2">
       {projects.length > 0 ? (
-        projects.map((project: any) => (
-          <ProjectCard
-            onManageClick={() => onManageClick(project.id)}
-            // onCPEClick={() => onCPEClick(project.id)}
-            onConfirmCPEClick={() => onConfirmCPEClick(project.id)}
-            key={project.id}
-            {...project}
-          />
-        ))
+        projects
+          ?.filter((project: any) => project.isEscrowed === false)
+          .map((project: any) => (
+            <ProjectCard
+              onManageClick={() => onManageClick(project.id)}
+              // onCPEClick={() => onCPEClick(project.id)}
+              onConfirmCPEClick={() => onConfirmCPEClick(project.id)}
+              key={project.id}
+              {...project}
+            />
+          ))
       ) : (
         <div className="sm:!py-8 py-4 text-center text-gray-500">
           <p className="text-lg font-medium">No Projects</p>

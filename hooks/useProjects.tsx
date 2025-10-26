@@ -5,14 +5,10 @@ import { useEffect } from "react";
 import { toast } from "sonner";
 
 export const useProject = () => {
-  const { user, setUser, isInitialized, token, initializeAuth } =
-    useAuthStore();
+  const { user, isInitialized, token, initializeAuth } = useAuthStore();
 
   useEffect(() => {
-    if (!isInitialized) {
-      console.log("-> Initializing Auth Store...");
-      initializeAuth();
-    }
+    if (!isInitialized) initializeAuth();
   }, [isInitialized, initializeAuth]);
 
   const getAllProject = useQuery({
@@ -22,6 +18,36 @@ export const useProject = () => {
       return res.data;
     },
     enabled: isInitialized && !!user && !!token,
+  });
+
+  const getAllProjectById = (id: string | number | null) =>
+    useQuery({
+      queryKey: ["get-all-project-with-id", id],
+      queryFn: async () => {
+        const res = await apiInstance.get(`/api/projects/${id}/details`);
+        return res.data.data;
+      },
+      enabled: !!id && isInitialized && !!user && !!token,
+    });
+
+  const editProjectById = useMutation({
+    mutationKey: ["edit-project-with-id"],
+    mutationFn: async ({
+      id,
+      payload,
+    }: {
+      id: string | number;
+      payload: Record<string, any>;
+    }) => {
+      const res = await apiInstance.patch(
+        `/api/projects/${id}/manage`,
+        payload
+      );
+      return res.data;
+    },
+    onError: (err: any) => {
+      toast.error(err.response?.data?.message || "Something went wrong!");
+    },
   });
 
   const createProject = useMutation({
@@ -45,6 +71,9 @@ export const useProject = () => {
       });
       return res.data;
     },
+    onError: (err: any) => {
+      toast.error(err.response?.data?.message || "Failed to create project");
+    },
   });
 
   const convertProjectToEscrowFn = useMutation({
@@ -56,21 +85,15 @@ export const useProject = () => {
       return res.data;
     },
     onError: (err: any) => {
-      // if (
-      //   err.response.data.detail ===
-      //   "Project is already marked as escrowed and cannot be updated again."
-      // ) {
-      //   toast.error("Project is already an escrow project");
-      // } else {
-        // }
-        toast.error(err.response.data.message || "Something went wrong!");
+      toast.error(err.response?.data?.message || "Something went wrong!");
     },
   });
 
   return {
     getAllProject,
+    getAllProjectById,
+    editProjectById,
     createProject,
-
     convertProjectToEscrowFn,
   };
 };

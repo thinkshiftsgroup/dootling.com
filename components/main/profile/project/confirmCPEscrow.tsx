@@ -40,13 +40,9 @@ const ConfirmConvertProjectToEscrow: React.FC<
           </button>
         </div>
 
-        {/* Body */}
         <div className="p-6">
           <p className="text-gray-700">
             Are you sure you want to convert this project
-            {/* <span className="font-semibold text-[#157BFF]">
-              (ID: {projectId})
-            </span>{" "} */}{" "}
             to an escrow contract?
           </p>
         </div>
