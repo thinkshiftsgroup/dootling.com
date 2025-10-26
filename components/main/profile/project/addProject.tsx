@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Loader2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -65,6 +65,17 @@ const AddProjectsModal: React.FC<AddProjectsModalProps> = ({
     setSelectedContributors((prev) => prev.filter((c) => c.id !== id));
   };
 
+  const imageRef = useRef<HTMLInputElement | null>(null);
+
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selected = e.target.files?.[0];
+    if (selected) {
+      setImagePreview(URL.createObjectURL(selected));
+    }
+  };
+
   const handleSubmit = () => {
     if (!title.trim() || !summary.trim()) {
       toast.error("Please fill in all required fields.");
@@ -117,7 +128,7 @@ const AddProjectsModal: React.FC<AddProjectsModalProps> = ({
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", stiffness: 80, damping: 15 }}
-            className="fixed top-0 right-0 h-screen w-full max-w-[500px] bg-white z-50 shadow-xl border-l border-gray-200 sm:!rounded-tl-2xl rounded-none sm:!rounded-bl-2xl flex flex-col"
+            className="fixed top-0  right-0 h-screen w-full max-w-[500px] bg-white z-50 shadow-xl border-l border-gray-200 sm:!rounded-tl-2xl rounded-none sm:!rounded-bl-2xl flex flex-col"
           >
             <div className="flex items-center justify-between px-6 py-4 border-b">
               <h2 className="text-lg font-bold text-gray-800">
@@ -133,7 +144,60 @@ const AddProjectsModal: React.FC<AddProjectsModalProps> = ({
               </Button>
             </div>
 
-            <div className="flex-1 overflow-y-auto px-6 py-4 space-y-6">
+            <div className="flex-1 overflow-y-auto hide-scrollbar px-6 py-4 space-y-6">
+              <div className="w-full">
+                <label htmlFor="imageUpload" className="text-black font-medium">
+                  Images
+                </label>
+
+                <div
+                  onClick={() => imageRef.current?.click()}
+                  className="bg-[#FBFBFB] border border-[#D1D1D1] rounded-sm cursor-pointer flex items-center justify-center w-32 h-32 overflow-hidden"
+                >
+                  {imagePreview ? (
+                    <div className="relative w-full h-full">
+                      <img
+                        src={imagePreview}
+                        alt="Uploaded"
+                        className="object-cover w-full h-full"
+                      />
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setImagePreview(null);
+                        }}
+                        className="absolute top-1 right-1 bg-white/70 hover:bg-white p-1 rounded-full text-red-500"
+                      >
+                        <X size={14} />
+                      </button>
+                    </div>
+                  ) : (
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 170 169"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0.2 99.6V68.8H69.4V0H100.6V68.8H169.4V99.6H100.6V168.4H69.4V99.6H0.2Z"
+                        fill="#979797"
+                      />
+                    </svg>
+                  )}
+                </div>
+
+                <input
+                  ref={imageRef}
+                  type="file"
+                  id="imageUpload"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="hidden"
+                />
+              </div>
+
               <div>
                 <label className="font-semibold text-gray-600 text-sm sm:text-base">
                   Project Title *
