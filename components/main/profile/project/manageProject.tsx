@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useProject } from "@/hooks/useProjects";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
+import { useFollowing } from "@/hooks/useFollow";
 
 interface ManageProjectProps {
   open: boolean;
@@ -19,49 +20,61 @@ const ManageProject: React.FC<ManageProjectProps> = ({
   projectId,
 }) => {
   const [selected, setSelectedRadio] = useState("invite");
-  const [contributors, setContributors] = useState<string[]>([]);
-  const [inputValue, setInputValue] = useState("");
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
+  const [selectedContributors, setSelectedContributors] = useState<any[]>([]);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
+  const { getFollowers } = useFollowing();
+  const queryClient = useQueryClient();
   const { getAllProjectById, editProjectById } = useProject();
-  const { data, isLoading, isError } = getAllProjectById(projectId!);
-  console.log(data, "get by id");
+  const { data, isLoading } = getAllProjectById(projectId!);
   const { mutate: editProject, isPending } = editProjectById;
+
+  const imageRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     if (data) {
       setTitle(data?.title || "");
       setSummary(data?.description || "");
       setSelectedRadio(data?.isPublic ? "anyone" : "invite");
-      setContributors(
-        data?.contributors?.map((c: any) => c.fullName || c.name || "") || []
-      );
+
+      if (data?.contributors?.length) {
+        setSelectedContributors(
+          data.contributors.map((c: any) => ({
+            id: c.user.id,
+            fullName: c.user.fullName,
+            email: c.user.email,
+            profilePhotoUrl: c.user.profilePhotoUrl,
+          }))
+        );
+      }
     }
   }, [data]);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedRadio(event.target.value);
+  const handleAddContributor = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const contributorId = e.target.value;
+    if (!contributorId) return;
+
+    const selectedUser = getFollowers.data?.list?.find(
+      (f: any) => f.id === contributorId
+    );
+    if (!selectedUser) return;
+
+    const alreadyExists = selectedContributors.some(
+      (c) => c.id === selectedUser.id
+    );
+    if (alreadyExists) {
+      toast.error("Contributor already added");
+      return;
+    }
+
+    setSelectedContributors((prev) => [...prev, selectedUser]);
   };
 
-  const handleAdd = () => {
-    if (inputValue.trim() === "") return;
-    setContributors([...contributors, inputValue.trim()]);
-    setInputValue("");
+  const handleDeleteContributor = (id: string | number) => {
+    setSelectedContributors((prev) => prev.filter((c) => c.id !== id));
   };
-
-  const handleDelete = (index: number) => {
-    const updated = contributors.filter((_, i) => i !== index);
-    setContributors(updated);
-  };
-
-  const queryClient = useQueryClient();
-  const contributorIds =
-    contributors.length > 0 ? contributors.map((c: any) => c.id) : undefined;
-
-  const imageRef = useRef<HTMLInputElement | null>(null);
-
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0];
@@ -73,13 +86,22 @@ const ManageProject: React.FC<ManageProjectProps> = ({
   const handleEditProject = () => {
     if (!projectId) return;
 
+    const contributorIds =
+      selectedContributors.length > 0
+        ? selectedContributors.map((c) => c.id)
+        : undefined;
+
     const payload = {
       title,
       description: summary,
       isPublic: selected === "anyone",
-      //if no contributor is selected dont send any
-      // contributorIds: contributors,
-      ...(contributorIds ? { contributorIds } : {}),
+      contributors: [
+        {
+          action: "create",
+          userId: contributorIds,
+        },
+      ],
+      // ...(contributorIds ? { contributorIds } : {}),
     };
 
     editProject(
@@ -87,14 +109,13 @@ const ManageProject: React.FC<ManageProjectProps> = ({
       {
         onSuccess: () => {
           toast.success("Project updated successfully");
-          queryClient.invalidateQueries({
-            queryKey: ["get-all-project"],
-          });
+          queryClient.invalidateQueries({ queryKey: ["get-all-project"] });
           onClose();
         },
-        onError: (error: any) => {
-          console.error(error);
-          toast.error("Failed to update project");
+        onError: (error:any) => {
+          toast.error(
+            error?.response?.data?.message || "Something went wrong. Try again."
+          );
         },
       }
     );
@@ -105,7 +126,7 @@ const ManageProject: React.FC<ManageProjectProps> = ({
       {open && (
         <>
           <motion.div
-            className="fixed inset-0 z-40"
+            className="fixed inset-0 z-40 bg-black/40"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -117,9 +138,9 @@ const ManageProject: React.FC<ManageProjectProps> = ({
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", stiffness: 80, damping: 15 }}
-            className="fixed top-0 right-0  h-screen w-full max-w-[500px] bg-white z-50 shadow-xl border-l border-gray-200 sm:!rounded-tl-2xl rounded-none sm:!rounded-bl-2xl flex flex-col"
+            className="fixed top-0 right-0 h-screen w-full max-w-[500px] bg-white z-50 shadow-xl border-l border-gray-200 sm:!rounded-tl-2xl sm:!rounded-bl-2xl flex flex-col"
           >
-            <div className="flex items-center justify-between px-6 py-4 ">
+            <div className="flex items-center justify-between px-6 py-4 border-b">
               <h2 className="text-lg font-bold text-gray-800">
                 Manage Project
               </h2>
@@ -129,16 +150,13 @@ const ManageProject: React.FC<ManageProjectProps> = ({
                 onClick={onClose}
                 className="hover:bg-gray-100 text-black rounded-full"
               >
-                <X className="w-7 h-7 " />
+                <X className="w-6 h-6" />
               </Button>
             </div>
 
-            <div className="flex-1 overflow-y-auto hide-scrollbar px-6 py-4 space-y-4">
-              <div className="w-full">
-                <label htmlFor="imageUpload" className="text-black font-medium">
-                  Images
-                </label>
-
+            <div className="flex-1 overflow-y-auto hide-scrollbar px-6 py-4 space-y-6">
+              <div>
+                <label className="text-black font-medium">Images</label>
                 <div
                   onClick={() => imageRef.current?.click()}
                   className="bg-[#FBFBFB] border border-[#D1D1D1] rounded-sm cursor-pointer flex items-center justify-center w-32 h-32 overflow-hidden"
@@ -188,157 +206,122 @@ const ManageProject: React.FC<ManageProjectProps> = ({
               </div>
 
               <div>
-                <label
-                  className="font-semibold text-gray-600 sm:!text-base text-sm"
-                  htmlFor="Amount"
-                >
+                <label className="font-semibold text-gray-600 text-sm">
                   Project Title *
                 </label>
-                <div className="flex my-2">
-                  <input
-                    type="text"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    className="w-full border rounded-sm sm:!text-sm text-xs bg-white z-10 text-gray-600 p-2 border-gray-400/50"
-                  />
-                </div>
+                <input
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="w-full border rounded-sm text-sm bg-white text-gray-600 p-2 border-gray-300 focus:border-[#157BFF] focus:outline-none"
+                />
               </div>
 
               <div>
-                <label
-                  className="font-semibold text-gray-600 sm:!text-base text-sm"
-                  htmlFor="Amount"
-                >
+                <label className="font-semibold text-gray-600 text-sm">
                   Project Summary Description *
                 </label>
-                <div className="flex my-2">
-                  <textarea
-                    rows={4}
-                    value={summary}
-                    onChange={(e) => setSummary(e.target.value)}
-                    className="w-full text-gray-600 border border-[#f1f1f1] rounded-md text-sm p-2 focus:outline-none focus:border-[#157BFF] transition-colors resize-none"
-                  />
-                </div>
+                <textarea
+                  rows={4}
+                  value={summary}
+                  onChange={(e) => setSummary(e.target.value)}
+                  className="w-full text-gray-600 border border-[#f1f1f1] rounded-md text-sm p-2 focus:outline-none focus:border-[#157BFF] resize-none"
+                />
               </div>
 
-              <div className="mb-10">
-                <label
-                  className="font-semibold text-gray-600 sm:!text-base text-sm"
-                  htmlFor="contributors"
-                >
-                  Add contributors *
+              <div>
+                <label className="font-semibold text-gray-600 text-sm">
+                  Add Contributors *
                 </label>
+                <select
+                  onChange={handleAddContributor}
+                  className="mt-2 w-full border border-gray-300 rounded-sm p-2 text-gray-700 bg-white focus:outline-none focus:border-[#157BFF]"
+                >
+                  <option value="">Select a contributor...</option>
+                  {getFollowers.data?.list?.map((user: any) => (
+                    <option key={user.id} value={user.id}>
+                      {user.fullName}
+                    </option>
+                  ))}
+                </select>
 
-                <div className="flex my-2">
-                  <div className="flex w-full border border-[#f1f1f1] rounded-sm focus-within:border-[#157BFF] transition">
-                    <input
-                      id="contributors"
-                      type="text"
-                      value={inputValue}
-                      onChange={(e) => setInputValue(e.target.value)}
-                      placeholder="John Ball (Director in Design - United Kingdom)"
-                      className="flex-1 px-3 py-2 text-gray-700 focus:outline-none"
-                    />
-                    <button
-                      type="button"
-                      onClick={handleAdd}
-                      className="px-3 w-1/4 flex items-center gap-2 justify-center text-white bg-[#157BFF] font-medium hover:bg-blue-600 transition-colors rounded-sm"
-                    >
-                      <svg
-                        className="w-4 h-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M12 4v16m8-8H4"
-                        />
-                      </svg>
-                      Add
-                    </button>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  {contributors.map((name, index) => (
+                <div className="mt-3 space-y-2">
+                  {selectedContributors.map((c) => (
                     <div
-                      key={index}
-                      className="flex items-center gap-2 text-gray-800"
+                      key={c.id}
+                      className="flex items-center justify-between border rounded-md p-2 text-sm text-gray-800"
                     >
-                      <p className="text-base">
-                        <span className="font-semibold">
-                          {name.split(" (")[0] || name}
-                        </span>{" "}
-                        {name.includes("(") ? `(${name.split("(")[1]}` : ""}
-                      </p>
+                      <div className="flex items-center gap-2">
+                        {c.profilePhotoUrl ? (
+                          <img
+                            src={c.profilePhotoUrl}
+                            alt={c.fullName}
+                            className="w-6 h-6 rounded-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold">
+                            {c.fullName.charAt(0).toUpperCase()}
+                          </div>
+                        )}
+                        <p>
+                          <span className="font-semibold">{c.fullName}</span>{" "}
+                          {/* <span className="text-gray-500 text-xs">
+                            ({c.email})
+                          </span> */}
+                        </p>
+                      </div>
                       <button
-                        onClick={() => handleDelete(index)}
+                        onClick={() => handleDeleteContributor(c.id)}
                         className="text-red-500 hover:text-red-700 transition-colors"
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="w-3 h-3"
-                          width={30}
-                          height={30}
-                          viewBox="0 0 20 20"
-                        >
-                          <path
-                            fill="currentColor"
-                            d="m9.129 0l1.974.005c.778.094 1.46.46 2.022 1.078c.459.504.7 1.09.714 1.728h5.475a.69.69 0 0 1 .686.693a.69.69 0 0 1-.686.692l-1.836-.001v11.627c0 2.543-.949 4.178-3.041 4.178H5.419c-2.092 0-3.026-1.626-3.026-4.178V4.195H.686A.69.69 0 0 1 0 3.505c0-.383.307-.692.686-.692h5.47c.014-.514.205-1.035.554-1.55C7.23.495 8.042.074 9.129 0m6.977 4.195H3.764v11.627c0 1.888.52 2.794 1.655 2.794h9.018c1.139 0 1.67-.914 1.67-2.794z"
-                          ></path>
-                        </svg>
+                        <X className="w-4 h-4" />
                       </button>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="space-y-6 mb-8">
-                <label className="flex items-center space-x-2 cursor-pointer">
+              <div className="space-y-3">
+                <label className="flex items-center gap-2 cursor-pointer">
                   <input
                     type="radio"
                     name="privacy"
                     value="invite"
-                    onChange={handleChange}
                     checked={selected === "invite"}
+                    onChange={(e) => setSelectedRadio(e.target.value)}
                     className="h-4 w-4 accent-blue-500 cursor-pointer"
                   />
-                  <span className="text-sm font-medium text-gray-600">
-                    Make Project Private{" "}
-                    <span className="font-normal">(Invite Only)</span>
+                  <span className="text-sm text-gray-600">
+                    Make Project Private <span>(Invite Only)</span>
                   </span>
                 </label>
 
-                <label className="flex items-center space-x-2 cursor-pointer">
+                <label className="flex items-center gap-2 cursor-pointer">
                   <input
                     type="radio"
                     name="privacy"
                     value="anyone"
-                    onChange={handleChange}
                     checked={selected === "anyone"}
+                    onChange={(e) => setSelectedRadio(e.target.value)}
                     className="h-4 w-4 accent-blue-500 cursor-pointer"
                   />
-                  <span className="text-sm font-medium text-gray-600">
-                    Make Project Public{" "}
-                    <span className="font-normal">(Anyone Can Join)</span>
+                  <span className="text-sm text-gray-600">
+                    Make Project Public <span>(Anyone Can Join)</span>
                   </span>
                 </label>
               </div>
 
-              <button
+              <Button
                 onClick={handleEditProject}
                 disabled={isPending}
-                className="text-white w-5/11 flex items-center justify-center gap-2 rounded-sm font-medium text-base py-2 cursor-pointer bg-[#1571E8]"
+                className="w-full bg-[#1571E8] text-white py-2 rounded-sm font-medium hover:bg-blue-600 transition"
               >
                 {isPending ? (
                   <Loader2 className="animate-spin" />
                 ) : (
                   "Save Changes"
                 )}
-              </button>
+              </Button>
             </div>
           </motion.div>
         </>
