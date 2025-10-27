@@ -14,13 +14,13 @@ const StatCard: React.FC<StatCardProps> = ({ title, value, subtitle, trend, tren
   const getVariantStyles = () => {
     switch (variant) {
       case 'blue':
-        return 'bg-blue-900 text-white';
+        return 'bg-[#157bff] text-white';
       case 'light':
         return 'bg-gray-50 text-gray-800';
       case 'gradient':
-        return 'bg-gradient-to-r from-yellow-400 via-gray-600 to-blue-900 text-white';
+        return 'bg-gradient-to-r from-yellow-400 via-gray-600 to-[#157bff] text-white';
       default:
-        return 'bg-blue-800 text-white';
+        return 'bg-[#157bff]/80 text-white';
     }
   };
 
@@ -50,13 +50,13 @@ const CustomerSatisfactionCard = () => {
       <div className="bg-yellow-400 rounded-full p-4 mb-4">
         <Heart size={32} className="text-white" />
       </div>
-      <h3 className="text-blue-900 font-semibold mb-4">Customer Satisfaction</h3>
+      <h3 className="text-[#157bff] font-semibold mb-4">Customer Satisfaction</h3>
       <div className="text-center mb-6">
-        <div className="text-3xl font-bold text-blue-900 mb-1">23K</div>
+        <div className="text-3xl font-bold text-[#157bff] mb-1">23K</div>
         <p className="text-sm text-gray-600">Users</p>
       </div>
       <div className="text-center">
-        <div className="text-3xl font-bold text-blue-900 mb-1">$54M+</div>
+        <div className="text-3xl font-bold text-[#157bff] mb-1">$54M+</div>
         <p className="text-sm text-gray-600">Transaction</p>
       </div>
     </div>
@@ -65,7 +65,7 @@ const CustomerSatisfactionCard = () => {
 
 const AffiliateNetworkCard = () => {
   return (
-    <div className="bg-blue-900 text-white rounded-lg p-6">
+    <div className="bg-[#157bff] text-white rounded-lg p-6">
       <h3 className="text-lg font-semibold mb-6 text-center">Affiliate Network</h3>
       
       <div className="space-y-6">

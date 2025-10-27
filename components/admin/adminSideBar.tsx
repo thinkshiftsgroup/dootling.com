@@ -231,6 +231,10 @@ const AdminSidebar: React.FC = () => {
               path="/admin/settings/profile"
             />
             <SidebarSubItem
+              title="Profile Categories"
+              path="/admin/settings/profile-categories"
+            />
+            <SidebarSubItem
               title="Roles & Permissions"
               path="/admin/settings/roles"
             />
