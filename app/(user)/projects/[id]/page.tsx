@@ -4,8 +4,11 @@ import React from "react";
 
 import ProjectChatSidebar from "@/components/main/projects/projectsSidebar";
 import ProjectMessage from "@/components/main/projects/projectMessage";
+import { useParams } from "next/navigation";
 
 const Projects = () => {
+  const params = useParams<{ id: string }>();
+  const projectId = params?.id;
   return (
     <div className="">
       <Navbar fixed={true} />
@@ -15,8 +18,8 @@ const Projects = () => {
           <div className="w-full col-span-7 ">
             <div className="w-full mx-auto">
               <div className="grid gap-2 md:!gap-0 grid-cols-1 md:!grid-cols-8">
-                <ProjectChatSidebar />
-                <ProjectMessage />
+                <ProjectChatSidebar  />
+                <ProjectMessage projectId={projectId} />
               </div>
             </div>
           </div>

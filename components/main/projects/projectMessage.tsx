@@ -16,7 +16,7 @@ import FilesTab from "./tabs/filesTab";
 import ProjectInfoTab from "./tabs/projectInfoTab";
 import ProjectMilestone from "./projectMilestone";
 
-const ProjectMessage = () => {
+const ProjectMessage = ({ projectId }: any) => {
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -255,10 +255,10 @@ const ProjectMessage = () => {
         </div>
 
         {tabs === "chat" && <ProjectInnerTabs messages={messages} />}
-        {tabs === "tasks" && <ProjectTasks />}
+        {tabs === "tasks" && <ProjectTasks projectId={projectId} />}
         {tabs === "files" && <FilesTab />}
         {tabs === "info" && <ProjectInfoTab />}
-        {tabs === "milestone" && <ProjectMilestone />}
+        {tabs === "milestone" && <ProjectMilestone projectId={projectId} />}
 
         {tabs === "chat" && (
           <div className="sm:!p-4 p-2  border-t bg-white flex items-center gap-2">

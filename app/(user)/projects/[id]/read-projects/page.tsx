@@ -16,8 +16,12 @@ import ProjectTasks from "@/components/main/projects/tabs/projectTasks";
 import FilesTab from "@/components/main/projects/tabs/filesTab";
 import Navbar from "@/components/main/landing-page/navbar/navbar";
 import ProjectMilestone from "@/components/main/projects/projectMilestone";
+import { useParams } from "next/navigation";
 
 const ReadProjectMessage = () => {
+  const params = useParams<{ id: string }>();
+  const projectId = params?.id;
+
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -259,10 +263,10 @@ const ReadProjectMessage = () => {
           </div>
 
           {tabs === "chat" && <ProjectInnerTabs messages={messages} />}
-          {tabs === "tasks" && <ProjectTasks />}
+          {tabs === "tasks" && <ProjectTasks projectId={projectId} />}
           {tabs === "files" && <FilesTab />}
           {tabs === "info" && <ProjectInfoTab />}
-          {tabs === "milestone" && <ProjectMilestone />}
+          {tabs === "milestone" && <ProjectMilestone projectId={projectId} />}
 
           {tabs === "chat" && (
             <div className="sm:!p-4 p-2  border-t bg-white flex items-center gap-2">

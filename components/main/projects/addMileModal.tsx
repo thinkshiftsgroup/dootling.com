@@ -1,7 +1,7 @@
 "use client";
 import React, { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 import { FaFile } from "react-icons/fa6";
@@ -12,31 +12,30 @@ import { toast } from "sonner";
 interface AddMileStoneProp {
   open: boolean;
   onClose: () => void;
+  projectId: any;
 }
 
-const AddMileStone: React.FC<AddMileStoneProp> = ({ open, onClose }) => {
-  const [userName, setUserName] = useState("");
-  const [userList, setUserList] = useState<string[]>([]);
+const AddMileStone: React.FC<AddMileStoneProp> = ({
+  open,
+  onClose,
+  projectId,
+}) => {
+  const [title, setTitle] = useState("");
+  const [release, setRelease] = useState("");
+  const [dueDate, setDueDate] = useState("");
+  const [desc, setDesc] = useState("");
 
-  // const handleAddUser = () => {
-  //   if (!userName.trim()) return;
-  //   setUserList((prev) => [...prev, userName.trim()]);
-  //   setUserName("");
-  // };
-
-  // const handleRemoveUser = (nameToRemove: string) => {
-  //   setUserList((prev) => prev.filter((user) => user !== nameToRemove));
-  // };
-
+  //images input
   const imageRef = useRef<HTMLInputElement | null>(null);
-
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selected = e.target.files?.[0];
-    if (selected) {
-      setImagePreview(URL.createObjectURL(selected));
-    }
+    const selected = e.target.files ? Array.from(e.target.files) : [];
+    const newPreviews = [
+      ...imagePreviews,
+      ...selected.map((file) => URL.createObjectURL(file)),
+    ];
+    setImagePreviews(newPreviews);
   };
 
   const fileRef = useRef<HTMLInputElement | null>(null);
@@ -56,39 +55,45 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({ open, onClose }) => {
   const handleFileRemove = (index: number) => {
     setFiles((prev) => prev.filter((_, i) => i !== index));
   };
-  const { createMilestone } = useProject();
+  const { createMilestone, getAllProjectById } = useProject();
+  const { data, isLoading } = getAllProjectById(projectId!);
   const { isPending } = createMilestone;
   const queryClient = useQueryClient();
 
-  // const handleCreateMileStone = () => {
-  //    if (!selectedProjectId) return;
-  //   const payload = {
-  //     title: "Design Review Final",
-  //     releasePercentage: 25,
-  //     dueDate: new Date("2026-03-01").toISOString(),
-  //     description: "Client signed off on all mockups and documentation",
-  //     image: selectedImageFile, 
-  //     file: files, 
-  //   };
+  const handleCreateMileStone = () => {
+    if (!projectId) return;
 
-  //   createMilestone.mutate(
-  //     {
-  //       id: "selectedProjectId",
-  //       payload,
-  //     },
-  //     {
-  //       onSuccess: () => {
-  //         toast.success("Milestone successfully");
-  //         onClose();
-  //       },
-  //       onError: (error: any) => {
-  //         toast.error(
-  //           error?.response?.data?.message || "Something went wrong. Try again."
-  //         );
-  //       },
-  //     }
-  //   );
-  // };
+    const payload = {
+      title,
+      releasePercentage: parseInt(release),
+      dueDate: new Date(dueDate).toISOString(),
+      description: desc,
+      images: Array.from(imageRef.current?.files || []),
+      files: files,
+    };
+
+    createMilestone.mutate(
+      {
+        id: projectId,
+        payload,
+      },
+      {
+        onSuccess: () => {
+          toast.success("Milestone added successfully");
+          queryClient.invalidateQueries({
+            queryKey: ["get-milestone-with-project-id"],
+          });
+          setTitle("");
+          setRelease("");
+          setDueDate("");
+          setDesc("");
+          setImagePreviews([]);
+          setFiles([]);
+          onClose();
+        },
+      }
+    );
+  };
 
   return (
     <AnimatePresence>
@@ -123,7 +128,8 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({ open, onClose }) => {
               </Button>
             </div>
             <p className="text-xs mb-3 px-4">
-              Total Project Budget <span className="font-bold">$4500</span>
+              Total Project Budget{" "}
+              <span className="font-bold">${data?.totalBudget || 0}</span>
             </p>
 
             <div className="px-4 overflow-y-scroll hide-scrollbar mb-3 space-y-3">
@@ -132,18 +138,32 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({ open, onClose }) => {
                   Title*
                 </label>
                 <input
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
                   type="text"
                   className="w-full rounded-sm p-1.5 border border-[#D1D1D1]"
                 />
               </div>
+              <div>
+                <label htmlFor="" className="text-black font-medium">
+                  Rule*
+                </label>
+                <textarea
+                  value={desc}
+                  onChange={(e) => setDesc(e.target.value)}
+                  className="w-full h-[100px] rounded-sm p-1.5 border border-[#D1D1D1]"
+                />
+              </div>
+
               <div className="flex items-center gap-2">
                 <div className="w-full">
                   <label htmlFor="" className="text-black font-medium">
                     Release Percentage*
                   </label>
-               
+
                   <input
-                    id="dueDate"
+                    value={release}
+                    onChange={(e) => setRelease(e.target.value)}
                     type="text"
                     placeholder="50%"
                     className="w-full rounded-sm p-1.5 border border-[#D1D1D1] text-gray-700 focus:outline-none focus:ring-1 focus:ring-[#157bff]"
@@ -154,32 +174,22 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({ open, onClose }) => {
                     Due Date
                   </label>
                   <input
+                    value={dueDate}
+                    onChange={(e) => setDueDate(e.target.value)}
                     id="dueDate"
                     type="date"
+                    min={new Date().toISOString().split("T")[0]}
                     className="w-full rounded-sm p-1.5 border border-[#D1D1D1] text-gray-700 focus:outline-none focus:ring-1 focus:ring-[#157bff]"
                   />
                 </div>
               </div>
-              <div className="w-full">
+              {/* <div className="w-full">
                 <label htmlFor="" className="text-black font-medium">
                   Rule*
                 </label>
                 <textarea className="w-full h-[200px] rounded-sm p-1.5 border border-[#D1D1D1]" />
-              </div>
-              <div className="w-full">
-                <label htmlFor="" className="text-black font-medium">
-                  Contributors*
-                </label>
-                <select
-                  name=""
-                  id=""
-                  className=" text-sm sm:!text-sm p-1.5 rounded-sm w-full border border-[#D1D1D1]"
-                >
-                  <option value=""></option>
-                  <option value="">John Israel</option>
-                </select>
-              </div>
-              <div className="w-full">
+              </div> */}
+              {/* <div className="w-full">
                 <label
                   className="text-[#404040] text-sm sm:!text-bsse font-semibold"
                   htmlFor=""
@@ -188,14 +198,12 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({ open, onClose }) => {
                 </label>
                 <input
                   type="text"
-                  // value={userName}
                   className=" text-sm sm:!text-base p-2 rounded-sm w-full border border-[#000000]/40 text-black"
                   placeholder="50%"
-                  // onChange={(e) => setUserName(e.target.value)}
                 />
                 <div className="relative my-2"></div>
-              </div>{" "}
-              <div className="w-full">
+              </div> */}
+              {/* <div className="w-full">
                 <label
                   className="text-[#404040] text-sm sm:!text-bsse font-semibold"
                   htmlFor=""
@@ -204,41 +212,45 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({ open, onClose }) => {
                 </label>
                 <input
                   type="date"
-                  // value={userName}
                   className=" text-sm sm:!text-base p-2 rounded-sm w-full border border-[#000000]/40 text-black"
                   placeholder="50%"
-                  // onChange={(e) => setUserName(e.target.value)}
                 />
                 <div className="relative my-2"></div>
-              </div>
+              </div> */}
               <div className="w-full">
                 <label htmlFor="imageUpload" className="text-black font-medium">
                   Images
                 </label>
 
-                <div
-                  onClick={() => imageRef.current?.click()}
-                  className="bg-[#FBFBFB] border border-[#D1D1D1] rounded-sm cursor-pointer flex items-center justify-center w-32 h-32 overflow-hidden"
-                >
-                  {imagePreview ? (
-                    <div className="relative w-full h-full">
+                <div className="flex flex-wrap gap-3 mt-2">
+                  {imagePreviews.map((src, index) => (
+                    <div
+                      key={index}
+                      className="relative w-32 h-32 border rounded-sm overflow-hidden"
+                    >
                       <img
-                        src={imagePreview}
-                        alt="Uploaded"
+                        src={src}
+                        alt={`Preview ${index}`}
                         className="object-cover w-full h-full"
                       />
                       <button
                         type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setImagePreview(null);
-                        }}
+                        onClick={() =>
+                          setImagePreviews((prev) =>
+                            prev.filter((_, i) => i !== index)
+                          )
+                        }
                         className="absolute top-1 right-1 bg-white/70 hover:bg-white p-1 rounded-full text-red-500"
                       >
                         <X size={14} />
                       </button>
                     </div>
-                  ) : (
+                  ))}
+
+                  <div
+                    onClick={() => imageRef.current?.click()}
+                    className="bg-[#FBFBFB] border border-[#D1D1D1] rounded-sm cursor-pointer flex items-center justify-center w-32 h-32"
+                  >
                     <svg
                       width="20"
                       height="20"
@@ -251,7 +263,7 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({ open, onClose }) => {
                         fill="#979797"
                       />
                     </svg>
-                  )}
+                  </div>
                 </div>
 
                 <input
@@ -259,10 +271,12 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({ open, onClose }) => {
                   type="file"
                   id="imageUpload"
                   accept="image/*"
+                  multiple
                   onChange={handleImageChange}
                   className="hidden"
                 />
               </div>
+
               <div>
                 <label htmlFor="fileUpload" className="text-black font-medium">
                   File
@@ -329,8 +343,16 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({ open, onClose }) => {
                   className="hidden"
                 />
               </div>
-              <button className="rounded-sm text-base mt-3  font-bold text-white bg-[#FAAF40] p-2">
-                Create Milestone
+              <button
+                onClick={handleCreateMileStone}
+                disabled={isPending}
+                className="rounded-sm flex items-center justify-center text-base mt-3  font-bold text-white bg-[#FAAF40] p-2"
+              >
+                {isPending ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  "Create Milestone"
+                )}
               </button>
             </div>
           </motion.div>

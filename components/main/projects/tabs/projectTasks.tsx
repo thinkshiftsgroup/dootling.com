@@ -4,10 +4,17 @@ import { FaAngleLeft } from "react-icons/fa6";
 import { FaAngleRight } from "react-icons/fa6";
 import AddTaskModal from "./addTaskModal";
 import ManageTasks from "./manageTasks";
+import { useProject } from "@/hooks/useProjects";
 
-const ProjectTasks = () => {
+const ProjectTasks = ({ projectId }: any) => {
   const [addTaskModal, setAddTaskModal] = useState(false);
   const [manageTasksModal, setManageTasksMmodal] = useState(false);
+
+  const { getAllProjectById } = useProject();
+  const { data: projectData, isLoading: projectDataLoad } = getAllProjectById(
+    projectId!
+  );
+
   return (
     <div className="flex-1 w-full p-2 overflow-y-scroll hide-scrollbar space-y-4">
       <div className="flex md:!flex-row flex-col items-center gap-5">
@@ -55,32 +62,28 @@ const ProjectTasks = () => {
         </div>
         <div className="flex flex-wrap w-full items-center gap-2">
           <div className="flex -space-x-2 items-center">
-            <Image
-              alt="user-img"
-              src="/images/user/taskUser.png"
-              width={100}
-              height={100}
-              className="rounded-full w-7 h-7  object-cover object-top border-2 border-white"
-            />
-
-            <Image
-              alt="user-img"
-              src="/images/user/taskUser.png"
-              width={100}
-              height={100}
-              className="rounded-full w-7 h-7  object-cover object-top border-2 border-white"
-            />
-
-            <Image
-              alt="user-img"
-              src="/images/user/taskUser.png"
-              width={100}
-              height={100}
-              className="rounded-full w-7 h-7  object-cover object-top border-2 border-white"
-            />
+            {projectData?.contributors?.slice(0, 3).map((contributor: any) => (
+              <Image
+                key={contributor.id}
+                alt={contributor.user.fullName}
+                src={
+                  contributor.user.profilePhotoUrl ||
+                  "/images/user/taskUser.png"
+                }
+                width={100}
+                height={100}
+                className="rounded-full w-7 h-7 object-cover object-top border-2 border-white"
+              />
+            ))}
           </div>
+
           <p className="flex whitespace-nowrap items-center gap-1 text-black font-semibold">
-            Aliana Molex <span className="text-gray-500">And 208 Others</span>
+            {projectData?.contributors?.[0]?.user.fullName}{" "}
+            {projectData?.contributors?.length > 1 && (
+              <span className="text-gray-500">
+                And {projectData.contributors.length - 1} Others
+              </span>
+            )}
           </p>
         </div>
       </div>

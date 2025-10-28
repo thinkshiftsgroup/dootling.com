@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddProjectsModal from "./addProject";
 import ManageProject from "./manageProject";
 import ConfirmConvertProjectToEscrow from "./confirmCPEscrow";
@@ -7,6 +7,7 @@ import MyProjectsContent from "./myProject";
 import EscrowProjectsContent from "./escrowProjects";
 import InvitedProjectsContent from "./invitedProjectContent";
 import PeerConfirmationContent from "./peerConfirmationContent";
+import { useRoleStore } from "@/stores/userRoleStore";
 
 const ProjectDashboard = ({}) => {
   const [activeTab, setActiveTab] = useState<string>("my-projects");
@@ -20,6 +21,12 @@ const ProjectDashboard = ({}) => {
   const { getAllProject } = useProject();
   const isLoading = getAllProject?.isLoading;
   const data = getAllProject?.data?.data || [];
+
+  const { isAdmin, setRole } = useRoleStore();
+
+  useEffect(() => {
+    setRole("user");
+  }, []);
 
   return (
     <div className="w-full bg-gray-50 sm:!py-8 py-4">
@@ -131,7 +138,7 @@ const ProjectDashboard = ({}) => {
                 </li>
               </ul>
             </div>
-            {activeTab === "my-projects" && (
+            {!isAdmin && activeTab === "my-projects" && (
               <button
                 onClick={() => setShowModal(true)}
                 className="bg-[#157BFF] whitespace-nowrap justify-center hover:bg-blue-700 text-white px-2 sm:!px-4 py-2 rounded-sm flex items-center gap-2 transition"

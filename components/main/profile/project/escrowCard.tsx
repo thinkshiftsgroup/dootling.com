@@ -6,7 +6,6 @@ import { ProjectI } from "@/types/project";
 interface ProjectCardProps extends ProjectI {
   onManageClick?: () => void;
   onCPEClick?: () => void;
-  onConfirmCPEClick?: () => void;
 }
 
 const EscrowProjectCard: React.FC<ProjectCardProps> = ({
@@ -15,11 +14,11 @@ const EscrowProjectCard: React.FC<ProjectCardProps> = ({
   title,
   _count,
   createdAt,
-  onManageClick,
+  id,
   onCPEClick,
-  onConfirmCPEClick,
 }) => {
   const router = useRouter();
+  const [openMore, setOpenMore] = useState(false);
   return (
     <div className="bg-white h-40 flex rounded-md shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
       <div className="w-2/5 h-full bg-gradient-to-br from-gray-100 to-gray-200">
@@ -36,14 +35,29 @@ const EscrowProjectCard: React.FC<ProjectCardProps> = ({
         )}
       </div>
 
-      <div className="w-3/5 p-4 flex flex-col justify-between">
+      <div className="w-3/5 relative p-4 flex flex-col justify-between">
         <div className="flex items-start justify-between">
           <h3 className="text-base font-semibold text-gray-900 truncate">
             {title}
           </h3>
-          <button className="text-gray-400 hover:text-gray-600 transition">
-            <MoreHorizontal className="w-5 h-5" />
-          </button>
+          <div>
+            <button
+              onClick={() => setOpenMore((prev) => !prev)}
+              className="text-gray-400 hover:text-gray-600 transition"
+            >
+              <MoreHorizontal className="w-5 h-5" />
+            </button>
+            {openMore && (
+              <div className="rounded-sm absolute right-2 p-2 shadow-md">
+                <p
+                  className="text-xs font-medium hover:text-[#157bff] cursor-pointer"
+                  onClick={() => router.push(`/projects/${id}`)}
+                >
+                  More
+                </p>
+              </div>
+            )}
+          </div>
         </div>
 
         <div>
@@ -94,7 +108,7 @@ const EscrowProjectCard: React.FC<ProjectCardProps> = ({
           </span>
 
           <span
-            onClick={() => router.push("/projects")}
+            onClick={() => router.push(`/projects/${id}`)}
             className="flex gap-1 bg-[#F8F9FA] text-gray-800 hover:text-gray-950 hover:bg-[#d0d0d0] rounded-sm p-1 px-1 items-center cursor-pointer shadow-sm text-[10px]  transition-colors transistion-shadow"
           >
             <svg
