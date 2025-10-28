@@ -1,7 +1,7 @@
 "use cient";
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useQueryClient } from "@tanstack/react-query";
 import { useProject } from "@/hooks/useProjects";
@@ -14,11 +14,28 @@ interface AddContProp {
   project: any;
 }
 
-interface Contributor {
+export interface Contributor {
   id: string;
-  fullName: string;
-  role?: string;
-  country?: string;
+  projectId: string;
+  userId: string;
+  releasePercentage: number;
+  fundsReleased: number;
+  role?: string | null;
+  createdAt: string;
+  updatedAt: string;
+  project: {
+    id: string;
+    title: string;
+  };
+  user: {
+    id: string;
+    fullName: string;
+    username: string;
+    country?: string | null;
+    headline?: string | null;
+    profilePhotoUrl?: string | null;
+    lastActive?: string | null;
+  };
 }
 
 const AddContributorsModal: React.FC<AddContProp> = ({
@@ -38,9 +55,12 @@ const AddContributorsModal: React.FC<AddContProp> = ({
   const { mutate: editProject, isPending } = editProjectById;
   const queryClient = useQueryClient();
 
-  const { getFollowers } = useFollowing();
+  const { getFollowers, getAllContributors } = useFollowing();
 
-  const contributors: Contributor[] = getFollowers.data?.list || [];
+  const contributors = getFollowers.data?.list || [];
+  // const contributors: Contributor[] =
+  //   getAllContributors.data?.contributors || [];
+  // console.log(contributors, "cont");
 
   const handleSubmit = (e?: React.FormEvent) => {
     e?.preventDefault();
@@ -51,10 +71,10 @@ const AddContributorsModal: React.FC<AddContProp> = ({
       contributors: [
         {
           action: "create",
-          id: selectedContributors,
+          userId: selectedContributors,
           role,
-          releasedPercentage: parseInt(released),
           budgetPercentage: parseInt(budget),
+          releasePercentage: parseInt(released),
         },
       ],
     };
@@ -63,8 +83,10 @@ const AddContributorsModal: React.FC<AddContProp> = ({
       { id: project.id, payload },
       {
         onSuccess: () => {
-          toast.success("Project updated successfully");
-          queryClient.invalidateQueries({ queryKey: ["get-all-project"] });
+          toast.success("Contributor Added successfully");
+          queryClient.invalidateQueries({
+            queryKey: ["get-all-project-with-id"],
+          });
           onClose();
         },
         onError: (error: any) => {
@@ -75,6 +97,8 @@ const AddContributorsModal: React.FC<AddContProp> = ({
       }
     );
   };
+
+  
   return (
     <AnimatePresence>
       {open && (
@@ -120,14 +144,13 @@ const AddContributorsModal: React.FC<AddContProp> = ({
                   <select
                     value={selectedContributors}
                     onChange={(e) => setSelectedContributors(e.target.value)}
-                    className="flex-1 w-full border border-gray-300 rounded-sm p-2 text-gray-700 focus:outline-none focus:border-[#157BFF] bg-white"
+                    className=" text-sm sm:!text-base p-2 rounded-sm w-full border border-[#000000]/40 text-black"
                   >
                     <option value="">Select a contributor</option>
                     {contributors.length > 0 ? (
-                      contributors.map((c) => (
+                      contributors.map((c: any) => (
                         <option key={c.id} value={c.id}>
-                          {c.fullName} ({c.role || "Contributor"}
-                          {c.country ? ` - ${c.country}` : ""})
+                          {c.fullName} ({c.username})
                         </option>
                       ))
                     ) : (
@@ -136,7 +159,6 @@ const AddContributorsModal: React.FC<AddContProp> = ({
                   </select>
                 </div>
               </div>
-             
               <div>
                 <label
                   className="text-[#404040] text-sm sm:!text-bsse font-semibold"
@@ -169,7 +191,7 @@ const AddContributorsModal: React.FC<AddContProp> = ({
                 />
                 <div className="relative my-2"></div>
               </div>{" "}
-              {/* <div className="w-full">
+              <div className="w-full">
                 <label
                   className="text-[#404040] text-sm sm:!text-bsse font-semibold"
                   htmlFor=""
@@ -178,13 +200,13 @@ const AddContributorsModal: React.FC<AddContProp> = ({
                 </label>
                 <input
                   type="text"
-                  value={userName}
+                  value={released}
                   className=" text-sm sm:!text-base p-2 rounded-sm w-full border border-[#000000]/40 text-black"
                   placeholder="50%"
-                  onChange={(e) => setUserName(e.target.value)}
+                  onChange={(e) => setReleased(e.target.value)}
                 />
                 <div className="relative my-2"></div>
-              </div> */}
+              </div>
               <div className="w-full">
                 <label
                   className="text-[#404040] text-sm sm:!text-bsse font-semibold"
@@ -202,8 +224,16 @@ const AddContributorsModal: React.FC<AddContProp> = ({
                 />
                 <div className="relative my-2"></div>
               </div>
-              <button onClick={handleSubmit} disabled={isPending} className="text-white w-full rounded-md font-semibold text-base py-2 cursor-pointer bg-[#1571E8]">
-                { isPending ? "Loading" :"Add Contributor"}
+              <button
+                onClick={handleSubmit}
+                disabled={isPending}
+                className="text-white flex items-center justify-center w-full rounded-md font-semibold text-base py-2 cursor-pointer bg-[#1571E8]"
+              >
+                {isPending ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  "Add Contributor"
+                )}
               </button>
             </div>
           </motion.div>
