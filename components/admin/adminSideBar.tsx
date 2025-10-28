@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import {
   LayoutDashboard,
@@ -39,6 +39,13 @@ const SidebarMenuItem: React.FC<SidebarMenuItemProps> = ({
     React.Children.toArray(children)
       .filter((child: any) => child?.props?.path)
       .some((child: any) => pathname.startsWith(child.props.path));
+
+  // Auto-open dropdown if a child is active
+  useEffect(() => {
+    if (isActive && children && !path) {
+      setOpen(true);
+    }
+  }, [isActive, children, path]);
 
   const handleClick = () => {
     if (path) router.push(path);
@@ -112,7 +119,7 @@ const SidebarSubItem = ({ title, path }: { title: string; path: string }) => {
         e.stopPropagation();
         router.push(path);
       }}
-      className={`px-2 py-2 list-disc whitespace-nowrap list-inside w-full rounded-sm capitalize font-medium text-sm text-left transition-all ease-in-out duration-100 cursor-pointer ${
+      className={`px-2 py-2 ps-4 whitespace-nowrap w-full rounded-sm capitalize font-medium text-sm text-left transition-all ease-in-out duration-100 cursor-pointer ${
         isActive
           ? "bg-[#157bff] text-white"
           : "text-[#7e8b9a] hover:text-[#157bff] hover:bg-[#157bff]/15"

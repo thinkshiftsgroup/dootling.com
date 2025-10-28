@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { ChevronRight } from "lucide-react";
+import { useRoleStore } from "@/stores/userRoleStore";
 
 export default function ConnectWorks() {
   const [isOpen, setIsOpen] = useState(false);
@@ -38,12 +39,15 @@ export default function ConnectWorks() {
     }
   `;
 
+  
+  const { isUser } = useRoleStore();
+
   return (
     <div className="">
       <style dangerouslySetInnerHTML={{ __html: styles }} />
       <div className="max-w-2xl">
         {/* Trigger Button */}
-        {!isOpen && (
+        {isUser && !isOpen && (
           <button
             onClick={() => setIsOpen(true)}
             className="bg-[#157BFF] hover:bg-blue-600 text-white px-2 py-1 rounded-sm flex items-center gap-2 transition-colors text-[0.9rem]"
