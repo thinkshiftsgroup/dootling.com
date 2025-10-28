@@ -10,6 +10,7 @@ import PayoutTransactions from "./payoutTransaction";
 import PayoutTable from "./payoutTransaction";
 import RecallEscrowWallet from "./recallEscrowFund";
 import WithdrawFunds from "./withdrawFunds";
+import { useRoleStore } from "@/stores/userRoleStore";
 
 const ProfileFinance = () => {
   const [showManageFunds, setManageFunds] = useState(false);
@@ -30,6 +31,8 @@ const ProfileFinance = () => {
 
   const [withdrawFunds, setWithdrawFunds] = useState(false);
 
+  const { isUser } = useRoleStore();
+  
   return (
     <div className="rounded-sm bg-white px-4 py-2">
       <div className="flex lg:flex-row flex-col items-center justify-between gap-2 my-5">
@@ -54,7 +57,7 @@ const ProfileFinance = () => {
             >
               All Transactions
             </p>
-            <button
+            {isUser && ( <button
               onClick={() => setWithdrawFunds(true)}
               className="bg-[#FAAF40] cursor-pointer text-white text-[10px] flex items-center gap-1 p-1 rounded"
             >
@@ -84,7 +87,7 @@ const ProfileFinance = () => {
                   stroke-width="3.41755"
                 />
               </svg>
-            </button>
+            </button>)}
           </div>
         </div>
 
