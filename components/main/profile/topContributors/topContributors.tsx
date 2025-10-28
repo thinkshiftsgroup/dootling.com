@@ -26,7 +26,7 @@ const TopContributorsTab: React.FC = () => {
   const tabs = [
     {
       key: "recent",
-      label: "Recently Added",
+      label: "Top Contributors",
       count: recentContributors.data?.contributors.length || 0,
     },
     {
@@ -42,11 +42,11 @@ const TopContributorsTab: React.FC = () => {
       label: "Followed",
       count: (getFollowers.data?.list ?? []).length || 0,
     },
-    {
-      key: "hometown",
-      label: "Collaborators",
-      count: getAllContributors.data?.contributors.length || 0,
-    },
+    // {
+    //   key: "hometown",
+    //   label: "Contributors",
+    //   count: getAllContributors.data?.contributors.length || 0,
+    // },
   ] as const;
 
   const activeColor = "text-black border-black";
