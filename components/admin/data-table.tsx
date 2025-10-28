@@ -47,6 +47,8 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 
+import { useRouter } from "next/navigation";
+
 export type Payment = {
   id: string;
   amount: number;
@@ -243,6 +245,7 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const payment = row.original;
+      const router = useRouter();
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -253,7 +256,9 @@ export const columns: ColumnDef<Payment>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => alert(`Viewing ${payment.id}`)}>
+            <DropdownMenuItem
+              onClick={() => router.push(`/admin/users/${payment.id}/profile`)}
+            >
               <Eye size={14} className="mr-2" /> View Details
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => alert(`Editing ${payment.id}`)}>
@@ -363,7 +368,10 @@ export function DataTableDemo() {
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(
@@ -376,7 +384,10 @@ export function DataTableDemo() {
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="text-center py-10">
+                <TableCell
+                  colSpan={columns.length}
+                  className="text-center py-10"
+                >
                   No results.
                 </TableCell>
               </TableRow>

@@ -25,10 +25,9 @@ const AddProjectsModal: React.FC<AddProjectsModalProps> = ({
   onClose,
 }) => {
   const { createProject } = useProject();
-  const { getAllContributors } = useFollowing();
+  const {  getFollowers } = useFollowing();
 
-  const contributors: Contributor[] =
-    getAllContributors.data?.contributors || [];
+  const contributors: Contributor[] = getFollowers.data?.list || [];
 
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
@@ -44,22 +43,22 @@ const AddProjectsModal: React.FC<AddProjectsModalProps> = ({
     setSelectedRadio(event.target.value);
   };
 
-  const filteredContributors = useMemo(() => {
-    if (!inputValue.trim()) return [];
-    return contributors
-      .filter(
-        (c) =>
-          c.fullName.toLowerCase().includes(inputValue.toLowerCase()) &&
-          !selectedContributors.some((s) => s.id === c.id)
-      )
-      .slice(0, 10);
-  }, [inputValue, contributors, selectedContributors]);
+  // const filteredContributors = useMemo(() => {
+  //   if (!inputValue.trim()) return [];
+  //   return contributors
+  //     .filter(
+  //       (c) =>
+  //         c.fullName.toLowerCase().includes(inputValue.toLowerCase()) &&
+  //         !selectedContributors.some((s) => s.id === c.id)
+  //     )
+  //     .slice(0, 10);
+  // }, [inputValue, contributors, selectedContributors]);
 
-  const handleSelectContributor = (contributor: Contributor) => {
-    if (selectedContributors.some((c) => c.id === contributor.id)) return;
-    setSelectedContributors((prev) => [...prev, contributor]);
-    setInputValue("");
-  };
+  // const handleSelectContributor = (contributor: Contributor) => {
+  //   if (selectedContributors.some((c) => c.id === contributor.id)) return;
+  //   setSelectedContributors((prev) => [...prev, contributor]);
+  //   setInputValue("");
+  // };
 
   const handleDeleteContributor = (id: string) => {
     setSelectedContributors((prev) => prev.filter((c) => c.id !== id));
@@ -222,7 +221,7 @@ const AddProjectsModal: React.FC<AddProjectsModalProps> = ({
                 />
               </div>
 
-              <div className="relative">
+              {/* <div className="relative">
                 <label className="font-semibold text-gray-600 text-sm sm:text-base">
                   Add Contributors *
                 </label>
@@ -318,6 +317,95 @@ const AddProjectsModal: React.FC<AddProjectsModalProps> = ({
                       <p>
                         <span className="font-semibold">{c.fullName}</span>
                         <span className="text-gray-500 text-xs">
+                          ({c.role || "Contributor"})
+                        </span>
+                      </p>
+                      <button
+                        onClick={() => handleDeleteContributor(c.id)}
+                        className="text-red-500 hover:text-red-700 transition-colors"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div> */}
+
+              <div className="space-y-2">
+                <label className="font-semibold text-gray-600 text-sm sm:text-base">
+                  Add Contributors *
+                </label>
+
+                <div className="flex gap-2 mt-2">
+                  <select
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    className="flex-1 border border-gray-300 rounded-sm p-2 text-gray-700 focus:outline-none focus:border-[#157BFF] bg-white"
+                  >
+                    <option value="">Select a contributor</option>
+                    {contributors.length > 0 ? (
+                      contributors
+                        .filter(
+                          (c) =>
+                            !selectedContributors.some((s) => s.id === c.id)
+                        )
+                        .map((c) => (
+                          <option key={c.id} value={c.id}>
+                            {c.fullName} ({c.role || "Contributor"}
+                            {c.country ? ` - ${c.country}` : ""})
+                          </option>
+                        ))
+                    ) : (
+                      <option disabled>No contributors available</option>
+                    )}
+                  </select>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const selectedContributor = contributors.find(
+                        (c) => c.id === inputValue
+                      );
+                      if (selectedContributor) {
+                        setSelectedContributors((prev) => [
+                          ...prev,
+                          selectedContributor,
+                        ]);
+                        setInputValue("");
+                      } else {
+                        toast.error(
+                          "Please select a contributor from the dropdown."
+                        );
+                      }
+                    }}
+                    className="px-3 flex items-center gap-2 justify-center text-white bg-[#157BFF] font-medium hover:bg-blue-600 transition-colors rounded-sm"
+                  >
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 4v16m8-8H4"
+                      />
+                    </svg>
+                    Add
+                  </button>
+                </div>
+
+                <div className="space-y-2 mt-3">
+                  {selectedContributors.map((c) => (
+                    <div
+                      key={c.id}
+                      className="flex items-center justify-between text-gray-800 border rounded-md p-2 text-sm"
+                    >
+                      <p>
+                        <span className="font-semibold">{c.fullName}</span>
+                        <span className="text-gray-500 text-xs ml-1">
                           ({c.role || "Contributor"})
                         </span>
                       </p>

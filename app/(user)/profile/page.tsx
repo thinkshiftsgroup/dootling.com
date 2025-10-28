@@ -271,7 +271,7 @@ const UserProfile = () => {
           className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
         />
       ),
-      label: "Followed",
+      label: "Links",
     },
     {
       icon: (isActive: boolean) => (
@@ -341,7 +341,7 @@ const UserProfile = () => {
           />
         </svg>
       ),
-      label: "Link",
+      label: "Paylink",
     },
     {
       icon: (isActive: boolean) => (
@@ -592,8 +592,8 @@ const UserProfile = () => {
                       {activeTab === "Feeds" && <ProfileFeeds />}
                       {activeTab === "Account" && <ProfileAbout />}
                       {activeTab === "Finance" && <ProfileFinance />}
-                      {activeTab === "Followed" && <FollowedTab />}
-                      {activeTab === "Link" && <ProfileLinks />}
+                      {activeTab === "Links" && <FollowedTab />}
+                      {activeTab === "paylink" && <ProfileLinks />}
                       {activeTab === "Heatmap" && <HeatmapConnections />}
                       {activeTab === "Dootime" && <DootimeTab />}
                       {activeTab === "Top Contributors" && (

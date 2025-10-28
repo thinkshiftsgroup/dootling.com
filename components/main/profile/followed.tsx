@@ -15,10 +15,10 @@ const FollowedTab: React.FC = () => {
 
   const tabs = [
     { key: "all", label: "All Linked", count: 12 },
-    { key: "recent", label: "Recently Added", count: 2 },
-    { key: "close", label: "Circle" },
-    { key: "hometown", label: "Collaborators" },
+    { key: "recent", label: "Recently Linked", count: 2 },
+    { key: "close", label: "Followed" },
     { key: "following", label: "Following" },
+    { key: "hometown", label: "Collaborators" },
   ] as const;
 
   const members = [

@@ -89,11 +89,52 @@ export const useProject = () => {
     },
   });
 
+  const createMilestone = useMutation({
+    mutationKey: ["create-milestone"],
+    mutationFn: async ({
+      id,
+      payload,
+    }: {
+      id: string | number;
+      payload: {
+        title: string;
+        releasePercentage: number;
+        dueDate: string;
+        description: string;
+        image?: File;
+        file?: File;
+      };
+    }) => {
+      const formData = new FormData();
+      formData.append("title", payload.title);
+      formData.append("releasePercentage", String(payload.releasePercentage));
+      formData.append("dueDate", payload.dueDate);
+      formData.append("description", payload.description);
+
+      if (payload.image) formData.append("image", payload.image);
+      if (payload.file) formData.append("file", payload.file);
+
+      const res = await apiInstance.post(
+        `/api/milestones/${id}/create`,
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+
+      return res.data;
+    },
+    onError: (err: any) => {
+      toast.error(err.response?.data?.message || "Something went wrong!");
+    },
+  });
+
   return {
     getAllProject,
     getAllProjectById,
     editProjectById,
     createProject,
     convertProjectToEscrowFn,
+    createMilestone,
   };
 };

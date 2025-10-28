@@ -35,11 +35,11 @@ const ConvertProjectToEscrow: React.FC<ConvertProjectToEscrowProps> = ({
   };
 
   const [purpose, setPurpose] = useState("");
-  const [selected, setSelectedRadio] = useState("invite");
+  // const [selected, setSelectedRadio] = useState("invite");
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedRadio(event.target.value);
-  };
+  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setSelectedRadio(event.target.value);
+  // };
 
   const [collaborators, setCollaborators] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState("");
@@ -72,7 +72,7 @@ const ConvertProjectToEscrow: React.FC<ConvertProjectToEscrowProps> = ({
               Escrow Smart Contract
             </h1>
             <p className=" sm:!text-base text-xs  text-[#404040]">
-              <span className="text-[#157BFF]">For:</span>Thinkemphaty Vault App
+              <span className="text-[#157BFF]">For:</span>{project.title} {" "}
               Project
             </p>
           </div>
@@ -86,14 +86,15 @@ const ConvertProjectToEscrow: React.FC<ConvertProjectToEscrowProps> = ({
         {tabs === "Overview" && (
           <OverviewTab
             project={project}
-            handleChange={handleChange}
-            selected={selected}
+            setTabs={setTabs}
+            // handleChange={handleChange}
+            // selected={selected}
             setWithdrawFunds={setWithdrawFunds}
             setShowModal={setShowModal}
           />
         )}
         {/* {tabs === "Milsetones" && <MilestonesTab />} */}
-        {tabs === "Contributors" && <ContributorsTab />}
+        {tabs === "Contributors" && <ContributorsTab project={project} />}
 
         {tabs === "Audit Log" && (
           <div>

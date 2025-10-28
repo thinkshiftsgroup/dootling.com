@@ -5,6 +5,9 @@ import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 import { FaFile } from "react-icons/fa6";
+import { useProject } from "@/hooks/useProjects";
+import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 interface AddMileStoneProp {
   open: boolean;
@@ -15,15 +18,15 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({ open, onClose }) => {
   const [userName, setUserName] = useState("");
   const [userList, setUserList] = useState<string[]>([]);
 
-  const handleAddUser = () => {
-    if (!userName.trim()) return;
-    setUserList((prev) => [...prev, userName.trim()]);
-    setUserName("");
-  };
+  // const handleAddUser = () => {
+  //   if (!userName.trim()) return;
+  //   setUserList((prev) => [...prev, userName.trim()]);
+  //   setUserName("");
+  // };
 
-  const handleRemoveUser = (nameToRemove: string) => {
-    setUserList((prev) => prev.filter((user) => user !== nameToRemove));
-  };
+  // const handleRemoveUser = (nameToRemove: string) => {
+  //   setUserList((prev) => prev.filter((user) => user !== nameToRemove));
+  // };
 
   const imageRef = useRef<HTMLInputElement | null>(null);
 
@@ -53,6 +56,39 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({ open, onClose }) => {
   const handleFileRemove = (index: number) => {
     setFiles((prev) => prev.filter((_, i) => i !== index));
   };
+  const { createMilestone } = useProject();
+  const { isPending } = createMilestone;
+  const queryClient = useQueryClient();
+
+  // const handleCreateMileStone = () => {
+  //    if (!selectedProjectId) return;
+  //   const payload = {
+  //     title: "Design Review Final",
+  //     releasePercentage: 25,
+  //     dueDate: new Date("2026-03-01").toISOString(),
+  //     description: "Client signed off on all mockups and documentation",
+  //     image: selectedImageFile, 
+  //     file: files, 
+  //   };
+
+  //   createMilestone.mutate(
+  //     {
+  //       id: "selectedProjectId",
+  //       payload,
+  //     },
+  //     {
+  //       onSuccess: () => {
+  //         toast.success("Milestone successfully");
+  //         onClose();
+  //       },
+  //       onError: (error: any) => {
+  //         toast.error(
+  //           error?.response?.data?.message || "Something went wrong. Try again."
+  //         );
+  //       },
+  //     }
+  //   );
+  // };
 
   return (
     <AnimatePresence>
@@ -86,7 +122,9 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({ open, onClose }) => {
                 <X size={20} />
               </Button>
             </div>
-            <p className="text-xs mb-3 px-4">Total Project Budget <span className="font-bold" >$4500</span></p>
+            <p className="text-xs mb-3 px-4">
+              Total Project Budget <span className="font-bold">$4500</span>
+            </p>
 
             <div className="px-4 overflow-y-scroll hide-scrollbar mb-3 space-y-3">
               <div>
@@ -103,16 +141,7 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({ open, onClose }) => {
                   <label htmlFor="" className="text-black font-medium">
                     Release Percentage*
                   </label>
-                  {/* <select
-                    name=""
-                    className="w-full rounded-sm p-1.5 border border-[#D1D1D1]"
-                    id=""
-                  >
-                    <option value="">Select Priority</option>
-                    <option value="Highest">Highest</option>
-                    <option value="Mid">Mid</option>
-                    <option value="Lowest">Lowest</option>
-                  </select> */}
+               
                   <input
                     id="dueDate"
                     type="text"
@@ -149,47 +178,6 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({ open, onClose }) => {
                   <option value=""></option>
                   <option value="">John Israel</option>
                 </select>
-                {/* <div className="relative my-2">
-                  <input
-                    type="text"
-                    value={userName}
-                    className=" text-sm sm:!text-sm p-1.5 rounded-sm w-full border border-[#D1D1D1]"
-                    placeholder="Joshua Israel"
-                    onChange={(e) => setUserName(e.target.value)}
-                  />
-                  <button
-                    onClick={handleAddUser}
-                    className="bg-[#157BFF] text-sm sm:!text-sm absolute top-0 right-0 px-5 sm:!px-5 cursor-pointer py-2  text-white rounded-sm"
-                  >
-                    + Add
-                  </button>
-                </div> */}
-                {/* {userList.map((user, idx) => {
-                  return (
-                    <p
-                      key={idx}
-                      className="text-xs text-black my-1 flex items-center gap-1"
-                    >
-                      {user}
-                      <svg
-                        onClick={() => handleRemoveUser(user)}
-                        width="12"
-                        height="12"
-                        viewBox="0 0 197 197"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M126.124 70.8776L70.8737 126.128M126.124 126.128L70.8737 70.8776M98.4987 185.982C139.734 185.982 160.36 185.982 173.169 173.173C185.978 160.364 185.978 139.747 185.978 98.5026C185.978 57.2677 185.978 36.641 173.169 23.8322C160.36 11.0234 139.743 11.0234 98.4987 11.0234C57.2638 11.0234 36.6371 11.0234 23.8283 23.8322C11.0195 36.641 11.0195 57.2585 11.0195 98.5026C11.0195 139.738 11.0195 160.364 23.8283 173.173C36.6371 185.982 57.2546 185.982 98.4987 185.982Z"
-                          stroke="#EA0234"
-                          stroke-width="21.9675"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                      </svg>
-                    </p>
-                  );
-                })} */}
               </div>
               <div className="w-full">
                 <label
@@ -207,22 +195,6 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({ open, onClose }) => {
                 />
                 <div className="relative my-2"></div>
               </div>{" "}
-              {/* <div className="w-full">
-                <label
-                  className="text-[#404040] text-sm sm:!text-bsse font-semibold"
-                  htmlFor=""
-                >
-                  Percentage to Release(%)
-                </label>
-                <input
-                  type="text"
-                  // value={userName}
-                  className=" text-sm sm:!text-base p-2 rounded-sm w-full border border-[#000000]/40 text-black"
-                  placeholder="50%"
-                  // onChange={(e) => setUserName(e.target.value)}
-                />
-                <div className="relative my-2"></div>
-              </div> */}
               <div className="w-full">
                 <label
                   className="text-[#404040] text-sm sm:!text-bsse font-semibold"
