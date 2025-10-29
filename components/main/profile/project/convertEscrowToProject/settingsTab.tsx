@@ -31,7 +31,7 @@ const SettingsTab = () => {
               className="accent-[#157bff] w-4 h-4 rounded-sm"
             />
           </div>
-          <div className="flex items-center gap-2 justify-between p-2 ">
+          {/* <div className="flex items-center gap-2 justify-between p-2 ">
             <div className="flex flex-col gap-1">
               <p className="text-black font-medium text-base">Delete Project</p>
               <p className="text-gray-400 text-sm">
@@ -42,7 +42,7 @@ const SettingsTab = () => {
               type="checkbox"
               className="accent-[#157bff] w-4 h-4 rounded-sm"
             />
-          </div>
+          </div> */}
         </div>
 
         <div className="flex sm:!flex-row flex-col my-2 items-center gap-2 justify-end">
@@ -62,7 +62,7 @@ const SettingsTab = () => {
               />
             </svg>
           </button>
-          <button className="text-white flex items-center justify-center gap-2 rounded-sm font-semibold text-sm sm:!text-base p-2 cursor-pointer bg-red-500 hover:bg-red-600 text-[0.9rem]">
+          {/* <button className="text-white flex items-center justify-center gap-2 rounded-sm font-semibold text-sm sm:!text-base p-2 cursor-pointer bg-red-500 hover:bg-red-600 text-[0.9rem]">
             Delete Project
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -75,7 +75,7 @@ const SettingsTab = () => {
                 d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6zM8 9h8v10H8zm7.5-5l-1-1h-5l-1 1H5v2h14V4z"
               />
             </svg>
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

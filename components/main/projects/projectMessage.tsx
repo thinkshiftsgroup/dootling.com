@@ -2,7 +2,7 @@
 import React from "react";
 import { useState } from "react";
 import Image from "next/image";
-import { Send, Search } from "lucide-react";
+import { Send, Search, Globe } from "lucide-react";
 import { FiPhone } from "react-icons/fi";
 import { GoDeviceCameraVideo } from "react-icons/go";
 import { FiLock } from "react-icons/fi";
@@ -15,6 +15,7 @@ import { IoAtOutline } from "react-icons/io5";
 import FilesTab from "./tabs/filesTab";
 import ProjectInfoTab from "./tabs/projectInfoTab";
 import ProjectMilestone from "./projectMilestone";
+import { useProject } from "@/hooks/useProjects";
 
 const ProjectMessage = ({ projectId }: any) => {
   const [messages, setMessages] = useState([
@@ -95,6 +96,25 @@ const ProjectMessage = ({ projectId }: any) => {
         </svg>
       ),
     },
+
+    {
+      id: "milestone",
+      label: "Milestone",
+      color: "#FAAF40",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+        >
+          <path
+            fill="currentColor"
+            d="M7.03 5.47a.75.75 0 0 0-1.06 0l-2.5 2.5a.75.75 0 0 0 1.06 1.06l1.22-1.22V18a.75.75 0 0 0 1.5 0V7.81l1.22 1.22a.75.75 0 0 0 1.06-1.06zm5.97.78a.75.75 0 0 0 0 1.5h7a.75.75 0 0 0 0-1.5zm-1 3.5a.75.75 0 0 0 0 1.5h5a.75.75 0 0 0 0-1.5zm0 3.5a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5zm0 3a.75.75 0 0 0 0 1.5h1a.75.75 0 0 0 0-1.5z"
+          />
+        </svg>
+      ),
+    },
     {
       id: "tasks",
       label: "Tasks",
@@ -114,24 +134,7 @@ const ProjectMessage = ({ projectId }: any) => {
         </svg>
       ),
     },
-    {
-      id: "milestone",
-      label: "Milestone",
-      color: "#FAAF40",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-        >
-          <path
-            fill="currentColor"
-            d="M7.03 5.47a.75.75 0 0 0-1.06 0l-2.5 2.5a.75.75 0 0 0 1.06 1.06l1.22-1.22V18a.75.75 0 0 0 1.5 0V7.81l1.22 1.22a.75.75 0 0 0 1.06-1.06zm5.97.78a.75.75 0 0 0 0 1.5h7a.75.75 0 0 0 0-1.5zm-1 3.5a.75.75 0 0 0 0 1.5h5a.75.75 0 0 0 0-1.5zm0 3.5a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5zm0 3a.75.75 0 0 0 0 1.5h1a.75.75 0 0 0 0-1.5z"
-          />
-        </svg>
-      ),
-    },
+
     {
       id: "files",
       label: "Files",
@@ -198,58 +201,149 @@ const ProjectMessage = ({ projectId }: any) => {
   ];
 
   const [tabs, setTabs] = useState("chat");
+
+  const { getAllProjectById } = useProject();
+  const { data: projectData, isLoading: projectDataLoad } = getAllProjectById(
+    projectId!
+  );
+  console.log(projectData);
+  const projectInitial = projectData?.title?.charAt(0)?.toUpperCase() || "P";
+  const imageSrc = projectData?.imageUrl || "";
+
+  const [showDropdown, setShowDropdown] = useState(false);
+
   return (
-    <div className="md:!flex w-full overflow-x-scroll hidden col-span-6 shadow-sm h-[86vh] bg-[#F8FAFC] text-gray-800">
+    <div className="flex w-full overflow-x-scroll hide-scrollbar col-span-8 md:!col-span-6 shadow-sm h-[86vh] bg-[#F8FAFC] text-gray-800">
       <div className="flex-1 flex flex-col">
         <div className="sm:!p-3.5 p-2 whitespace-nowrap gap-2 md:!flex-row flex-col flex items-center justify-between border-b bg-white">
           <div className="flex items-center gap-3">
-            <Image
-              src="/images/user/userImg.jpg"
-              alt="Profile"
-              width={40}
-              height={40}
-              className="rounded-full"
-            />
-            <div>
-              <h1 className="font-semibold flex items-center gap-0.5">
-                Paul Molive
-                <FiLock size={10} className="text-gray-400" />
-              </h1>
-              <p className="text-xs text-green-500">Online</p>
-            </div>
+            {projectDataLoad ? (
+              <>
+                <div className="w-10 h-10 rounded-full bg-gray-200 animate-pulse"></div>
+                <div className="flex flex-col gap-1">
+                  <div className="w-28 h-3 bg-gray-200 rounded animate-pulse"></div>
+                  <div className="w-16 h-2 bg-gray-200 rounded animate-pulse"></div>
+                </div>
+              </>
+            ) : (
+              <>
+                {imageSrc ? (
+                  <Image
+                    src={imageSrc}
+                    alt={projectData?.title}
+                    width={40}
+                    height={40}
+                    className="rounded-full object-cover"
+                  />
+                ) : (
+                  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-100 text-blue-700 font-semibold text-sm">
+                    {projectInitial}
+                  </div>
+                )}
+
+                <div>
+                  <span className="flex items-center gap-2">
+                    <h1 className="font-semibold leading-snug max-w-[200px] truncate">
+                      {projectData?.title}
+                    </h1>
+                    {projectData?.isPublic ? (
+                      <Globe size={10} className="text-gray-400" />
+                    ) : (
+                      <FiLock size={10} className="text-gray-400" />
+                    )}
+                  </span>
+                  <p className="text-xs text-green-500">Online</p>
+                </div>
+              </>
+            )}
           </div>
 
-          <div className="flex items-center gap-2">
-            {tabItems.map((tab) => {
-              const active = tabs === tab.id;
-              return (
-                <div
-                  key={tab.id}
-                  onClick={() => setTabs(tab.id)}
-                  className={`cursor-pointer flex items-center gap-2 rounded-sm px-3 py-2 transition
-              ${
-                active
-                  ? `shadow-[0_0_6px_rgba(0,0,0,0.15)] bg-[${tab.color}]/10 text-black scale-[1.02]`
-                  : `bg-[${tab.color}]/10 text-black hover:bg-[${tab.color}]/20`
-              }`}
-                >
-                  <span>{tab.icon}</span>
-                  <p
-                    className={`text-xs font-bold ${
-                      active ? "" : "text-black"
-                    }`}
+          <div className="flex items-center gap-2 relative">
+            {/* Tabs section */}
+            <div className="hidden md:!flex items-center gap-2">
+              {tabItems.map((tab) => {
+                const active = tabs === tab?.id;
+                return (
+                  <div
+                    key={tab?.id}
+                    onClick={() => setTabs(tab?.id)}
+                    className={`cursor-pointer flex items-center gap-2 rounded-sm px-3 py-2 transition
+          ${
+            active
+              ? `shadow-[0_0_6px_rgba(0,0,0,0.15)] bg-[${tab.color}]/10 text-black scale-[1.02]`
+              : `bg-[${tab.color}]/10 text-black hover:bg-[${tab.color}]/20`
+          }`}
                   >
-                    {tab.label}
-                  </p>
-                </div>
-              );
-            })}
-            <div className="bg-[#157BFF]/10 rounded-md p-2 hover:bg-[#157BFF]/20 transition">
-              <FiPhone className="text-[#157bff]" size={16} />
+                    <span>{tab.icon}</span>
+                    <p
+                      className={`text-xs font-bold ${
+                        active ? "" : "text-black"
+                      }`}
+                    >
+                      {tab.label}
+                    </p>
+                  </div>
+                );
+              })}
             </div>
 
-            <div className="bg-[#157BFF]/10 rounded-md p-2 hover:bg-[#157BFF]/20 transition">
-              <GoDeviceCameraVideo className="text-[#157bff]" size={16} />
+            <div className="md:!hidden relative">
+              <button
+                onClick={() => setShowDropdown((prev) => !prev)}
+                className="bg-gray-100 hover:bg-gray-200 p-2 rounded-full transition"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2}
+                  stroke="currentColor"
+                  className="w-5 h-5 text-gray-700"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm6 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm6 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+                  />
+                </svg>
+              </button>
+
+              {showDropdown && (
+                <div className="absolute right-0 top-10 bg-white shadow-md rounded-md border p-1 z-50">
+                  {tabItems.map((tab) => {
+                    const active = tabs === tab?.id;
+                    return (
+                      <div
+                        key={tab?.id}
+                        onClick={() => {
+                          setTabs(tab?.id);
+                          setShowDropdown(false);
+                        }}
+                        className={`cursor-pointer flex items-center gap-2 rounded-sm px-3 py-2 text-sm transition
+              ${
+                active
+                  ? "bg-[#E7F1FF] font-semibold text-[#157bff]"
+                  : "hover:bg-gray-100 text-gray-700"
+              }`}
+                      >
+                        <span>{tab.icon}</span>
+                        <p>{tab.label}</p>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+            {/* Action buttons (stay visible on all screens) */}
+            <div className="flex items-center gap-2">
+              <div className="bg-[#157BFF]/10 rounded-md p-2 hover:bg-[#157BFF]/20 transition">
+                <FiPhone className="text-[#157bff]" size={16} />
+              </div>
+
+              <div className="bg-[#157BFF]/10 rounded-md p-2 hover:bg-[#157BFF]/20 transition">
+                <GoDeviceCameraVideo className="text-[#157bff]" size={16} />
+              </div>
             </div>
           </div>
         </div>

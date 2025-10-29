@@ -19,8 +19,8 @@ const ProjectDashboard = ({}) => {
   const [selectedProjectName, setSelectedProjectName] = useState<string>("");
 
   const { getAllProject } = useProject();
-  const isLoading = getAllProject?.isLoading;
   const data = getAllProject?.data?.data || [];
+  const isLoading = getAllProject?.isLoading;
 
   const { isAdmin, setRole } = useRoleStore();
 

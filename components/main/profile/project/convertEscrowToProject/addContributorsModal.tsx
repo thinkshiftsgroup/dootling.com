@@ -89,16 +89,10 @@ const AddContributorsModal: React.FC<AddContProp> = ({
           });
           onClose();
         },
-        onError: (error: any) => {
-          toast.error(
-            error?.response?.data?.message || "Something went wrong. Try again."
-          );
-        },
       }
     );
   };
 
-  
   return (
     <AnimatePresence>
       {open && (

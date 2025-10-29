@@ -100,6 +100,7 @@ export const useProject = () => {
         title: string;
         releasePercentage: number;
         dueDate: string;
+        releaseDate: string;
         description: string;
         images?: File[];
         files?: File[];
@@ -145,6 +146,7 @@ export const useProject = () => {
         title: string;
         releasePercentage: number;
         dueDate: string;
+        releaseDate: string;
         description: string;
         images?: File[];
         files?: File[];
@@ -159,7 +161,6 @@ export const useProject = () => {
       formData.append("description", payload.description);
       formData.append("action", payload.action);
       formData.append("id", payload.id);
-
 
       if (payload.images?.length) {
         payload.images.forEach((img) => formData.append("image", img));
@@ -194,14 +195,100 @@ export const useProject = () => {
       enabled: !!id && isInitialized && !!user && !!token,
     });
 
+  const createTask = useMutation({
+    mutationKey: ["create-task"],
+    mutationFn: async ({
+      projectId,
+      milestoneId,
+      payload,
+    }: {
+      projectId: string | number;
+      milestoneId: string | number;
+      payload: {
+        title: string;
+        percentageOfProject: number;
+        dueDate: string;
+        description: string;
+        image?: File[];
+        file?: File[];
+        action: string;
+        priority: string;
+        contributorId: string;
+        percentageToRelease?: number;
+        releaseDate?: string;
+      };
+    }) => {
+      const formData = new FormData();
+
+      // Basic fields
+      formData.append("title", payload.title);
+      formData.append(
+        "percentageOfProject",
+        String(payload.percentageOfProject)
+      );
+      formData.append("dueDate", payload.dueDate);
+      formData.append("description", payload.description);
+      formData.append("action", payload.action);
+      formData.append("priority", payload.priority);
+      formData.append("contributorId", payload.contributorId);
+
+      if (payload.percentageToRelease !== undefined) {
+        formData.append(
+          "percentageToRelease",
+          String(payload.percentageToRelease)
+        );
+      }
+
+      if (payload.releaseDate) {
+        formData.append("releaseDate", payload.releaseDate);
+      }
+
+      if (payload.image?.length) {
+        payload.image.forEach((img) => formData.append("image", img));
+      }
+
+      if (payload.file?.length) {
+        payload.file.forEach((file) => formData.append("file", file));
+      }
+
+      const res = await apiInstance.post(
+        `/api/tasks/projects/${projectId}/milestones/${milestoneId}`,
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+
+      return res.data;
+    },
+    onError: (err: any) => {
+      toast.error(err.response?.data?.message || "Something went wrong!");
+    },
+  });
+
+  const getTasksbyId = (id: string | number | null) =>
+    useQuery({
+      queryKey: ["get-task-with-milestone-id", id],
+      queryFn: async () => {
+        const res = await apiInstance.get(`/api/tasks/milestones/${id}`);
+        return res.data;
+      },
+      enabled: !!id && isInitialized && !!user && !!token,
+    });
+
   return {
     getAllProject,
     getAllProjectById,
     editProjectById,
     createProject,
+    
     convertProjectToEscrowFn,
+    
     createMilestone,
     getMilestonebyId,
-    editMilestone
+    editMilestone,
+    
+    createTask,
+    getTasksbyId
   };
 };

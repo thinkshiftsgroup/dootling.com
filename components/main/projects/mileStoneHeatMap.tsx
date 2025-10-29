@@ -126,7 +126,7 @@ const MileStoneHeatMap: React.FC<MileStoneHeatMapProps> = ({
 
   return (
     <div
-      className={`w-full h-[20vh] hide-scrollbar p-2 overflow-x-scroll ${bgColor} rounded-md`}
+      className={`w-full hide-scrollbar p-2 overflow-x-scroll ${bgColor} rounded-md`}
     >
       <div className="mx-auto">
         <div className="relative">

@@ -17,8 +17,8 @@ const EscrowProjectCard: React.FC<ProjectCardProps> = ({
   id,
   onCPEClick,
 }) => {
-  const router = useRouter();
-  const [openMore, setOpenMore] = useState(false);
+  // const router = useRouter();
+  // const [openMore, setOpenMore] = useState(false);
   return (
     <div className="bg-white h-40 flex rounded-md shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
       <div className="w-2/5 h-full bg-gradient-to-br from-gray-100 to-gray-200">
@@ -40,7 +40,7 @@ const EscrowProjectCard: React.FC<ProjectCardProps> = ({
           <h3 className="text-base font-semibold text-gray-900 truncate">
             {title}
           </h3>
-          <div>
+          {/* <div>
             <button
               onClick={() => setOpenMore((prev) => !prev)}
               className="text-gray-400 hover:text-gray-600 transition"
@@ -57,7 +57,7 @@ const EscrowProjectCard: React.FC<ProjectCardProps> = ({
                 </p>
               </div>
             )}
-          </div>
+          </div> */}
         </div>
 
         <div>
@@ -108,7 +108,7 @@ const EscrowProjectCard: React.FC<ProjectCardProps> = ({
           </span>
 
           <span
-            onClick={() => router.push(`/projects/${id}`)}
+            // onClick={() => router.push(`/projects/${id}`)}
             className="flex gap-1 bg-[#F8F9FA] text-gray-800 hover:text-gray-950 hover:bg-[#d0d0d0] rounded-sm p-1 px-1 items-center cursor-pointer shadow-sm text-[10px]  transition-colors transistion-shadow"
           >
             <svg

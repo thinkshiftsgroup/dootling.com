@@ -67,7 +67,7 @@ const ProjectMilestone = ({ projectId }: any) => {
   return (
     <div className="flex-1 w-full p-2 overflow-y-scroll hide-scrollbar space-y-4">
       <div className="flex md:!flex-row flex-col items-center gap-5">
-        <div className="flex items-center w-full gap-2">
+        <div className="flex md:!flex-row flex-col items-center w-full gap-2">
           <button
             onClick={() => setAddTaskModal(true)}
             className="text-[#157bff] flex items-center gap-2 bg-[#157bff]/10 cursor-pointer rounded-sm py-2 px-4"
@@ -116,9 +116,9 @@ const ProjectMilestone = ({ projectId }: any) => {
 
         <div className="flex flex-wrap w-full items-center gap-2">
           <div className="flex -space-x-2 items-center">
-            {projectData?.contributors?.slice(0, 3).map((contributor: any) => (
+            {projectData?.contributors?.slice(0, 3).map((contributor: any, index:any) => (
               <Image
-                key={contributor.id}
+                key={index}
                 alt={contributor.user.fullName}
                 src={
                   contributor.user.profilePhotoUrl ||
@@ -142,9 +142,10 @@ const ProjectMilestone = ({ projectId }: any) => {
         </div>
       </div>
       <div className="mt-3 md:flex-row flex-col flex items-center justify-between gap-2">
-        <div className="w-[50vw]">
+        <div className="md:!w-[60vw] w-full" >
           <MileStoneHeatMap pageType={"profile"} />
         </div>
+
         <div className=" flex flex-col gap-1 w-full">
           {[
             {
@@ -198,7 +199,7 @@ const ProjectMilestone = ({ projectId }: any) => {
           ))}
         </div>
       </div>
-      <div className="overflow-x-auto">
+      <div className="min-w-[600px] sm:min-w-full border-collapse">
         <table className="min-w-full border-collapse">
           <thead className="bg-[#E7F1FF]/30 font-medium text-xs sm:!text-sm text-left">
             <tr>
@@ -221,10 +222,9 @@ const ProjectMilestone = ({ projectId }: any) => {
                 </td>
               </tr>
             ) : paginatedData?.length ? (
-              paginatedData.map((milestone: any, index:any) => (
+              paginatedData.map((milestone: any, index: any) => (
                 <>
                   <tr key={index}>
-                    {/* <td className="py-3 px-2 capitalize">{milestone.title}</td> */}
                     <td className="py-3">
                       <div className="flex flex-col px-1">
                         <p className="text-sm font-medium">{milestone.title}</p>

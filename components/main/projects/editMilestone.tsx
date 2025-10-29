@@ -114,6 +114,7 @@ const EditMileStone: React.FC<EditMileStoneProp> = ({
       title: formData.title,
       releasePercentage: parseInt(formData.releasePercentage),
       dueDate: new Date(formData.dueDate).toISOString(),
+      releaseDate: new Date(formData.releaseDate).toISOString(),
       description: formData.description,
       existingImages: existingImages,
       newImages: images,
@@ -222,6 +223,7 @@ const EditMileStone: React.FC<EditMileStoneProp> = ({
                     onChange={handleChange}
                     id="dueDate"
                     type="date"
+                    min={new Date().toISOString().split("T")[0]}
                     className="w-full rounded-sm p-1.5 border border-[#D1D1D1] text-gray-700 focus:outline-none focus:ring-1 focus:ring-[#157bff]"
                   />
                 </div>
@@ -264,7 +266,7 @@ const EditMileStone: React.FC<EditMileStoneProp> = ({
                 />
                 <div className="relative my-2"></div>
               </div> */}
-              {/* <div className="w-full">
+              <div className="w-full">
                 <label
                   className="text-[#404040] text-sm sm:!text-bsse font-semibold"
                   htmlFor=""
@@ -273,6 +275,7 @@ const EditMileStone: React.FC<EditMileStoneProp> = ({
                 </label>
                 <input
                   type="date"
+                  min={new Date().toISOString().split("T")[0]}
                   name="releaseDate"
                   value={formData.releaseDate}
                   onChange={handleChange}
@@ -280,7 +283,7 @@ const EditMileStone: React.FC<EditMileStoneProp> = ({
                   placeholder="50%"
                 />
                 <div className="relative my-2"></div>
-              </div> */}
+              </div>
               <div className="w-full">
                 <label htmlFor="imageUpload" className="text-black font-medium">
                   Images
@@ -407,7 +410,11 @@ const EditMileStone: React.FC<EditMileStoneProp> = ({
                 onClick={handleEditMilestone}
                 className="rounded-sm text-base mt-3  font-bold text-white bg-[#FAAF40] p-2"
               >
-                {editMilestone.isPending ? <Loader2 className="animate-spin" /> : "Update Task"}
+                {editMilestone.isPending ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  "Update Task"
+                )}
               </button>
             </div>
           </motion.div>

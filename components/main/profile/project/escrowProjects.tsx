@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import FundWalletSideModal from "../finance/fundEscrowWallet.tsx";
 import ManageEscrowFunds from "../finance/manageEscrow";
@@ -7,6 +8,7 @@ import { Loader2 } from "lucide-react";
 import WithdrawFunds from "../finance/withdrawFunds";
 import ConvertProjectToEscrow from "./CPEcrow";
 import { ProjectI } from "@/types/project";
+import { useRouter } from "next/navigation";
 
 const EscrowProjectsContent: React.FC<{
   projects: ProjectI[];
@@ -37,6 +39,8 @@ const EscrowProjectsContent: React.FC<{
     setManageProject(true);
   };
 
+  const router = useRouter();
+
   const onCPEClick = (id: string) => {
     setSelectedProjectId(id);
     setCPEcrow(true);
@@ -54,8 +58,8 @@ const EscrowProjectsContent: React.FC<{
   return (
     <>
       <div className="space-y-2">
-        <div className="flex overflow-x-scroll hide-scrollbar  lg:!flex-row flex-col items-center justify-between gap-2 my-5">
-          <div className="flex w-full h-[110px] overflow-y-scroll hide-scrollbar flex-col justify-between gap-3 p-2 bg-white shadow-md min-w-[250px] rounded">
+        <div className="flex overflow-x-scroll hide-scrollbar  lg:!flex-row flex-col items-center justify-between gap-2 m-5">
+          <div className="flex w-full h-[120px] overflow-y-scroll hide-scrollbar flex-col justify-between gap-3 p-2 bg-white shadow-md min-w-[250px] rounded">
             <div className="flex items-center">
               <p
                 className="text-white font-bold text-xl w-full px-3 py-2 rounded-sm leading-none"
@@ -76,7 +80,7 @@ const EscrowProjectsContent: React.FC<{
             </div>
           </div>
 
-          <div className="flex w-full h-[110px] overflow-y-scroll hide-scrollbar flex-col justify-between gap-3 p-2 bg-white shadow-md min-w-[250px] rounded">
+          <div className="flex w-full h-[120px] overflow-y-scroll hide-scrollbar flex-col justify-between gap-3 p-2 bg-white shadow-md min-w-[250px] rounded">
             <div className="flex items-center">
               <p
                 className="text-white font-bold text-xl w-full px-3 py-2 rounded-sm leading-none"
@@ -101,7 +105,7 @@ const EscrowProjectsContent: React.FC<{
             </div>
           </div>
 
-          <div className="flex w-full h-[110px] overflow-y-scroll hide-scrollbar flex-col justify-between gap-3 p-2 bg-white shadow-md min-w-[250px] rounded">
+          <div className="flex w-full h-[120px] overflow-y-scroll hide-scrollbar flex-col justify-between gap-3 p-2 bg-white shadow-md min-w-[250px] rounded">
             <div className="flex items-center">
               <p
                 className="text-white font-bold text-xl w-full px-3 py-2 rounded-sm leading-none"
@@ -154,16 +158,26 @@ const EscrowProjectsContent: React.FC<{
           </div>
         </div>
         {projects.length > 0 ? (
-          projects
-            ?.filter((project: any) => project.isEscrowed)
-            .map((project: any) => (
-              <EscrowProjectCard
-                key={project.id}
-                {...project}
-                onManageClick={() => onManageClick(project.id)}
-                onCPEClick={() => onCPEClick(project.id)}
-              />
-            ))
+          <>
+            {projects
+              ?.filter((project: any) => project.isEscrowed)
+              .slice(0, 4)
+              .map((project: any) => (
+                <EscrowProjectCard
+                  key={project.id}
+                  {...project}
+                  onManageClick={() => onManageClick(project.id)}
+                  onCPEClick={() => onCPEClick(project.id)}
+                />
+              ))}
+
+            <p
+              onClick={() => router.push("/projects")}
+              className="mt-3 text-main hover:text-[#157bff] font-medium text-center text-sm cursor-pointer hover:underline"
+            >
+              view all
+            </p>
+          </>
         ) : (
           <div className="py-8 text-center text-gray-500">
             <p className="text-lg font-medium">No Escrow Projects</p>

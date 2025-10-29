@@ -22,22 +22,28 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({
 }) => {
   const [title, setTitle] = useState("");
   const [release, setRelease] = useState("");
+  const [releaseDate, setReleaseDate] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [desc, setDesc] = useState("");
 
   //images input
   const imageRef = useRef<HTMLInputElement | null>(null);
-  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+  const [images, setImages] = useState<{ file: File; preview: string }[]>([]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files ? Array.from(e.target.files) : [];
-    const newPreviews = [
-      ...imagePreviews,
-      ...selected.map((file) => URL.createObjectURL(file)),
-    ];
-    setImagePreviews(newPreviews);
+
+    const newImages = selected.map((file) => ({
+      file,
+      preview: URL.createObjectURL(file),
+    }));
+
+    setImages((prev) => [...prev, ...newImages]);
   };
 
+  const handleImageRemove = (index: number) => {
+    setImages((prev) => prev.filter((_, i) => i !== index));
+  };
   const fileRef = useRef<HTMLInputElement | null>(null);
   const [files, setFiles] = useState<File[]>([]);
 
@@ -66,10 +72,11 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({
     const payload = {
       title,
       releasePercentage: parseInt(release),
+      releaseDate: new Date(releaseDate).toISOString(),
       dueDate: new Date(dueDate).toISOString(),
       description: desc,
-      images: Array.from(imageRef.current?.files || []),
-      files: files,
+      images: images.map((img) => img.file),
+      files,
     };
 
     createMilestone.mutate(
@@ -87,7 +94,7 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({
           setRelease("");
           setDueDate("");
           setDesc("");
-          setImagePreviews([]);
+          // setImagePreviews([]);
           setFiles([]);
           onClose();
         },
@@ -174,14 +181,27 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({
                     Due Date
                   </label>
                   <input
-                    value={dueDate}
-                    onChange={(e) => setDueDate(e.target.value)}
+                    value={releaseDate}
+                    onChange={(e) => setReleaseDate(e.target.value)}
                     id="dueDate"
                     type="date"
                     min={new Date().toISOString().split("T")[0]}
                     className="w-full rounded-sm p-1.5 border border-[#D1D1D1] text-gray-700 focus:outline-none focus:ring-1 focus:ring-[#157bff]"
                   />
                 </div>
+              </div>
+              <div className="w-full">
+                <label htmlFor="dueDate" className="text-black font-medium">
+                  Due Date
+                </label>
+                <input
+                  value={dueDate}
+                  onChange={(e) => setDueDate(e.target.value)}
+                  id="dueDate"
+                  type="date"
+                  min={new Date().toISOString().split("T")[0]}
+                  className="w-full rounded-sm p-1.5 border border-[#D1D1D1] text-gray-700 focus:outline-none focus:ring-1 focus:ring-[#157bff]"
+                />
               </div>
               {/* <div className="w-full">
                 <label htmlFor="" className="text-black font-medium">
@@ -223,23 +243,19 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({
                 </label>
 
                 <div className="flex flex-wrap gap-3 mt-2">
-                  {imagePreviews.map((src, index) => (
+                  {images.map((img, index) => (
                     <div
                       key={index}
                       className="relative w-32 h-32 border rounded-sm overflow-hidden"
                     >
                       <img
-                        src={src}
+                        src={img.preview}
                         alt={`Preview ${index}`}
                         className="object-cover w-full h-full"
                       />
                       <button
                         type="button"
-                        onClick={() =>
-                          setImagePreviews((prev) =>
-                            prev.filter((_, i) => i !== index)
-                          )
-                        }
+                        onClick={() => handleImageRemove(index)}
                         className="absolute top-1 right-1 bg-white/70 hover:bg-white p-1 rounded-full text-red-500"
                       >
                         <X size={14} />
