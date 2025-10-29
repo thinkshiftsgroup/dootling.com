@@ -67,8 +67,10 @@ const ProjectChatSidebar: React.FC<ProjectChatSidebarProps> = ({
                   //   router.push(`/projects/read-projects/${project.id}`);
                   // }
                 }}
-                className={`flex relative items-center bg-white rounded-sm my-2 justify-between px-2 md:!py-3 py-1 cursor-pointer border-b border-gray-100 hover:bg-gray-50 transition ${
-                  isActive ? "bg-[#E8F0FE]" : ""
+                className={`relative flex items-center justify-between px-2 md:!py-3 py-1 my-2 rounded-sm cursor-pointer border-b transition-all duration-200 ${
+                  isActive
+                    ? "bg-[#E8F0FE] border-l-4 border-[#157bff] shadow-[0_0_4px_rgba(21,123,255,0.2)]"
+                    : "bg-white hover:bg-gray-50 border-transparent"
                 }`}
               >
                 <div className="flex items-center gap-2 sm:!gap-3">
@@ -89,7 +91,11 @@ const ProjectChatSidebar: React.FC<ProjectChatSidebarProps> = ({
                   </div>
 
                   <div className="flex flex-col relative">
-                    <p className="sm:text-sm text-xs font-medium text-gray-800">
+                    <p
+                      className={`sm:text-sm text-xs font-medium truncate ${
+                        isActive ? "text-[#157bff]" : "text-gray-800"
+                      }`}
+                    >
                       {project.title}
                     </p>
 

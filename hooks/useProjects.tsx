@@ -110,6 +110,7 @@ export const useProject = () => {
       formData.append("title", payload.title);
       formData.append("releasePercentage", String(payload.releasePercentage));
       formData.append("dueDate", payload.dueDate);
+      // formData.append("releaseDate", payload.releaseDate);
       formData.append("description", payload.description);
 
       if (payload.images?.length) {
@@ -158,6 +159,7 @@ export const useProject = () => {
       formData.append("title", payload.title);
       formData.append("releasePercentage", String(payload.releasePercentage));
       formData.append("dueDate", payload.dueDate);
+      // formData.append("releaseDate", payload.releaseDate);
       formData.append("description", payload.description);
       formData.append("action", payload.action);
       formData.append("id", payload.id);
@@ -216,6 +218,7 @@ export const useProject = () => {
         contributorId: string;
         percentageToRelease?: number;
         releaseDate?: string;
+        id?: string;
       };
     }) => {
       const formData = new FormData();
@@ -231,7 +234,10 @@ export const useProject = () => {
       formData.append("action", payload.action);
       formData.append("priority", payload.priority);
       formData.append("contributorId", payload.contributorId);
-
+      
+      if (payload.id !== undefined) {
+        formData.append("id", String(payload.id));
+      }
       if (payload.percentageToRelease !== undefined) {
         formData.append(
           "percentageToRelease",
@@ -281,14 +287,14 @@ export const useProject = () => {
     getAllProjectById,
     editProjectById,
     createProject,
-    
+
     convertProjectToEscrowFn,
-    
+
     createMilestone,
     getMilestonebyId,
     editMilestone,
-    
+
     createTask,
-    getTasksbyId
+    getTasksbyId,
   };
 };

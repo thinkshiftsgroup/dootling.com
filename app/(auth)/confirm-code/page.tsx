@@ -176,7 +176,7 @@ export default function VerifyOTPPage() {
         toast.success("Email verified successfully! 🎉");
         clearUnverifiedEmail();
 
-        router.push("/profile");
+        router.push("/login");
       } else {
         setError("Verification failed: Invalid server response.");
       }

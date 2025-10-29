@@ -34,7 +34,8 @@ const AddTaskModal: React.FC<addTaskModalProp> = ({
   const [releaseDate, setReleaseDate] = useState("");
 
   const { getFollowers, getAllContributors } = useFollowing();
-  const contributors = getFollowers.data?.list || [];
+  const contributors = getAllContributors.data?.contributors || [];
+  console.log(contributors, "cont")
 
   const imageRef = useRef<HTMLInputElement | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -92,7 +93,7 @@ const AddTaskModal: React.FC<addTaskModalProp> = ({
         onSuccess: () => {
           toast.success("Task added");
           queryClient.invalidateQueries({
-            queryKey: ["get-all-project-with-id"],
+            queryKey: ["get-task-with-milestone-id"],
           });
           onClose();
         },
@@ -204,7 +205,7 @@ const AddTaskModal: React.FC<addTaskModalProp> = ({
                     {contributors?.length > 0 ? (
                       contributors?.map((c: any) => (
                         <option key={c.id} value={c.id}>
-                          {c.fullName} ({c.username})
+                          {c.user.fullName} ({c.user.username})
                         </option>
                       ))
                     ) : (
