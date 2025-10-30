@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { FaAngleLeft } from "react-icons/fa6";
 import { FaAngleRight } from "react-icons/fa6";
@@ -26,6 +26,16 @@ const ProjectTasks = ({ projectId }: any) => {
   const handleToggle = (index: number) => {
     setExpandedRow((prev) => (prev === index ? null : index));
   };
+
+  useEffect(() => {
+    if (data && data.length > 0) {
+      setSelectedMilestone(data[0].id);
+    } else {
+      setSelectedMilestone("");
+    }
+    setExpandedRow(null);
+  }, [projectId, data]);
+
   return (
     <div className="flex-1 w-full p-2 overflow-y-scroll hide-scrollbar space-y-4">
       <div className="flex md:!flex-row flex-col items-center gap-5">
@@ -73,19 +83,30 @@ const ProjectTasks = ({ projectId }: any) => {
         </div>
         <div className="flex flex-wrap w-full items-center gap-2">
           <div className="flex -space-x-2 items-center">
-            {projectData?.contributors?.slice(0, 3).map((contributor: any) => (
-              <Image
-                key={contributor.id}
-                alt={contributor.user.fullName}
-                src={
-                  contributor.user.profilePhotoUrl ||
-                  "/images/user/taskUser.png"
-                }
-                width={100}
-                height={100}
-                className="rounded-full w-7 h-7 object-cover object-top border-2 border-white"
-              />
-            ))}
+            {projectData?.contributors
+              ?.slice(0, 3)
+              .map((contributor: any, index: number) => {
+                const user = contributor.user;
+                const initial = user.fullName?.charAt(0)?.toUpperCase() || "?";
+
+                return user.profilePhotoUrl ? (
+                  <Image
+                    key={index}
+                    alt={user.fullName}
+                    src={user.profilePhotoUrl}
+                    width={100}
+                    height={100}
+                    className="rounded-full w-7 h-7 object-cover object-top border-2 border-white"
+                  />
+                ) : (
+                  <div
+                    key={index}
+                    className="rounded-full w-7 h-7 flex items-center justify-center bg-gray-300 text-[10px] font-semibold text-gray-700 border-2 border-white"
+                  >
+                    {initial}
+                  </div>
+                );
+              })}
           </div>
 
           <p className="flex whitespace-nowrap items-center gap-1 text-black font-semibold">
@@ -149,13 +170,11 @@ const ProjectTasks = ({ projectId }: any) => {
                             className="rounded-sm w-10 h-10 object-cover object-top border-2 border-white"
                           />
                         ) : (
-                          <Image
-                            alt="user-img"
-                            src="/images/user/taskUser.png"
-                            width={100}
-                            height={100}
-                            className="rounded-sm w-10 h-10 object-cover object-top border-2 border-white"
-                          />
+                          <div className="rounded-full w-10 h-10 flex items-center justify-center bg-gray-300 text-[10px] font-semibold text-gray-700 border-2 border-white">
+                            {task?.contributor?.user.fullName
+                              .charAt(0)
+                              ?.toUpperCase() || "?"}
+                          </div>
                         )}
 
                         <p className="font-semibold text-xs sm:!text-sm text-black whitespace-nowrap">

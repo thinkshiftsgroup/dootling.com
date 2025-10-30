@@ -53,7 +53,7 @@ const OverviewTab = ({
         onSuccess: () => {
           toast.success("Project updated successfully");
           queryClient.invalidateQueries({ queryKey: ["get-all-project"] });
-          setTabs("Contributors");
+          // setTabs("Contributors");
         },
         onError: (error: any) => {
           toast.error(

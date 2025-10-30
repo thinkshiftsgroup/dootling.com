@@ -24,6 +24,7 @@ const ManageProject: React.FC<ManageProjectProps> = ({
   const [summary, setSummary] = useState("");
   const [selectedContributors, setSelectedContributors] = useState<any[]>([]);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
 
   const { getFollowers, getAllContributors } = useFollowing();
   console.log(getAllContributors, "contr");
@@ -40,17 +41,18 @@ const ManageProject: React.FC<ManageProjectProps> = ({
       setSummary(data?.description || "");
       setSelectedRadio(data?.isPublic ? "anyone" : "invite");
 
-      if (data?.projectImageUrl) {
-        setImagePreview(data?.projectImageUrl);
-      }
+      setImagePreview(data.projectImageUrl || null);
 
       if (data?.contributors?.length) {
         setSelectedContributors(
           data.contributors.map((c: any) => ({
             id: c.user.id,
-            fullName: c.user.fullName,
-            email: c.user.email,
-            profilePhotoUrl: c.user.profilePhotoUrl,
+            user: {
+              id: c.user.id,
+              fullName: c.user.fullName,
+              email: c.user.email,
+              profilePhotoUrl: c.user.profilePhotoUrl,
+            },
           }))
         );
       }
@@ -62,111 +64,127 @@ const ManageProject: React.FC<ManageProjectProps> = ({
     if (!contributorId) return;
 
     const selectedUser = getAllContributors.data?.contributors?.find(
-      (f: any) => f.id === contributorId
+      (f: any) => f.user.id === contributorId
     );
-
     if (!selectedUser) return;
 
-    const alreadyExists = selectedContributors.some(
-      (c) => c.id === selectedUser.id
-    );
-
-    if (alreadyExists) {
+    if (selectedContributors.some((c) => c.id === selectedUser.user.id)) {
       toast.error("Contributor already added");
       return;
     }
 
-    setSelectedContributors((prev) => [...prev, selectedUser]);
+    setSelectedContributors((prev) => [
+      ...prev,
+      {
+        id: selectedUser.user.id,
+        user: {
+          id: selectedUser.user.id,
+          fullName: selectedUser.user.fullName,
+          email: selectedUser.user.email,
+          profilePhotoUrl: selectedUser.user.profilePhotoUrl,
+        },
+      },
+    ]);
   };
 
   const handleDeleteContributor = (id: string | number) => {
     setSelectedContributors((prev) =>
-      prev.filter((c) => {
-        const isExisting = data?.contributors?.some(
-          (ec: any) => ec.user.id === c.id
-        );
+      prev
+        .map((c) => {
+          const isExisting = data?.contributors?.some(
+            (ec: any) => ec.user.id === c.id
+          );
 
-        if (isExisting) {
-          if (c.id === id) {
+          if (isExisting && c.id === id) {
             return {
               ...c,
               action: c.action === "delete" ? undefined : "delete",
             };
           }
-          return c;
-        }
 
-        return c.id !== id;
-      })
+          // If new contributor, remove it from the array
+          if (!isExisting && c.id === id) return null;
+
+          return c;
+        })
+        .filter(Boolean)
     );
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selected = e.target.files?.[0];
-    if (selected) {
-      setImagePreview(URL.createObjectURL(selected));
+    const file = e.target.files?.[0];
+    if (file) {
+      setImagePreview(URL.createObjectURL(file));
+      setSelectedImageFile(file);
     }
+  };
+
+  const handleRemoveImage = () => {
+    setImagePreview(null);
+    setSelectedImageFile(null);
   };
 
   const handleEditProject = () => {
     if (!projectId) return;
 
-    // Map userId -> contributor recordId for existing contributors
     const existingContributorsMap = new Map(
       data?.contributors?.map((c: any) => [c.user.id, c.id]) || []
     );
 
-    // Build payload contributors array
-    const contributorsPayload = selectedContributors.map((c) => {
+    const uniqueContributors = Array.from(
+      new Map(selectedContributors.map((c) => [c.id, c])).values()
+    );
+
+    const contributorsPayload = uniqueContributors.map((c) => {
       if (c.action === "delete" && existingContributorsMap.has(c.id)) {
-        // Delete existing contributor
         return { action: "delete", id: existingContributorsMap.get(c.id) };
       }
 
       if (existingContributorsMap.has(c.id)) {
-        // Update existing contributor
         return {
           action: "update",
           id: existingContributorsMap.get(c.id),
           role: c.role || null,
-          // budgetPercentage: c.budgetPercentage || 0,
-          // releasePercentage: c.releasePercentage || 0,
         };
       }
 
-      // New contributor
       return {
         action: "create",
-        userId: c.id,
+        userId: c.user.id,
         role: c.role || null,
-        // budgetPercentage: c.budgetPercentage || 0,
-        // releasePercentage: c.releasePercentage || 0,
       };
     });
 
-    const payload = {
-      title,
-      description: summary,
-      isPublic: selected === "anyone",
-      contributors: contributorsPayload,
-    };
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", summary);
+    formData.append("isPublic", selected === "anyone" ? "true" : "false");
+    formData.append("contributors", JSON.stringify(contributorsPayload));
+
+    if (selectedImageFile) {
+      formData.append("image", selectedImageFile);
+    }
 
     editProject(
-      { id: projectId, payload },
+      { id: projectId, payload: formData },
       {
         onSuccess: () => {
           toast.success("Project updated successfully");
           queryClient.invalidateQueries({ queryKey: ["get-all-project"] });
+          queryClient.invalidateQueries({
+            queryKey: ["get-all-project-with-id"],
+          });
           onClose();
-        },
-        onError: (error: any) => {
-          toast.error(
-            error?.response?.data?.detail || "Something went wrong. Try again."
-          );
         },
       }
     );
   };
+
+  const uniqueContributors = Array.from(
+    new Map(
+      getAllContributors.data?.contributors?.map((u: any) => [u.user.id, u])
+    ).values()
+  );
 
   return (
     <AnimatePresence>
@@ -215,16 +233,18 @@ const ManageProject: React.FC<ManageProjectProps> = ({
                         alt="Uploaded"
                         className="object-cover w-full h-full"
                       />
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setImagePreview(null);
-                        }}
-                        className="absolute top-1 right-1 bg-white/70 hover:bg-white p-1 rounded-full text-red-500"
-                      >
-                        <X size={14} />
-                      </button>
+                      {imagePreview && (
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleRemoveImage();
+                          }}
+                          className="absolute top-1 right-1 bg-white/70 hover:bg-white p-1 rounded-full text-red-500"
+                        >
+                          <X size={14} />
+                        </button>
+                      )}
                     </div>
                   ) : (
                     <svg
@@ -285,15 +305,17 @@ const ManageProject: React.FC<ManageProjectProps> = ({
                   className="mt-2 w-full border border-gray-300 rounded-sm p-2 text-gray-700 bg-white focus:outline-none focus:border-[#157BFF]"
                 >
                   <option value="">Select a contributor...</option>
-                  {getAllContributors.data?.contributors?.map((user: any) => (
-                    <option key={user.id} value={user.id}>
-                      {user?.user.fullName}
+                  {uniqueContributors.map((user: any) => (
+                    <option key={user.user.id} value={user.user.id}>
+                      {user.user.fullName}
                     </option>
                   ))}
                 </select>
 
                 <div className="mt-3 space-y-2">
-                  {selectedContributors.map((c) => {
+                  {Array.from(
+                    new Map(selectedContributors.map((c) => [c.id, c])).values()
+                  ).map((c) => {
                     const isExisting = data?.contributors?.some(
                       (ec: any) => ec.user.id === c.id
                     );

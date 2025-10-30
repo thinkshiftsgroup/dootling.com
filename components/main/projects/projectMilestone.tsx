@@ -116,19 +116,30 @@ const ProjectMilestone = ({ projectId }: any) => {
 
         <div className="flex flex-wrap w-full items-center gap-2">
           <div className="flex -space-x-2 items-center">
-            {projectData?.contributors?.slice(0, 3).map((contributor: any, index:any) => (
-              <Image
-                key={index}
-                alt={contributor.user.fullName}
-                src={
-                  contributor.user.profilePhotoUrl ||
-                  "/images/user/taskUser.png"
-                }
-                width={100}
-                height={100}
-                className="rounded-full w-7 h-7 object-cover object-top border-2 border-white"
-              />
-            ))}
+            {projectData?.contributors
+              ?.slice(0, 3)
+              .map((contributor: any, index: number) => {
+                const user = contributor.user;
+                const initial = user.fullName?.charAt(0)?.toUpperCase() || "?";
+
+                return user.profilePhotoUrl ? (
+                  <Image
+                    key={index}
+                    alt={user.fullName}
+                    src={user.profilePhotoUrl}
+                    width={100}
+                    height={100}
+                    className="rounded-full w-7 h-7 object-cover object-top border-2 border-white"
+                  />
+                ) : (
+                  <div
+                    key={index}
+                    className="rounded-full w-7 h-7 flex items-center justify-center bg-gray-300 text-[10px] font-semibold text-gray-700 border-2 border-white"
+                  >
+                    {initial}
+                  </div>
+                );
+              })}
           </div>
 
           <p className="flex whitespace-nowrap items-center gap-1 text-black font-semibold">
@@ -142,7 +153,7 @@ const ProjectMilestone = ({ projectId }: any) => {
         </div>
       </div>
       <div className="mt-3 md:flex-row flex-col flex items-center justify-between gap-2">
-        <div className="md:!w-[60vw] w-full" >
+        <div className="md:!w-[60vw] w-full">
           <MileStoneHeatMap pageType={"profile"} />
         </div>
 

@@ -270,7 +270,7 @@ const ProjectMessage = ({ projectId }: any) => {
                     className={`cursor-pointer flex items-center gap-2 rounded-sm px-3 py-2 transition
           ${
             active
-              ? `shadow-[0_0_6px_rgba(0,0,0,0.15)] bg-[${tab.color}]/10 text-black scale-[1.02]`
+              ? `shadow-[0_0_6px_rgba(0,0,0,0.50)] bg-[${tab.color}]/10 text-black scale-[1.02]`
               : `bg-[${tab.color}]/10 text-black hover:bg-[${tab.color}]/20`
           }`}
                   >
