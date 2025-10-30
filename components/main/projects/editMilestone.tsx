@@ -30,10 +30,13 @@ const EditMileStone: React.FC<EditMileStoneProp> = ({
     releasePercentage: "",
   });
 
-  const [images, setImages] = useState<File[]>([]);
+  console.log(milestone, "mms");
+
   const [files, setFiles] = useState<File[]>([]);
+  const [images, setImages] = useState<File[]>([]);
   const [imagePreview, setImagePreview] = useState<string[]>([]);
   const [existingImages, setExistingImages] = useState<string[]>([]);
+  const [newImages, setNewImages] = useState<File[]>([]);
 
   const imageRef = useRef<HTMLInputElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
@@ -42,28 +45,28 @@ const EditMileStone: React.FC<EditMileStoneProp> = ({
   const { data } = getAllProjectById(projectId!);
 
   useEffect(() => {
-    if (milestone) {
-      setFormData({
-        title: milestone.title || "",
-        description: milestone.description || "",
-        dueDate: milestone.dueDate
-          ? new Date(milestone.dueDate).toISOString().split("T")[0]
-          : "",
-        releaseDate: milestone.releaseDate
-          ? new Date(milestone.releaseDate).toISOString().split("T")[0]
-          : "",
-        releasePercentage: milestone.releasePercentage || 0,
-      });
+    if (!milestone) return;
 
-      if (milestone.images) {
-        setExistingImages(milestone.images);
-        setImagePreview(milestone.images);
-      }
+    setFormData({
+      title: milestone.title || "",
+      description: milestone.description || "",
+      dueDate: milestone.dueDate
+        ? new Date(milestone.dueDate).toISOString().split("T")[0]
+        : "",
+      releaseDate: milestone.releaseDate
+        ? new Date(milestone.releaseDate).toISOString().split("T")[0]
+        : "",
+      releasePercentage: milestone.releasePercentage?.toString() || "",
+    });
 
-      if (milestone.files) {
-        setFiles(milestone.files);
-      }
-    }
+    // Existing images
+    const images =
+      milestone.galleryItems
+        ?.filter((item: any) => item.fileType.startsWith("image/"))
+        .map((item: any) => item.url) || [];
+
+    setExistingImages(images);
+    setImagePreview(images);
   }, [milestone]);
 
   const handleChange = (
@@ -74,13 +77,11 @@ const EditMileStone: React.FC<EditMileStoneProp> = ({
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files || files.length === 0) return;
-    const fileArray = Array.from(files);
-    setImages(fileArray);
+    const files = e.target.files ? Array.from(e.target.files) : [];
+    setImages((prev) => [...prev, ...files]);
     setImagePreview((prev) => [
       ...prev,
-      ...fileArray.map((file) => URL.createObjectURL(file)),
+      ...files.map((f) => URL.createObjectURL(f)),
     ]);
   };
 
@@ -94,15 +95,12 @@ const EditMileStone: React.FC<EditMileStoneProp> = ({
   };
 
   const handleImageRemove = (index: number) => {
-    const removed = imagePreview[index];
-
-    if (existingImages.includes(removed)) {
-      setExistingImages((prev) => prev.filter((img) => img !== removed));
+    if (index < existingImages.length) {
+      setExistingImages((prev) => prev.filter((_, i) => i !== index));
     } else {
-      setImages((prev) => prev.filter((_, i) => i !== index));
+      const newIndex = index - existingImages.length;
+      setNewImages((prev) => prev.filter((_, i) => i !== newIndex));
     }
-
-    setImagePreview((prev) => prev.filter((_, i) => i !== index));
   };
 
   const queryClient = useQueryClient();
@@ -110,27 +108,35 @@ const EditMileStone: React.FC<EditMileStoneProp> = ({
   const handleEditMilestone = () => {
     if (!projectId) return;
 
-    const payload = {
-      title: formData.title,
-      releasePercentage: parseInt(formData.releasePercentage),
-      dueDate: new Date(formData.dueDate).toISOString(),
-      releaseDate: new Date(formData.releaseDate).toISOString(),
-      description: formData.description,
-      existingImages: existingImages,
-      newImages: images,
-      files: files,
-      action: "update",
-      id: milestone.id,
-    };
+    const formDataToSend = new FormData();
+    formDataToSend.append("title", formData.title);
+    formDataToSend.append("description", formData.description);
+    formDataToSend.append("dueDate", new Date(formData.dueDate).toISOString());
+    if (formData.releaseDate) {
+      formDataToSend.append(
+        "releaseDate",
+        new Date(formData.releaseDate).toISOString()
+      );
+    }
+
+    formDataToSend.append("releasePercentage", formData.releasePercentage);
+    formDataToSend.append("action", "update");
+    formDataToSend.append("id", milestone.id);
+
+    newImages.forEach((file) => formDataToSend.append("image", file));
+
+    files.forEach((file) => formDataToSend.append("file", file));
 
     editMilestone.mutate(
-      { id: projectId, payload },
+      { id: projectId, payload: formDataToSend },
       {
         onSuccess: () => {
           toast.success("Milestone updated successfully");
           queryClient.invalidateQueries({
             queryKey: ["get-milestone-with-project-id"],
           });
+
+          // Reset form
           setFormData({
             title: "",
             description: "",
@@ -139,8 +145,8 @@ const EditMileStone: React.FC<EditMileStoneProp> = ({
             releasePercentage: "",
           });
           setImages([]);
-          setExistingImages([]);
           setImagePreview([]);
+          setExistingImages([]);
           setFiles([]);
           onClose();
         },
@@ -239,33 +245,6 @@ const EditMileStone: React.FC<EditMileStoneProp> = ({
                   className="w-full h-[200px] rounded-sm p-1.5 border border-[#D1D1D1]"
                 />
               </div>
-              {/* <div className="w-full">
-                <label htmlFor="" className="text-black font-medium">
-                  Contributors*
-                </label>
-                <select
-                  name=""
-                  id=""
-                  className=" text-sm sm:!text-sm p-1.5 rounded-sm w-full border border-[#D1D1D1]"
-                >
-                  <option value=""></option>
-                  <option value="">John Israel</option>
-                </select>
-              </div> */}
-              {/* <div className="w-full">
-                <label
-                  className="text-[#404040] text-sm sm:!text-bsse font-semibold"
-                  htmlFor=""
-                >
-                  Percentage of Total Budget(%)
-                </label>
-                <input
-                  type="text"
-                  className=" text-sm sm:!text-base p-2 rounded-sm w-full border border-[#000000]/40 text-black"
-                  placeholder="50%"
-                />
-                <div className="relative my-2"></div>
-              </div> */}
               <div className="w-full">
                 <label
                   className="text-[#404040] text-sm sm:!text-bsse font-semibold"
@@ -290,7 +269,10 @@ const EditMileStone: React.FC<EditMileStoneProp> = ({
                 </label>
 
                 <div className="flex flex-wrap gap-3 mt-2">
-                  {imagePreview.map((src, index) => (
+                  {[
+                    ...existingImages,
+                    ...newImages.map((file) => URL.createObjectURL(file)),
+                  ].map((src, index) => (
                     <div
                       key={index}
                       className="relative w-32 h-32 border rounded-sm overflow-hidden"

@@ -71,30 +71,28 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({
 
     const payload = {
       title,
-      releasePercentage: parseInt(release),
+      releasePercentage: release,
       releaseDate: new Date(releaseDate).toISOString(),
       dueDate: new Date(dueDate).toISOString(),
       description: desc,
-      images: images.map((img) => img.file),
-      files,
+      image: images.map((img) => img.file),
+      file: files,
     };
 
     createMilestone.mutate(
-      {
-        id: projectId,
-        payload,
-      },
+      { id: projectId, payload },
       {
         onSuccess: () => {
           toast.success("Milestone added successfully");
           queryClient.invalidateQueries({
             queryKey: ["get-milestone-with-project-id"],
           });
+
           setTitle("");
           setRelease("");
           setDueDate("");
           setDesc("");
-          // setImagePreviews([]);
+          setImages([]);
           setFiles([]);
           onClose();
         },
@@ -181,8 +179,8 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({
                     Due Date
                   </label>
                   <input
-                    value={releaseDate}
-                    onChange={(e) => setReleaseDate(e.target.value)}
+                    value={dueDate}
+                    onChange={(e) => setDueDate(e.target.value)}
                     id="dueDate"
                     type="date"
                     min={new Date().toISOString().split("T")[0]}
@@ -192,11 +190,11 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({
               </div>
               <div className="w-full">
                 <label htmlFor="dueDate" className="text-black font-medium">
-                  Due Date
+                  Release Date
                 </label>
                 <input
-                  value={dueDate}
-                  onChange={(e) => setDueDate(e.target.value)}
+                  value={releaseDate}
+                  onChange={(e) => setReleaseDate(e.target.value)}
                   id="dueDate"
                   type="date"
                   min={new Date().toISOString().split("T")[0]}

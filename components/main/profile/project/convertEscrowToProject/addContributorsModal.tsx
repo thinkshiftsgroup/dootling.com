@@ -201,7 +201,7 @@ const AddContributorsModal: React.FC<AddContProp> = ({
                 />
                 <div className="relative my-2"></div>
               </div>
-              <div className="w-full">
+              {/* <div className="w-full">
                 <label
                   className="text-[#404040] text-sm sm:!text-bsse font-semibold"
                   htmlFor=""
@@ -217,7 +217,7 @@ const AddContributorsModal: React.FC<AddContProp> = ({
                   onChange={(e) => setDate(e.target.value)}
                 />
                 <div className="relative my-2"></div>
-              </div>
+              </div> */}
               <button
                 onClick={handleSubmit}
                 disabled={isPending}

@@ -140,12 +140,15 @@ const ProjectTasks = ({ projectId }: any) => {
                   <tr key={task.id} className="hover:bg-[#E7F1FF]/10">
                     <td className="py-3">
                       <div className="flex items-center gap-2 flex-wrap">
-                        {/* <input
-                        type="checkbox"
-                        className="w-4 h-4 accent-[#157bff]"
-                      /> */}
-
-                        <div className="flex -space-x-2">
+                        {task.contributor.user.profilePhotoUrl ? (
+                          <Image
+                            alt="user-img"
+                            src={task.contributor.user.profilePhotoUrl}
+                            width={100}
+                            height={100}
+                            className="rounded-sm w-10 h-10 object-cover object-top border-2 border-white"
+                          />
+                        ) : (
                           <Image
                             alt="user-img"
                             src="/images/user/taskUser.png"
@@ -153,10 +156,10 @@ const ProjectTasks = ({ projectId }: any) => {
                             height={100}
                             className="rounded-sm w-10 h-10 object-cover object-top border-2 border-white"
                           />
-                        </div>
+                        )}
 
                         <p className="font-semibold text-xs sm:!text-sm text-black whitespace-nowrap">
-                          {task?.contributor?.role || "No Contributor"}
+                          {task?.contributor?.user.fullName || "No Contributor"}
                         </p>
                       </div>
                     </td>

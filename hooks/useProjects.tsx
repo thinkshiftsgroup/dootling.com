@@ -57,18 +57,33 @@ export const useProject = () => {
       description,
       isPublic,
       contributorIds,
+      image,
     }: {
       title: string;
       description: string;
       isPublic: boolean;
       contributorIds?: string[];
+      image?: File;
     }) => {
-      const res = await apiInstance.post("api/projects", {
-        title,
-        description,
-        isPublic,
-        contributorIds,
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("isPublic", String(isPublic));
+
+      if (contributorIds?.length) {
+        contributorIds.forEach((id) => formData.append("contributorIds", id));
+      }
+
+      if (image) {
+        formData.append("image", image);
+      }
+
+      const res = await apiInstance.post("api/projects", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
+
       return res.data;
     },
     onError: (err: any) => {
@@ -98,28 +113,24 @@ export const useProject = () => {
       id: string | number;
       payload: {
         title: string;
-        releasePercentage: number;
-        dueDate: string;
+        releasePercentage: string | number;
         releaseDate: string;
+        dueDate: string;
         description: string;
-        images?: File[];
-        files?: File[];
+        image?: File[];
+        file?: File[];
       };
     }) => {
       const formData = new FormData();
       formData.append("title", payload.title);
       formData.append("releasePercentage", String(payload.releasePercentage));
+      formData.append("releaseDate", payload.releaseDate);
       formData.append("dueDate", payload.dueDate);
-      // formData.append("releaseDate", payload.releaseDate);
       formData.append("description", payload.description);
 
-      if (payload.images?.length) {
-        payload.images.forEach((img) => formData.append("image", img));
-      }
+      payload.image?.forEach((img) => formData.append("image", img));
 
-      if (payload.files?.length) {
-        payload.files.forEach((file) => formData.append("file", file));
-      }
+      payload.file?.forEach((file) => formData.append("file", file));
 
       const res = await apiInstance.post(
         `/api/milestones/${id}/create`,
@@ -143,38 +154,11 @@ export const useProject = () => {
       payload,
     }: {
       id: string | number;
-      payload: {
-        title: string;
-        releasePercentage: number;
-        dueDate: string;
-        releaseDate: string;
-        description: string;
-        images?: File[];
-        files?: File[];
-        action: string;
-        id: string;
-      };
+      payload: FormData;
     }) => {
-      const formData = new FormData();
-      formData.append("title", payload.title);
-      formData.append("releasePercentage", String(payload.releasePercentage));
-      formData.append("dueDate", payload.dueDate);
-      // formData.append("releaseDate", payload.releaseDate);
-      formData.append("description", payload.description);
-      formData.append("action", payload.action);
-      formData.append("id", payload.id);
-
-      if (payload.images?.length) {
-        payload.images.forEach((img) => formData.append("image", img));
-      }
-
-      if (payload.files?.length) {
-        payload.files.forEach((file) => formData.append("file", file));
-      }
-
       const res = await apiInstance.patch(
         `/api/milestones/${id}/manage`,
-        formData,
+        payload,
         {
           headers: { "Content-Type": "multipart/form-data" },
         }
@@ -223,7 +207,6 @@ export const useProject = () => {
     }) => {
       const formData = new FormData();
 
-      // Basic fields
       formData.append("title", payload.title);
       formData.append(
         "percentageOfProject",
@@ -234,7 +217,7 @@ export const useProject = () => {
       formData.append("action", payload.action);
       formData.append("priority", payload.priority);
       formData.append("contributorId", payload.contributorId);
-      
+
       if (payload.id !== undefined) {
         formData.append("id", String(payload.id));
       }

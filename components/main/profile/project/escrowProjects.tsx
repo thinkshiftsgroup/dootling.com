@@ -157,10 +157,11 @@ const EscrowProjectsContent: React.FC<{
             </div>
           </div>
         </div>
-        {projects.length > 0 ? (
+        {projects?.filter((project: any) => project.isEscrowed === true)
+          .length > 0 ? (
           <>
             {projects
-              ?.filter((project: any) => project.isEscrowed)
+              ?.filter((project: any) => project.isEscrowed === true)
               .slice(0, 4)
               .map((project: any) => (
                 <EscrowProjectCard

@@ -9,7 +9,7 @@ interface ProjectCardProps extends ProjectI {
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({
-  imageSrc,
+  projectImageUrl,
   isPublic,
   title,
   _count,
@@ -23,9 +23,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   return (
     <div className="bg-white h-40 flex rounded-md shadow-sm border border-gray-200 overflow-scroll hide-scrollbar hover:shadow-md transition-shadow">
       <div className="w-2/5 h-full bg-gradient-to-br from-gray-100 to-gray-200">
-        {imageSrc ? (
+        {projectImageUrl ? (
           <img
-            src={imageSrc}
+            src={projectImageUrl}
             alt={title}
             className="w-full h-full object-cover"
           />

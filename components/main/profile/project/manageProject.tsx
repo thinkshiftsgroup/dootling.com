@@ -64,6 +64,7 @@ const ManageProject: React.FC<ManageProjectProps> = ({
     const alreadyExists = selectedContributors.some(
       (c) => c.id === selectedUser.id
     );
+
     if (alreadyExists) {
       toast.error("Contributor already added");
       return;
@@ -73,7 +74,13 @@ const ManageProject: React.FC<ManageProjectProps> = ({
   };
 
   const handleDeleteContributor = (id: string | number) => {
-    setSelectedContributors((prev) => prev.filter((c) => c.id !== id));
+    setSelectedContributors((prev) =>
+      prev.map((c) =>
+        c.id === id
+          ? { ...c, action: c.action === "delete" ? undefined : "delete" }
+          : c
+      )
+    );
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,22 +93,44 @@ const ManageProject: React.FC<ManageProjectProps> = ({
   const handleEditProject = () => {
     if (!projectId) return;
 
-    const contributorIds =
-      selectedContributors.length > 0
-        ? selectedContributors.map((c) => c.id)
-        : undefined;
+    const existingContributorIds =
+      data?.contributors?.map((c: any) => c.user.id) || [];
+
+    const currentContributorIds = selectedContributors.map((c) => c.id);
+
+    const newContributors = currentContributorIds
+      .filter((id) => !existingContributorIds.includes(id))
+      .map((id) => ({
+        action: "create",
+        userId: id,
+      }));
+
+    const existingContributors = currentContributorIds
+      .filter((id) => existingContributorIds.includes(id))
+      .map((id) => ({
+        action: "update",
+        userId: id,
+      }));
+
+    const removedContributors = existingContributorIds
+      .filter((id: any) => !currentContributorIds.includes(id))
+      .map((id: any) => ({
+        action: "delete",
+        userId: id,
+      }));
+
+    // Combine all
+    const contributors = [
+      ...existingContributors,
+      ...newContributors,
+      ...removedContributors,
+    ];
 
     const payload = {
       title,
       description: summary,
       isPublic: selected === "anyone",
-      contributors: [
-        {
-          action: "create",
-          userId: contributorIds,
-        },
-      ],
-      // ...(contributorIds ? { contributorIds } : {}),
+      contributors,
     };
 
     editProject(
@@ -112,9 +141,9 @@ const ManageProject: React.FC<ManageProjectProps> = ({
           queryClient.invalidateQueries({ queryKey: ["get-all-project"] });
           onClose();
         },
-        onError: (error:any) => {
+        onError: (error: any) => {
           toast.error(
-            error?.response?.data?.message || "Something went wrong. Try again."
+            error?.response?.data?.detail || "Something went wrong. Try again."
           );
         },
       }
@@ -249,7 +278,11 @@ const ManageProject: React.FC<ManageProjectProps> = ({
                   {selectedContributors.map((c) => (
                     <div
                       key={c.id}
-                      className="flex items-center justify-between border rounded-md p-2 text-sm text-gray-800"
+                      className={`flex items-center justify-between border rounded-md p-2 text-sm ${
+                        c.action === "delete"
+                          ? "bg-red-50 opacity-60 line-through"
+                          : "text-gray-800"
+                      }`}
                     >
                       <div className="flex items-center gap-2">
                         {c.profilePhotoUrl ? (
@@ -263,19 +296,27 @@ const ManageProject: React.FC<ManageProjectProps> = ({
                             {c.fullName.charAt(0).toUpperCase()}
                           </div>
                         )}
-                        <p>
-                          <span className="font-semibold">{c.fullName}</span>{" "}
-                          {/* <span className="text-gray-500 text-xs">
-                            ({c.email})
-                          </span> */}
-                        </p>
+                        <p className="font-semibold">{c.fullName}</p>
                       </div>
                       <button
                         onClick={() => handleDeleteContributor(c.id)}
-                        className="text-red-500 hover:text-red-700 transition-colors"
+                        className={`transition-colors ${
+                          c.action === "delete"
+                            ? "text-green-500 hover:text-green-700"
+                            : "text-red-500 hover:text-red-700"
+                        }`}
                       >
-                        <X className="w-4 h-4" />
+                        {c.action === "delete" ? (
+                          "Undo"
+                        ) : (
+                          <X className="w-4 h-4" />
+                        )}
                       </button>
+                      {c.action === "delete" && (
+                        <span className="ml-2 text-xs text-red-600 font-semibold">
+                          (Marked for Deletion)
+                        </span>
+                      )}
                     </div>
                   ))}
                 </div>
