@@ -26,7 +26,6 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({
   const [dueDate, setDueDate] = useState("");
   const [desc, setDesc] = useState("");
 
-  //images input
   const imageRef = useRef<HTMLInputElement | null>(null);
   const [images, setImages] = useState<{ file: File; preview: string }[]>([]);
 
@@ -37,7 +36,6 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({
       file,
       preview: URL.createObjectURL(file),
     }));
-
     setImages((prev) => [...prev, ...newImages]);
   };
 
@@ -69,18 +67,26 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({
   const handleCreateMileStone = () => {
     if (!projectId) return;
 
-    const payload = {
-      title,
-      releasePercentage: release,
-      releaseDate: new Date(releaseDate).toISOString(),
-      dueDate: new Date(dueDate).toISOString(),
-      description: desc,
-      image: images.map((img) => img.file),
-      file: files,
-    };
+    const formData = new FormData();
+
+    formData.append("title", title);
+    formData.append("releasePercentage", release);
+    formData.append("releaseDate", new Date(releaseDate).toISOString());
+    formData.append("dueDate", new Date(dueDate).toISOString());
+    formData.append("description", desc);
+
+    // Append multiple image files under the 'image' field name
+    images.forEach((img) => {
+      formData.append("image", img.file);
+    });
+
+    // Append multiple general files under the 'file' field name
+    files.forEach((file) => {
+      formData.append("file", file);
+    });
 
     createMilestone.mutate(
-      { id: projectId, payload },
+      { id: projectId, payload: formData },
       {
         onSuccess: () => {
           toast.success("Milestone added successfully");
@@ -201,40 +207,7 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({
                   className="w-full rounded-sm p-1.5 border border-[#D1D1D1] text-gray-700 focus:outline-none focus:ring-1 focus:ring-[#157bff]"
                 />
               </div>
-              {/* <div className="w-full">
-                <label htmlFor="" className="text-black font-medium">
-                  Rule*
-                </label>
-                <textarea className="w-full h-[200px] rounded-sm p-1.5 border border-[#D1D1D1]" />
-              </div> */}
-              {/* <div className="w-full">
-                <label
-                  className="text-[#404040] text-sm sm:!text-bsse font-semibold"
-                  htmlFor=""
-                >
-                  Percentage of Total Budget(%)
-                </label>
-                <input
-                  type="text"
-                  className=" text-sm sm:!text-base p-2 rounded-sm w-full border border-[#000000]/40 text-black"
-                  placeholder="50%"
-                />
-                <div className="relative my-2"></div>
-              </div> */}
-              {/* <div className="w-full">
-                <label
-                  className="text-[#404040] text-sm sm:!text-bsse font-semibold"
-                  htmlFor=""
-                >
-                  Release Date
-                </label>
-                <input
-                  type="date"
-                  className=" text-sm sm:!text-base p-2 rounded-sm w-full border border-[#000000]/40 text-black"
-                  placeholder="50%"
-                />
-                <div className="relative my-2"></div>
-              </div> */}
+
               <div className="w-full">
                 <label htmlFor="imageUpload" className="text-black font-medium">
                   Images
@@ -297,7 +270,6 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({
                 </label>
 
                 <div className="flex flex-wrap items-center gap-2 mt-2">
-                  {/* Add Button (always visible) */}
                   <div
                     onClick={() => fileRef.current?.click()}
                     className="border rounded-sm p-2 cursor-pointer text-sm border-[#D1D1D1] font-medium hover:bg-gray-50"
@@ -346,7 +318,6 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({
                   ))}
                 </div>
 
-                {/* Hidden Input */}
                 <input
                   ref={fileRef}
                   type="file"

@@ -41,7 +41,10 @@ export const useProject = () => {
     }) => {
       const res = await apiInstance.patch(
         `/api/projects/${id}/manage`,
-        payload
+        payload,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
       );
       return res.data;
     },
@@ -111,30 +114,11 @@ export const useProject = () => {
       payload,
     }: {
       id: string | number;
-      payload: {
-        title: string;
-        releasePercentage: string | number;
-        releaseDate: string;
-        dueDate: string;
-        description: string;
-        image?: File[];
-        file?: File[];
-      };
+      payload: FormData;
     }) => {
-      const formData = new FormData();
-      formData.append("title", payload.title);
-      formData.append("releasePercentage", String(payload.releasePercentage));
-      formData.append("releaseDate", payload.releaseDate);
-      formData.append("dueDate", payload.dueDate);
-      formData.append("description", payload.description);
-
-      payload.image?.forEach((img) => formData.append("image", img));
-
-      payload.file?.forEach((file) => formData.append("file", file));
-
       const res = await apiInstance.post(
         `/api/milestones/${id}/create`,
-        formData,
+        payload,
         {
           headers: { "Content-Type": "multipart/form-data" },
         }
