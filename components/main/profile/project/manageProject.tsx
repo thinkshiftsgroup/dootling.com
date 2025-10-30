@@ -25,7 +25,8 @@ const ManageProject: React.FC<ManageProjectProps> = ({
   const [selectedContributors, setSelectedContributors] = useState<any[]>([]);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
-  const { getFollowers } = useFollowing();
+  const { getFollowers, getAllContributors } = useFollowing();
+  console.log(getAllContributors, "contr");
   const queryClient = useQueryClient();
   const { getAllProjectById, editProjectById } = useProject();
   const { data, isLoading } = getAllProjectById(projectId!);
@@ -38,6 +39,10 @@ const ManageProject: React.FC<ManageProjectProps> = ({
       setTitle(data?.title || "");
       setSummary(data?.description || "");
       setSelectedRadio(data?.isPublic ? "anyone" : "invite");
+
+      if (data?.projectImageUrl) {
+        setImagePreview(data?.projectImageUrl);
+      }
 
       if (data?.contributors?.length) {
         setSelectedContributors(
@@ -56,9 +61,10 @@ const ManageProject: React.FC<ManageProjectProps> = ({
     const contributorId = e.target.value;
     if (!contributorId) return;
 
-    const selectedUser = getFollowers.data?.list?.find(
+    const selectedUser = getAllContributors.data?.contributors?.find(
       (f: any) => f.id === contributorId
     );
+
     if (!selectedUser) return;
 
     const alreadyExists = selectedContributors.some(
@@ -75,11 +81,23 @@ const ManageProject: React.FC<ManageProjectProps> = ({
 
   const handleDeleteContributor = (id: string | number) => {
     setSelectedContributors((prev) =>
-      prev.map((c) =>
-        c.id === id
-          ? { ...c, action: c.action === "delete" ? undefined : "delete" }
-          : c
-      )
+      prev.filter((c) => {
+        const isExisting = data?.contributors?.some(
+          (ec: any) => ec.user.id === c.id
+        );
+
+        if (isExisting) {
+          if (c.id === id) {
+            return {
+              ...c,
+              action: c.action === "delete" ? undefined : "delete",
+            };
+          }
+          return c;
+        }
+
+        return c.id !== id;
+      })
     );
   };
 
@@ -93,44 +111,44 @@ const ManageProject: React.FC<ManageProjectProps> = ({
   const handleEditProject = () => {
     if (!projectId) return;
 
-    const existingContributorIds =
-      data?.contributors?.map((c: any) => c.user.id) || [];
+    // Map userId -> contributor recordId for existing contributors
+    const existingContributorsMap = new Map(
+      data?.contributors?.map((c: any) => [c.user.id, c.id]) || []
+    );
 
-    const currentContributorIds = selectedContributors.map((c) => c.id);
+    // Build payload contributors array
+    const contributorsPayload = selectedContributors.map((c) => {
+      if (c.action === "delete" && existingContributorsMap.has(c.id)) {
+        // Delete existing contributor
+        return { action: "delete", id: existingContributorsMap.get(c.id) };
+      }
 
-    const newContributors = currentContributorIds
-      .filter((id) => !existingContributorIds.includes(id))
-      .map((id) => ({
+      if (existingContributorsMap.has(c.id)) {
+        // Update existing contributor
+        return {
+          action: "update",
+          id: existingContributorsMap.get(c.id),
+          role: c.role || null,
+          // budgetPercentage: c.budgetPercentage || 0,
+          // releasePercentage: c.releasePercentage || 0,
+        };
+      }
+
+      // New contributor
+      return {
         action: "create",
-        userId: id,
-      }));
-
-    const existingContributors = currentContributorIds
-      .filter((id) => existingContributorIds.includes(id))
-      .map((id) => ({
-        action: "update",
-        userId: id,
-      }));
-
-    const removedContributors = existingContributorIds
-      .filter((id: any) => !currentContributorIds.includes(id))
-      .map((id: any) => ({
-        action: "delete",
-        userId: id,
-      }));
-
-    // Combine all
-    const contributors = [
-      ...existingContributors,
-      ...newContributors,
-      ...removedContributors,
-    ];
+        userId: c.id,
+        role: c.role || null,
+        // budgetPercentage: c.budgetPercentage || 0,
+        // releasePercentage: c.releasePercentage || 0,
+      };
+    });
 
     const payload = {
       title,
       description: summary,
       isPublic: selected === "anyone",
-      contributors,
+      contributors: contributorsPayload,
     };
 
     editProject(
@@ -267,58 +285,70 @@ const ManageProject: React.FC<ManageProjectProps> = ({
                   className="mt-2 w-full border border-gray-300 rounded-sm p-2 text-gray-700 bg-white focus:outline-none focus:border-[#157BFF]"
                 >
                   <option value="">Select a contributor...</option>
-                  {getFollowers.data?.list?.map((user: any) => (
+                  {getAllContributors.data?.contributors?.map((user: any) => (
                     <option key={user.id} value={user.id}>
-                      {user.fullName}
+                      {user?.user.fullName}
                     </option>
                   ))}
                 </select>
 
                 <div className="mt-3 space-y-2">
-                  {selectedContributors.map((c) => (
-                    <div
-                      key={c.id}
-                      className={`flex items-center justify-between border rounded-md p-2 text-sm ${
-                        c.action === "delete"
-                          ? "bg-red-50 opacity-60 line-through"
-                          : "text-gray-800"
-                      }`}
-                    >
-                      <div className="flex items-center gap-2">
-                        {c.profilePhotoUrl ? (
-                          <img
-                            src={c.profilePhotoUrl}
-                            alt={c.fullName}
-                            className="w-6 h-6 rounded-full object-cover"
-                          />
-                        ) : (
-                          <div className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold">
-                            {c.fullName.charAt(0).toUpperCase()}
-                          </div>
-                        )}
-                        <p className="font-semibold">{c.fullName}</p>
-                      </div>
-                      <button
-                        onClick={() => handleDeleteContributor(c.id)}
-                        className={`transition-colors ${
-                          c.action === "delete"
-                            ? "text-green-500 hover:text-green-700"
-                            : "text-red-500 hover:text-red-700"
+                  {selectedContributors.map((c) => {
+                    const isExisting = data?.contributors?.some(
+                      (ec: any) => ec.user.id === c.id
+                    );
+
+                    return (
+                      <div
+                        key={c.id}
+                        className={`flex items-center justify-between border rounded-md p-2 text-sm ${
+                          c.action === "delete" && isExisting
+                            ? "bg-red-50 opacity-60 line-through"
+                            : "text-gray-800"
                         }`}
                       >
-                        {c.action === "delete" ? (
-                          "Undo"
-                        ) : (
-                          <X className="w-4 h-4" />
+                        <div className="flex items-center gap-2">
+                          {c?.user?.profilePhotoUrl ? (
+                            <img
+                              src={c?.user?.profilePhotoUrl}
+                              alt={c.user?.fullName}
+                              className="w-6 h-6 rounded-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold">
+                              {c.user?.fullName.charAt(0).toUpperCase()}
+                            </div>
+                          )}
+                          <p className="font-semibold">{c.user?.fullName}</p>
+                        </div>
+
+                        <button
+                          onClick={() => handleDeleteContributor(c.id)}
+                          className={`transition-colors ${
+                            c.action === "delete" && isExisting
+                              ? "text-green-500 hover:text-green-700"
+                              : "text-red-500 hover:text-red-700"
+                          }`}
+                        >
+                          {isExisting ? (
+                            c.action === "delete" ? (
+                              "Undo"
+                            ) : (
+                              <X className="w-4 h-4" />
+                            )
+                          ) : (
+                            <X className="w-4 h-4" />
+                          )}
+                        </button>
+
+                        {c.action === "delete" && isExisting && (
+                          <span className="ml-2 text-xs text-red-600 font-semibold">
+                            (Marked for Deletion)
+                          </span>
                         )}
-                      </button>
-                      {c.action === "delete" && (
-                        <span className="ml-2 text-xs text-red-600 font-semibold">
-                          (Marked for Deletion)
-                        </span>
-                      )}
-                    </div>
-                  ))}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 

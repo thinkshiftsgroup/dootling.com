@@ -30,8 +30,6 @@ const EditMileStone: React.FC<EditMileStoneProp> = ({
     releasePercentage: "",
   });
 
-  console.log(milestone, "mms");
-
   const [files, setFiles] = useState<File[]>([]);
   const [images, setImages] = useState<File[]>([]);
   const [imagePreview, setImagePreview] = useState<string[]>([]);
