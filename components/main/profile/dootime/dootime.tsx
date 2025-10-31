@@ -2,9 +2,12 @@
 import React, { useState } from "react";
 import DataTable from "./dataTable";
 import SetupDootimeLink from "./setUpDootimeLink";
+import { useRoleStore } from "@/stores/userRoleStore";
 
 const DootimeTab = () => {
   const [showModal, setShowModal] = useState(false);
+  
+  const { isUser } = useRoleStore();
 
   return (
     <div className="rounded-lg p-3 w-full bg-white shadow-md mb-[40px]">
@@ -44,7 +47,7 @@ const DootimeTab = () => {
           </div>
 
           <div className="flex items-center flex-shrink-0">
-            <button
+            { isUser && (<button
               onClick={() => setShowModal(true)}
               className="bg-[#157BFF] hover:bg-blue-600 text-white px-2 py-1 rounded-sm flex items-center gap-2 transition-colors whitespace-nowrap text-[0.9rem] cursor-pointer"
             >
@@ -61,7 +64,7 @@ const DootimeTab = () => {
                 />
               </svg>
               Dootime Link
-            </button>
+            </button>)}
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState, useMemo, useCallback } from "react";
+import React, { useRef, useState, useMemo, useCallback, useEffect } from "react";
 import Navbar from "@/components/main/landing-page/navbar/navbar";
 import Image from "next/image";
 import ContributionHeatmap from "@/components/main/landing-page/heatMap";
@@ -30,6 +30,7 @@ import { LuCalendarFold } from "react-icons/lu";
 import ReferralSideTab from "@/components/main/profile/side-card/referralSideTab";
 import DootimeTab from "@/components/main/profile/dootime/dootime";
 import LinkedInLoader from "@/components/main/atom/loader";
+import { useRoleStore } from "@/stores/userRoleStore";
 
 interface ImageUploadRef {
   openFileDialog: () => void;
@@ -100,6 +101,12 @@ const ProfileImageUploadTrigger = ({
 };
 
 const UserProfile = () => {
+  const { setRole, isUser } = useRoleStore();
+    
+  useEffect(() => {
+    setRole("user");
+  }, [setRole]);
+
   const { user, setUser, isInitialized, token, initializeAuth } =
     useAuthStore();
 
@@ -107,7 +114,7 @@ const UserProfile = () => {
 
   const [profilePhotoUrl, setProfilePhotoUrl] = useState<string | undefined>(
     user?.profilePhotoUrl
-  );
+  );  
 
   React.useEffect(() => {
     setProfilePhotoUrl(user?.profilePhotoUrl);

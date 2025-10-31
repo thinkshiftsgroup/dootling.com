@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Lock, Globe, MoreHorizontal } from "lucide-react";
 import AddSpaceModal from "./addSpaceModal";
+import { useRoleStore } from "@/stores/userRoleStore";
 
 interface Spaces {
   id: number;
@@ -110,6 +111,7 @@ const SpacesDashboard: React.FC<SpacesDashboardProps> = ({
   const [activeTab, setActiveTab] = useState<string>("my-Spaces");
   const [showModal, setShowModal] = useState(false);
 
+  const { isUser } = useRoleStore();
   return (
     <div className="w-full bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto">
@@ -193,7 +195,7 @@ const SpacesDashboard: React.FC<SpacesDashboardProps> = ({
               </TabButton>
             </div>
 
-            <button
+            {isUser && (<button
               onClick={() => setShowModal(true)}
               className="bg-[#157BFF] whitespaces-nowrap justify-center hover:bg-blue-700 text-white px-4 py-2 rounded-sm flex items-center gap-2 transition"
             >
@@ -207,7 +209,7 @@ const SpacesDashboard: React.FC<SpacesDashboardProps> = ({
                 <path d="M18 12.998h-5v5a1 1 0 0 1-2 0v-5H6a1 1 0 0 1 0-2h5v-5a1 1 0 0 1 2 0v5h5a1 1 0 0 1 0 2"></path>
               </svg>
               Create Space
-            </button>
+            </button>)}
           </div>
 
           <div className="w-full space-y-1">

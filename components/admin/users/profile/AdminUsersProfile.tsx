@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Navbar from "@/components/main/landing-page/navbar/navbar";
 import Image from "next/image";
 import ContributionHeatmap from "@/components/main/landing-page/heatMap";
@@ -18,12 +18,21 @@ import FollowedTab from "@/components/main/profile/followed";
 import ProfileAbout from "@/components/main/profile/about/about";
 import TopContributorsTab from "@/components/main/profile/topContributors/topContributors";
 import { useRoleStore } from "@/stores/userRoleStore";
+import DootimeTab from "@/components/main/profile/dootime/dootime";
+import HeatmapConnections from "@/components/main/profile/heatmap/heatMap";
+import ProfileLinks from "@/components/main/profile/link/links";
+import ProfileFinance from "@/components/main/profile/finance/finance";
 
 const AdminUserProfile = () => {
+
+  const { setRole, isAdmin } = useRoleStore();
+  
+  useEffect(() => {
+    setRole("admin");
+  }, [setRole]);
+  
   const scrollRef = useRef<HTMLDivElement>(null);
   const [openLikesModal, setOpenLikesModal] = useState(false);
-
-  const { role, setRole, isAdmin } = useRoleStore();
 
   const [activeTab, setActiveTab] = useState("Feeds");
 
@@ -173,15 +182,15 @@ const AdminUserProfile = () => {
       ),
       label: "Paylink",
     },
-    {
-      icon: (isActive: boolean) => (
-        <HiOutlineNewspaper
-          size={30}
-          className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
-        />
-      ),
-      label: "Account",
-    },
+    // {
+    //   icon: (isActive: boolean) => (
+    //     <HiOutlineNewspaper
+    //       size={30}
+    //       className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
+    //     />
+    //   ),
+    //   label: "Account",
+    // },
     {
       icon: (isActive: boolean) => (
         <svg
@@ -336,8 +345,6 @@ const AdminUserProfile = () => {
                                     </div>
                                   </div>
                                 </div>
-
-                               {isAdmin ? <button className="bg-blue-500 mt-3 cursor-pointer hover:bg-blue-600 text-white px-2 flex items-center gap-2 py-1 rounded-sm text-[0.9rem]">
                                   Message
                                   <Image
                                     src="/images/icon/message-01.svg"
@@ -345,7 +352,7 @@ const AdminUserProfile = () => {
                                     width={20}
                                     height={20}
                                   />
-                                </button>: ""}
+                                </button>} */}
                               </div>
 
                               <span className="flex flex-wrap items-center gap-1.5 -mt-[2rem] text-xs ms-[8.5rem]">
@@ -457,15 +464,19 @@ const AdminUserProfile = () => {
 
                       <div className="mt-6">
                         {activeTab === "Feeds" && <ProfileFeeds />}
-                        {activeTab === "Projects" && <ProjectDashboard />}
-                        {activeTab === "Followed" && <FollowedTab />}
+                        {activeTab === "Finance" && <ProfileFinance />}
+                        {activeTab === "Links" && <FollowedTab />}
+                        {activeTab === "paylink" && <ProfileLinks />}
+                        {activeTab === "Heatmap" && <HeatmapConnections />}
+                        {activeTab === "Dootime" && <DootimeTab />}
                         {activeTab === "Spaces" && (
                           <ProfileSpace Spaces={myProjects} />
                         )}
-                        {activeTab === "Account" && <ProfileAbout />}
+                        {/* {activeTab === "Account" && <ProfileAbout />} */}
                         {activeTab === "Top Contributors" && (
                           <TopContributorsTab />
-                        )}
+                        )} 
+                        {activeTab === "Projects" && <ProjectDashboard />}
                       </div>
                     </div>
                   </div>

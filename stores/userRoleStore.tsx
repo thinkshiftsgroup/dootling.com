@@ -8,22 +8,14 @@ interface RoleState {
   isAdmin: boolean;
   isUser: boolean;
 }
-
-export const useRoleStore = create<RoleState>()(
-  persist(
-    (set) => ({
-      role: "admin",
-      isAdmin: true,
-      isUser: false,
-      setRole: (role) =>
-        set({
-          role,
-          isAdmin: role === "admin",
-          isUser: role === "user",
-        }),
+export const useRoleStore = create<RoleState>()((set) => ({
+  role: null,
+  isAdmin: false,
+  isUser: false,
+  setRole: (role) =>
+    set({
+      role,
+      isAdmin: role === "admin",
+      isUser: role === "user",
     }),
-    {
-      name: "role-storage",
-    }
-  )
-);
+}));

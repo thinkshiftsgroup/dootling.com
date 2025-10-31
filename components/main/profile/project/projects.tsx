@@ -28,6 +28,8 @@ const ProjectDashboard = ({}) => {
     setRole("user");
   }, []);
 
+  const { isUser } = useRoleStore();
+  
   return (
     <div className="w-full bg-gray-50 sm:!py-8 py-4">
       <div className="max-w-7xl mx-auto">
@@ -138,23 +140,25 @@ const ProjectDashboard = ({}) => {
                 </li>
               </ul>
             </div>
-            {!isAdmin && activeTab === "my-projects" && (
-              <button
-                onClick={() => setShowModal(true)}
-                className="bg-[#157BFF] whitespace-nowrap justify-center hover:bg-blue-700 text-white px-2 sm:!px-4 py-2 rounded-sm flex items-center gap-2 transition"
+           {isUser && activeTab === "my-projects" && (
+            <button
+              onClick={() => setShowModal(true)}
+              className="bg-[#157BFF] whitespace-nowrap justify-center hover:bg-blue-700 text-white px-2 sm:!px-4 py-2 rounded-sm flex items-center gap-2 transition"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width={20}
+                height={20}
+                viewBox="0 0 24 24"
+                fill="currentColor"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width={20}
-                  height={20}
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path d="M18 12.998h-5v5a1 1 0 0 1-2 0v-5H6a1 1 0 0 1 0-2h5v-5a1 1 0 0 1 2 0v5h5a1 1 0 0 1 0 2"></path>
-                </svg>
-                Create Project
-              </button>
-            )}
+                <path d="M18 12.998h-5v5a1 1 0 0 1-2 0v-5H6a1 1 0 0 1 0-2h5v-5a1 1 0 0 1 2 0v5h5a1 1 0 0 1 0 2"></path>
+              </svg>
+              Create Project
+            </button>
+          )}
+
+
           </div>
           {activeTab === "my-projects" && (
             <MyProjectsContent
