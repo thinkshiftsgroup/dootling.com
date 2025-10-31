@@ -35,9 +35,9 @@ const EscrowProjectCard: React.FC<ProjectCardProps> = ({
         )}
       </div>
 
-      <div className="w-3/5 relative p-4 flex flex-col justify-between">
+      <div className="w-3/5 overflow-y-scroll hide-scrollbar md:!p-4 p-2 flex flex-col justify-between">
         <div className="flex items-start justify-between">
-          <h3 className="text-base font-semibold text-gray-900 truncate">
+          <h3 className="sm:!text-base text-sm font-semibold text-gray-900 truncate">
             {title}
           </h3>
           {/* <div>
@@ -61,10 +61,10 @@ const EscrowProjectCard: React.FC<ProjectCardProps> = ({
         </div>
 
         <div>
-          <p className="text-sm text-gray-600">
+          <p className="sm:!text-sm text-xs text-gray-600">
             {_count.contributors || 0} Contributors
           </p>
-          <p className="text-xs text-gray-400 mt-1">
+          <p className="sm:!text-xs text-[10px] text-gray-400 mt-1">
             Created {new Date(createdAt).toLocaleDateString("en-US")}
           </p>
         </div>
@@ -82,10 +82,10 @@ const EscrowProjectCard: React.FC<ProjectCardProps> = ({
             </>
           )}
         </div>
-        <div className="flex items-center gap-1.5 mt-2">
+        <div className="flex md:!flex-row flex-col whitespace-nowrap items-center gap-1.5 mt-2">
           <span
             onClick={() => onCPEClick?.()}
-            className="flex gap-1 bg-[#F8F9FA] text-gray-800 hover:text-gray-950 hover:bg-[#d0d0d0] rounded-sm p-1 px-1 items-center cursor-pointer shadow-sm text-[10px]  transition-colors transistion-shadow"
+            className="flex gap-1 sm:!w-auto w-full bg-[#F8F9FA] text-gray-800 hover:text-gray-950 hover:bg-[#d0d0d0] rounded-sm p-1 px-1 items-center cursor-pointer shadow-sm text-[10px]  transition-colors transistion-shadow"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -109,7 +109,7 @@ const EscrowProjectCard: React.FC<ProjectCardProps> = ({
 
           <span
             // onClick={() => router.push(`/projects/${id}`)}
-            className="flex gap-1 bg-[#F8F9FA] text-gray-800 hover:text-gray-950 hover:bg-[#d0d0d0] rounded-sm p-1 px-1 items-center cursor-pointer shadow-sm text-[10px]  transition-colors transistion-shadow"
+            className="flex gap-1 sm:!w-auto w-full bg-[#F8F9FA] text-gray-800 hover:text-gray-950 hover:bg-[#d0d0d0] rounded-sm p-1 px-1 items-center cursor-pointer shadow-sm text-[10px]  transition-colors transistion-shadow"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

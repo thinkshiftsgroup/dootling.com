@@ -68,7 +68,7 @@ const AddProjectsModal: React.FC<AddProjectsModalProps> = ({
 
     const contributorIds =
       selectedContributors.length > 0
-        ? selectedContributors.map((c) => c.id)
+        ? selectedContributors.map((c) => c.id) 
         : undefined;
 
     createProject.mutate(

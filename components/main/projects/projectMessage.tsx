@@ -16,6 +16,7 @@ import FilesTab from "./tabs/filesTab";
 import ProjectInfoTab from "./tabs/projectInfoTab";
 import ProjectMilestone from "./projectMilestone";
 import { useProject } from "@/hooks/useProjects";
+import clsx from "clsx";
 
 const ProjectMessage = ({ projectId }: any) => {
   const [messages, setMessages] = useState([
@@ -208,14 +209,14 @@ const ProjectMessage = ({ projectId }: any) => {
   );
   console.log(projectData);
   const projectInitial = projectData?.title?.charAt(0)?.toUpperCase() || "P";
-  const imageSrc = projectData?.imageUrl || "";
+  const imageSrc = projectData?.projectImageUrl || "";
 
   const [showDropdown, setShowDropdown] = useState(false);
 
   return (
-    <div className="flex w-full overflow-x-scroll hide-scrollbar col-span-8 md:!col-span-6 shadow-sm h-[86vh] bg-[#F8FAFC] text-gray-800">
+    <div className="flex w-full overflow-scroll hide-scrollbar  shadow-sm h-[86vh] bg-[#F8FAFC] text-gray-800">
       <div className="flex-1 flex flex-col">
-        <div className="sm:!p-3.5 p-2 whitespace-nowrap gap-2 md:!flex-row flex-col flex items-center justify-between border-b bg-white">
+        <div className="sm:!p-3 p-2 whitespace-nowrap gap-2 md:!flex-row flex-col flex items-center justify-between border-b bg-white">
           <div className="flex items-center gap-3">
             {projectDataLoad ? (
               <>
@@ -259,35 +260,34 @@ const ProjectMessage = ({ projectId }: any) => {
           </div>
 
           <div className="flex items-center gap-2 relative">
-            {/* Tabs section */}
-            <div className="hidden md:!flex items-center gap-2">
+            <div className="hidden lg:!flex items-center gap-2 border-gray-200">
               {tabItems.map((tab) => {
-                const active = tabs === tab?.id;
+                const active = tabs === tab.id;
+
                 return (
-                  <div
-                    key={tab?.id}
-                    onClick={() => setTabs(tab?.id)}
-                    className={`cursor-pointer flex items-center gap-2 rounded-sm px-3 py-2 transition
-          ${
-            active
-              ? `shadow-[0_0_6px_rgba(0,0,0,0.50)] bg-[${tab.color}]/10 text-black scale-[1.02]`
-              : `bg-[${tab.color}]/10 text-black hover:bg-[${tab.color}]/20`
-          }`}
+                  <button
+                    key={tab.id}
+                    onClick={() => setTabs(tab.id)}
+                    className={clsx(
+                      "flex items-center gap-2 p-2 relative transition-colors",
+                      active
+                        ? "font-medium text-black"
+                        : "text-gray-500 hover:text-[#157bff]"
+                    )}
                   >
                     <span>{tab.icon}</span>
-                    <p
-                      className={`text-xs font-bold ${
-                        active ? "" : "text-black"
-                      }`}
-                    >
-                      {tab.label}
-                    </p>
-                  </div>
+                    <p className="text-xs">{tab.label}</p>
+
+                    {/* Active underline */}
+                    {active && (
+                      <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-[#157bff] rounded-full" />
+                    )}
+                  </button>
                 );
               })}
             </div>
 
-            <div className="md:!hidden relative">
+            <div className="lg:!hidden relative">
               <button
                 onClick={() => setShowDropdown((prev) => !prev)}
                 className="bg-gray-100 hover:bg-gray-200 p-2 rounded-full transition"
@@ -348,35 +348,37 @@ const ProjectMessage = ({ projectId }: any) => {
           </div>
         </div>
 
-        {tabs === "chat" && <ProjectInnerTabs messages={messages} />}
-        {tabs === "tasks" && <ProjectTasks projectId={projectId} />}
-        {tabs === "files" && <FilesTab />}
-        {tabs === "info" && <ProjectInfoTab />}
-        {tabs === "milestone" && <ProjectMilestone projectId={projectId} />}
+        <div className="overflow-x-scroll hide-scrollbar">
+          {tabs === "chat" && <ProjectInnerTabs messages={messages} />}
+          {tabs === "tasks" && <ProjectTasks projectId={projectId} />}
+          {tabs === "files" && <FilesTab />}
+          {tabs === "info" && <ProjectInfoTab />}
+          {tabs === "milestone" && <ProjectMilestone projectId={projectId} />}
 
-        {tabs === "chat" && (
-          <div className="sm:!p-4 p-2  border-t bg-white flex items-center gap-2">
-            <IoAtOutline className="w-5 h-5 " />
-            <ImAttachment className="w-4 h-4" />
-            <input
-              type="text"
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-              placeholder="Type your message..."
-              className="flex-1 px-2 sm:!px-4 py-2 text-xs sm:!text-sm "
-            />
-            <div className="flex items-center gap-2">
-              <button
-                onClick={handleSend}
-                className="bg-[#157BFF] text-white rounded-sm p-2 hover:bg-blue-600 transition"
-              >
-                <Send className="w-4 h-4" />
-              </button>
-              <CiFaceSmile className="w-4 h-4" />
-              <IoMicOutline className="w-4 h-4" />
+          {tabs === "chat" && (
+            <div className="sm:!p-4 p-2  border-t bg-white flex items-center gap-2">
+              <IoAtOutline className="w-5 h-5 " />
+              <ImAttachment className="w-4 h-4" />
+              <input
+                type="text"
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+                placeholder="Type your message..."
+                className="flex-1 px-2 sm:!px-4 py-2 text-xs sm:!text-sm "
+              />
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={handleSend}
+                  className="bg-[#157BFF] text-white rounded-sm p-2 hover:bg-blue-600 transition"
+                >
+                  <Send className="w-4 h-4" />
+                </button>
+                <CiFaceSmile className="w-4 h-4" />
+                <IoMicOutline className="w-4 h-4" />
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

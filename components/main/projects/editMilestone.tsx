@@ -56,15 +56,18 @@ const EditMileStone: React.FC<EditMileStoneProp> = ({
         : "",
       releasePercentage: milestone.releasePercentage?.toString() || "",
     });
-
-    // Existing images
-    const images =
+    const milestoneImages =
       milestone.galleryItems
-        ?.filter((item: any) => item.fileType.startsWith("image/"))
-        .map((item: any) => item.url) || [];
+        ?.filter((i: any) => i.fileType.startsWith("image/"))
+        .map((i: any) => i.url) || [];
 
-    setExistingImages(images);
-    setImagePreview(images);
+    const milestoneFiles =
+      milestone.galleryItems
+        ?.filter((i: any) => i.fileType === "application/pdf")
+        .map((i: any) => i.url) || [];
+
+    setImages(milestoneImages);
+    setFiles(milestoneFiles);
   }, [milestone]);
 
   const handleChange = (
@@ -75,12 +78,8 @@ const EditMileStone: React.FC<EditMileStoneProp> = ({
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files ? Array.from(e.target.files) : [];
-    setImages((prev) => [...prev, ...files]);
-    setImagePreview((prev) => [
-      ...prev,
-      ...files.map((f) => URL.createObjectURL(f)),
-    ]);
+    const newFiles = e.target.files ? Array.from(e.target.files) : [];
+    setImages((prev) => [...prev, ...newFiles]);
   };
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,17 +87,12 @@ const EditMileStone: React.FC<EditMileStoneProp> = ({
     setFiles((prev) => [...prev, ...newFiles]);
   };
 
-  const handleFileRemove = (index: number) => {
-    setFiles((prev) => prev.filter((_, i) => i !== index));
+  const handleImageRemove = (index: number) => {
+    setImages((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const handleImageRemove = (index: number) => {
-    if (index < existingImages.length) {
-      setExistingImages((prev) => prev.filter((_, i) => i !== index));
-    } else {
-      const newIndex = index - existingImages.length;
-      setNewImages((prev) => prev.filter((_, i) => i !== newIndex));
-    }
+  const handleFileRemove = (index: number) => {
+    setFiles((prev) => prev.filter((_, i) => i !== index));
   };
 
   const queryClient = useQueryClient();
@@ -116,14 +110,19 @@ const EditMileStone: React.FC<EditMileStoneProp> = ({
         new Date(formData.releaseDate).toISOString()
       );
     }
-
     formDataToSend.append("releasePercentage", formData.releasePercentage);
     formDataToSend.append("action", "update");
     formDataToSend.append("id", milestone.id);
 
-    newImages.forEach((file) => formDataToSend.append("image", file));
+    // Append all images (existing URLs + new files)
+    images.forEach((img) => {
+      formDataToSend.append("image", img);
+    });
 
-    files.forEach((file) => formDataToSend.append("file", file));
+    // Append all files (existing URLs + new files)
+    files.forEach((f) => {
+      formDataToSend.append("file", f);
+    });
 
     editMilestone.mutate(
       { id: projectId, payload: formDataToSend },
@@ -134,7 +133,7 @@ const EditMileStone: React.FC<EditMileStoneProp> = ({
             queryKey: ["get-milestone-with-project-id"],
           });
 
-          // Reset form
+          // reset state
           setFormData({
             title: "",
             description: "",
@@ -143,8 +142,6 @@ const EditMileStone: React.FC<EditMileStoneProp> = ({
             releasePercentage: "",
           });
           setImages([]);
-          setImagePreview([]);
-          setExistingImages([]);
           setFiles([]);
           onClose();
         },
@@ -267,25 +264,18 @@ const EditMileStone: React.FC<EditMileStoneProp> = ({
                 </label>
 
                 <div className="flex flex-wrap gap-3 mt-2">
-                  {[
-                    ...existingImages,
-                    ...newImages.map((file) => URL.createObjectURL(file)),
-                  ].map((src, index) => (
-                    <div
-                      key={index}
-                      className="relative w-32 h-32 border rounded-sm overflow-hidden"
-                    >
+                  {images.map((img, index) => (
+                    <div key={index} className="relative w-32 h-32">
                       <img
-                        src={src}
-                        alt={`Preview ${index}`}
+                        src={
+                          typeof img === "string"
+                            ? img
+                            : URL.createObjectURL(img)
+                        }
                         className="object-cover w-full h-full"
                       />
-                      <button
-                        type="button"
-                        onClick={() => handleImageRemove(index)}
-                        className="absolute top-1 right-1 bg-white/70 hover:bg-white p-1 rounded-full text-red-500"
-                      >
-                        <X size={14} />
+                      <button onClick={() => handleImageRemove(index)}>
+                        <X />
                       </button>
                     </div>
                   ))}
@@ -333,42 +323,14 @@ const EditMileStone: React.FC<EditMileStoneProp> = ({
                     + Add or Drag & Drop File
                   </div>
 
-                  {files.map((file, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center gap-2 border border-[#D1D1D1] rounded-sm p-2"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="18"
-                        height="18"
-                        viewBox="0 0 384 512"
-                        className="text-red-500"
-                      >
-                        <path
-                          fill="currentColor"
-                          d="M181.9 256.1c-5-16-4.9-46.9-2-46.9c8.4 0 7.6 36.9 2 46.9m-1.7 47.2c-7.7 20.2-17.3 43.3-28.4 62.7c18.3-7 39-17.2 62.9-21.9c-12.7-9.6-24.9-23.4-34.5-40.8M248 160h136v328c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V24C0 10.7 10.7 0 24 0h200v136c0 13.2 10.8 24 24 24"
-                        />
-                      </svg>
-
-                      <span className="text-xs font-medium text-gray-800 truncate max-w-[120px]">
-                        {file.name}
+                  {files.map((f: any, index) => (
+                    <div key={index} className="flex items-center gap-2">
+                      <FaFile />
+                      <span>
+                        {typeof f === "string" ? f.split("/").pop() : f.name}
                       </span>
-
-                      <button
-                        type="button"
-                        onClick={() => handleFileRemove(index)}
-                        className="text-red-500 hover:text-red-600"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="14"
-                          height="14"
-                          viewBox="0 0 24 24"
-                          fill="currentColor"
-                        >
-                          <path d="M7.616 20q-.667 0-1.141-.475T6 18.386V6h-.5q-.213 0-.356-.144T5 5.499t.144-.356T5.5 5H9q0-.31.23-.54t.54-.23h4.46q.31 0 .54.23T15 5h3.5q.213 0 .356.144t.144.357t-.144.356T18.5 6H18v12.385q0 .666-.475 1.14t-1.14.475zM17 6H7v12.385q0 .269.173.442t.443.173h8.769q.269 0 .442-.173t.173-.442zm-6.692 11q.213 0 .357-.144t.143-.356v-8q0-.213-.144-.356T10.307 8t-.356.144t-.143.356v8q0 .213.144.356q.144.144.356.144m3.385 0q.213 0 .356-.144t.143-.356v-8q0-.213-.144-.356Q13.904 8 13.692 8q-.213 0-.357.144t-.143.356v8q0 .213.144.356t.357.144M7 6v13z" />
-                        </svg>
+                      <button onClick={() => handleFileRemove(index)}>
+                        <X />
                       </button>
                     </div>
                   ))}
@@ -393,7 +355,7 @@ const EditMileStone: React.FC<EditMileStoneProp> = ({
                 {editMilestone.isPending ? (
                   <Loader2 className="animate-spin" />
                 ) : (
-                  "Update Task"
+                  "Update Milestone"
                 )}
               </button>
             </div>

@@ -77,12 +77,14 @@ const ManageProject: React.FC<ManageProjectProps> = ({
       ...prev,
       {
         id: selectedUser.user.id,
+        action: "create",
         user: {
           id: selectedUser.user.id,
           fullName: selectedUser.user.fullName,
           email: selectedUser.user.email,
           profilePhotoUrl: selectedUser.user.profilePhotoUrl,
         },
+        role: null,
       },
     ]);
   };
@@ -149,7 +151,7 @@ const ManageProject: React.FC<ManageProjectProps> = ({
       }
 
       return {
-        action: "create",
+        action: c.action || "create",
         userId: c.user.id,
         role: c.role || null,
       };

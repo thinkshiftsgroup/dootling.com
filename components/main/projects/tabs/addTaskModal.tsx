@@ -35,7 +35,6 @@ const AddTaskModal: React.FC<addTaskModalProp> = ({
 
   const { getFollowers, getAllContributors } = useFollowing();
   const contributors = getAllContributors.data?.contributors || [];
-  console.log(contributors, "cont")
 
   const imageRef = useRef<HTMLInputElement | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -43,23 +42,45 @@ const AddTaskModal: React.FC<addTaskModalProp> = ({
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0];
-    if (selected) {
-      setImageFile(selected);
-      setImagePreview(URL.createObjectURL(selected));
+    if (!selected) return;
+
+    // check single file
+    if (selected.size > 1024 * 1024) {
+      toast.error("Image must be less than 1MB");
+      return;
     }
+
+    setImageFile(selected);
+    setImagePreview(URL.createObjectURL(selected));
   };
 
   const fileRef = useRef<HTMLInputElement | null>(null);
   const [files, setFiles] = useState<File[]>([]);
 
+  // FILE HANDLER — 1MB per file
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files ? Array.from(e.target.files) : [];
+
+    if (files.length + selected.length > 10) {
+      toast.error("You can only upload up to 10 files");
+      return;
+    }
+
+    const validFiles = selected.filter((file) => {
+      if (file.size > 1024 * 1024) {
+        toast.error(`${file.name} exceeds 1MB and was skipped`);
+        return false;
+      }
+      return true;
+    });
+
     const newFiles = [
       ...files,
-      ...selected.filter(
+      ...validFiles.filter(
         (f) => !files.some((existing) => existing.name === f.name)
       ),
     ];
+
     setFiles(newFiles);
   };
 
@@ -287,7 +308,7 @@ const AddTaskModal: React.FC<addTaskModalProp> = ({
               </div>
               <div className="w-full">
                 <label htmlFor="imageUpload" className="text-black font-medium">
-                  Images
+                  Images (Max. 10)
                 </label>
 
                 <div
@@ -339,7 +360,7 @@ const AddTaskModal: React.FC<addTaskModalProp> = ({
               </div>
               <div>
                 <label htmlFor="fileUpload" className="text-black font-medium">
-                  File
+                  File (Max. 10)
                 </label>
 
                 <div className="flex flex-wrap items-center gap-2 mt-2">

@@ -153,7 +153,7 @@ const ProjectMilestone = ({ projectId }: any) => {
         </div>
       </div>
       <div className="mt-3 md:flex-row flex-col flex items-center justify-between gap-2">
-        <div className="md:!w-[60vw] w-full">
+        <div className="w-full">
           <MileStoneHeatMap pageType={"profile"} />
         </div>
 

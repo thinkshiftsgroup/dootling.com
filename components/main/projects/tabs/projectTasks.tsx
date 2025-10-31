@@ -147,6 +147,7 @@ const ProjectTasks = ({ projectId }: any) => {
               <th className="py-3 px-2">Title</th>
               <th className="py-3 px-2">Priority</th>
               <th className="py-3 px-2">Due Date</th>
+              <th className="py-3 px-2">Release Date</th>
               <th className="py-3 px-2">Status</th>
               <th className="py-3 px-2">Description</th>
               <th className="py-3 px-2">Payment</th>
@@ -205,9 +206,9 @@ const ProjectTasks = ({ projectId }: any) => {
                     <td className="py-3 px-2 text-[10px] sm:!text-xs text-center">
                       <span
                         className={`${
-                          task.priority === "HIGH"
+                          task.priority === "Lowest"
                             ? "bg-red-500"
-                            : task.priority === "MEDIUM"
+                            : task.priority === "Mid"
                             ? "bg-yellow-500"
                             : "bg-green-500"
                         } text-white px-3 py-1 rounded-sm`}
@@ -220,6 +221,17 @@ const ProjectTasks = ({ projectId }: any) => {
                       <span className="bg-[#F8FBFF] font-medium text-black px-3 py-1 rounded-sm">
                         {task.dueDate
                           ? new Date(task.dueDate).toLocaleDateString("en-GB", {
+                              day: "numeric",
+                              month: "long",
+                              year: "numeric",
+                            })
+                          : "—"}
+                      </span>
+                    </td>
+                    <td className="py-3 text-sm px-2 text-center">
+                      <span className="bg-[#F8FBFF] font-medium text-black px-3 py-1 rounded-sm">
+                        {task.releaseDate
+                          ? new Date(task.releaseDate).toLocaleDateString("en-GB", {
                               day: "numeric",
                               month: "long",
                               year: "numeric",

@@ -73,8 +73,9 @@ export const useProject = () => {
       formData.append("description", description);
       formData.append("isPublic", String(isPublic));
 
+      // Send contributorIds as a JSON string
       if (contributorIds?.length) {
-        contributorIds.forEach((id) => formData.append("contributorIds", id));
+        formData.append("contributorIds", JSON.stringify(contributorIds));
       }
 
       if (image) {

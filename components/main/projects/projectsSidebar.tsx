@@ -32,7 +32,7 @@ const ProjectChatSidebar: React.FC<ProjectChatSidebarProps> = ({
 
   return (
     <div className="w-full col-span-8 md:!col-span-2 bg-white border-r shadow-sm flex flex-col h-[86vh]">
-      <div className="md:!p-4 p-2 border-b flex items-center gap-2">
+      <div className="p-3 border-b flex items-center gap-2">
         <div className="flex items-center bg-white rounded-sm w-full px-1 sm:!px-3 py-2 border">
           <FiSearch className="text-[#157bff]" size={18} />
           <input
@@ -56,7 +56,7 @@ const ProjectChatSidebar: React.FC<ProjectChatSidebarProps> = ({
             const isActive = selectedProjectId === project.id;
             const projectInitial =
               project.title?.charAt(0)?.toUpperCase() || "P";
-            const imageSrc = project.imageUrl || "";
+            const imageSrc = project.projectImageUrl || "";
 
             return (
               <div

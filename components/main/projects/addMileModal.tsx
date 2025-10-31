@@ -26,64 +26,113 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({
   const [dueDate, setDueDate] = useState("");
   const [desc, setDesc] = useState("");
 
+  const { createMilestone, getAllProjectById } = useProject();
+  const { data, isLoading } = getAllProjectById(projectId!);
+  const { isPending } = createMilestone;
+  const queryClient = useQueryClient();
+
+  const MAX_IMAGES = 10;
+  const MAX_FILES = 10;
+  const MAX_FILE_SIZE = 1 * 1024 * 1024;
+  const MAX_TOTAL_SIZE = 1 * 1024 * 1024;
+
+  const calculateImagesSize = () =>
+    images.reduce((acc, img) => acc + img.file.size, 0);
+
+  const calculateFilesSize = () =>
+    files.reduce((acc, file) => acc + file.size, 0);
+
+  //images
   const imageRef = useRef<HTMLInputElement | null>(null);
   const [images, setImages] = useState<{ file: File; preview: string }[]>([]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files ? Array.from(e.target.files) : [];
 
-    const newImages = selected.map((file) => ({
+    if (images.length + selected.length > MAX_IMAGES) {
+      toast.error(`You can only upload up to ${MAX_IMAGES} images`);
+      return;
+    }
+
+    const filtered = selected.filter((file) => file.size <= MAX_FILE_SIZE);
+    if (filtered.length < selected.length) {
+      toast.error("Some images are too large (max 1MB each)");
+    }
+
+    const newImages = filtered.map((file) => ({
       file,
       preview: URL.createObjectURL(file),
     }));
+
+    const totalImageSize =
+      calculateImagesSize() +
+      newImages.reduce((acc, img) => acc + img.file.size, 0);
+
+    if (totalImageSize > MAX_TOTAL_SIZE) {
+      toast.error("Total image size cannot exceed 1 MB");
+      return;
+    }
+
     setImages((prev) => [...prev, ...newImages]);
   };
 
   const handleImageRemove = (index: number) => {
     setImages((prev) => prev.filter((_, i) => i !== index));
   };
+
+  //files
   const fileRef = useRef<HTMLInputElement | null>(null);
   const [files, setFiles] = useState<File[]>([]);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files ? Array.from(e.target.files) : [];
+
+    if (files.length + selected.length > MAX_FILES) {
+      toast.error(`You can only upload up to ${MAX_FILES} files`);
+      return;
+    }
+
+    const filtered = selected.filter((file) => file.size <= MAX_FILE_SIZE);
+    if (filtered.length < selected.length) {
+      toast.error("Some files are too large (max 1MB each)");
+    }
+
     const newFiles = [
       ...files,
-      ...selected.filter(
+      ...filtered.filter(
         (f) => !files.some((existing) => existing.name === f.name)
       ),
     ];
+
+    const totalFileSize = newFiles.reduce((acc, file) => acc + file.size, 0);
+    if (totalFileSize > MAX_TOTAL_SIZE) {
+      toast.error("Total file size cannot exceed 1 MB");
+      return;
+    }
+
     setFiles(newFiles);
   };
 
   const handleFileRemove = (index: number) => {
     setFiles((prev) => prev.filter((_, i) => i !== index));
   };
-  const { createMilestone, getAllProjectById } = useProject();
-  const { data, isLoading } = getAllProjectById(projectId!);
-  const { isPending } = createMilestone;
-  const queryClient = useQueryClient();
 
+  //add function
   const handleCreateMileStone = () => {
     if (!projectId) return;
 
     const formData = new FormData();
-
     formData.append("title", title);
     formData.append("releasePercentage", release);
-    formData.append("releaseDate", new Date(releaseDate).toISOString());
     formData.append("dueDate", new Date(dueDate).toISOString());
     formData.append("description", desc);
 
-    // Append multiple image files under the 'image' field name
-    images.forEach((img) => {
-      formData.append("image", img.file);
-    });
+    if (releaseDate) {
+      formData.append("releaseDate", new Date(releaseDate).toISOString());
+    }
 
-    // Append multiple general files under the 'file' field name
-    files.forEach((file) => {
-      formData.append("file", file);
-    });
+    images.forEach((img) => formData.append("image", img.file));
+    files.forEach((file) => formData.append("file", file));
 
     createMilestone.mutate(
       { id: projectId, payload: formData },
@@ -210,7 +259,7 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({
 
               <div className="w-full">
                 <label htmlFor="imageUpload" className="text-black font-medium">
-                  Images
+                  Images (Max. 10)
                 </label>
 
                 <div className="flex flex-wrap gap-3 mt-2">
@@ -266,7 +315,7 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({
 
               <div>
                 <label htmlFor="fileUpload" className="text-black font-medium">
-                  File
+                  File (Max. 10)
                 </label>
 
                 <div className="flex flex-wrap items-center gap-2 mt-2">
