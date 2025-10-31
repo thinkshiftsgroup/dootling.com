@@ -24,8 +24,10 @@ const ManageProject: React.FC<ManageProjectProps> = ({
   const [summary, setSummary] = useState("");
   const [selectedContributors, setSelectedContributors] = useState<any[]>([]);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
 
-  const { getFollowers } = useFollowing();
+  const { getFollowers, getAllContributors } = useFollowing();
+  console.log(getAllContributors, "contr");
   const queryClient = useQueryClient();
   const { getAllProjectById, editProjectById } = useProject();
   const { data, isLoading } = getAllProjectById(projectId!);
@@ -39,13 +41,18 @@ const ManageProject: React.FC<ManageProjectProps> = ({
       setSummary(data?.description || "");
       setSelectedRadio(data?.isPublic ? "anyone" : "invite");
 
+      setImagePreview(data.projectImageUrl || null);
+
       if (data?.contributors?.length) {
         setSelectedContributors(
           data.contributors.map((c: any) => ({
             id: c.user.id,
-            fullName: c.user.fullName,
-            email: c.user.email,
-            profilePhotoUrl: c.user.profilePhotoUrl,
+            user: {
+              id: c.user.id,
+              fullName: c.user.fullName,
+              email: c.user.email,
+              profilePhotoUrl: c.user.profilePhotoUrl,
+            },
           }))
         );
       }
@@ -56,70 +63,130 @@ const ManageProject: React.FC<ManageProjectProps> = ({
     const contributorId = e.target.value;
     if (!contributorId) return;
 
-    const selectedUser = getFollowers.data?.list?.find(
-      (f: any) => f.id === contributorId
+    const selectedUser = getAllContributors.data?.contributors?.find(
+      (f: any) => f.user.id === contributorId
     );
     if (!selectedUser) return;
 
-    const alreadyExists = selectedContributors.some(
-      (c) => c.id === selectedUser.id
-    );
-    if (alreadyExists) {
+    if (selectedContributors.some((c) => c.id === selectedUser.user.id)) {
       toast.error("Contributor already added");
       return;
     }
 
-    setSelectedContributors((prev) => [...prev, selectedUser]);
+    setSelectedContributors((prev) => [
+      ...prev,
+      {
+        id: selectedUser.user.id,
+        action: "create",
+        user: {
+          id: selectedUser.user.id,
+          fullName: selectedUser.user.fullName,
+          email: selectedUser.user.email,
+          profilePhotoUrl: selectedUser.user.profilePhotoUrl,
+        },
+        role: null,
+      },
+    ]);
   };
 
   const handleDeleteContributor = (id: string | number) => {
-    setSelectedContributors((prev) => prev.filter((c) => c.id !== id));
+    setSelectedContributors((prev) =>
+      prev
+        .map((c) => {
+          const isExisting = data?.contributors?.some(
+            (ec: any) => ec.user.id === c.id
+          );
+
+          if (isExisting && c.id === id) {
+            return {
+              ...c,
+              action: c.action === "delete" ? undefined : "delete",
+            };
+          }
+
+          // If new contributor, remove it from the array
+          if (!isExisting && c.id === id) return null;
+
+          return c;
+        })
+        .filter(Boolean)
+    );
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selected = e.target.files?.[0];
-    if (selected) {
-      setImagePreview(URL.createObjectURL(selected));
+    const file = e.target.files?.[0];
+    if (file) {
+      setImagePreview(URL.createObjectURL(file));
+      setSelectedImageFile(file);
     }
+  };
+
+  const handleRemoveImage = () => {
+    setImagePreview(null);
+    setSelectedImageFile(null);
   };
 
   const handleEditProject = () => {
     if (!projectId) return;
 
-    const contributorIds =
-      selectedContributors.length > 0
-        ? selectedContributors.map((c) => c.id)
-        : undefined;
+    const existingContributorsMap = new Map(
+      data?.contributors?.map((c: any) => [c.user.id, c.id]) || []
+    );
 
-    const payload = {
-      title,
-      description: summary,
-      isPublic: selected === "anyone",
-      contributors: [
-        {
-          action: "create",
-          userId: contributorIds,
-        },
-      ],
-      // ...(contributorIds ? { contributorIds } : {}),
-    };
+    const uniqueContributors = Array.from(
+      new Map(selectedContributors.map((c) => [c.id, c])).values()
+    );
+
+    const contributorsPayload = uniqueContributors.map((c) => {
+      if (c.action === "delete" && existingContributorsMap.has(c.id)) {
+        return { action: "delete", id: existingContributorsMap.get(c.id) };
+      }
+
+      if (existingContributorsMap.has(c.id)) {
+        return {
+          action: "update",
+          id: existingContributorsMap.get(c.id),
+          role: c.role || null,
+        };
+      }
+
+      return {
+        action: c.action || "create",
+        userId: c.user.id,
+        role: c.role || null,
+      };
+    });
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", summary);
+    formData.append("isPublic", selected === "anyone" ? "true" : "false");
+    formData.append("contributors", JSON.stringify(contributorsPayload));
+
+    if (selectedImageFile) {
+      formData.append("image", selectedImageFile);
+    }
 
     editProject(
-      { id: projectId, payload },
+      { id: projectId, payload: formData },
       {
         onSuccess: () => {
           toast.success("Project updated successfully");
           queryClient.invalidateQueries({ queryKey: ["get-all-project"] });
+          queryClient.invalidateQueries({
+            queryKey: ["get-all-project-with-id"],
+          });
           onClose();
-        },
-        onError: (error:any) => {
-          toast.error(
-            error?.response?.data?.message || "Something went wrong. Try again."
-          );
         },
       }
     );
   };
+
+  const uniqueContributors = Array.from(
+    new Map(
+      getAllContributors.data?.contributors?.map((u: any) => [u.user.id, u])
+    ).values()
+  );
 
   return (
     <AnimatePresence>
@@ -168,16 +235,18 @@ const ManageProject: React.FC<ManageProjectProps> = ({
                         alt="Uploaded"
                         className="object-cover w-full h-full"
                       />
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setImagePreview(null);
-                        }}
-                        className="absolute top-1 right-1 bg-white/70 hover:bg-white p-1 rounded-full text-red-500"
-                      >
-                        <X size={14} />
-                      </button>
+                      {imagePreview && (
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleRemoveImage();
+                          }}
+                          className="absolute top-1 right-1 bg-white/70 hover:bg-white p-1 rounded-full text-red-500"
+                        >
+                          <X size={14} />
+                        </button>
+                      )}
                     </div>
                   ) : (
                     <svg
@@ -238,46 +307,72 @@ const ManageProject: React.FC<ManageProjectProps> = ({
                   className="mt-2 w-full border border-gray-300 rounded-sm p-2 text-gray-700 bg-white focus:outline-none focus:border-[#157BFF]"
                 >
                   <option value="">Select a contributor...</option>
-                  {getFollowers.data?.list?.map((user: any) => (
-                    <option key={user.id} value={user.id}>
-                      {user.fullName}
+                  {uniqueContributors.map((user: any) => (
+                    <option key={user.user.id} value={user.user.id}>
+                      {user.user.fullName}
                     </option>
                   ))}
                 </select>
 
                 <div className="mt-3 space-y-2">
-                  {selectedContributors.map((c) => (
-                    <div
-                      key={c.id}
-                      className="flex items-center justify-between border rounded-md p-2 text-sm text-gray-800"
-                    >
-                      <div className="flex items-center gap-2">
-                        {c.profilePhotoUrl ? (
-                          <img
-                            src={c.profilePhotoUrl}
-                            alt={c.fullName}
-                            className="w-6 h-6 rounded-full object-cover"
-                          />
-                        ) : (
-                          <div className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold">
-                            {c.fullName.charAt(0).toUpperCase()}
-                          </div>
-                        )}
-                        <p>
-                          <span className="font-semibold">{c.fullName}</span>{" "}
-                          {/* <span className="text-gray-500 text-xs">
-                            ({c.email})
-                          </span> */}
-                        </p>
-                      </div>
-                      <button
-                        onClick={() => handleDeleteContributor(c.id)}
-                        className="text-red-500 hover:text-red-700 transition-colors"
+                  {Array.from(
+                    new Map(selectedContributors.map((c) => [c.id, c])).values()
+                  ).map((c) => {
+                    const isExisting = data?.contributors?.some(
+                      (ec: any) => ec.user.id === c.id
+                    );
+
+                    return (
+                      <div
+                        key={c.id}
+                        className={`flex items-center justify-between border rounded-md p-2 text-sm ${
+                          c.action === "delete" && isExisting
+                            ? "bg-red-50 opacity-60 line-through"
+                            : "text-gray-800"
+                        }`}
                       >
-                        <X className="w-4 h-4" />
-                      </button>
-                    </div>
-                  ))}
+                        <div className="flex items-center gap-2">
+                          {c?.user?.profilePhotoUrl ? (
+                            <img
+                              src={c?.user?.profilePhotoUrl}
+                              alt={c.user?.fullName}
+                              className="w-6 h-6 rounded-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold">
+                              {c.user?.fullName.charAt(0).toUpperCase()}
+                            </div>
+                          )}
+                          <p className="font-semibold">{c.user?.fullName}</p>
+                        </div>
+
+                        <button
+                          onClick={() => handleDeleteContributor(c.id)}
+                          className={`transition-colors ${
+                            c.action === "delete" && isExisting
+                              ? "text-green-500 hover:text-green-700"
+                              : "text-red-500 hover:text-red-700"
+                          }`}
+                        >
+                          {isExisting ? (
+                            c.action === "delete" ? (
+                              "Undo"
+                            ) : (
+                              <X className="w-4 h-4" />
+                            )
+                          ) : (
+                            <X className="w-4 h-4" />
+                          )}
+                        </button>
+
+                        {c.action === "delete" && isExisting && (
+                          <span className="ml-2 text-xs text-red-600 font-semibold">
+                            (Marked for Deletion)
+                          </span>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 

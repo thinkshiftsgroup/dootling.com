@@ -20,4 +20,5 @@ export interface ProjectI {
   createdAt: string;
   updatedAt: string;
   _count: { contributors: number };
+  projectImageUrl: string;
 }

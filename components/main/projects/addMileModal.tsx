@@ -1,7 +1,7 @@
 "use client";
 import React, { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 import { FaFile } from "react-icons/fa6";
@@ -12,83 +12,148 @@ import { toast } from "sonner";
 interface AddMileStoneProp {
   open: boolean;
   onClose: () => void;
+  projectId: any;
 }
 
-const AddMileStone: React.FC<AddMileStoneProp> = ({ open, onClose }) => {
-  const [userName, setUserName] = useState("");
-  const [userList, setUserList] = useState<string[]>([]);
+const AddMileStone: React.FC<AddMileStoneProp> = ({
+  open,
+  onClose,
+  projectId,
+}) => {
+  const [title, setTitle] = useState("");
+  const [release, setRelease] = useState("");
+  const [releaseDate, setReleaseDate] = useState("");
+  const [dueDate, setDueDate] = useState("");
+  const [desc, setDesc] = useState("");
 
-  // const handleAddUser = () => {
-  //   if (!userName.trim()) return;
-  //   setUserList((prev) => [...prev, userName.trim()]);
-  //   setUserName("");
-  // };
+  const { createMilestone, getAllProjectById } = useProject();
+  const { data, isLoading } = getAllProjectById(projectId!);
+  const { isPending } = createMilestone;
+  const queryClient = useQueryClient();
 
-  // const handleRemoveUser = (nameToRemove: string) => {
-  //   setUserList((prev) => prev.filter((user) => user !== nameToRemove));
-  // };
+  const MAX_IMAGES = 10;
+  const MAX_FILES = 10;
+  const MAX_FILE_SIZE = 1 * 1024 * 1024;
+  const MAX_TOTAL_SIZE = 1 * 1024 * 1024;
 
+  const calculateImagesSize = () =>
+    images.reduce((acc, img) => acc + img.file.size, 0);
+
+  const calculateFilesSize = () =>
+    files.reduce((acc, file) => acc + file.size, 0);
+
+  //images
   const imageRef = useRef<HTMLInputElement | null>(null);
-
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [images, setImages] = useState<{ file: File; preview: string }[]>([]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selected = e.target.files?.[0];
-    if (selected) {
-      setImagePreview(URL.createObjectURL(selected));
+    const selected = e.target.files ? Array.from(e.target.files) : [];
+
+    if (images.length + selected.length > MAX_IMAGES) {
+      toast.error(`You can only upload up to ${MAX_IMAGES} images`);
+      return;
     }
+
+    const filtered = selected.filter((file) => file.size <= MAX_FILE_SIZE);
+    if (filtered.length < selected.length) {
+      toast.error("Some images are too large (max 1MB each)");
+    }
+
+    const newImages = filtered.map((file) => ({
+      file,
+      preview: URL.createObjectURL(file),
+    }));
+
+    const totalImageSize =
+      calculateImagesSize() +
+      newImages.reduce((acc, img) => acc + img.file.size, 0);
+
+    if (totalImageSize > MAX_TOTAL_SIZE) {
+      toast.error("Total image size cannot exceed 1 MB");
+      return;
+    }
+
+    setImages((prev) => [...prev, ...newImages]);
   };
 
+  const handleImageRemove = (index: number) => {
+    setImages((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  //files
   const fileRef = useRef<HTMLInputElement | null>(null);
   const [files, setFiles] = useState<File[]>([]);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files ? Array.from(e.target.files) : [];
+
+    if (files.length + selected.length > MAX_FILES) {
+      toast.error(`You can only upload up to ${MAX_FILES} files`);
+      return;
+    }
+
+    const filtered = selected.filter((file) => file.size <= MAX_FILE_SIZE);
+    if (filtered.length < selected.length) {
+      toast.error("Some files are too large (max 1MB each)");
+    }
+
     const newFiles = [
       ...files,
-      ...selected.filter(
+      ...filtered.filter(
         (f) => !files.some((existing) => existing.name === f.name)
       ),
     ];
+
+    const totalFileSize = newFiles.reduce((acc, file) => acc + file.size, 0);
+    if (totalFileSize > MAX_TOTAL_SIZE) {
+      toast.error("Total file size cannot exceed 1 MB");
+      return;
+    }
+
     setFiles(newFiles);
   };
 
   const handleFileRemove = (index: number) => {
     setFiles((prev) => prev.filter((_, i) => i !== index));
   };
-  const { createMilestone } = useProject();
-  const { isPending } = createMilestone;
-  const queryClient = useQueryClient();
 
-  // const handleCreateMileStone = () => {
-  //    if (!selectedProjectId) return;
-  //   const payload = {
-  //     title: "Design Review Final",
-  //     releasePercentage: 25,
-  //     dueDate: new Date("2026-03-01").toISOString(),
-  //     description: "Client signed off on all mockups and documentation",
-  //     image: selectedImageFile, 
-  //     file: files, 
-  //   };
+  //add function
+  const handleCreateMileStone = () => {
+    if (!projectId) return;
 
-  //   createMilestone.mutate(
-  //     {
-  //       id: "selectedProjectId",
-  //       payload,
-  //     },
-  //     {
-  //       onSuccess: () => {
-  //         toast.success("Milestone successfully");
-  //         onClose();
-  //       },
-  //       onError: (error: any) => {
-  //         toast.error(
-  //           error?.response?.data?.message || "Something went wrong. Try again."
-  //         );
-  //       },
-  //     }
-  //   );
-  // };
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("releasePercentage", release);
+    formData.append("dueDate", new Date(dueDate).toISOString());
+    formData.append("description", desc);
+
+    if (releaseDate) {
+      formData.append("releaseDate", new Date(releaseDate).toISOString());
+    }
+
+    images.forEach((img) => formData.append("image", img.file));
+    files.forEach((file) => formData.append("file", file));
+
+    createMilestone.mutate(
+      { id: projectId, payload: formData },
+      {
+        onSuccess: () => {
+          toast.success("Milestone added successfully");
+          queryClient.invalidateQueries({
+            queryKey: ["get-milestone-with-project-id"],
+          });
+
+          setTitle("");
+          setRelease("");
+          setDueDate("");
+          setDesc("");
+          setImages([]);
+          setFiles([]);
+          onClose();
+        },
+      }
+    );
+  };
 
   return (
     <AnimatePresence>
@@ -123,7 +188,8 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({ open, onClose }) => {
               </Button>
             </div>
             <p className="text-xs mb-3 px-4">
-              Total Project Budget <span className="font-bold">$4500</span>
+              Total Project Budget{" "}
+              <span className="font-bold">${data?.totalBudget || 0}</span>
             </p>
 
             <div className="px-4 overflow-y-scroll hide-scrollbar mb-3 space-y-3">
@@ -132,18 +198,32 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({ open, onClose }) => {
                   Title*
                 </label>
                 <input
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
                   type="text"
                   className="w-full rounded-sm p-1.5 border border-[#D1D1D1]"
                 />
               </div>
+              <div>
+                <label htmlFor="" className="text-black font-medium">
+                  Rule*
+                </label>
+                <textarea
+                  value={desc}
+                  onChange={(e) => setDesc(e.target.value)}
+                  className="w-full h-[100px] rounded-sm p-1.5 border border-[#D1D1D1]"
+                />
+              </div>
+
               <div className="flex items-center gap-2">
                 <div className="w-full">
                   <label htmlFor="" className="text-black font-medium">
                     Release Percentage*
                   </label>
-               
+
                   <input
-                    id="dueDate"
+                    value={release}
+                    onChange={(e) => setRelease(e.target.value)}
                     type="text"
                     placeholder="50%"
                     className="w-full rounded-sm p-1.5 border border-[#D1D1D1] text-gray-700 focus:outline-none focus:ring-1 focus:ring-[#157bff]"
@@ -154,91 +234,59 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({ open, onClose }) => {
                     Due Date
                   </label>
                   <input
+                    value={dueDate}
+                    onChange={(e) => setDueDate(e.target.value)}
                     id="dueDate"
                     type="date"
+                    min={new Date().toISOString().split("T")[0]}
                     className="w-full rounded-sm p-1.5 border border-[#D1D1D1] text-gray-700 focus:outline-none focus:ring-1 focus:ring-[#157bff]"
                   />
                 </div>
               </div>
               <div className="w-full">
-                <label htmlFor="" className="text-black font-medium">
-                  Rule*
-                </label>
-                <textarea className="w-full h-[200px] rounded-sm p-1.5 border border-[#D1D1D1]" />
-              </div>
-              <div className="w-full">
-                <label htmlFor="" className="text-black font-medium">
-                  Contributors*
-                </label>
-                <select
-                  name=""
-                  id=""
-                  className=" text-sm sm:!text-sm p-1.5 rounded-sm w-full border border-[#D1D1D1]"
-                >
-                  <option value=""></option>
-                  <option value="">John Israel</option>
-                </select>
-              </div>
-              <div className="w-full">
-                <label
-                  className="text-[#404040] text-sm sm:!text-bsse font-semibold"
-                  htmlFor=""
-                >
-                  Percentage of Total Budget(%)
-                </label>
-                <input
-                  type="text"
-                  // value={userName}
-                  className=" text-sm sm:!text-base p-2 rounded-sm w-full border border-[#000000]/40 text-black"
-                  placeholder="50%"
-                  // onChange={(e) => setUserName(e.target.value)}
-                />
-                <div className="relative my-2"></div>
-              </div>{" "}
-              <div className="w-full">
-                <label
-                  className="text-[#404040] text-sm sm:!text-bsse font-semibold"
-                  htmlFor=""
-                >
+                <label htmlFor="dueDate" className="text-black font-medium">
                   Release Date
                 </label>
                 <input
+                  value={releaseDate}
+                  onChange={(e) => setReleaseDate(e.target.value)}
+                  id="dueDate"
                   type="date"
-                  // value={userName}
-                  className=" text-sm sm:!text-base p-2 rounded-sm w-full border border-[#000000]/40 text-black"
-                  placeholder="50%"
-                  // onChange={(e) => setUserName(e.target.value)}
+                  min={new Date().toISOString().split("T")[0]}
+                  className="w-full rounded-sm p-1.5 border border-[#D1D1D1] text-gray-700 focus:outline-none focus:ring-1 focus:ring-[#157bff]"
                 />
-                <div className="relative my-2"></div>
               </div>
+
               <div className="w-full">
                 <label htmlFor="imageUpload" className="text-black font-medium">
-                  Images
+                  Images (Max. 10)
                 </label>
 
-                <div
-                  onClick={() => imageRef.current?.click()}
-                  className="bg-[#FBFBFB] border border-[#D1D1D1] rounded-sm cursor-pointer flex items-center justify-center w-32 h-32 overflow-hidden"
-                >
-                  {imagePreview ? (
-                    <div className="relative w-full h-full">
+                <div className="flex flex-wrap gap-3 mt-2">
+                  {images.map((img, index) => (
+                    <div
+                      key={index}
+                      className="relative w-32 h-32 border rounded-sm overflow-hidden"
+                    >
                       <img
-                        src={imagePreview}
-                        alt="Uploaded"
+                        src={img.preview}
+                        alt={`Preview ${index}`}
                         className="object-cover w-full h-full"
                       />
                       <button
                         type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setImagePreview(null);
-                        }}
+                        onClick={() => handleImageRemove(index)}
                         className="absolute top-1 right-1 bg-white/70 hover:bg-white p-1 rounded-full text-red-500"
                       >
                         <X size={14} />
                       </button>
                     </div>
-                  ) : (
+                  ))}
+
+                  <div
+                    onClick={() => imageRef.current?.click()}
+                    className="bg-[#FBFBFB] border border-[#D1D1D1] rounded-sm cursor-pointer flex items-center justify-center w-32 h-32"
+                  >
                     <svg
                       width="20"
                       height="20"
@@ -251,7 +299,7 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({ open, onClose }) => {
                         fill="#979797"
                       />
                     </svg>
-                  )}
+                  </div>
                 </div>
 
                 <input
@@ -259,17 +307,18 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({ open, onClose }) => {
                   type="file"
                   id="imageUpload"
                   accept="image/*"
+                  multiple
                   onChange={handleImageChange}
                   className="hidden"
                 />
               </div>
+
               <div>
                 <label htmlFor="fileUpload" className="text-black font-medium">
-                  File
+                  File (Max. 10)
                 </label>
 
                 <div className="flex flex-wrap items-center gap-2 mt-2">
-                  {/* Add Button (always visible) */}
                   <div
                     onClick={() => fileRef.current?.click()}
                     className="border rounded-sm p-2 cursor-pointer text-sm border-[#D1D1D1] font-medium hover:bg-gray-50"
@@ -318,7 +367,6 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({ open, onClose }) => {
                   ))}
                 </div>
 
-                {/* Hidden Input */}
                 <input
                   ref={fileRef}
                   type="file"
@@ -329,8 +377,16 @@ const AddMileStone: React.FC<AddMileStoneProp> = ({ open, onClose }) => {
                   className="hidden"
                 />
               </div>
-              <button className="rounded-sm text-base mt-3  font-bold text-white bg-[#FAAF40] p-2">
-                Create Milestone
+              <button
+                onClick={handleCreateMileStone}
+                disabled={isPending}
+                className="rounded-sm flex items-center justify-center text-base mt-3  font-bold text-white bg-[#FAAF40] p-2"
+              >
+                {isPending ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  "Create Milestone"
+                )}
               </button>
             </div>
           </motion.div>

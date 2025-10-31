@@ -32,7 +32,7 @@ const EditContPercentage: React.FC<EditContPercentageProps> = ({
           action: "update",
           id: contributorId,
           releasePercentage: parseInt(released),
-          // budgetPercentage: parseInt(balance),
+          budgetPercentage: parseInt(balance),
         },
       ],
     };
@@ -81,7 +81,7 @@ const EditContPercentage: React.FC<EditContPercentageProps> = ({
             />
           </div>
 
-          {/* <div>
+          <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Budget Percentage (%)
             </label>
@@ -92,7 +92,7 @@ const EditContPercentage: React.FC<EditContPercentageProps> = ({
               className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#157bff] text-gray-700 "
               placeholder="50%"
             />
-          </div> */}
+          </div>
 
           <div className="flex justify-end gap-3 mt-5">
             <button

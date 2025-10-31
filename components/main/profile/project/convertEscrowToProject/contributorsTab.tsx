@@ -160,7 +160,7 @@ const ContributorsTab = ({ project }: any) => {
                         {cont.releasePercentage || 0}%
                       </span>
                     </div>
-                    <p>{cont.releasedDate || "--"}</p>
+                    {/* <p>{cont.releasedDate || "--"}</p> */}
                   </div>
                 </td>
 
@@ -172,7 +172,7 @@ const ContributorsTab = ({ project }: any) => {
                         {cont.budgetPercentage || 0}%
                       </span>
                     </div>
-                    <p>{cont.user.balanceDate || "--"}</p>
+                    {/* <p>{cont.user.balanceDate || "--"}</p> */}
                   </div>
                 </td>
 

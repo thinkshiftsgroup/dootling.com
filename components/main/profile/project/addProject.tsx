@@ -25,7 +25,7 @@ const AddProjectsModal: React.FC<AddProjectsModalProps> = ({
   onClose,
 }) => {
   const { createProject } = useProject();
-  const {  getFollowers } = useFollowing();
+  const { getFollowers } = useFollowing();
 
   const contributors: Contributor[] = getFollowers.data?.list || [];
 
@@ -43,23 +43,6 @@ const AddProjectsModal: React.FC<AddProjectsModalProps> = ({
     setSelectedRadio(event.target.value);
   };
 
-  // const filteredContributors = useMemo(() => {
-  //   if (!inputValue.trim()) return [];
-  //   return contributors
-  //     .filter(
-  //       (c) =>
-  //         c.fullName.toLowerCase().includes(inputValue.toLowerCase()) &&
-  //         !selectedContributors.some((s) => s.id === c.id)
-  //     )
-  //     .slice(0, 10);
-  // }, [inputValue, contributors, selectedContributors]);
-
-  // const handleSelectContributor = (contributor: Contributor) => {
-  //   if (selectedContributors.some((c) => c.id === contributor.id)) return;
-  //   setSelectedContributors((prev) => [...prev, contributor]);
-  //   setInputValue("");
-  // };
-
   const handleDeleteContributor = (id: string) => {
     setSelectedContributors((prev) => prev.filter((c) => c.id !== id));
   };
@@ -67,11 +50,13 @@ const AddProjectsModal: React.FC<AddProjectsModalProps> = ({
   const imageRef = useRef<HTMLInputElement | null>(null);
 
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0];
     if (selected) {
       setImagePreview(URL.createObjectURL(selected));
+      setImageFile(selected);
     }
   };
 
@@ -83,31 +68,30 @@ const AddProjectsModal: React.FC<AddProjectsModalProps> = ({
 
     const contributorIds =
       selectedContributors.length > 0
-        ? selectedContributors.map((c) => c.id)
+        ? selectedContributors.map((c) => c.id) 
         : undefined;
 
-    const payload: any = {
-      title: title.trim(),
-      description: summary.trim(),
-      isPublic: selected === "anyone",
-      ...(contributorIds ? { contributorIds } : {}),
-    };
-
-    createProject.mutate(payload, {
-      onSuccess: () => {
-        toast.success("Project created successfully!");
-        setTitle("");
-        setSummary("");
-        setSelectedContributors([]);
-        onClose();
-        queryClient.invalidateQueries({ queryKey: ["get-all-project"] });
+    createProject.mutate(
+      {
+        title: title.trim(),
+        description: summary.trim(),
+        isPublic: selected === "anyone",
+        contributorIds,
+        image: imageFile || undefined,
       },
-      onError: (error: any) => {
-        toast.error(
-          error?.response?.data?.message || "Something went wrong. Try again."
-        );
-      },
-    });
+      {
+        onSuccess: () => {
+          toast.success("Project created successfully!");
+          setTitle("");
+          setSummary("");
+          setSelectedContributors([]);
+          setImagePreview(null);
+          setImageFile(null);
+          onClose();
+          queryClient.invalidateQueries({ queryKey: ["get-all-project"] });
+        },
+      }
+    );
   };
 
   return (
@@ -220,116 +204,6 @@ const AddProjectsModal: React.FC<AddProjectsModalProps> = ({
                   className="w-full border border-gray-300 rounded-md text-sm p-2 mt-2 focus:outline-none focus:border-[#157BFF] transition-colors resize-none"
                 />
               </div>
-
-              {/* <div className="relative">
-                <label className="font-semibold text-gray-600 text-sm sm:text-base">
-                  Add Contributors *
-                </label>
-
-                <div className="flex mt-2">
-                  <div className="flex w-full border border-gray-300 rounded-sm focus-within:border-[#157BFF] transition">
-                    <input
-                      id="collaborators"
-                      type="text"
-                      value={inputValue}
-                      onChange={(e) => setInputValue(e.target.value)}
-                      placeholder="Search by name..."
-                      className="flex-1 px-3 py-2 text-gray-700 focus:outline-none"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const match = contributors.find(
-                          (c) =>
-                            c.fullName.toLowerCase() ===
-                              inputValue.trim().toLowerCase() &&
-                            !selectedContributors.some((s) => s.id === c.id)
-                        );
-                        if (match) {
-                          setSelectedContributors((prev) => [...prev, match]);
-                          setInputValue("");
-                        } else {
-                          toast.error(
-                            "Please select a valid contributor from the list."
-                          );
-                        }
-                      }}
-                      className="px-3 w-1/4 flex items-center gap-2 justify-center text-white bg-[#157BFF] font-medium hover:bg-blue-600 transition-colors rounded-sm"
-                    >
-                      <svg
-                        className="w-4 h-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M12 4v16m8-8H4"
-                        />
-                      </svg>
-                      Add
-                    </button>
-                  </div>
-                </div>
-
-                {inputValue && (
-                  <ul className="absolute z-50 bg-white border border-gray-200 w-full rounded-md shadow-md max-h-40 overflow-y-auto mt-1">
-                    {filteredContributors.length > 0 ? (
-                      filteredContributors.map((c) => (
-                        <li
-                          key={c.id}
-                          onClick={() => handleSelectContributor(c)}
-                          className="px-3 py-2 hover:bg-blue-50 cursor-pointer text-sm text-gray-700 flex justify-between items-center"
-                        >
-                          <span>
-                            {c.fullName}
-                            <span className="text-gray-500 text-xs ml-1">
-                              ({c.role || "Contributor"}
-                              {c.country ? ` - ${c.country}` : ""})
-                            </span>
-                          </span>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleSelectContributor(c)}
-                            className="text-[#157BFF] hover:text-blue-700 text-xs"
-                          >
-                            Add
-                          </Button>
-                        </li>
-                      ))
-                    ) : (
-                      <li className="px-3 py-2 text-gray-500 text-sm">
-                        No matches found
-                      </li>
-                    )}
-                  </ul>
-                )}
-
-                <div className="space-y-2 mt-3">
-                  {selectedContributors.map((c) => (
-                    <div
-                      key={c.id}
-                      className="flex items-center justify-between text-gray-800 border rounded-md p-2 text-sm"
-                    >
-                      <p>
-                        <span className="font-semibold">{c.fullName}</span>
-                        <span className="text-gray-500 text-xs">
-                          ({c.role || "Contributor"})
-                        </span>
-                      </p>
-                      <button
-                        onClick={() => handleDeleteContributor(c.id)}
-                        className="text-red-500 hover:text-red-700 transition-colors"
-                      >
-                        <X className="w-4 h-4" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div> */}
 
               <div className="space-y-2">
                 <label className="font-semibold text-gray-600 text-sm sm:text-base">

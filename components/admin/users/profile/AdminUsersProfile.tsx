@@ -345,8 +345,6 @@ const AdminUserProfile = () => {
                                     </div>
                                   </div>
                                 </div>
-
-                               {/* {isAdmin ? "" : <button className="bg-blue-500 mt-3 cursor-pointer hover:bg-blue-600 text-white px-2 flex items-center gap-2 py-1 rounded-sm text-[0.9rem]">
                                   Message
                                   <Image
                                     src="/images/icon/message-01.svg"

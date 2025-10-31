@@ -1,57 +1,125 @@
 "use client";
 import React, { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 import { FaFile } from "react-icons/fa6";
+import { useProject } from "@/hooks/useProjects";
+import { useFollowing } from "@/hooks/useFollow";
+import { toast } from "sonner";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface addTaskModalProp {
   open: boolean;
   onClose: () => void;
+  projectId: string;
 }
 
-const AddTaskModal: React.FC<addTaskModalProp> = ({ open, onClose }) => {
-  const [userName, setUserName] = useState("");
-  const [userList, setUserList] = useState<string[]>([]);
+const AddTaskModal: React.FC<addTaskModalProp> = ({
+  open,
+  onClose,
+  projectId,
+}) => {
+  const { getMilestonebyId, createTask } = useProject();
+  const { data, isLoading } = getMilestonebyId(projectId!);
+  const [selectedContributors, setSelectedContributors] = useState("");
+  const [selectedMilestone, setSelectedMilestone] = useState("");
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
+  const [priority, setPriority] = useState("");
+  const [percentageOfProject, setPercentageofProject] = useState("");
+  const [percentageToRelease, setPercentageToRelease] = useState("");
+  const [dueDate, setDueDate] = useState("");
+  const [releaseDate, setReleaseDate] = useState("");
 
-  const handleAddUser = () => {
-    if (!userName.trim()) return;
-    setUserList((prev) => [...prev, userName.trim()]);
-    setUserName("");
-  };
-
-  const handleRemoveUser = (nameToRemove: string) => {
-    setUserList((prev) => prev.filter((user) => user !== nameToRemove));
-  };
+  const { getFollowers, getAllContributors } = useFollowing();
+  const contributors = getAllContributors.data?.contributors || [];
 
   const imageRef = useRef<HTMLInputElement | null>(null);
-
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0];
-    if (selected) {
-      setImagePreview(URL.createObjectURL(selected));
+    if (!selected) return;
+
+    // check single file
+    if (selected.size > 1024 * 1024) {
+      toast.error("Image must be less than 1MB");
+      return;
     }
+
+    setImageFile(selected);
+    setImagePreview(URL.createObjectURL(selected));
   };
 
   const fileRef = useRef<HTMLInputElement | null>(null);
   const [files, setFiles] = useState<File[]>([]);
 
+  // FILE HANDLER — 1MB per file
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files ? Array.from(e.target.files) : [];
+
+    if (files.length + selected.length > 10) {
+      toast.error("You can only upload up to 10 files");
+      return;
+    }
+
+    const validFiles = selected.filter((file) => {
+      if (file.size > 1024 * 1024) {
+        toast.error(`${file.name} exceeds 1MB and was skipped`);
+        return false;
+      }
+      return true;
+    });
+
     const newFiles = [
       ...files,
-      ...selected.filter(
+      ...validFiles.filter(
         (f) => !files.some((existing) => existing.name === f.name)
       ),
     ];
+
     setFiles(newFiles);
   };
 
   const handleFileRemove = (index: number) => {
     setFiles((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const queryClient = useQueryClient();
+
+  const handleSubmit = () => {
+    if (!projectId) return;
+    if (!selectedMilestone) return;
+
+    const payload = {
+      title,
+      percentageToRelease: Number(percentageToRelease),
+      dueDate: new Date(dueDate).toISOString(),
+      releaseDate: new Date(releaseDate).toISOString(),
+      description: desc,
+      percentageOfProject: Number(percentageOfProject),
+      image: imageFile ? [imageFile] : [],
+      file: files,
+      priority,
+      contributorId: selectedContributors,
+      action: "create",
+    };
+
+    createTask.mutate(
+      { projectId: projectId, payload, milestoneId: selectedMilestone },
+      {
+        onSuccess: () => {
+          toast.success("Task added");
+          queryClient.invalidateQueries({
+            queryKey: ["get-task-with-milestone-id"],
+          });
+          onClose();
+        },
+      }
+    );
   };
 
   return (
@@ -93,8 +161,10 @@ const AddTaskModal: React.FC<addTaskModalProp> = ({ open, onClose }) => {
                   Title*
                 </label>
                 <input
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
                   type="text"
-                  className="w-full rounded-sm p-1.5 border border-[#D1D1D1]"
+                  className=" text-sm sm:!text-sm p-1.5 rounded-sm w-full border border-[#D1D1D1]"
                 />
               </div>
               <div className="flex items-center gap-2">
@@ -103,8 +173,10 @@ const AddTaskModal: React.FC<addTaskModalProp> = ({ open, onClose }) => {
                     Priority*
                   </label>
                   <select
+                    value={priority}
+                    onChange={(e) => setPriority(e.target.value)}
                     name=""
-                    className="w-full rounded-sm p-1.5 border border-[#D1D1D1]"
+                    className=" text-sm sm:!text-sm p-1.5 rounded-sm w-full border border-[#D1D1D1]"
                     id=""
                   >
                     <option value="">Select Priority</option>
@@ -118,9 +190,12 @@ const AddTaskModal: React.FC<addTaskModalProp> = ({ open, onClose }) => {
                     Due Date
                   </label>
                   <input
+                    value={dueDate}
+                    onChange={(e) => setDueDate(e.target.value)}
                     id="dueDate"
                     type="date"
-                    className="w-full rounded-sm p-1.5 border border-[#D1D1D1] text-gray-700 focus:outline-none focus:ring-1 focus:ring-[#157bff]"
+                    min={new Date().toISOString().split("T")[0]}
+                    className=" text-sm sm:!text-sm p-1.5 rounded-sm w-full border border-[#D1D1D1]"
                   />
                 </div>
               </div>
@@ -128,32 +203,59 @@ const AddTaskModal: React.FC<addTaskModalProp> = ({ open, onClose }) => {
                 <label htmlFor="" className="text-black font-medium">
                   Description*
                 </label>
-                <textarea className="w-full h-[200px] rounded-sm p-1.5 border border-[#D1D1D1]" />
+                <textarea
+                  value={desc}
+                  onChange={(e) => setDesc(e.target.value)}
+                  className="w-full h-[200px] rounded-sm p-1.5 border border-[#D1D1D1]"
+                />
+              </div>
+              <div className="w-full">
+                <label
+                  className="text-[#404040] text-sm sm:!text-base font-semibold"
+                  htmlFor=""
+                >
+                  Contributors
+                </label>
+                <div className="relative my-2">
+                  <select
+                    value={selectedContributors}
+                    onChange={(e) => setSelectedContributors(e.target.value)}
+                    className=" text-sm sm:!text-sm p-1.5 rounded-sm w-full border border-[#D1D1D1]"
+                  >
+                    <option value="">Select a contributor</option>
+                    {contributors?.length > 0 ? (
+                      contributors?.map((c: any) => (
+                        <option key={c.id} value={c.id}>
+                          {c.user.fullName} ({c.user.username})
+                        </option>
+                      ))
+                    ) : (
+                      <option disabled>No contributors available</option>
+                    )}
+                  </select>
+                </div>
               </div>
               <div className="w-full">
                 <label htmlFor="" className="text-black font-medium">
-                  Contributors*
+                  Add Milestone*
                 </label>
                 <select
+                  value={selectedMilestone}
+                  onChange={(e) => setSelectedMilestone(e.target.value)}
                   name=""
                   id=""
                   className=" text-sm sm:!text-sm p-1.5 rounded-sm w-full border border-[#D1D1D1]"
                 >
-                  <option value=""></option>
-                  <option value="">John Israel</option>
-                </select>
-              </div>
-              <div className="w-full">
-                <label htmlFor="" className="text-black font-medium">
-                  Add Milestones*
-                </label>
-                <select
-                  name=""
-                  id=""
-                  className=" text-sm sm:!text-sm p-1.5 rounded-sm w-full border border-[#D1D1D1]"
-                >
-                  <option value=""></option>
-                  <option value="">Milestone A</option>
+                  <option value="">Select a milestone</option>
+                  {data?.length > 0 ? (
+                    data?.map((c: any) => (
+                      <option key={c.id} value={c.id}>
+                        {c.title}
+                      </option>
+                    ))
+                  ) : (
+                    <option disabled>No milestone available</option>
+                  )}
                 </select>
               </div>
               <div className="w-full">
@@ -164,11 +266,11 @@ const AddTaskModal: React.FC<addTaskModalProp> = ({ open, onClose }) => {
                   Percentage of Total Budget(%)
                 </label>
                 <input
+                  value={percentageOfProject}
+                  onChange={(e) => setPercentageofProject(e.target.value)}
                   type="text"
-                  // value={userName}
-                  className=" text-sm sm:!text-base p-2 rounded-sm w-full border border-[#000000]/40 text-black"
+                  className=" text-sm sm:!text-sm p-1.5 rounded-sm w-full border border-[#D1D1D1]"
                   placeholder="50%"
-                  // onChange={(e) => setUserName(e.target.value)}
                 />
                 <div className="relative my-2"></div>
               </div>{" "}
@@ -181,10 +283,10 @@ const AddTaskModal: React.FC<addTaskModalProp> = ({ open, onClose }) => {
                 </label>
                 <input
                   type="text"
-                  // value={userName}
-                  className=" text-sm sm:!text-base p-2 rounded-sm w-full border border-[#000000]/40 text-black"
+                  value={percentageToRelease}
+                  onChange={(e) => setPercentageToRelease(e.target.value)}
+                  className=" text-sm sm:!text-sm p-1.5 rounded-sm w-full border border-[#D1D1D1]"
                   placeholder="50%"
-                  // onChange={(e) => setUserName(e.target.value)}
                 />
                 <div className="relative my-2"></div>
               </div>
@@ -196,17 +298,17 @@ const AddTaskModal: React.FC<addTaskModalProp> = ({ open, onClose }) => {
                   Release Date
                 </label>
                 <input
+                  value={releaseDate}
+                  onChange={(e) => setReleaseDate(e.target.value)}
                   type="date"
-                  // value={userName}
-                  className=" text-sm sm:!text-base p-2 rounded-sm w-full border border-[#000000]/40 text-black"
-                  placeholder="50%"
-                  // onChange={(e) => setUserName(e.target.value)}
+                  min={new Date().toISOString().split("T")[0]}
+                  className=" text-sm sm:!text-sm p-1.5 rounded-sm w-full border border-[#D1D1D1]"
                 />
                 <div className="relative my-2"></div>
               </div>
               <div className="w-full">
                 <label htmlFor="imageUpload" className="text-black font-medium">
-                  Images
+                  Images (Max. 10)
                 </label>
 
                 <div
@@ -258,7 +360,7 @@ const AddTaskModal: React.FC<addTaskModalProp> = ({ open, onClose }) => {
               </div>
               <div>
                 <label htmlFor="fileUpload" className="text-black font-medium">
-                  File
+                  File (Max. 10)
                 </label>
 
                 <div className="flex flex-wrap items-center gap-2 mt-2">
@@ -322,8 +424,15 @@ const AddTaskModal: React.FC<addTaskModalProp> = ({ open, onClose }) => {
                   className="hidden"
                 />
               </div>
-              <button className="rounded-sm text-base mt-3  font-bold text-white bg-[#FAAF40] p-2">
-                Create Task
+              <button
+                onClick={handleSubmit}
+                className="rounded-sm text-base mt-3 flex justify-center items-center font-bold text-white bg-[#FAAF40] p-2"
+              >
+                {createTask.isPending ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  "Create Task"
+                )}
               </button>
             </div>
           </motion.div>

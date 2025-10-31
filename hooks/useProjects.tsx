@@ -41,7 +41,10 @@ export const useProject = () => {
     }) => {
       const res = await apiInstance.patch(
         `/api/projects/${id}/manage`,
-        payload
+        payload,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
       );
       return res.data;
     },
@@ -57,18 +60,34 @@ export const useProject = () => {
       description,
       isPublic,
       contributorIds,
+      image,
     }: {
       title: string;
       description: string;
       isPublic: boolean;
       contributorIds?: string[];
+      image?: File;
     }) => {
-      const res = await apiInstance.post("api/projects", {
-        title,
-        description,
-        isPublic,
-        contributorIds,
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("isPublic", String(isPublic));
+
+      // Send contributorIds as a JSON string
+      if (contributorIds?.length) {
+        formData.append("contributorIds", JSON.stringify(contributorIds));
+      }
+
+      if (image) {
+        formData.append("image", image);
+      }
+
+      const res = await apiInstance.post("api/projects", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
+
       return res.data;
     },
     onError: (err: any) => {
@@ -96,26 +115,118 @@ export const useProject = () => {
       payload,
     }: {
       id: string | number;
+      payload: FormData;
+    }) => {
+      const res = await apiInstance.post(
+        `/api/milestones/${id}/create`,
+        payload,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+
+      return res.data;
+    },
+    onError: (err: any) => {
+      toast.error(err.response?.data?.message || "Something went wrong!");
+    },
+  });
+
+  const editMilestone = useMutation({
+    mutationKey: ["edit-milestone"],
+    mutationFn: async ({
+      id,
+      payload,
+    }: {
+      id: string | number;
+      payload: FormData;
+    }) => {
+      const res = await apiInstance.patch(
+        `/api/milestones/${id}/manage`,
+        payload,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+
+      return res.data;
+    },
+    onError: (err: any) => {
+      toast.error(err.response?.data?.message || "Something went wrong!");
+    },
+  });
+
+  const getMilestonebyId = (id: string | number | null) =>
+    useQuery({
+      queryKey: ["get-milestone-with-project-id", id],
+      queryFn: async () => {
+        const res = await apiInstance.get(`/api/milestones/${id}`);
+        return res.data;
+      },
+      enabled: !!id && isInitialized && !!user && !!token,
+    });
+
+  const createTask = useMutation({
+    mutationKey: ["create-task"],
+    mutationFn: async ({
+      projectId,
+      milestoneId,
+      payload,
+    }: {
+      projectId: string | number;
+      milestoneId: string | number;
       payload: {
         title: string;
-        releasePercentage: number;
+        percentageOfProject: number;
         dueDate: string;
         description: string;
-        image?: File;
-        file?: File;
+        image?: File[];
+        file?: File[];
+        action: string;
+        priority: string;
+        contributorId: string;
+        percentageToRelease?: number;
+        releaseDate?: string;
+        id?: string;
       };
     }) => {
       const formData = new FormData();
+
       formData.append("title", payload.title);
-      formData.append("releasePercentage", String(payload.releasePercentage));
+      formData.append(
+        "percentageOfProject",
+        String(payload.percentageOfProject)
+      );
       formData.append("dueDate", payload.dueDate);
       formData.append("description", payload.description);
+      formData.append("action", payload.action);
+      formData.append("priority", payload.priority);
+      formData.append("contributorId", payload.contributorId);
 
-      if (payload.image) formData.append("image", payload.image);
-      if (payload.file) formData.append("file", payload.file);
+      if (payload.id !== undefined) {
+        formData.append("id", String(payload.id));
+      }
+      if (payload.percentageToRelease !== undefined) {
+        formData.append(
+          "percentageToRelease",
+          String(payload.percentageToRelease)
+        );
+      }
+
+      if (payload.releaseDate) {
+        formData.append("releaseDate", payload.releaseDate);
+      }
+
+      if (payload.image?.length) {
+        payload.image.forEach((img) => formData.append("image", img));
+      }
+
+      if (payload.file?.length) {
+        payload.file.forEach((file) => formData.append("file", file));
+      }
 
       const res = await apiInstance.post(
-        `/api/milestones/${id}/create`,
+        `/api/tasks/projects/${projectId}/milestones/${milestoneId}`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -129,12 +240,29 @@ export const useProject = () => {
     },
   });
 
+  const getTasksbyId = (id: string | number | null) =>
+    useQuery({
+      queryKey: ["get-task-with-milestone-id", id],
+      queryFn: async () => {
+        const res = await apiInstance.get(`/api/tasks/milestones/${id}`);
+        return res.data;
+      },
+      enabled: !!id && isInitialized && !!user && !!token,
+    });
+
   return {
     getAllProject,
     getAllProjectById,
     editProjectById,
     createProject,
+
     convertProjectToEscrowFn,
+
     createMilestone,
+    getMilestonebyId,
+    editMilestone,
+
+    createTask,
+    getTasksbyId,
   };
 };
