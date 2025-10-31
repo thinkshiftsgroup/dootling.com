@@ -345,6 +345,7 @@ const AdminUserProfile = () => {
                                     </div>
                                   </div>
                                 </div>
+                                <button>
                                   Message
                                   <Image
                                     src="/images/icon/message-01.svg"
@@ -352,7 +353,7 @@ const AdminUserProfile = () => {
                                     width={20}
                                     height={20}
                                   />
-                                </button>} */}
+                                </button>
                               </div>
 
                               <span className="flex flex-wrap items-center gap-1.5 -mt-[2rem] text-xs ms-[8.5rem]">
