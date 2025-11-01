@@ -138,6 +138,7 @@ const UserProfile = () => {
         fetchUserProfile();
       } else {
         console.log("-> CONDITION NOT MET: Finishing loading.");
+        console.log("user:", user);
         setIsLoading(false);
       }
     }
@@ -146,7 +147,12 @@ const UserProfile = () => {
   const username = user?.username || user?.firstname || "User";
   const firstname = user?.firstname || "Dootling";
   const lastname = user?.lastname || "User";
-  const userInitials = useMemo(() => getInitials(username), [username]);
+  const fullName = user?.fullName || "Dootling User";
+  console.log("Full Name:", fullName);
+  const userInitials = useMemo(
+    () => fullName.charAt(0).toUpperCase(),
+    [fullName]
+  );
   const userHeadline = user?.biodata?.headline || "Software Developer";
   const userCountry = user?.biodata?.country || "United Kingdom";
   const userTags = (user?.biodata?.tags || "Advocate")
@@ -434,7 +440,7 @@ const UserProfile = () => {
 
                               <div className="flex flex-col gap-1.5">
                                 <h1 className="text-3xl flex mt-1.5 items-center gap-1 whitespace-nowrap font-bold text-black">
-                                  {firstname} {lastname}
+                                  {fullName}
                                 </h1>
 
                                 <span className="flex whitespace-nowrap flex-wrap lg:flex-nowrap font-normal items-center gap-1">

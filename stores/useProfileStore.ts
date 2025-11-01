@@ -27,21 +27,6 @@ interface UserProfile {
   } | null;
 }
 
-interface Biodata {
-  dateOfBirth: Date | string;
-  country: string | null;
-  pronouns: string | null;
-  phone: string | null;
-  languages: string | null;
-  city: string | null;
-  role: string | null;
-  industry: string | null;
-  tags: string | null;
-  headline: string | null;
-}
-
-type ProfileType = UserProfile;
-
 interface ProfileState {
   profile: ProfileType | null;
   isLoading: boolean;
@@ -55,29 +40,55 @@ interface ProfileState {
   updatePartialProfile: (data: Partial<ProfileType>) => void;
 }
 
-const PROFILE_STORAGE_KEY = "dootling_auth_state";
+type ProfileType = UserProfile;
 
-let preloadedProfile: { profile: ProfileType | null } = {
+const AUTH_STORAGE_KEY = "dootling_auth_state";
+
+let preloadedProfile: { profile: ProfileType | null; token: string | null } = {
   profile: null,
+  token: null,
 };
 
 if (typeof window !== "undefined") {
-  const stored = localStorage.getItem(PROFILE_STORAGE_KEY);
+  const stored = localStorage.getItem(AUTH_STORAGE_KEY);
   if (stored) {
     try {
-      preloadedProfile = JSON.parse(stored);
+      const parsedState = JSON.parse(stored) as {
+        token: string | null;
+        user: ProfileType | null;
+      };
 
-      if (preloadedProfile.profile && !("id" in preloadedProfile.profile)) {
-        preloadedProfile.profile = null;
-        localStorage.removeItem(PROFILE_STORAGE_KEY);
+      if (parsedState.user && "id" in parsedState.user) {
+        preloadedProfile.profile = parsedState.user;
+        preloadedProfile.token = parsedState.token;
+      } else {
+        localStorage.removeItem(AUTH_STORAGE_KEY);
       }
     } catch {
-      localStorage.removeItem(PROFILE_STORAGE_KEY);
+      localStorage.removeItem(AUTH_STORAGE_KEY);
     }
   }
 }
 
-export const useProfileStore = create<ProfileState>((set) => ({
+const getStoredAuthState = (): {
+  token: string | null;
+  user: ProfileType | null;
+} => {
+  if (typeof window === "undefined") return { token: null, user: null };
+  const stored = localStorage.getItem(AUTH_STORAGE_KEY);
+  if (stored) {
+    try {
+      const parsed = JSON.parse(stored) as {
+        token: string | null;
+        user: ProfileType | null;
+      };
+      return parsed;
+    } catch {}
+  }
+  return { token: null, user: null };
+};
+
+export const useProfileStore = create<ProfileState>((set, get) => ({
   profile: preloadedProfile.profile,
   isLoading: false,
   isLoaded: !!preloadedProfile.profile,
@@ -86,10 +97,11 @@ export const useProfileStore = create<ProfileState>((set) => ({
   setLoaded: (loaded) => set({ isLoaded: loaded }),
 
   setProfile: (profileData) => {
-    localStorage.setItem(
-      PROFILE_STORAGE_KEY,
-      JSON.stringify({ profile: profileData })
-    );
+    const { token: tokenToPreserve } = getStoredAuthState();
+
+    const storagePayload = { user: profileData, token: tokenToPreserve };
+
+    localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(storagePayload));
     set({
       profile: profileData,
       isLoaded: true,
@@ -98,7 +110,7 @@ export const useProfileStore = create<ProfileState>((set) => ({
   },
 
   clearProfile: () => {
-    localStorage.removeItem(PROFILE_STORAGE_KEY);
+    localStorage.removeItem(AUTH_STORAGE_KEY);
     set({
       profile: null,
       isLoaded: false,
@@ -115,10 +127,11 @@ export const useProfileStore = create<ProfileState>((set) => ({
         ...data,
       };
 
-      localStorage.setItem(
-        PROFILE_STORAGE_KEY,
-        JSON.stringify({ profile: newProfile })
-      );
+      const { token: tokenToPreserve } = getStoredAuthState();
+
+      const storagePayload = { user: newProfile, token: tokenToPreserve };
+
+      localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(storagePayload));
 
       return {
         profile: newProfile,
