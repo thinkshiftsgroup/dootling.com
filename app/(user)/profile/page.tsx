@@ -613,7 +613,7 @@ const UserProfile = () => {
                         <ProfileSpace Spaces={myProjects} />
                       )}
                       {activeTab === "Projects" && (
-                        <ProjectDashboard projects={myProjects} />
+                        <ProjectDashboard />
                       )}
                     </div>
                   </div>
