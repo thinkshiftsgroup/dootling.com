@@ -14,6 +14,15 @@ import { Dropdown } from "./dropDown";
 import { Bell, Gear } from "phosphor-react";
 
 export default function AddPostModal() {
+  const [selected, setSelected] = useState('Anyone');
+  const allOptions = ['Anyone', 'Your Followers', 'Profiles You Follow', 'Mentioned Only'];
+  const listItems = [selected, ...allOptions.filter(opt => opt !== selected)];
+
+
+  const handleSelect = (option: string) => {
+    setSelected(option);
+  };
+
   const [isOpen, setIsOpen] = useState(false);
   const [content, setContent] = useState("");
   const [topic, setTopic] = useState("");
@@ -94,11 +103,10 @@ export default function AddPostModal() {
           <div className="fixed inset-0 z-50 flex items-center justify-center  bg-opacity-50 p-4">
             <div
               className={`w-full max-w-2xl mt-8 bg-white rounded-2xl shadow-2xl overflow-hidden 
-            ${
-              isOpen
-                ? "animate-in fade-in slide-in-from-top-4"
-                : "animate-out fade-out slide-out-to-top"
-            }
+            ${isOpen
+                  ? "animate-in fade-in slide-in-from-top-4"
+                  : "animate-out fade-out slide-out-to-top"
+                }
             duration-200`}
             >
               {/* Modal Header */}
@@ -397,7 +405,7 @@ export default function AddPostModal() {
 
               {/* Modal Footer */}
               <div className="flex justify-between items-center px-3 sm:px-6 py-4">
-                <Dropdown
+                {/* <Dropdown
                   trigger={
                     <span className="text-xs sm:text-lg text-gray-400 font-medium">
                       Anyone can reply and quote
@@ -441,15 +449,43 @@ export default function AddPostModal() {
                       </div>
                     </div>
                   </div>
+                </Dropdown> */}
+                <Dropdown
+                  trigger={
+                    <span className="text-xs sm:text-lg text-gray-400 font-medium">
+                      {selected} can reply and quote
+                    </span>
+                  }
+                  align="left"
+                  position="top"
+                >
+                  <div className="bg-white m-0 shadow-md rounded-lg w-72 sm:w-80">
+                    <div className="max-h-60 overflow-y-auto p-3">
+                      {listItems.map((option, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => handleSelect(option)}
+                          className="w-full text-left mb-4 last:mb-0 hover:bg-gray-50 p-2 rounded transition-colors"
+                        >
+                          <div className="flex items-start gap-3">
+                            <div>
+                              <h6 className="text-gray-900 text-sm font-medium">
+                                {option}
+                              </h6>
+                            </div>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 </Dropdown>
                 <button
                   onClick={handlePost}
                   disabled={!content.trim()}
-                  className={`px-6 py-1.5 rounded-sm font-semibold transition-colors ${
-                    content.trim()
+                  className={`px-6 py-1.5 rounded-sm font-semibold transition-colors ${content.trim()
                       ? "bg-black text-white hover:bg-gray-800"
                       : "border-gray-200 border-2 text-gray-400 cursor-not-allowed"
-                  }`}
+                    }`}
                 >
                   Post
                 </button>

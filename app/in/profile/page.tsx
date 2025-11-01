@@ -6,16 +6,17 @@ import ContributionHeatmap from "@/components/main/landing-page/heatMap";
 import { FiUsers } from "react-icons/fi";
 import { HiOutlineNewspaper } from "react-icons/hi";
 import { LuArrowUpToLine } from "react-icons/lu";
-import { FaFire, FaSmile } from "react-icons/fa";
-import { TbDots } from "react-icons/tb";
-
-import { FaThumbsUp, FaHeart } from "react-icons/fa";
-import { FaHandsClapping } from "react-icons/fa6";
-import { BiCommentDetail } from "react-icons/bi";
-import { BiRepost } from "react-icons/bi";
-import { LuSend } from "react-icons/lu";
-import ProfileIn from "@/components/main/profile/otherProfile";
 import InReactionModal from "@/components/main/landing-page/in/inReactionModal";
+import ProfileFeeds from "@/components/main/profile/feeds";
+import SimilarProfiles from "@/components/main/profile/side-card/similarProfiles";
+import TrendingProjects from "@/components/main/profile/side-card/tredingProjects";
+import TrendingSpaces from "@/components/main/profile/side-card/trendingSpaces";
+import ReferralSideTab from "@/components/main/profile/side-card/referralSideTab";
+import ProjectDashboard from "@/components/main/profile/project/projects";
+import ProfileSpace from "@/components/main/space/profileSpace";
+import FollowedTab from "@/components/main/profile/followed";
+import ProfileAbout from "@/components/main/profile/about/about";
+import TopContributorsTab from "@/components/main/profile/topContributors/topContributors";
 
 const InProfile = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -120,6 +121,25 @@ const InProfile = () => {
         />
       ),
       label: "Top Contributors",
+    },
+  ];
+
+  const myProjects = [
+    {
+      id: 1,
+      imageSrc: "/images/project.png",
+      isPrivate: true,
+      projectName: "E-commerce App",
+      collaborators: 12,
+      createdDate: "10/15/2025",
+    },
+    {
+      id: 2,
+      imageSrc: "/images/project.png",
+      isPrivate: false,
+      projectName: "Mobile App",
+      collaborators: 5,
+      createdDate: "09/20/2025",
     },
   ];
 
@@ -351,173 +371,27 @@ const InProfile = () => {
                       </div>
 
                       <div className="mt-6">
-                        {activeTab === "Feeds" && (
-                          <div className="rounded-lg p-5 bg-white shadow-md mb-[40px]">
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-2">
-                                <Image
-                                  width={100}
-                                  height={100}
-                                  alt="user"
-                                  src="/images/user/userImg.jpg"
-                                  className="rounded w-20 h-20 object-cover"
-                                />
-                                <div>
-                                  <h1 className="text-xl flex items-center gap-1 font-bold text-black">
-                                    John Paul{" "}
-                                    <Image
-                                      src="/images/icon/verified.svg"
-                                      alt="icon"
-                                      width={14}
-                                      height={14}
-                                    />
-                                  </h1>
-                                  <p className="text-gray-500 text-xs">
-                                    90 days ago
-                                  </p>
-                                </div>
-                              </div>
-                              <TbDots size={20} className="cursor-pointer" />
-                            </div>
-                            <h1 className="text-3xl text-black my-4">
-                              Completed milestone: "Prototype testing" in Mobile
-                              App Development
-                            </h1>
-                            <div>
-                              <Image
-                                width={100}
-                                height={100}
-                                alt="feed image"
-                                className="w-full h-32 object-cover"
-                                src="/images/page-img/pizza.jpg"
-                              />
-                            </div>
-
-                            <div className="py-2.5 my-2.5 flex items-center  justify-between border-b-[#e5e5e5] border-b">
-                              <div
-                                onClick={() => setOpenLikesModal(true)}
-                                className="flex cursor-pointer items-center gap-2"
-                              >
-                                <div className="flex items-center">
-                                  <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-white border-2 border-white z-30">
-                                    <FaThumbsUp className="w-2.5 h-2.5" />
-                                  </div>
-                                  <div className="-ml-2 w-6 h-6 rounded-full bg-green-500 flex items-center justify-center text-white border-2 border-white z-20">
-                                    <FaHandsClapping className="w-2.5 h-2.5" />
-                                  </div>
-                                  <div className="-ml-2 w-6 h-6 rounded-full bg-rose-500 flex items-center justify-center text-white border-2 border-white z-10">
-                                    <FaHeart className="w-2.5 h-2.5" />
-                                  </div>
-                                </div>
-
-                                <span className="text-gray-700 font-medium text-sm">
-                                  293
-                                </span>
-                              </div>
-                              <div className="text-xs text-gray-500 flex items-center gap-1">
-                                <p>23 comments</p>
-                                <span className="inline-flex w-1 h-1 rounded-full bg-gray-500"></span>
-                                <p>4 reposts</p>
-                              </div>
-                            </div>
-                            <div className="flex items-center gap-[4rem]">
-                              <Image
-                                width={100}
-                                height={100}
-                                alt="user"
-                                src="/images/user/userImg.jpg"
-                                className="rounded w-10 h-10 object-cover"
-                              />
-                              <div className="flex items-center justify-between  w-7/9">
-                                <div className="flex flex-col items-center gap-1">
-                                  <FaThumbsUp />
-                                  <p className="font-bold">Like</p>
-                                </div>
-                                <div className="flex flex-col items-center gap-1">
-                                  <BiCommentDetail />
-                                  <p className="font-bold">Comment</p>
-                                </div>
-                                <div className="flex flex-col items-center gap-1">
-                                  <BiRepost />
-                                  <p className="font-bold">Repost</p>
-                                </div>
-                                <div className="flex flex-col items-center gap-1">
-                                  <LuSend />
-                                  <p className="font-bold">Send</p>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+                        {activeTab === "Feeds" && <ProfileFeeds />}
+                        {activeTab === "Projects" && (
+                          <ProjectDashboard />
                         )}
-
-                        {activeTab === "About" && <ProfileIn />}
+                        {activeTab === "Followed" && <FollowedTab />}
+                        {activeTab === "Spaces" && (
+                          <ProfileSpace Spaces={myProjects} />
+                        )}
+                        {activeTab === "Account" && <ProfileAbout />}
+                        {activeTab === "Top Contributors" && (
+                          <TopContributorsTab />
+                        )}
                       </div>
                     </div>
                   </div>
-                  <div className="w-full col-span-2 ">
+                  <div className="w-full my-4 lg:!my-0 col-span-2 ">
                     <div className="">
-                      <div className="rounded-lg shadow bg-white">
-                        <div className="flex justify-between p-4 border-b border-[#f1f1f1]">
-                          <div className="header-title">
-                            <h4 className="text-xl font-semibold">
-                              More Similar Profiles
-                            </h4>
-                          </div>
-                        </div>
-
-                        <div className="p-4 pt-0">
-                          <ul className="m-0 p-0 list-none">
-                            {[
-                              {
-                                name: "Annette Black",
-                                info: "33 Projects 6 Streaks",
-                                image: "/images/user/13.jpg",
-                              },
-                              {
-                                name: "Christopher Plessis",
-                                info: "33 Projects 6 Streaks",
-                                image: "/images/user/17.jpg",
-                              },
-                              {
-                                name: "Ellyse Perry",
-                                info: "33 Projects 6 Streaks",
-                                image: "/images/user/16.jpg",
-                              },
-                            ].map((user, index) => (
-                              <li key={index} className="mb-3 last:mb-0">
-                                <div className="flex items-center gap-2">
-                                  <Image
-                                    src={user.image}
-                                    alt={user.name}
-                                    width={60}
-                                    height={60}
-                                    className="avatar-60 avatar-borderd object-cover rounded-sm w-full h-auto inline-block"
-                                  />
-                                  <div className="flex-1">
-                                    <div className="flex items-center justify-between gap-2">
-                                      <div>
-                                        <h5>{user.name}</h5>
-                                        <small className="capitalize flex items-center gap-2">
-                                          <div className="w-2 h-2 flex-none rounded-full bg-black" />
-                                          {user.info}
-                                        </small>
-                                      </div>
-                                      <div className="flex items-center flex-shrink-0 gap-2">
-                                        <button className="px-2 py-1 cursor-pointer bg-blue-100 text-blue-600 rounded hover:bg-blue-200 leading-none">
-                                          <i className="ph ph-plus text-sm"></i>
-                                        </button>
-                                        <button className="px-2 py-1 cursor-pointer bg-red-100 text-red-600 rounded hover:bg-red-200 leading-none">
-                                          <i className="ph ph-x text-sm"></i>
-                                        </button>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
+                      <SimilarProfiles />
+                      <TrendingProjects />
+                      <TrendingSpaces />
+                      <ReferralSideTab />
                     </div>
                   </div>
                 </div>

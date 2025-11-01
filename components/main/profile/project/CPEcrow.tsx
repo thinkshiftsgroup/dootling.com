@@ -11,11 +11,16 @@ import ContributorsTab from "./convertEscrowToProject/contributorsTab";
 import SettingsTab from "./convertEscrowToProject/settingsTab";
 import WithdrawFunds from "../finance/withdrawFunds";
 import FundWalletSideModal from "../finance/fundEscrowWallet.tsx";
+import { ProjectI } from "@/types/project";
 
-const ConvertProjectToEscrow = ({
-  setCPEcrow,
-}: {
+interface ConvertProjectToEscrowProps {
   setCPEcrow: (open: boolean) => void;
+  project: ProjectI;
+}
+
+const ConvertProjectToEscrow: React.FC<ConvertProjectToEscrowProps> = ({
+  setCPEcrow,
+  project,
 }) => {
   const [userName, setUserName] = useState("");
   const [userList, setUserList] = useState<string[]>([]);
@@ -30,11 +35,11 @@ const ConvertProjectToEscrow = ({
   };
 
   const [purpose, setPurpose] = useState("");
-  const [selected, setSelectedRadio] = useState("invite");
+  // const [selected, setSelectedRadio] = useState("invite");
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedRadio(event.target.value);
-  };
+  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setSelectedRadio(event.target.value);
+  // };
 
   const [collaborators, setCollaborators] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState("");
@@ -67,7 +72,7 @@ const ConvertProjectToEscrow = ({
               Escrow Smart Contract
             </h1>
             <p className=" sm:!text-base text-xs  text-[#404040]">
-              <span className="text-[#157BFF]">For:</span>Thinkemphaty Vault App
+              <span className="text-[#157BFF]">For:</span>{project.title} {" "}
               Project
             </p>
           </div>
@@ -80,14 +85,16 @@ const ConvertProjectToEscrow = ({
         <Tabs tabs={tabs} setTabs={setTabs} />
         {tabs === "Overview" && (
           <OverviewTab
-            handleChange={handleChange}
-            selected={selected}
+            project={project}
+            setTabs={setTabs}
+            // handleChange={handleChange}
+            // selected={selected}
             setWithdrawFunds={setWithdrawFunds}
             setShowModal={setShowModal}
           />
         )}
-        {tabs === "Milsetones" && <MilestonesTab />}
-        {tabs === "Contributors" && <ContributorsTab />}
+        {/* {tabs === "Milsetones" && <MilestonesTab />} */}
+        {tabs === "Contributors" && <ContributorsTab project={project} />}
 
         {tabs === "Audit Log" && (
           <div>

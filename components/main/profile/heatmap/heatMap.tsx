@@ -3,8 +3,12 @@ import React from "react";
 import Image from "next/image";
 import AddHeatmapModal from "../addHeatMapModal";
 import ConnectWorks from "./addPermission";
+import { useRoleStore } from "@/stores/userRoleStore";
 
 const HeatmapConnections = () => {
+  
+  const { isUser } = useRoleStore();
+
   const connections = [
     {
       name: "GitHub",
@@ -125,7 +129,7 @@ const HeatmapConnections = () => {
             <div className="flex sm:!flex-row !flex-col justify-between items-start mb-3">
               <h1 className="text-4xl font-medium text-gray-900">Heatmap</h1>
               <div className="flex sm:!flex-row flex-col sm:!w-auto w-full items-center gap-2 justify-between">
-                <div className="flex !my-2 md:!my-0 items-center gap-1 bg-[#F5F6FA] text-[#FAAF40] px-3 py-2 rounded-lg">
+                { isUser && (<div className="flex !my-2 md:!my-0 items-center gap-1 bg-[#F5F6FA] text-[#FAAF40] px-3 py-2 rounded-lg">
                   <Image
                     src="/images/dootling-icon1.svg"
                     width={25}
@@ -133,7 +137,7 @@ const HeatmapConnections = () => {
                     alt="icon"
                   />
                   <span className="font-medium">Browser Extension</span>
-                </div>
+                </div>)}
 
                 <div className="mx-auto sm:!hidden block">
                   <AddHeatmapModal />
@@ -181,9 +185,9 @@ const HeatmapConnections = () => {
                         {connection.contributions}
                       </p>
                     </div>
-                    <button className="text[#157BFF] hover:text-blue-700 font-medium transition-colors hidden sm:block">
+                     {isUser && (<button className="text[#157BFF] hover:text-blue-700 font-medium transition-colors hidden sm:block">
                       Revoke
-                    </button>
+                    </button>)}
                   </div>
                 </div>
               ))}

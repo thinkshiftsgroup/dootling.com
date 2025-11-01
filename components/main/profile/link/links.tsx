@@ -65,35 +65,24 @@ const ProfileLinks = () => {
 
           {/* Price and Button */}
           <div className="flex items-center gap-4 flex-shrink-0">
-            <span className="text-sm font-medium text-gray-900">$40,0050</span>
+            <span className="text-sm font-bold text-gray-900">$40,0050</span>
             <button
               onClick={() => setShowModal(true)}
               className="bg-[#157BFF] hover:bg-blue-600 text-white px-2 py-1 rounded-sm flex items-center gap-2 transition-colors whitespace-nowrap text-[0.9rem] cursor-pointer"
             >
               <svg
-                className="w-5 h-5"
+                width="16"
+                height="16"
+                viewBox="0 0 292 263"
+                fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                width={15}
-                height={15}
-                viewBox="0 0 512 512"
               >
-                <g fill="none">
-                  <g clipPath="url(#SVG3Z7Ltc7M)">
-                    <path
-                      fill="currentColor"
-                      fillRule="evenodd"
-                      d="m258.588 352.758l-23.921 23.922c-33.272 33.271-87.408 33.271-120.68 0c-33.271-33.272-33.271-87.408 0-120.68l23.922-23.921l-30.17-30.17l-23.922 23.921c-49.987 49.987-49.987 131.032 0 181.02s131.033 49.987 181.02 0l23.921-23.922zm82.745-246.091h-42.666v42.666h42.666c47.054 0 85.334 38.28 85.334 85.334c0 47.053-38.28 85.333-85.334 85.333h-42.666v42.667h42.666c70.693 0 128-57.308 128-128s-57.307-128-128-128m-128 63.999V63.999h42.666v106.667zm-41.056 37.239l-75.424-75.424l30.17-30.17l75.424 75.424zm21.085 46.28L153.6 307.2l34.133 25.6l50.037-66.716zm64.31 1.815h83.661v-42.666h-72.228z"
-                      clipRule="evenodd"
-                      strokeWidth={13}
-                      stroke="currentColor"
-                    ></path>
-                  </g>
-                  <defs>
-                    <clipPath id="SVG3Z7Ltc7M">
-                      <path fill="#fff" d="M0 0h512v512H0z"></path>
-                    </clipPath>
-                  </defs>
-                </g>
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M146.519 199.166L130.097 215.588C107.257 238.428 70.0932 238.428 47.2524 215.588C24.4124 192.748 24.4124 155.584 47.2524 132.743L63.6745 116.322L42.9633 95.6106L26.5412 112.032C-7.77414 146.347 -7.77414 201.984 26.5412 236.3C60.8565 270.616 116.493 270.615 150.809 236.3L167.23 219.877L146.519 199.166ZM203.322 30.2284H174.032V59.518H203.322C235.624 59.518 261.903 85.7966 261.903 118.099C261.903 150.4 235.624 176.678 203.322 176.678H174.032V205.969H203.322C251.852 205.969 291.192 166.628 291.192 118.099C291.192 69.5695 251.852 30.2284 203.322 30.2284ZM115.452 74.1628V0.9375H144.742V74.1628H115.452ZM87.2676 99.7268L35.4902 47.9494L56.2015 27.2381L107.979 79.0155L87.2676 99.7268ZM101.742 131.497L74.4462 167.891L97.878 185.465L132.228 139.666L101.742 131.497ZM145.89 132.743H203.322V103.454H153.739L145.89 132.743Z"
+                  fill="white"
+                />
               </svg>
               Setup Link
             </button>

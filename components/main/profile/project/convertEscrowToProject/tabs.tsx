@@ -1,9 +1,9 @@
 import React from "react";
 
-const Tabs = ({tabs, setTabs}:any) => {
+const Tabs = ({ tabs, setTabs }: any) => {
   return (
     <div className="mb-2">
-      <ul className="flex w-full items-center gap-4 *:cursor-pointer font-medium text-gray-500">
+      <ul className="flex whitespace-nowrap flex-wrap w-full items-center gap-4 *:cursor-pointer font-medium text-gray-500">
         <li
           onClick={() => setTabs("Overview")}
           className={`${
@@ -24,7 +24,7 @@ const Tabs = ({tabs, setTabs}:any) => {
         >
           Contributors
         </li>
-        <li
+        {/* <li
           onClick={() => setTabs("Milsetones")}
           className={`${
             tabs === "Milsetones"
@@ -33,7 +33,7 @@ const Tabs = ({tabs, setTabs}:any) => {
           }`}
         >
           Milestones
-        </li>
+        </li> */}
         <li
           onClick={() => setTabs("Audit Log")}
           className={`${

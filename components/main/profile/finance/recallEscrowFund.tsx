@@ -85,7 +85,7 @@ const RecallEscrowWallet: React.FC<FundWalletSideModalProps> = ({
             <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
               <div>
                 <label
-                  className="font-semibold text-gray-600 sm:!text-lg text-sm "
+                  className="font-semibold text-gray-600 sm:!text-base text-sm "
                   htmlFor="Amount"
                 >
                   Recall Accessible Funds to Available Wallet Balance*
@@ -95,7 +95,7 @@ const RecallEscrowWallet: React.FC<FundWalletSideModalProps> = ({
                     <select
                       value={currency}
                       onChange={handleCurrencyChange}
-                      className="bg-gray-200 font-bold sm:!text-lg text-sm uppercase w-full focus:outline-none cursor-pointer"
+                      className="bg-gray-200 font-bold sm:!text-base text-sm uppercase w-full focus:outline-none cursor-pointer"
                     >
                       <option value="USD">USD</option>
                       <option value="NGN">NGN</option>
@@ -115,14 +115,14 @@ const RecallEscrowWallet: React.FC<FundWalletSideModalProps> = ({
 
               <div>
                 <label
-                  className="font-semibold text-gray-600 sm:!text-lg text-sm "
+                  className="font-semibold text-gray-600 sm:!text-base text-sm "
                   htmlFor="Purpose"
                 >
                   Reasons *
                 </label>
                 <input
                   type="text"
-                  className="w-full shadow-sm my-2 bg-white z-10 text-gray-600 rounded-md border py-5 px-3 border-gray-400/50 "
+                  className="w-full shadow-sm my-2 bg-white z-10 text-gray-600 rounded-md border py-3 px-3 border-gray-400/50 "
                   placeholder=""
                 />
                 {/* <select
@@ -146,7 +146,7 @@ const RecallEscrowWallet: React.FC<FundWalletSideModalProps> = ({
                 </label>
                 <input
                   type="password"
-                  className="w-full shadow-sm my-2 bg-white z-10 text-gray-600 rounded-md border py-5 px-3 border-gray-400/50 "
+                  className="w-full shadow-sm my-2 bg-white z-10 text-gray-600 rounded-md border py-3 px-3 border-gray-400/50 "
                   placeholder=""
                 />
                 {/* <select

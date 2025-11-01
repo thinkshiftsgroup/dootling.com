@@ -15,8 +15,13 @@ import ProjectInnerTabs from "@/components/main/projects/tabs/chat";
 import ProjectTasks from "@/components/main/projects/tabs/projectTasks";
 import FilesTab from "@/components/main/projects/tabs/filesTab";
 import Navbar from "@/components/main/landing-page/navbar/navbar";
+import ProjectMilestone from "@/components/main/projects/projectMilestone";
+import { useParams } from "next/navigation";
 
 const ReadProjectMessage = () => {
+  const params = useParams<{ id: string }>();
+  const projectId = params?.id;
+
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -115,6 +120,24 @@ const ReadProjectMessage = () => {
       ),
     },
     {
+      id: "milestone",
+      label: "Milestone",
+      color: "#FAAF40",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+        >
+          <path
+            fill="currentColor"
+            d="M7.03 5.47a.75.75 0 0 0-1.06 0l-2.5 2.5a.75.75 0 0 0 1.06 1.06l1.22-1.22V18a.75.75 0 0 0 1.5 0V7.81l1.22 1.22a.75.75 0 0 0 1.06-1.06zm5.97.78a.75.75 0 0 0 0 1.5h7a.75.75 0 0 0 0-1.5zm-1 3.5a.75.75 0 0 0 0 1.5h5a.75.75 0 0 0 0-1.5zm0 3.5a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5zm0 3a.75.75 0 0 0 0 1.5h1a.75.75 0 0 0 0-1.5z"
+          />
+        </svg>
+      ),
+    },
+    {
       id: "files",
       label: "Files",
       color: "#FAAF40",
@@ -197,7 +220,7 @@ const ReadProjectMessage = () => {
               />
               <div>
                 <h1 className="font-semibold flex items-center gap-0.5">
-                  Paul Molive
+                  Paul Moliver
                   <FiLock size={10} className="text-gray-400" />
                 </h1>
                 <p className="text-xs text-green-500">Online</p>
@@ -240,9 +263,10 @@ const ReadProjectMessage = () => {
           </div>
 
           {tabs === "chat" && <ProjectInnerTabs messages={messages} />}
-          {tabs === "tasks" && <ProjectTasks />}
+          {tabs === "tasks" && <ProjectTasks projectId={projectId} />}
           {tabs === "files" && <FilesTab />}
           {tabs === "info" && <ProjectInfoTab />}
+          {tabs === "milestone" && <ProjectMilestone projectId={projectId} />}
 
           {tabs === "chat" && (
             <div className="sm:!p-4 p-2  border-t bg-white flex items-center gap-2">
