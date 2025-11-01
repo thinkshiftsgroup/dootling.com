@@ -9,6 +9,22 @@ interface UserProfile {
   lastname: string | null;
   userType: string;
   isVerified: boolean;
+  biodata: {
+    dateOfBirth: Date;
+    country: string | null;
+    pronouns: string | null;
+    phone: string | null;
+    city: string | null;
+    role: string | null;
+    industry: string | null;
+    tags: string | null;
+    headline: string | null;
+    languages: string | null;
+    id: string;
+    createdAt: Date;
+    updatedAt: Date;
+    userId: string;
+  } | null;
 }
 
 interface Biodata {
@@ -24,7 +40,7 @@ interface Biodata {
   headline: string | null;
 }
 
-type ProfileType = UserProfile & Biodata;
+type ProfileType = UserProfile;
 
 interface ProfileState {
   profile: ProfileType | null;
@@ -39,7 +55,7 @@ interface ProfileState {
   updatePartialProfile: (data: Partial<ProfileType>) => void;
 }
 
-const PROFILE_STORAGE_KEY = "dootling_profile_state";
+const PROFILE_STORAGE_KEY = "dootling_auth_state";
 
 let preloadedProfile: { profile: ProfileType | null } = {
   profile: null,

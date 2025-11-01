@@ -19,7 +19,7 @@ interface UserProfileData {
     industry: string | null;
     tags: string | null;
     headline: string | null;
-
+    languages: string | null;
     id: string;
     createdAt: Date;
     updatedAt: Date;
