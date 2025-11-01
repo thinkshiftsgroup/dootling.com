@@ -24,7 +24,6 @@ interface LoginResponse {
     lastname: string | null;
     fullName: string;
     profilePhotoUrl?: string;
-
     biodata: {
       dateOfBirth: Date;
       country: string | null;
@@ -35,7 +34,7 @@ interface LoginResponse {
       industry: string | null;
       tags: string | null;
       headline: string | null;
-
+      languages?: string | null;
       id: string;
       createdAt: Date;
       updatedAt: Date;
@@ -112,7 +111,7 @@ export default function LoginPage() {
 
         if (response.data.token && response.data.user) {
           const { token, user } = response.data;
-          loginUser(response.data.token, response.data.user);
+          loginUser(token, user);
           const rememberMeDays = formData.rememberMe ? 28 : undefined;
 
           Cookies.set("dootling_auth_token", token, {
