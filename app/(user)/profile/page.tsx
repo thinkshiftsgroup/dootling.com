@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState, useMemo, useCallback, useEffect } from "react";
+import React, { useRef, useState, useMemo, useCallback } from "react";
 import Navbar from "@/components/main/landing-page/navbar/navbar";
 import Image from "next/image";
 import ContributionHeatmap from "@/components/main/landing-page/heatMap";
@@ -30,7 +30,6 @@ import { LuCalendarFold } from "react-icons/lu";
 import ReferralSideTab from "@/components/main/profile/side-card/referralSideTab";
 import DootimeTab from "@/components/main/profile/dootime/dootime";
 import LinkedInLoader from "@/components/main/atom/loader";
-import { useRoleStore } from "@/stores/userRoleStore";
 
 interface ImageUploadRef {
   openFileDialog: () => void;
@@ -101,12 +100,6 @@ const ProfileImageUploadTrigger = ({
 };
 
 const UserProfile = () => {
-  const { setRole, isUser } = useRoleStore();
-    
-  useEffect(() => {
-    setRole("user");
-  }, [setRole]);
-
   const { user, setUser, isInitialized, token, initializeAuth } =
     useAuthStore();
 
@@ -114,7 +107,7 @@ const UserProfile = () => {
 
   const [profilePhotoUrl, setProfilePhotoUrl] = useState<string | undefined>(
     user?.profilePhotoUrl
-  );  
+  );
 
   React.useEffect(() => {
     setProfilePhotoUrl(user?.profilePhotoUrl);
@@ -145,6 +138,7 @@ const UserProfile = () => {
         fetchUserProfile();
       } else {
         console.log("-> CONDITION NOT MET: Finishing loading.");
+        console.log("user:", user);
         setIsLoading(false);
       }
     }
@@ -153,7 +147,12 @@ const UserProfile = () => {
   const username = user?.username || user?.firstname || "User";
   const firstname = user?.firstname || "Dootling";
   const lastname = user?.lastname || "User";
-  const userInitials = useMemo(() => getInitials(username), [username]);
+  const fullName = user?.fullName || "Dootling User";
+  console.log("Full Name:", fullName);
+  const userInitials = useMemo(
+    () => fullName.charAt(0).toUpperCase(),
+    [fullName]
+  );
   const userHeadline = user?.biodata?.headline || "Software Developer";
   const userCountry = user?.biodata?.country || "United Kingdom";
   const userTags = (user?.biodata?.tags || "Advocate")
@@ -278,7 +277,7 @@ const UserProfile = () => {
           className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
         />
       ),
-      label: "Links",
+      label: "Followed",
     },
     {
       icon: (isActive: boolean) => (
@@ -313,13 +312,7 @@ const UserProfile = () => {
           viewBox="0 0 163 163"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className={`transition-colors duration-200 ${
-            isActive ? "text-white" : "text-[#157BFF]/50"
-          }`}
-          stroke="currentColor"
-          style={{
-            color: isActive ? "#ffffff" : "#157BFF80",
-          }}
+          className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
         >
           <path
             d="M0 135.562H162.676M0 157.252H162.676M27.1126 43.3795V27.112H43.3802M119.295 27.112H135.563V43.3795M27.1126 75.9146V92.1822H43.3802M119.295 92.1822H135.563V75.9146M81.3378 81.3372C75.5852 81.3372 70.0683 79.052 66.0006 74.9843C61.9329 70.9166 59.6477 65.3996 59.6477 59.6471C59.6477 53.8945 61.9329 48.3776 66.0006 44.3099C70.0683 40.2422 75.5852 37.957 81.3378 37.957C87.0904 37.957 92.6073 40.2422 96.675 44.3099C100.743 48.3776 103.028 53.8945 103.028 59.6471C103.028 65.3996 100.743 70.9166 96.675 74.9843C92.6073 79.052 87.0904 81.3372 81.3378 81.3372ZM16.2676 5.42188H146.408C149.284 5.42188 152.043 6.56447 154.077 8.59831C156.11 10.6322 157.253 13.3906 157.253 16.2669V103.027C157.253 105.904 156.11 108.662 154.077 110.696C152.043 112.73 149.284 113.872 146.408 113.872H16.2676C13.3913 113.872 10.6328 112.73 8.59896 110.696C6.56512 108.662 5.42252 105.904 5.42252 103.027V16.2669C5.42252 13.3906 6.56512 10.6322 8.59896 8.59831C10.6328 6.56447 13.3913 5.42188 16.2676 5.42188Z"
@@ -333,22 +326,25 @@ const UserProfile = () => {
     {
       icon: (isActive: boolean) => (
         <svg
-          width="30"
-          height="30"
-          viewBox="0 0 292 263"
-          fill="none"
           className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
           xmlns="http://www.w3.org/2000/svg"
+          width={30}
+          height={30}
+          viewBox="0 0 24 24"
         >
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M146.519 199.166L130.097 215.588C107.257 238.428 70.0932 238.428 47.2524 215.588C24.4124 192.748 24.4124 155.584 47.2524 132.743L63.6745 116.322L42.9633 95.6106L26.5412 112.032C-7.77414 146.347 -7.77414 201.984 26.5412 236.3C60.8565 270.616 116.493 270.615 150.809 236.3L167.23 219.877L146.519 199.166ZM203.322 30.2284H174.032V59.518H203.322C235.624 59.518 261.903 85.7966 261.903 118.099C261.903 150.4 235.624 176.678 203.322 176.678H174.032V205.969H203.322C251.852 205.969 291.192 166.628 291.192 118.099C291.192 69.5695 251.852 30.2284 203.322 30.2284ZM115.452 74.1628V0.9375H144.742V74.1628H115.452ZM87.2676 99.7268L35.4902 47.9494L56.2015 27.2381L107.979 79.0155L87.2676 99.7268ZM101.742 131.497L74.4462 167.891L97.878 185.465L132.228 139.666L101.742 131.497ZM145.89 132.743H203.322V103.454H153.739L145.89 132.743Z"
-            fill={`${isActive ? "white" : "#157BFF80"}`}
-          />
+          <g
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={1.5}
+          >
+            <path d="M14 21h-2c-4.714 0-7.071 0-8.536-1.465C2 18.072 2 15.715 2 11V7.944c0-1.816 0-2.724.38-3.406A3 3 0 0 1 3.538 3.38C4.22 3 5.128 3 6.944 3C8.108 3 8.69 3 9.2 3.191c1.163.436 1.643 1.493 2.168 2.542L12 7M8 7h8.75c2.107 0 3.16 0 3.917.506a3 3 0 0 1 .827.827C22 9.09 22 10.143 22 12.25q.001.957-.005 1.75"></path>
+            <path d="M17.686 20.432a1.941 1.941 0 0 0 2.746-2.746l-1.716-1.716a1.94 1.94 0 0 0-2.639-.098m.237-2.303a1.941 1.941 0 0 0-2.745 2.745l1.715 1.715a1.94 1.94 0 0 0 2.64.1"></path>
+          </g>
         </svg>
       ),
-      label: "Paylink",
+      label: "Link",
     },
     {
       icon: (isActive: boolean) => (
@@ -388,6 +384,25 @@ const UserProfile = () => {
     },
   ];
 
+  const myProjects = [
+    {
+      id: 1,
+      imageSrc: "/images/project.png",
+      isPrivate: true,
+      projectName: "E-commerce App",
+      collaborators: 12,
+      createdDate: "10/15/2025",
+    },
+    {
+      id: 2,
+      imageSrc: "/images/project.png",
+      isPrivate: false,
+      projectName: "Mobile App",
+      collaborators: 5,
+      createdDate: "09/20/2025",
+    },
+  ];
+
   if (!isInitialized || isLoading) {
     return <LinkedInLoader />;
   }
@@ -424,20 +439,8 @@ const UserProfile = () => {
                               />
 
                               <div className="flex flex-col gap-1.5">
-                                <h1 className="text-3xl flex mt-1.5 items-center whitespace-nowrap font-bold text-black">
-                                  {firstname} {lastname}
-                                  <svg
-                                    width="16"
-                                    height="16"
-                                    viewBox="0 0 78 77"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      d="M41.3993 12.3218C42.9567 12.7407 44.3029 13.7864 45.9402 15.0527L46.8899 15.7882C47.667 16.3862 47.8525 16.5237 48.0379 16.6228C48.2371 16.7311 48.4472 16.818 48.6647 16.8819C48.8662 16.9426 49.0932 16.9778 50.0653 17.1057L51.2581 17.256C53.3111 17.5182 54.9995 17.7325 56.3969 18.5351C57.6217 19.2386 58.6354 20.2523 59.3389 21.4771C60.1415 22.8713 60.3558 24.5629 60.618 26.6159L60.7715 27.8087C60.8962 28.7808 60.9314 29.0078 60.9922 29.2093C61.0561 29.4267 61.1414 29.6357 61.248 29.8361C61.3503 30.0215 61.4878 30.207 62.0858 30.9841L62.8213 31.9338C64.0876 33.5711 65.1333 34.9173 65.5522 36.4747C65.9188 37.8361 65.9188 39.2703 65.5522 40.6318C65.1333 42.1891 64.0876 43.5354 62.8213 45.1726L62.0858 46.1224C61.4878 46.8994 61.3503 47.0849 61.2512 47.2704C61.1424 47.4708 61.0561 47.6797 60.9922 47.8971C60.9314 48.0986 60.8962 48.3256 60.7683 49.2978L60.618 50.4905C60.3558 52.5435 60.1415 54.2319 59.3389 55.6294C58.6351 56.8525 57.6201 57.8675 56.3969 58.5713C55.0027 59.374 53.3111 59.5882 51.2581 59.8504L50.0653 60.0039C49.0932 60.1286 48.8662 60.1638 48.6647 60.2246C48.4473 60.2885 48.2383 60.3738 48.0379 60.4804C47.8525 60.5827 47.667 60.7202 46.8899 61.3182L45.9402 62.0537C44.3029 63.32 42.9567 64.3657 41.3993 64.7846C40.0379 65.1512 38.6037 65.1512 37.2422 64.7846C35.6849 64.3657 34.3386 63.32 32.7014 62.0537L31.7516 61.3182C30.9746 60.7202 30.7891 60.5827 30.6036 60.4836C30.4045 60.3753 30.1944 60.2885 29.9769 60.2246C29.7754 60.1638 29.5484 60.1286 28.5762 60.0007L27.3835 59.8504C25.3305 59.5882 23.6421 59.374 22.2446 58.5713C21.0215 57.8675 20.0065 56.8525 19.3027 55.6294C18.5 54.2351 18.2858 52.5435 18.0236 50.4905L17.8701 49.2978C17.7454 48.3256 17.7102 48.0986 17.6494 47.8971C17.5866 47.6797 17.5008 47.4696 17.3936 47.2704C17.2913 47.0849 17.1538 46.8994 16.5558 46.1224L15.8203 45.1726C14.554 43.5354 13.5083 42.1891 13.0894 40.6318C12.7228 39.2703 12.7228 37.8361 13.0894 36.4747C13.5083 34.9173 14.554 33.5711 15.8203 31.9338L16.5558 30.9841C17.1538 30.207 17.2913 30.0215 17.3904 29.8361C17.4987 29.6369 17.5855 29.4268 17.6494 29.2093C17.7102 29.0078 17.7454 28.7808 17.8733 27.8087L18.0236 26.6159C18.2858 24.5629 18.5 22.8745 19.3027 21.4771C20.0065 20.2539 21.0215 19.2389 22.2446 18.5351C23.6389 17.7325 25.3305 17.5182 27.3835 17.256L28.5762 17.1025C29.5484 16.9778 29.7754 16.9426 29.9769 16.8819C30.1943 16.819 30.4044 16.7332 30.6036 16.626C30.7891 16.5237 30.9746 16.3862 31.7516 15.7882L32.7014 15.0527C34.3386 13.7864 35.6849 12.7407 37.2422 12.3218C38.6037 11.9552 40.0379 11.9552 41.3993 12.3218ZM51.175 29.8968C50.5753 29.2973 49.7621 28.9606 48.9141 28.9606C48.0662 28.9606 47.253 29.2973 46.6533 29.8968L36.123 40.4271L31.9883 36.2924C31.3852 35.7099 30.5774 35.3876 29.739 35.3948C28.9005 35.4021 28.0985 35.7384 27.5056 36.3313C26.9127 36.9242 26.5764 37.7263 26.5691 38.5647C26.5618 39.4032 26.8841 40.2109 27.4666 40.814L33.8622 47.2096C34.4619 47.8091 35.2751 48.1459 36.123 48.1459C36.9709 48.1459 37.7842 47.8091 38.3838 47.2096L51.175 34.4185C51.7745 33.8188 52.1112 33.0056 52.1112 32.1576C52.1112 31.3097 51.7745 30.4965 51.175 29.8968Z"
-                                      fill="#0088FF"
-                                    />
-                                  </svg>
+                                <h1 className="text-3xl flex mt-1.5 items-center gap-1 whitespace-nowrap font-bold text-black">
+                                  {fullName}
                                 </h1>
 
                                 <span className="flex whitespace-nowrap flex-wrap lg:flex-nowrap font-normal items-center gap-1">
@@ -599,36 +602,19 @@ const UserProfile = () => {
                       {activeTab === "Feeds" && <ProfileFeeds />}
                       {activeTab === "Account" && <ProfileAbout />}
                       {activeTab === "Finance" && <ProfileFinance />}
-                      {activeTab === "Links" && <FollowedTab />}
-                      {activeTab === "paylink" && <ProfileLinks />}
+                      {activeTab === "Followed" && <FollowedTab />}
+                      {activeTab === "Link" && <ProfileLinks />}
                       {activeTab === "Heatmap" && <HeatmapConnections />}
                       {activeTab === "Dootime" && <DootimeTab />}
                       {activeTab === "Top Contributors" && (
                         <TopContributorsTab />
                       )}
                       {activeTab === "Spaces" && (
-                        <ProfileSpace
-                          Spaces={[
-                            {
-                              id: 1,
-                              imageSrc: "/images/project.png",
-                              isPrivate: true,
-                              projectName: "E-commerce App",
-                              collaborators: 12,
-                              createdDate: "10/15/2025",
-                            },
-                            {
-                              id: 2,
-                              imageSrc: "/images/project.png",
-                              isPrivate: false,
-                              projectName: "Mobile App",
-                              collaborators: 5,
-                              createdDate: "09/20/2025",
-                            },
-                          ]}
-                        />
+                        <ProfileSpace Spaces={myProjects} />
                       )}
-                      {activeTab === "Projects" && <ProjectDashboard />}
+                      {activeTab === "Projects" && (
+                        <ProjectDashboard projects={myProjects} />
+                      )}
                     </div>
                   </div>
                 </div>
