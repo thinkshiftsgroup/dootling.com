@@ -75,18 +75,9 @@ type TabId =
   | "email-sms"
   | "v-pills-export-tab";
 
-const ProfileIn = () => {
+const ProfileIn = ({profile, isLoading}:any) => {
   const [open, setOpen] = useState<string | null>("profile");
   const [activeTab, setActiveTab] = useState<string>("personal-info");
-  const { profile, isLoading, isLoaded } = useProfileStore();
-
-  const { fetchUserProfile, updateProfileDetails } = useProfileActions();
-
-  useEffect(() => {
-    if (!isLoaded) {
-      fetchUserProfile();
-    }
-  }, [isLoaded, fetchUserProfile]);
 
   const toggleAccordion = (section: string) => {
     setOpen(open === section ? null : section);
@@ -259,7 +250,7 @@ const ProfileIn = () => {
           <div className="card">
             <div className="card-body my-2 sm:!my-0">
               <div id="profileTabContent" className="tab-content active show">
-                {isLoading && !isLoaded && activeTab === "personal-info" ? (
+                {isLoading && activeTab === "personal-info" ? (
                   <PersonalInformationSkeleton />
                 ) : (
                   <div

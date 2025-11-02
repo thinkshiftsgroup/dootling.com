@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { useProfileStore } from "@/stores/useProfileStore";
 import apiInstance from "@/api/apiInstance";
+import { useQuery } from "@tanstack/react-query";
 
 const useProfileActions = () => {
   const {
@@ -44,7 +45,16 @@ const useProfileActions = () => {
     [setLoading, updatePartialProfile]
   );
 
-  return { fetchUserProfile, updateProfileDetails };
+  const userInProfile = ({ userId }: { userId: string }) =>
+    useQuery({
+      queryKey: ["user-in-profile"],
+      queryFn: async () => {
+        const res = await apiInstance.get(`/api/users/${userId}`);
+        return res.data;
+      },
+    });
+
+  return { fetchUserProfile, updateProfileDetails, userInProfile };
 };
 
 export default useProfileActions;
