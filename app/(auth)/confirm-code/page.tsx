@@ -37,7 +37,7 @@ interface VerifyResponse {
       industry: string | null;
       tags: string | null;
       headline: string | null;
-
+      languages?: string | null;
       id: string;
       createdAt: Date;
       updatedAt: Date;
@@ -160,14 +160,9 @@ export default function VerifyOTPPage() {
       );
 
       if (response.data.token && response.data.user) {
-        // loginUser(response.data.token, {
-        //   ...response.data.user,
-        //   name: response.data.user.name || "Dootling User",
-        // });
-
         const { token, user } = response.data;
 
-        loginUser(response.data.token, response.data.user);
+        loginUser(response.data.token, user);
         const rememberMeDays = 30;
         Cookies.set("dootling_auth_token", token, {
           expires: rememberMeDays,

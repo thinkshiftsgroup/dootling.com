@@ -123,18 +123,18 @@ const ProfileAbout = () => {
         lastname: profile.lastname || "",
         username: profile.username || "",
         email: profile.email || "",
-        headline: profile.headline || "",
-        country: profile.country || "",
-        phone: profile.phone || "",
-        languages: profile.languages || "",
-        city: profile.city || "",
-        tags: profile.tags || "",
-        role: profile.role || "",
-        industry: profile.industry || "",
-        dateOfBirth: profile.dateOfBirth
-          ? new Date(profile.dateOfBirth).toISOString()
+        headline: profile.biodata?.headline || "",
+        country: profile.biodata?.country || "",
+        phone: profile.biodata?.phone || "",
+        languages: profile.biodata?.languages || "",
+        city: profile.biodata?.city || "",
+        tags: profile.biodata?.tags || "",
+        role: profile.biodata?.role || "",
+        industry: profile.biodata?.industry || "",
+        dateOfBirth: profile.biodata?.dateOfBirth
+          ? new Date(profile.biodata?.dateOfBirth).toISOString()
           : "",
-        pronouns: profile.pronouns || "",
+        pronouns: profile.biodata?.pronouns || "",
       });
     }
   }, [profile]);
