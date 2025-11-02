@@ -1,6 +1,5 @@
 // store/useRoleStore.ts
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
 
 interface RoleState {
   role: "admin" | "user" | "manager" | null;

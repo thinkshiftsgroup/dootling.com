@@ -7,16 +7,16 @@ import { FiUsers } from "react-icons/fi";
 import { HiOutlineNewspaper } from "react-icons/hi";
 import { LuArrowUpToLine } from "react-icons/lu";
 import InReactionModal from "@/components/main/landing-page/in/inReactionModal";
-import ProfileFeeds from "@/components/main/profile/feeds";
 import SimilarProfiles from "@/components/main/profile/side-card/similarProfiles";
 import TrendingProjects from "@/components/main/profile/side-card/tredingProjects";
 import TrendingSpaces from "@/components/main/profile/side-card/trendingSpaces";
-import ReferralSideTab from "@/components/main/profile/side-card/referralSideTab";
-import ProjectDashboard from "@/components/main/profile/project/projects";
 import ProfileSpace from "@/components/main/space/profileSpace";
 import FollowedTab from "@/components/main/profile/followed";
 import ProfileAbout from "@/components/main/profile/about/about";
 import TopContributorsTab from "@/components/main/profile/topContributors/topContributors";
+import ProfileFeeds from "@/components/in/profileFeeds";
+import ProjectDashboard from "@/components/in/project/projectDashboard";
+import ProfileIn from "@/components/in/otherProfile";
 
 const InProfile = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -372,14 +372,12 @@ const InProfile = () => {
 
                       <div className="mt-6">
                         {activeTab === "Feeds" && <ProfileFeeds />}
-                        {activeTab === "Projects" && (
-                          <ProjectDashboard />
-                        )}
+                        {activeTab === "Projects" && <ProjectDashboard />}
                         {activeTab === "Followed" && <FollowedTab />}
                         {activeTab === "Spaces" && (
                           <ProfileSpace Spaces={myProjects} />
                         )}
-                        {activeTab === "Account" && <ProfileAbout />}
+                        {activeTab === "Account" && <ProfileIn />}
                         {activeTab === "Top Contributors" && (
                           <TopContributorsTab />
                         )}
@@ -391,7 +389,7 @@ const InProfile = () => {
                       <SimilarProfiles />
                       <TrendingProjects />
                       <TrendingSpaces />
-                      <ReferralSideTab />
+                      {/* <ReferralSideTab /> */}
                     </div>
                   </div>
                 </div>
