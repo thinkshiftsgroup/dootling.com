@@ -25,12 +25,6 @@ const paragraph = "#7e8b9a";
 
 const PersonalInformationSkeleton = () => (
   <div className="space-y-6">
-    {/* <div className="flex mb-6">
-      <div className="relative">
-        <Skeleton className="rounded-full w-36 h-36 border" />
-        <Skeleton className="absolute bottom-0 right-0 p-2 rounded-full w-8 h-8" />
-      </div>
-    </div> */}
 
     <div className="grid grid-cols-2 gap-4">
       <div className="w-full flex flex-col gap-4">
@@ -420,30 +414,6 @@ const ProfileAbout = () => {
                       </h4>
 
                       <form className="space-y-6" onSubmit={handleSubmit}>
-                        {/* <div className="flex mb-6">
-                        <div className="relative  ">
-                          <Image
-                            src="/images/user/11.png"
-                            alt="profile"
-                            width={100}
-                            height={100}
-                            className="rounded-full w-36 h-36 border"
-                          />
-                          <label
-                            htmlFor="upload"
-                            className="absolute bottom-0 right-0 bg-[#1578ff] text-white p-2 rounded-full cursor-pointer hover:bg-blue-700 transition"
-                          >
-                            <Pencil size={16} />
-                          </label>
-                          <input
-                            id="upload"
-                            type="file"
-                            accept="image/*"
-                            className="hidden"
-                          />
-                        </div>
-                      </div> */}
-
                         <div className="lg:grid block grid-cols-2 gap-4">
                           <div className="w-full flex flex-col gap-4">
                             <div>

@@ -119,7 +119,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           )}
 
           <span
-            onClick={() => router.push("/projects")}
+            // onClick={() => router.push("/projects")}
             className="flex gap-1 sm:!w-auto w-full bg-[#F8F9FA] text-gray-800 hover:text-gray-950 hover:bg-[#d0d0d0] rounded-sm p-1 px-1 items-center cursor-pointer shadow-sm text-[10px]  transition-colors transistion-shadow"
           >
             <svg

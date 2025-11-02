@@ -60,25 +60,25 @@ const ProfileImageUploadTrigger = ({
   const uploadRef = useRef<ImageUploadRef | null>(null);
 
   return (
-    <div className="relative group w-[120px] h-[120px] ">
+    <div className="relative group w-[112px] h-[112px] ">
       {profilePhotoUrl ? (
-        <div className="w-[120px] h-full rounded-md bg-[#157BFF] flex items-center justify-center text-white text-7xl font-bold lg:text-8xl">
+        <div className="w-[112px] h-full rounded-md bg-[#157BFF] flex items-center justify-center text-white text-7xl font-bold lg:text-8xl">
           <Image
             src={profilePhotoUrl || "/placeholder.svg"}
             alt="Profile"
-            width={120}
-            height={120}
-            className="w-[120px] h-full rounded-md object-cover"
+            width={100}
+            height={100}
+             className="w-28 h-28 rounded-lg object-cover"
           />
         </div>
       ) : (
-        <div className="w-[120px] h-full rounded-md bg-[#157BFF] flex items-center justify-center text-white text-7xl font-bold lg:text-8xl">
+        <div className="w-[112px] h-full rounded-md bg-[#157BFF] flex items-center justify-center text-white text-7xl font-bold lg:text-8xl">
           {userInitials}
         </div>
       )}
 
       <div
-        className="absolute inset-0 bg-black/50 rounded-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer w-[120px]"
+        className="absolute inset-0 bg-black/50 rounded-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer w-[112px]"
         onClick={() => uploadRef.current?.openFileDialog()}
         title="Change Profile Photo"
       >
