@@ -439,7 +439,7 @@ const UserProfile = () => {
                               />
 
                               <div className="flex flex-col gap-1.5">
-                                <h1 className="text-3xl flex mt-1.5 items-center gap-1 whitespace-nowrap font-bold text-black">
+                                <h1 className="md:!text-3xl text-2xl  flex mt-1.5 items-center gap-1 whitespace-nowrap font-bold text-black">
                                   {fullName}
                                 </h1>
 

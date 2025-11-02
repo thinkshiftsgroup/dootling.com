@@ -8,6 +8,7 @@ import MiniLoader from "../../atom/miniloader";
 import { useFollowing } from "@/hooks/useFollow";
 import { Loader2 } from "lucide-react";
 import ConfirmationModal from "../../modal/confirmationModal";
+import { useRouter } from "next/navigation";
 
 interface userI {
   fullName: string;
@@ -82,6 +83,8 @@ export default function SimilarProfiles() {
     );
   };
 
+  const router = useRouter();
+
   return (
     <div className="rounded-lg shadow bg-white mb-4">
       <div className="flex justify-between px-2 py-3 border-b border-[#f1f1f1]">
@@ -96,7 +99,11 @@ export default function SimilarProfiles() {
         ) : (
           similarProfiles?.data?.list.map((user: userI) => {
             return (
-              <div key={user.id} className="mb-3 last:mb-0">
+              <div
+                onClick={() => router.push(`/in/profile/${user.id}`)}
+                key={user.id}
+                className="mb-3 last:mb-0 cursor-pointer"
+              >
                 <div className="flex items-center gap-2">
                   {user.profilePhotoUrl !== null ? (
                     <Image
@@ -146,13 +153,14 @@ export default function SimilarProfiles() {
                         {isLoggedIn &&
                           (user.isFollowing ? (
                             <button
-                              onClick={() =>
+                              onClick={(e) => {
+                                e.stopPropagation();
                                 handleUnfollowClick(
                                   user.id,
                                   user.fullName,
                                   user.profilePhotoUrl
-                                )
-                              }
+                                );
+                              }}
                               className="px-2 py-1 hover:bg-red-200 text-xs bg-red-100 text-red-600 rounded"
                             >
                               {loadingUserId === user.id &&
@@ -167,7 +175,10 @@ export default function SimilarProfiles() {
                             </button>
                           ) : (
                             <button
-                              onClick={() => handleFollow(user.id)}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleFollow(user.id);
+                              }}
                               className="px-2 py-1 text-xs bg-blue-100 text-blue-600 rounded hover:bg-blue-200"
                             >
                               {loadingUserId === user.id &&
@@ -180,8 +191,7 @@ export default function SimilarProfiles() {
                                 "+ Link"
                               )}
                             </button>
-                          ))
-                          }
+                          ))}
 
                         <button className="px-2 py-1 cursor-pointer bg-red-100 text-red-600 rounded hover:bg-red-200 leading-none">
                           <i className="ph ph-x text-xs"></i>

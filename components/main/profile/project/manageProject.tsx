@@ -27,7 +27,6 @@ const ManageProject: React.FC<ManageProjectProps> = ({
   const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
 
   const { getFollowers, getAllContributors } = useFollowing();
-  console.log(getAllContributors, "contr");
   const queryClient = useQueryClient();
   const { getAllProjectById, editProjectById } = useProject();
   const { data, isLoading } = getAllProjectById(projectId!);
