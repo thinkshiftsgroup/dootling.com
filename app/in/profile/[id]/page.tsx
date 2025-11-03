@@ -20,6 +20,10 @@ import ProfileIn from "@/components/in/otherProfile";
 import useProfileActions from "@/hooks/useProfileApi";
 import { useParams } from "next/navigation";
 import LinkedInLoader from "@/components/main/atom/loader";
+import { useFollowing } from "@/hooks/useFollow";
+import { useQueryClient } from "@tanstack/react-query";
+import { Loader2 } from "lucide-react";
+import DootimeIn from "@/components/in/dootime/DootimeIn";
 
 const InProfile = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -42,8 +46,6 @@ const InProfile = () => {
 
   const { userInProfile } = useProfileActions();
   const { data: profile, isLoading } = userInProfile({ userId: params.id });
-
-  console.log(profile, "profile data in in/profile/[id]");
 
   const items = [
     {
@@ -125,6 +127,24 @@ const InProfile = () => {
     },
     {
       icon: (isActive: boolean) => (
+        <svg
+          className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
+          width="30"
+          height="30"
+          viewBox="0 0 343 342"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M286.849 0.0234375C301.574 0.0234375 315.696 5.87294 326.108 16.2851C336.52 26.6973 342.37 40.8192 342.37 55.5443V252.003C342.37 266.728 336.52 280.85 326.108 291.262C315.696 301.674 301.574 307.523 286.849 307.523H201.603C204.439 300.998 205.771 294.079 205.771 287.246C205.771 285.435 205.658 283.652 205.43 281.898H286.849C294.778 281.898 302.382 278.749 307.988 273.142C313.595 267.536 316.745 259.931 316.745 252.003V55.5443C316.745 47.6154 313.595 40.0113 307.988 34.4047C302.382 28.7982 294.778 25.6484 286.849 25.6484H90.3906C82.4618 25.6484 74.8576 28.7982 69.2511 34.4047C63.6445 40.0113 60.4948 47.6154 60.4948 55.5443V145.403C51.3731 146.062 42.5625 148.998 34.8698 153.944V55.5443C34.8698 40.8192 40.7193 26.6973 51.1315 16.2851C61.5436 5.87294 75.6656 0.0234375 90.3906 0.0234375H286.849ZM184.349 51.2734C187.445 51.2736 190.436 52.3948 192.77 54.4299C195.103 56.4649 196.621 59.2761 197.042 62.3434L197.161 64.0859V153.773H261.19C264.436 153.774 267.561 155.008 269.933 157.224C272.305 159.44 273.747 162.474 273.969 165.713C274.19 168.951 273.173 172.153 271.125 174.671C269.076 177.19 266.148 178.836 262.932 179.279L261.19 179.398H184.349C181.253 179.398 178.261 178.277 175.928 176.242C173.595 174.207 172.077 171.396 171.656 168.328L171.536 166.586V64.0859C171.536 60.6879 172.886 57.4289 175.289 55.0261C177.692 52.6233 180.951 51.2734 184.349 51.2734ZM64.7656 239.19C74.9599 239.19 84.7366 235.14 91.945 227.932C99.1535 220.724 103.203 210.947 103.203 200.753C103.203 190.558 99.1535 180.782 91.945 173.573C84.7366 166.365 74.9599 162.315 64.7656 162.315C54.5714 162.315 44.7946 166.365 37.5862 173.573C30.3778 180.782 26.3281 190.558 26.3281 200.753C26.3281 210.947 30.3778 220.724 37.5862 227.932C44.7946 235.14 54.5714 239.19 64.7656 239.19ZM64.7656 341.69C110.532 341.69 128.828 314.886 128.828 288.305C128.828 270.623 116.528 256.273 101.375 256.273H28.156C13.0031 256.273 0.703125 270.623 0.703125 288.305C0.703125 314.989 18.9994 341.69 64.7656 341.69ZM180.078 217.836C180.078 225.765 176.928 233.369 171.322 238.975C165.715 244.582 158.111 247.732 150.182 247.732C142.253 247.732 134.649 244.582 129.043 238.975C123.436 233.369 120.286 225.765 120.286 217.836C120.286 209.907 123.436 202.303 129.043 196.696C134.649 191.09 142.253 187.94 150.182 187.94C158.111 187.94 165.715 191.09 171.322 196.696C176.928 202.303 180.078 209.907 180.078 217.836ZM135.935 324.607C142.836 313.332 145.877 300.605 145.877 288.305C145.862 280.161 143.992 272.129 140.411 264.815H166.719C178.848 264.815 188.688 274.86 188.688 287.246C188.688 305.866 174.048 324.607 137.438 324.607H135.935Z"
+            fill="currentColor"
+          />
+        </svg>
+      ),
+      label: "Dootime",
+    },
+    {
+      icon: (isActive: boolean) => (
         <LuArrowUpToLine
           size={30}
           className={`${isActive ? "text-white" : "text-[#157BFF]/50"}`}
@@ -157,6 +177,43 @@ const InProfile = () => {
     () => profile?.fullName?.charAt(0).toUpperCase(),
     [profile?.fullName]
   );
+  const { followUser, unFollowUser, getFollowers, getFollowing } =
+    useFollowing();
+
+  const queryClient = useQueryClient();
+  const [loadingUserId, setLoadingUserId] = useState<string | null>(null);
+  console.log(getFollowing?.data?.list[0]?.username);
+  const isFollowing = getFollowing?.data?.list?.some(
+    (user: any) => user.username === profile?.username
+  );
+
+  const handleFollow = (userId: string) => {
+    setLoadingUserId(userId);
+    followUser.mutate(
+      { userId },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ["get-following"] });
+          queryClient.invalidateQueries({ queryKey: ["user-in-profile"] });
+        },
+        onSettled: () => setLoadingUserId(null),
+      }
+    );
+  };
+
+  const handleUnfollow = (userId: string) => {
+    setLoadingUserId(userId);
+    unFollowUser.mutate(
+      { userId },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ["get-following"] });
+          queryClient.invalidateQueries({ queryKey: ["user-in-profile"] });
+        },
+        onSettled: () => setLoadingUserId(null),
+      }
+    );
+  };
 
   if (isLoading) return <LinkedInLoader />;
 
@@ -204,9 +261,9 @@ const InProfile = () => {
                           <div className="max-w-5xl -mt-2 relative overflow-x-scroll hide-scrollbar mx-auto  bg-white p-2">
                             <div className="flex md:!flex-row gap-2 justify-center flex-col items-start  md:!justify-between">
                               <div className="flex gap-1.5">
-                                <div className="relative group w-[112px] h-[112px] ">
+                                <div className="relative group w-[100px] h-[100px] ">
                                   {profile?.profileImgUrl ? (
-                                    <div className="w-[112px] h-full rounded-md bg-[#157BFF] flex items-center justify-center text-white text-7xl font-bold lg:text-8xl">
+                                    <div className="w-[100px] h-full rounded-md bg-[#157BFF] flex items-center justify-center text-white text-7xl font-bold lg:text-8xl">
                                       <Image
                                         src={
                                           profile?.profileImgUrl ||
@@ -219,24 +276,23 @@ const InProfile = () => {
                                       />
                                     </div>
                                   ) : (
-                                    <div className="w-[112px] h-full rounded-md bg-[#157BFF] flex items-center justify-center text-white text-7xl font-bold lg:text-8xl">
+                                    <div className="w-[100px] h-full rounded-md bg-[#157BFF] flex items-center justify-center text-white text-7xl font-bold lg:text-8xl">
                                       {userInitials}
                                     </div>
                                   )}
                                 </div>
 
                                 <div>
-                                  <h1 className="md:!text-2xl text-xl mt-1.5 font-bold text-black ">
+                                  <h1 className="md:text-3xl text-2xl mt-1.5 font-bold text-black flex items-center flex-wrap gap-1">
                                     <span className="whitespace-pre-wrap break-words">
                                       {profile?.fullName || "Dootling User"}
                                     </span>
-
                                     <Image
                                       src="/images/icon/verified.svg"
                                       alt="verified badge"
-                                      width={16}
-                                      height={16}
-                                      className="inline-block -mt-4 ml-1"
+                                      width={10}
+                                      height={10}
+                                      className="object-contain"
                                     />
                                   </h1>
 
@@ -266,7 +322,9 @@ const InProfile = () => {
                                 </div>
 
                                 <div className="text-center">
-                                  <p className="text-[20px] font-bold">5</p>
+                                  <p className="text-[20px] font-bold">
+                                    {profile?.projectCount || 0}
+                                  </p>
                                   <p className="text-gray-600 text-sm">
                                     Projects
                                   </p>
@@ -304,19 +362,61 @@ const InProfile = () => {
                                   </svg>
                                 </button>
 
-                                <button className="bg-[#157bff] flex items-center gap-1.5  cursor-pointer hover:bg-blue-600 text-white p-2 rounded-sm text-sm ">
-                                  Link{" "}
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="20"
-                                    height="20"
-                                    viewBox="0 0 24 24"
-                                  >
-                                    <path
-                                      fill="currentColor"
-                                      d="M19 12.998h-6v6h-2v-6H5v-2h6v-6h2v6h6z"
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    isFollowing
+                                      ? handleUnfollow(profile.id)
+                                      : handleFollow(profile.id);
+                                  }}
+                                  className={`flex items-center gap-1.5 cursor-pointer text-sm p-2 rounded-sm ${
+                                    isFollowing
+                                      ? "bg-gray-200 text-black hover:bg-gray-300"
+                                      : "bg-[#157bff] text-white hover:bg-blue-600"
+                                  }`}
+                                >
+                                  {loadingUserId === profile?.id &&
+                                  (followUser.isPending ||
+                                    unFollowUser.isPending) ? (
+                                    <Loader2
+                                      className="animate-spin inline-block"
+                                      size={14}
                                     />
-                                  </svg>
+                                  ) : (
+                                    <>
+                                      {isFollowing ? (
+                                        <>
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="18"
+                                            height="18"
+                                            viewBox="0 0 24 24"
+                                          >
+                                            <path
+                                              fill="currentColor"
+                                              d="M19 13H5v-2h14v2z"
+                                            />
+                                          </svg>
+                                          Unlink
+                                        </>
+                                      ) : (
+                                        <>
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="18"
+                                            height="18"
+                                            viewBox="0 0 24 24"
+                                          >
+                                            <path
+                                              fill="currentColor"
+                                              d="M19 12.998h-6v6h-2v-6H5v-2h6v-6h2v6h6z"
+                                            />
+                                          </svg>
+                                          Link
+                                        </>
+                                      )}
+                                    </>
+                                  )}
                                 </button>
                               </div>
                               {/* <div className="flex items-center flex-shrink-0 gap-2">
@@ -481,6 +581,7 @@ const InProfile = () => {
                       {activeTab === "Feeds" && <ProfileFeeds />}
                       {activeTab === "Projects" && <ProjectDashboard />}
                       {activeTab === "Followed" && <FollowedTab />}
+                      {activeTab === "Dootime" && <DootimeIn />}
                       {activeTab === "Spaces" && (
                         <ProfileSpace Spaces={myProjects} />
                       )}
@@ -495,7 +596,7 @@ const InProfile = () => {
                 </div>
                 <div className="w-full my-4 lg:!my-0 col-span-2 ">
                   <div className="">
-                    <SimilarProfiles />
+                    {/* <SimilarProfiles /> */}
                     <TrendingProjects />
                     <TrendingSpaces />
                     {/* <ReferralSideTab /> */}

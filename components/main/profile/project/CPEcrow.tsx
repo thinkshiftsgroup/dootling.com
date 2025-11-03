@@ -72,7 +72,7 @@ const ConvertProjectToEscrow: React.FC<ConvertProjectToEscrowProps> = ({
               Escrow Smart Contract
             </h1>
             <p className=" sm:!text-base text-xs  text-[#404040]">
-              <span className="text-[#157BFF]">For:</span>{project.title} {" "}
+              <span className="text-[#157BFF]">For:{" "}</span>{project.title} {" "}
               Project
             </p>
           </div>

@@ -27,7 +27,7 @@ const SelectTimeDate = ({ setPage }: any) => {
   const timeZones = moment.tz.names();
 
   return (
-    <div className="p-6 h-[84vh] overflow-y-scroll hide-scrollbar">
+    <div className="p-6">
       <p className="text-xl font-bold text-black mb-4">Select a Date & Time</p>
 
       <div className=" md:grid md:grid-cols-7 gap-6">

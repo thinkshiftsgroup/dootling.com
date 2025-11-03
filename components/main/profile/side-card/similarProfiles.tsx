@@ -100,7 +100,7 @@ export default function SimilarProfiles() {
           similarProfiles?.data?.list.map((user: userI) => {
             return (
               <div
-                onClick={() => router.push(`/in/profile/${user.id}`)}
+                onClick={() => router.push(`/in/profile/${user.username}`)}
                 key={user.id}
                 className="mb-3 last:mb-0 cursor-pointer"
               >
