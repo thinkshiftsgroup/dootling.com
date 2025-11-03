@@ -1,116 +1,32 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import Image from "next/image";
-import {
-  User,
-  Gear,
-  CaretDown,
-  PencilSimple,
-  Plus,
-  Pencil,
-  Phone,
-} from "phosphor-react";
+import { User } from "phosphor-react";
 import React, { useState } from "react";
-import { useProfileStore } from "@/stores/useProfileStore";
-import useProfileActions from "@/hooks/useProfileApi";
-import { toast } from "sonner";
-import { Skeleton } from "@/components/ui/skeleton";
 const mainBlue = "#1578ff";
 const mainText = "#2b2d42";
 const paragraph = "#7e8b9a";
 
-const PersonalInformationSkeleton = () => (
-  <div className="space-y-6">
-    <div className="grid grid-cols-2 gap-4">
-      <div className="w-full flex flex-col gap-4">
-        {Array(4)
-          .fill(0)
-          .map((_, index) => (
-            <div key={`col1-${index}`}>
-              <Skeleton className="h-4 w-1/4 mb-1" />
-              <Skeleton className="w-full h-10 rounded-md" />
-            </div>
-          ))}
-      </div>
-      <div className="w-full flex flex-col gap-4">
-        {Array(4)
-          .fill(0)
-          .map((_, index) => (
-            <div key={`col2-${index}`}>
-              <Skeleton className="h-4 w-1/4 mb-1" />
-              <Skeleton className="w-full h-10 rounded-md" />
-            </div>
-          ))}
-      </div>
-      <div className="col-span-2 grid grid-cols-2 gap-4">
-        {Array(2)
-          .fill(0)
-          .map((_, index) => (
-            <div key={`col3-${index}`}>
-              <Skeleton className="h-4 w-1/4 mb-1" />
-              <Skeleton className="w-full h-10 rounded-md" />
-            </div>
-          ))}
-      </div>
-    </div>
-
-    <div className="flex items-center gap-3 pt-4">
-      <Skeleton className="w-20 h-10 rounded" />
-      <Skeleton className="w-20 h-10 rounded" />
-    </div>
-  </div>
-);
-
-type TabId =
-  | "personal-info"
-  | "hobbies-interests"
-  | "v-pills-family"
-  | "v-pills-work-tab"
-  | "v-pills-lived-tab"
-  | "v-pills-visibility-tab"
-  | "v-pills-privacy-tab"
-  | "v-pills-block-tab"
-  | "manage-contact"
-  | "change-password"
-  | "email-sms"
-  | "v-pills-export-tab";
-
-const ProfileIn = ({profile, isLoading}:any) => {
+type TabId = "hobbies-interests" | "v-pills-work-tab" | "v-pills-lived-tab";
+const ProfileIn = ({ profile, isLoading }: any) => {
   const [open, setOpen] = useState<string | null>("profile");
-  const [activeTab, setActiveTab] = useState<string>("personal-info");
-
-  const toggleAccordion = (section: string) => {
-    setOpen(open === section ? null : section);
-  };
+  const [activeTab, setActiveTab] = useState<string>("hobbies-interests");
 
   const tabRefs: Record<TabId, React.RefObject<HTMLDivElement | null>> = {
-    "personal-info": useRef<HTMLDivElement>(null),
     "hobbies-interests": useRef<HTMLDivElement>(null),
-    "v-pills-family": useRef<HTMLDivElement>(null),
     "v-pills-work-tab": useRef<HTMLDivElement>(null),
     "v-pills-lived-tab": useRef<HTMLDivElement>(null),
-    "v-pills-visibility-tab": useRef<HTMLDivElement>(null),
-    "v-pills-privacy-tab": useRef<HTMLDivElement>(null),
-    "v-pills-block-tab": useRef<HTMLDivElement>(null),
-    "manage-contact": useRef<HTMLDivElement>(null),
-    "change-password": useRef<HTMLDivElement>(null),
-    "email-sms": useRef<HTMLDivElement>(null),
-    "v-pills-export-tab": useRef<HTMLDivElement>(null),
   };
 
   const handleTabClick = (id: TabId) => {
     if (
       [
-        "personal-info",
         "hobbies-interests",
-        "v-pills-family",
         "v-pills-work-tab",
         "v-pills-lived-tab",
       ].includes(id)
     ) {
       setOpen("profile");
-    } else {
-      setOpen("account");
     }
 
     setActiveTab(id);
@@ -122,27 +38,6 @@ const ProfileIn = ({profile, isLoading}:any) => {
       }
     }, 300);
   };
-
-  const familyMembers = [
-    {
-      id: 1,
-      name: "Paul Molive",
-      relation: "Brother",
-      img: "/images/user/01.jpg",
-    },
-    {
-      id: 2,
-      name: "Anna Mull",
-      relation: "Sister",
-      img: "/images/user/02.jpg",
-    },
-    {
-      id: 3,
-      name: "Paige Turner",
-      relation: "Cousin",
-      img: "/images/user/03.jpg",
-    },
-  ];
 
   const workplaces = [
     {
@@ -192,20 +87,11 @@ const ProfileIn = ({profile, isLoading}:any) => {
             <div className="p-5">
               <div className="flex flex-col space-y-4">
                 <div className="">
-                  <button
-                    onClick={() => toggleAccordion("profile")}
-                    className="w-full flex items-center justify-between px-4 py-3 bg-[#1578ff]  transition-all rounded-sm"
-                  >
+                  <button className="w-full flex items-center justify-between px-4 py-3 bg-[#1578ff]  transition-all rounded-sm">
                     <span className="flex items-center gap-2 font-semibold text-white">
                       <User size={20} className="" />
-                      Account Setups
+                      Account Information
                     </span>
-                    <CaretDown
-                      size={18}
-                      className={`text-white transition-transform duration-300 ${
-                        open === "profile" ? "rotate-180" : ""
-                      }`}
-                    />
                   </button>
 
                   <div
@@ -215,12 +101,10 @@ const ProfileIn = ({profile, isLoading}:any) => {
                   >
                     <div className="flex flex-col gap-3">
                       {[
-                        { label: "Personal Information", id: "personal-info" },
                         {
                           label: "Hobbies and Interests",
                           id: "hobbies-interests",
                         },
-                        { label: "Payout Account & KYC", id: "v-pills-family" },
                         { label: "Work and Education", id: "v-pills-work-tab" },
                         {
                           label: "Places You've Lived",
@@ -250,148 +134,6 @@ const ProfileIn = ({profile, isLoading}:any) => {
           <div className="card">
             <div className="card-body my-2 sm:!my-0">
               <div id="profileTabContent" className="tab-content active show">
-                {isLoading && activeTab === "personal-info" ? (
-                  <PersonalInformationSkeleton />
-                ) : (
-                  <div
-                    id="personal-info"
-                    ref={tabRefs["personal-info"]}
-                    className={`w-full bg-white my-2 rounded-sm transition-all ${
-                      activeTab === "personal-info" ? "block" : "hidden"
-                    }`}
-                  >
-                    <div>
-                      <h4 className="text-lg font-semibold text-gray-800 mb-6">
-                        Personal Information
-                      </h4>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-2">
-                    
-                        <div>
-                          <h5 className="font-semibold text-[#2b2d4a]">
-                            First Name
-                          </h5>
-                          <p className="text-sm text-[#738b9a]">
-                            {profile?.firstname || "-"}
-                          </p>
-                        </div>
-                        <div>
-                          <h5 className="font-semibold text-[#2b2d4a]">
-                            Last Name
-                          </h5>
-                          <p className="text-sm text-[#738b9a]">
-                            {profile?.lastname || "-"}
-                          </p>
-                        </div>
-                        <div>
-                          <h5 className="font-semibold text-[#2b2d4a]">
-                            Username:
-                          </h5>
-                          <p className="text-sm text-[#738b9a]">
-                            {profile?.username || "-"}
-                          </p>
-                        </div>
-                        <div>
-                          <h5 className="font-semibold text-[#2b2d4a]">
-                            Phone:
-                          </h5>
-                          <p className="text-sm text-[#738b9a]">
-                            {profile?.biodata?.phone || "-"}
-                          </p>
-                        </div>
-                        <div>
-                          <h5 className="font-semibold text-[#2b2d4a]">
-                            Role:
-                          </h5>
-                          <p className="text-sm text-[#738b9a]">
-                            {profile?.biodata?.role || "-"} 
-                          </p>
-                        </div>
-                        <div>
-                          <h5 className="font-semibold text-[#2b2d4a]">
-                            Pronouns:
-                          </h5>
-                          <p className="text-sm text-[#738b9a]">
-                            {profile?.biodata?.pronouns || "-"}
-                          </p>
-                        </div>
-                        <div>
-                          <h5 className="font-semibold text-[#2b2d4a]">
-                            Country:
-                          </h5>
-                          <p className="text-sm text-[#738b9a]">
-                            {profile?.biodata?.country || "-"}
-                          </p>
-                        </div>
-                        <div>
-                          <h5 className="font-semibold text-[#2b2d4a]">
-                            Email:
-                          </h5>
-                          <p className="text-sm text-[#738b9a]">
-                            {profile?.email || "-"}
-                          </p>
-                        </div>
-                        <div>
-                          <h5 className="font-semibold text-[#2b2d4a]">
-                            Langages:
-                          </h5>
-                          <p className="text-sm text-[#738b9a]">
-                            {profile?.biodata?.languages || "-"}
-                          </p>
-                        </div>
-                        <div>
-                          <h5 className="font-semibold text-[#2b2d4a]">
-                            Industry:
-                          </h5>
-                          <p className="text-sm text-[#738b9a]">
-                            {profile?.biodata?.industry || "-"}
-                          </p>
-                        </div>
-                        <div>
-                          <h5 className="font-semibold text-[#2b2d4a]">
-                            Date of Birth:
-                          </h5>
-                          <p className="text-sm text-[#738b9a]">
-                            {profile?.biodata?.dateOfBirth
-                              ? new Date(
-                                  profile.biodata.dateOfBirth
-                                ).toLocaleDateString("en-US", {
-                                  year: "numeric",
-                                  month: "short",
-                                  day: "numeric",
-                                })
-                              : "-"}
-                          </p>
-                        </div>
-                        <div>
-                          <h5 className="font-semibold text-[#2b2d4a]">
-                            City:
-                          </h5>
-                          <p className="text-sm text-[#738b9a]">
-                            {profile?.biodata?.city || "-"}
-                          </p>
-                        </div>
-                        <div>
-                          <h5 className="font-semibold text-[#2b2d4a]">
-                            Headline:
-                          </h5>
-                          <p className="text-sm text-[#738b9a]">
-                            {profile?.biodata?.headline}
-                          </p>
-                        </div>
-                        <div>
-                          <h5 className="font-semibold text-[#2b2d4a]">
-                            Tags:
-                          </h5>
-                          <p className="text-sm text-[#738b9a]">
-                            {profile?.biodata?.tags}
-                          </p>
-                        </div>
-                      
-                    </div>
-                  </div>
-                )}
                 <div
                   id="hobbies-interests"
                   ref={tabRefs["hobbies-interests"]}
@@ -463,58 +205,6 @@ const ProfileIn = ({profile, isLoading}:any) => {
                     </div>
                   </div>
                 </div>
-
-                <div
-                  id="v-pills-family"
-                  ref={tabRefs["v-pills-family"]}
-                  className={`${
-                    activeTab === "v-pills-family" ? "block" : "hidden"
-                  } tab-pane fade space-y-4`}
-                >
-                  <div className="flex items-center justify-between">
-                    <h4 className="text-lg font-semibold text-[#2b2d42]">
-                      Relationship
-                    </h4>
-                  </div>
-
-                  <hr className="border-gray-200" />
-
-                  <h4 className="text-lg font-semibold text-[#2b2d42] mt-6 mb-3">
-                    Family Members
-                  </h4>
-
-                  <ul className="space-y-4">
-                    {familyMembers.map((member) => (
-                      <li
-                        key={member.id}
-                        className="flex items-center justify-between gap-3"
-                      >
-                        <div className="flex-shrink-0">
-                          <Image
-                            src={member.img}
-                            alt={member.name}
-                            width={40}
-                            height={40}
-                            className="rounded-full object-cover"
-                            loading="lazy"
-                          />
-                        </div>
-
-                        <div className="flex-1 ms-3 flex items-center justify-between">
-                          <div>
-                            <h6 className="font-semibold text-[#2b2d42]">
-                              {member.name}
-                            </h6>
-                            <p className="text-sm text-gray-500">
-                              {member.relation}
-                            </p>
-                          </div>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
                 <div
                   id="v-pills-work-tab"
                   ref={tabRefs["v-pills-work-tab"]}
@@ -533,15 +223,6 @@ const ProfileIn = ({profile, isLoading}:any) => {
                   <hr className="border-gray-200" />
 
                   <ul className="space-y-4">
-                    <li className="flex items-center gap-3">
-                      <div className="flex justify-center items-center w-10 h-10 rounded-full  text-gray-500">
-                        <Plus size={20} />
-                      </div>
-                      <h6 className="font-medium" style={{ color: mainText }}>
-                        Add Work Place
-                      </h6>
-                    </li>
-
                     {workplaces.map((work) => (
                       <li
                         key={work.id}
@@ -625,7 +306,6 @@ const ProfileIn = ({profile, isLoading}:any) => {
                     </ul>
                   </div>
                 </div>
-
                 <div
                   id="v-pills-lived-tab"
                   ref={tabRefs["v-pills-lived-tab"]}

@@ -23,7 +23,7 @@ export const useFollowing = () => {
       return res.data;
     },
     onError: (err: any) => {
-      toast.error(err || "Something went wrong!");
+      toast.error(err.response?.data?.message || "Something went wrong!");
     },
   });
 
@@ -34,7 +34,7 @@ export const useFollowing = () => {
       return res.data;
     },
     onError: (err: any) => {
-      toast.error(err || "Something went wrong!");
+      toast.error(err.response?.data?.message || "Something went wrong!");
     },
   });
 
@@ -55,7 +55,16 @@ export const useFollowing = () => {
     },
     enabled: isInitialized && !!user && !!token,
   });
- 
+
+  const getFollowing = useQuery({
+    queryKey: ["get-following"],
+    queryFn: async () => {
+      const res = await apiInstance.get("/api/follows/following");
+      return res.data;
+    },
+    enabled: isInitialized && !!user && !!token,
+  });
+
   const getAllContributors = useQuery({
     queryKey: ["get-all-contributors"],
     queryFn: async () => {
@@ -80,6 +89,7 @@ export const useFollowing = () => {
     similarProfiles,
     getFollowers,
     getAllContributors,
-    recentContributors
+    recentContributors,
+    getFollowing
   };
 };

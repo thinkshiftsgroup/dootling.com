@@ -49,7 +49,7 @@ const useProfileActions = () => {
     useQuery({
       queryKey: ["user-in-profile"],
       queryFn: async () => {
-        const res = await apiInstance.get(`/api/users/${userId}`);
+        const res = await apiInstance.get(`/api/users/username/${userId}`);
         return res.data;
       },
     });

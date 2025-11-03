@@ -60,9 +60,9 @@ const ProfileImageUploadTrigger = ({
   const uploadRef = useRef<ImageUploadRef | null>(null);
 
   return (
-    <div className="relative group w-[112px] h-[112px] ">
+    <div className="relative group w-[100px] h-[100px] ">
       {profilePhotoUrl ? (
-        <div className="w-[112px] h-full rounded-md bg-[#157BFF] flex items-center justify-center text-white text-7xl font-bold lg:text-8xl">
+        <div className="w-[100px] h-full rounded-md bg-[#157BFF] flex items-center justify-center text-white text-7xl font-bold lg:text-8xl">
           <Image
             src={profilePhotoUrl || "/placeholder.svg"}
             alt="Profile"
@@ -72,13 +72,13 @@ const ProfileImageUploadTrigger = ({
           />
         </div>
       ) : (
-        <div className="w-[112px] h-full rounded-md bg-[#157BFF] flex items-center justify-center text-white text-7xl font-bold lg:text-8xl">
+        <div className="w-[100px] h-full rounded-md bg-[#157BFF] flex items-center justify-center text-white text-7xl font-bold lg:text-8xl">
           {userInitials}
         </div>
       )}
 
       <div
-        className="absolute inset-0 bg-black/50 rounded-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer w-[112px]"
+        className="absolute inset-0 bg-black/50 rounded-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer w-[100px]"
         onClick={() => uploadRef.current?.openFileDialog()}
         title="Change Profile Photo"
       >
